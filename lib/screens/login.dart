@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
+import 'package:oasis_cafe_app/screens/signUp.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Palette.backgroundColor,
+        // backgroundColor: Palette.backgroundColor,
         title: Text(
           '로그인',
           style: TextStyle(
@@ -112,8 +113,17 @@ class _LoginState extends State<Login> {
 
                 SizedBox(height: 10,),
 
-                Text(
-                    'Create an account'
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUp())
+                    );
+                  },
+
+                  child: Text(
+                      'Create an account'
+                  ),
                 ),
               ],
             ),
