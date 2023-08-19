@@ -12,7 +12,9 @@ class _signUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
+        title: Text(
+          'Sign up'
+        ),
       ),
     );
   }
