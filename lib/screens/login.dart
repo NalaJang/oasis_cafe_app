@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
+import 'package:oasis_cafe_app/screens/home.dart';
 import 'package:oasis_cafe_app/screens/signUp.dart';
 
 class Login extends StatefulWidget {
@@ -83,19 +84,28 @@ class _LoginState extends State<Login> {
             // 로그인 버튼
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Palette.buttonColor1,
-                  borderRadius: BorderRadius.circular(12)
-                ),
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    (context),
+                    MaterialPageRoute(builder: (context) => MainPage())
+                  );
+                },
 
-                child: Center(
-                  child: Text(
-                    'Log in',
-                    style: TextStyle(
-                      color: Palette.backgroundColor,
-                      fontSize: 16,
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Palette.buttonColor1,
+                    borderRadius: BorderRadius.circular(12)
+                  ),
+
+                  child: Center(
+                    child: Text(
+                      'Log in',
+                      style: TextStyle(
+                        color: Palette.backgroundColor,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
+import 'package:oasis_cafe_app/screens/home.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -92,13 +93,22 @@ class _signUpState extends State<SignUp> {
                   borderRadius: BorderRadius.circular(12)
                 ),
 
-                child: Center(
-                  child: Text(
-                    'Sign Up',
-                      style: TextStyle(
-                        color: Palette.backgroundColor,
-                        fontSize: 16,
-                      )
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainPage())
+                    );
+                  },
+
+                  child: Center(
+                    child: Text(
+                      'Sign Up',
+                        style: TextStyle(
+                          color: Palette.backgroundColor,
+                          fontSize: 16,
+                        )
+                    ),
                   ),
                 ),
               ),
