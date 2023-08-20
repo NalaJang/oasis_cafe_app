@@ -97,7 +97,7 @@ class _signUpState extends State<SignUp> {
                   onTap: (){
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MainPage())
+                        MaterialPageRoute(builder: (context) => BottomNavi())
                     );
                   },
 

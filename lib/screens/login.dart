@@ -88,7 +88,7 @@ class _LoginState extends State<Login> {
                 onTap: (){
                   Navigator.push(
                     (context),
-                    MaterialPageRoute(builder: (context) => MainPage())
+                    MaterialPageRoute(builder: (context) => BottomNavi())
                   );
                 },
 

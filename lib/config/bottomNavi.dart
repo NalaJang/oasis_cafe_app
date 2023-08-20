@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'palette.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+class BottomNavi extends StatefulWidget {
+  const BottomNavi({Key? key}) : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<BottomNavi> createState() => _BottomNaviState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _BottomNaviState extends State<BottomNavi> {
 
   int _selectedIndex = 0;
   static const List<Widget> _pageList = [
