@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/screens/mainPage.dart';
 
 import 'palette.dart';
 
@@ -13,7 +14,7 @@ class _BottomNaviState extends State<BottomNavi> {
 
   int _selectedIndex = 0;
   static const List<Widget> _pageList = [
-    Text('index 0'),
+    MainPage(),
     Text('index 1'),
     Text('index 2')
   ];
