@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
-import 'package:oasis_cafe_app/screens/home.dart';
+import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:oasis_cafe_app/screens/signUp.dart';
 
 class Login extends StatefulWidget {
