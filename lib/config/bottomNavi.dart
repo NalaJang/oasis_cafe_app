@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/screens/mainPage.dart';
+import 'package:oasis_cafe_app/screens/orderPage.dart';
 
 import 'palette.dart';
 
@@ -15,7 +16,7 @@ class _BottomNaviState extends State<BottomNavi> {
   int _selectedIndex = 0;
   static const List<Widget> _pageList = [
     MainPage(),
-    Text('index 1'),
+    OrderPage(),
     Text('index 2')
   ];
 
