@@ -73,6 +73,20 @@ class MainPage extends StatelessWidget {
               ],
             ),
 
+            SizedBox(height: 10,),
+
+            Column(
+              children: [
+                Image.asset(
+                    'image/IMG_banner1.PNG'
+                ),
+
+                Image.asset(
+                    'image/IMG_banner2.PNG'
+                ),
+              ],
+            ),
+
             // 디저트
             Row(
               children: [
