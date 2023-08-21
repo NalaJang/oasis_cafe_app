@@ -82,11 +82,15 @@ class MainPage extends StatelessWidget {
                       'image/IMG_banner1.PNG'
                   ),
 
+                  SizedBox(height: 10,),
+
                   Image.asset(
                       'image/IMG_banner2.PNG'
                   ),
                 ],
               ),
+
+              SizedBox(height: 30,),
 
               // 디저트
               Row(
@@ -99,6 +103,8 @@ class MainPage extends StatelessWidget {
                   ),
                 ],
               ),
+
+              SizedBox(height: 10,),
 
               Container(
                 height: 150,
