@@ -100,6 +100,21 @@ class MainPage extends StatelessWidget {
                 ],
               ),
 
+              Container(
+                height: 150,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Image.asset('image/IMG_dessert1.PNG'),
+                    SizedBox(width: 10,),
+                    Image.asset('image/IMG_dessert2.PNG'),
+                    SizedBox(width: 10,),
+                    Image.asset('image/IMG_dessert1.PNG'),
+                    SizedBox(width: 10,),
+                    Image.asset('image/IMG_dessert2.PNG'),
+                  ],
+                ),
+              )
             ],
           ),
         ),
