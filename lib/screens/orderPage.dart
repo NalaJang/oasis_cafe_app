@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/tabBar/tab1.dart';
 
 class OrderPage extends StatelessWidget {
   const OrderPage({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class OrderPage extends StatelessWidget {
 
         body: const TabBarView(
           children: [
-            Text('tab1'),
+            Beverage(),
             Text('tab2'),
             Text('tab3')
           ],
