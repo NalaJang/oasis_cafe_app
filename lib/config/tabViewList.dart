@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 final List<String> entries = ['추천', '에스프레소', '생과일 쥬스'];
 final List<String> subheading = ['Recommend', 'Espresso', 'Fresh juice'];
 
-class Beverage extends StatelessWidget {
-  const Beverage({Key? key}) : super(key: key);
+class TabViewList extends StatelessWidget {
+  const TabViewList(this.currentTabIndex, {Key? key}) : super(key: key);
+
+  final int currentTabIndex;
 
   @override
   Widget build(BuildContext context) {
