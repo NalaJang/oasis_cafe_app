@@ -74,7 +74,7 @@ class _SignUpState extends State<SignUp> {
               TextFormField(
                 controller: userEmailController,
                 validator: (value) =>
-                value == '' ? 'Please enter your name' : null,
+                value == '' ? 'Please enter your email' : null,
 
                 decoration: _getTextFormDecoration('이메일')
 
@@ -101,7 +101,6 @@ class _SignUpState extends State<SignUp> {
 
               // 비밀번호 확인
               TextFormField(
-                // controller: userPasswordController,
                 validator: (value) {
                   if( value == '' || value != userPasswordController.text ) {
                     return 'Please check your password';
@@ -123,10 +122,13 @@ class _SignUpState extends State<SignUp> {
               ),
 
               // 이름
-              TextField(
-                decoration: InputDecoration(
-                    hintText: '이름'
-                ),
+              TextFormField(
+                  controller: userNameController,
+                  validator: (value) =>
+                  value == '' ? 'Please enter your name' : null,
+
+                  decoration: _getTextFormDecoration('이름')
+
               ),
 
               SizedBox(height: 10,),
