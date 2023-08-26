@@ -33,10 +33,10 @@ class _SignUpState extends State<SignUp> {
         padding: const EdgeInsets.all(25.0),
         child: Column(
           children: [
-            // 아이디
+            // 이메일
             TextField(
               decoration: InputDecoration(
-                hintText: '아이디(4 ~ 13자리 이내)'
+                hintText: '이메일'
               ),
             ),
 
