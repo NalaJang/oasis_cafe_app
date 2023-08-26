@@ -134,19 +134,25 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 10,),
 
               // 생년월일
-              TextField(
-                decoration: InputDecoration(
-                    hintText: '생년월일 6자리'
-                ),
+              TextFormField(
+                  controller: userBirthController,
+                  validator: (value) =>
+                  value == '' ? 'Please enter your birth' : null,
+
+                  decoration: _getTextFormDecoration('생년월일 6자리')
+
               ),
 
               SizedBox(height: 10,),
 
               // 휴대폰 번호
-              TextField(
-                decoration: InputDecoration(
-                    hintText: '휴대폰 번호'
-                ),
+              TextFormField(
+                  controller: userPhoneNumberController,
+                  validator: (value) =>
+                  value == '' ? 'Please enter your phone number' : null,
+
+                  decoration: _getTextFormDecoration('휴대폰번호')
+
               ),
 
               SizedBox(height: 30,),
