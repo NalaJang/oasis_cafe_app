@@ -229,7 +229,19 @@ class _SignUpState extends State<SignUp> {
 
                           } catch (e) {
                             print(e);
+                            if( mounted ) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                      e.toString()
+                                    )
+                                )
+                              );
 
+                              setState(() {
+                                showSpinner = false;
+                              });
+                            }
                           }
                         },
 
