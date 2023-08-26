@@ -16,10 +16,10 @@ class _SignUpState extends State<SignUp> {
   final _authentication = FirebaseAuth.instance;
 
   var userEmailController = TextEditingController();
-  var userPassword = TextEditingController();
-  var userName = TextEditingController();
-  var userBirth = TextEditingController();
-  var userPhoneNumber = TextEditingController();
+  var userPasswordController = TextEditingController();
+  var userNameController = TextEditingController();
+  var userBirthController = TextEditingController();
+  var userPhoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +38,7 @@ class _SignUpState extends State<SignUp> {
             children: [
               // 이메일
               TextFormField(
+                controller: userName,
                 decoration: InputDecoration(
                   hintText: '이메일'
                 ),
