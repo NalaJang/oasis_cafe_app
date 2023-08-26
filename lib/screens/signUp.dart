@@ -21,6 +21,8 @@ class _SignUpState extends State<SignUp> {
   var userBirthController = TextEditingController();
   var userPhoneNumberController = TextEditingController();
 
+  final double textFormSizedBoxHeight = 30.0;
+
   void _tryValidation() {
     final isValid = formKey.currentState!.validate();
 
@@ -80,7 +82,7 @@ class _SignUpState extends State<SignUp> {
 
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: textFormSizedBoxHeight,),
 
               // 비밀번호
               TextFormField(
@@ -97,7 +99,7 @@ class _SignUpState extends State<SignUp> {
                 decoration: _getTextFormDecoration('비밀번호(6 ~ 20자리 이내)'),
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: textFormSizedBoxHeight,),
 
               // 비밀번호 확인
               TextFormField(
@@ -113,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                 decoration: _getTextFormDecoration('비밀번호 확인'),
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: textFormSizedBoxHeight,),
 
               // 본인 인증 서비스
               Text(
@@ -131,7 +133,7 @@ class _SignUpState extends State<SignUp> {
 
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: textFormSizedBoxHeight,),
 
               // 생년월일
               TextFormField(
@@ -143,7 +145,7 @@ class _SignUpState extends State<SignUp> {
 
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: textFormSizedBoxHeight,),
 
               // 휴대폰 번호
               TextFormField(
