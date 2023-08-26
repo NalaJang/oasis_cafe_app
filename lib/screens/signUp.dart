@@ -32,18 +32,26 @@ class _SignUpState extends State<SignUp> {
 
   InputDecoration _getTextFormDecoration(String labelText) {
     return InputDecoration(
-        labelText: labelText,
-        labelStyle: const TextStyle(
-            color: Colors.black
-        ),
-        focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            borderSide: BorderSide(color: Palette.iconColor)
-        ),
-        enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            borderSide: BorderSide(color: Palette.iconColor)
-        )
+      labelText: labelText,
+      labelStyle: const TextStyle(
+          color: Colors.black,
+      ),
+      focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Palette.iconColor)
+      ),
+      enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Palette.iconColor)
+      ),
+      errorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Palette.iconColor)
+      ),
+      focusedErrorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Palette.iconColor)
+      ),
     );
   }
 
