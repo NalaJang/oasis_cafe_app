@@ -209,10 +209,17 @@ class _SignUpState extends State<SignUp> {
                             });
 
                             if( newUser.user != null ) {
-
                               setState(() {
                                 showSpinner = false;
                               });
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                      '회원가입이 완료되었습니다.',
+                                    ),
+                                )
+                              );
                             }
 
                           } catch (e) {
