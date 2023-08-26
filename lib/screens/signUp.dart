@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _SignUpState extends State<SignUp> {
   var userPhoneNumberController = TextEditingController();
 
   final double textFormSizedBoxHeight = 30.0;
+  bool showSpinner = false;
 
   void _tryValidation() {
     final isValid = formKey.currentState!.validate();
@@ -67,161 +69,176 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
 
-      body: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // 이메일
-                TextFormField(
-                  controller: userEmailController,
-                  validator: (value) =>
-                  value == '' ? 'Please enter your email' : null,
-
-                  cursorColor: Colors.black,
-                  decoration: _getTextFormDecoration('이메일')
-
-                ),
-
-                SizedBox(height: textFormSizedBoxHeight,),
-
-                // 비밀번호
-                TextFormField(
-                  controller: userPasswordController,
-                  validator: (value) {
-                    if( value == '' || value!.length < 6 ) {
-                      return 'Password should be at least 6 characters';
-
-                    } else {
-                      return null;
-                    }
-                  },
-
-                  cursorColor: Colors.black,
-                  decoration: _getTextFormDecoration('비밀번호(6 ~ 20자리 이내)'),
-                ),
-
-                SizedBox(height: textFormSizedBoxHeight,),
-
-                // 비밀번호 확인
-                TextFormField(
-                  validator: (value) {
-                    if( value == '' || value != userPasswordController.text ) {
-                      return 'Please check your password';
-
-                    } else {
-                      return null;
-                    }
-                  },
-
-                  cursorColor: Colors.black,
-                  decoration: _getTextFormDecoration('비밀번호 확인'),
-                ),
-
-                SizedBox(height: textFormSizedBoxHeight,),
-
-                // 본인 인증 서비스
-                Text(
-                  '본인 인증 서비스 약관 전체 동의\n'
-                      '휴대폰 본인 인증 서비스 이용약관 동의(필수)'
-                ),
-
-                // 이름
-                TextFormField(
-                    controller: userNameController,
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Form(
+          key: formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // 이메일
+                  TextFormField(
+                    controller: userEmailController,
                     validator: (value) =>
-                    value == '' ? 'Please enter your name' : null,
+                    value == '' ? 'Please enter your email' : null,
 
                     cursorColor: Colors.black,
-                    decoration: _getTextFormDecoration('이름')
+                    decoration: _getTextFormDecoration('이메일')
 
-                ),
+                  ),
 
-                SizedBox(height: textFormSizedBoxHeight,),
+                  SizedBox(height: textFormSizedBoxHeight,),
 
-                // 생년월일
-                TextFormField(
-                    controller: userBirthController,
-                    validator: (value) =>
-                    value == '' ? 'Please enter your birth' : null,
+                  // 비밀번호
+                  TextFormField(
+                    controller: userPasswordController,
+                    validator: (value) {
+                      if( value == '' || value!.length < 6 ) {
+                        return 'Password should be at least 6 characters';
 
-                    cursorColor: Colors.black,
-                    decoration: _getTextFormDecoration('생년월일 6자리')
-
-                ),
-
-                SizedBox(height: textFormSizedBoxHeight,),
-
-                // 휴대폰 번호
-                TextFormField(
-                    controller: userPhoneNumberController,
-                    validator: (value) =>
-                    value == '' ? 'Please enter your phone number' : null,
+                      } else {
+                        return null;
+                      }
+                    },
 
                     cursorColor: Colors.black,
-                    decoration: _getTextFormDecoration('휴대폰번호')
+                    decoration: _getTextFormDecoration('비밀번호(6 ~ 20자리 이내)'),
+                  ),
 
-                ),
+                  SizedBox(height: textFormSizedBoxHeight,),
 
-                SizedBox(height: 30,),
+                  // 비밀번호 확인
+                  TextFormField(
+                    validator: (value) {
+                      if( value == '' || value != userPasswordController.text ) {
+                        return 'Please check your password';
 
-                // 회원가입 버튼
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Palette.buttonColor1,
-                      borderRadius: BorderRadius.circular(12)
-                    ),
+                      } else {
+                        return null;
+                      }
+                    },
 
-                    child: GestureDetector(
-                      onTap: () async {
-                        // 사용자 입력 값 유효성 검사
-                        _tryValidation();
+                    cursorColor: Colors.black,
+                    decoration: _getTextFormDecoration('비밀번호 확인'),
+                  ),
 
-                        try {
-                          final newUser = await _authentication.createUserWithEmailAndPassword(
-                              email: userEmailController.text, password: userPasswordController.text
-                          );
+                  SizedBox(height: textFormSizedBoxHeight,),
 
-                          await FirebaseFirestore.instance
-                          .collection('user')
-                          .doc(newUser.user!.uid)
-                          .set({
-                            // 데이터의 형식은 항상 map 의 형태
-                            'userEmail' : userEmailController.text,
-                            'userPassword' : userPasswordController.text,
-                            'userName' : userNameController.text,
-                            'userBirth' : userBirthController.text,
-                            'userPhoneNumber' : userPhoneNumberController.text
-                          });
+                  // 본인 인증 서비스
+                  Text(
+                    '본인 인증 서비스 약관 전체 동의\n'
+                        '휴대폰 본인 인증 서비스 이용약관 동의(필수)'
+                  ),
 
-                        } catch (e) {
-                          print(e);
+                  // 이름
+                  TextFormField(
+                      controller: userNameController,
+                      validator: (value) =>
+                      value == '' ? 'Please enter your name' : null,
 
-                        }
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(builder: (context) => BottomNavi())
-                        // );
-                      },
+                      cursorColor: Colors.black,
+                      decoration: _getTextFormDecoration('이름')
 
-                      child: Center(
-                        child: Text(
-                          'Sign Up',
-                            style: TextStyle(
-                              color: Palette.backgroundColor,
-                              fontSize: 16,
-                            )
+                  ),
+
+                  SizedBox(height: textFormSizedBoxHeight,),
+
+                  // 생년월일
+                  TextFormField(
+                      controller: userBirthController,
+                      validator: (value) =>
+                      value == '' ? 'Please enter your birth' : null,
+
+                      cursorColor: Colors.black,
+                      decoration: _getTextFormDecoration('생년월일 6자리')
+
+                  ),
+
+                  SizedBox(height: textFormSizedBoxHeight,),
+
+                  // 휴대폰 번호
+                  TextFormField(
+                      controller: userPhoneNumberController,
+                      validator: (value) =>
+                      value == '' ? 'Please enter your phone number' : null,
+
+                      cursorColor: Colors.black,
+                      decoration: _getTextFormDecoration('휴대폰번호')
+
+                  ),
+
+                  SizedBox(height: 30,),
+
+                  // 회원가입 버튼
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Palette.buttonColor1,
+                        borderRadius: BorderRadius.circular(12)
+                      ),
+
+                      child: GestureDetector(
+                        onTap: () async {
+
+                          // 사용자 입력 값 유효성 검사
+                          _tryValidation();
+
+                          try {
+                            setState(() {
+                              showSpinner = true;
+                            });
+
+                            final newUser = await _authentication.createUserWithEmailAndPassword(
+                                email: userEmailController.text, password: userPasswordController.text
+                            );
+
+                            await FirebaseFirestore.instance
+                            .collection('user')
+                            .doc(newUser.user!.uid)
+                            .set({
+                              // 데이터의 형식은 항상 map 의 형태
+                              'userEmail' : userEmailController.text,
+                              'userPassword' : userPasswordController.text,
+                              'userName' : userNameController.text,
+                              'userBirth' : userBirthController.text,
+                              'userPhoneNumber' : userPhoneNumberController.text
+                            });
+
+                            if( newUser.user != null ) {
+
+                              setState(() {
+                                showSpinner = false;
+                              });
+                            }
+
+                          } catch (e) {
+                            print(e);
+
+                          }
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(builder: (context) => BottomNavi())
+                          // );
+                        },
+
+                        child: Center(
+                          child: Text(
+                            'Sign Up',
+                              style: TextStyle(
+                                color: Palette.backgroundColor,
+                                fontSize: 16,
+                              )
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
