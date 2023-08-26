@@ -220,16 +220,17 @@ class _SignUpState extends State<SignUp> {
                                     ),
                                 )
                               );
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => BottomNavi())
+                              );
                             }
 
                           } catch (e) {
                             print(e);
 
                           }
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(builder: (context) => BottomNavi())
-                          // );
                         },
 
                         child: Center(
