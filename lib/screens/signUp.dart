@@ -30,6 +30,23 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  InputDecoration _getTextFormDecoration(String labelText) {
+    return InputDecoration(
+        labelText: labelText,
+        labelStyle: const TextStyle(
+            color: Colors.black
+        ),
+        focusedBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide(color: Palette.iconColor)
+        ),
+        enabledBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide(color: Palette.iconColor)
+        )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +68,8 @@ class _SignUpState extends State<SignUp> {
                 validator: (value) =>
                 value == '' ? 'Please enter your name' : null,
 
-                decoration: InputDecoration(
-                  labelText: '이메일'
-                ),
+                decoration: _getTextFormDecoration('이메일')
+
               ),
 
               SizedBox(height: 10,),
