@@ -83,10 +83,18 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 10,),
 
               // 비밀번호
-              TextField(
-                decoration: InputDecoration(
-                    hintText: '비밀번호(6 ~ 20자리 이내)'
-                ),
+              TextFormField(
+                controller: userPasswordController,
+                validator: (value) {
+                  if( value == '' || value!.length < 6 ) {
+                    return 'Please enter your password longer';
+
+                  } else {
+                    return null;
+                  }
+                },
+
+                decoration: _getTextFormDecoration('비밀번호(6 ~ 20자리 이내)'),
               ),
 
               SizedBox(height: 10,),
