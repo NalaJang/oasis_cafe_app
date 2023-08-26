@@ -192,11 +192,11 @@ class _SignUpState extends State<SignUp> {
                           .doc(newUser.user!.uid)
                           .set({
                             // 데이터의 형식은 항상 map 의 형태
-                            'userEmail' : userEmailController,
-                            'userPassword' : userPasswordController,
-                            'userName' : userNameController,
-                            'userBirth' : userBirthController,
-                            'userPhoneNumber' : userPhoneNumberController
+                            'userEmail' : userEmailController.text,
+                            'userPassword' : userPasswordController.text,
+                            'userName' : userNameController.text,
+                            'userBirth' : userBirthController.text,
+                            'userPhoneNumber' : userPhoneNumberController.text
                           });
 
                         } catch (e) {
