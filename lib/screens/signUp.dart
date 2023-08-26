@@ -100,10 +100,18 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 10,),
 
               // 비밀번호 확인
-              TextField(
-                decoration: InputDecoration(
-                  hintText: '비밀번호 확인'
-                ),
+              TextFormField(
+                // controller: userPasswordController,
+                validator: (value) {
+                  if( value == '' || value != userPasswordController.text ) {
+                    return 'Please check your password';
+
+                  } else {
+                    return null;
+                  }
+                },
+
+                decoration: _getTextFormDecoration('비밀번호 확인'),
               ),
 
               SizedBox(height: 10,),
