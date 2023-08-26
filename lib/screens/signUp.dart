@@ -80,6 +80,7 @@ class _SignUpState extends State<SignUp> {
                   validator: (value) =>
                   value == '' ? 'Please enter your email' : null,
 
+                  cursorColor: Colors.black,
                   decoration: _getTextFormDecoration('이메일')
 
                 ),
@@ -98,6 +99,7 @@ class _SignUpState extends State<SignUp> {
                     }
                   },
 
+                  cursorColor: Colors.black,
                   decoration: _getTextFormDecoration('비밀번호(6 ~ 20자리 이내)'),
                 ),
 
@@ -114,6 +116,7 @@ class _SignUpState extends State<SignUp> {
                     }
                   },
 
+                  cursorColor: Colors.black,
                   decoration: _getTextFormDecoration('비밀번호 확인'),
                 ),
 
@@ -131,6 +134,7 @@ class _SignUpState extends State<SignUp> {
                     validator: (value) =>
                     value == '' ? 'Please enter your name' : null,
 
+                    cursorColor: Colors.black,
                     decoration: _getTextFormDecoration('이름')
 
                 ),
@@ -143,6 +147,7 @@ class _SignUpState extends State<SignUp> {
                     validator: (value) =>
                     value == '' ? 'Please enter your birth' : null,
 
+                    cursorColor: Colors.black,
                     decoration: _getTextFormDecoration('생년월일 6자리')
 
                 ),
@@ -155,6 +160,7 @@ class _SignUpState extends State<SignUp> {
                     validator: (value) =>
                     value == '' ? 'Please enter your phone number' : null,
 
+                    cursorColor: Colors.black,
                     decoration: _getTextFormDecoration('휴대폰번호')
 
                 ),
