@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -10,6 +11,15 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  final _authentication = FirebaseAuth.instance;
+
+  String userEmail = '';
+  String userPassword = '';
+  String userName = '';
+  int userBirth = 0;
+  int userPhoneNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
