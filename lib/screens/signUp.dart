@@ -70,127 +70,129 @@ class _SignUpState extends State<SignUp> {
         key: formKey,
         child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Column(
-            children: [
-              // 이메일
-              TextFormField(
-                controller: userEmailController,
-                validator: (value) =>
-                value == '' ? 'Please enter your email' : null,
-
-                decoration: _getTextFormDecoration('이메일')
-
-              ),
-
-              SizedBox(height: textFormSizedBoxHeight,),
-
-              // 비밀번호
-              TextFormField(
-                controller: userPasswordController,
-                validator: (value) {
-                  if( value == '' || value!.length < 6 ) {
-                    return 'Please enter your password longer';
-
-                  } else {
-                    return null;
-                  }
-                },
-
-                decoration: _getTextFormDecoration('비밀번호(6 ~ 20자리 이내)'),
-              ),
-
-              SizedBox(height: textFormSizedBoxHeight,),
-
-              // 비밀번호 확인
-              TextFormField(
-                validator: (value) {
-                  if( value == '' || value != userPasswordController.text ) {
-                    return 'Please check your password';
-
-                  } else {
-                    return null;
-                  }
-                },
-
-                decoration: _getTextFormDecoration('비밀번호 확인'),
-              ),
-
-              SizedBox(height: textFormSizedBoxHeight,),
-
-              // 본인 인증 서비스
-              Text(
-                '본인 인증 서비스 약관 전체 동의\n'
-                    '휴대폰 본인 인증 서비스 이용약관 동의(필수)'
-              ),
-
-              // 이름
-              TextFormField(
-                  controller: userNameController,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // 이메일
+                TextFormField(
+                  controller: userEmailController,
                   validator: (value) =>
-                  value == '' ? 'Please enter your name' : null,
+                  value == '' ? 'Please enter your email' : null,
 
-                  decoration: _getTextFormDecoration('이름')
+                  decoration: _getTextFormDecoration('이메일')
 
-              ),
+                ),
 
-              SizedBox(height: textFormSizedBoxHeight,),
+                SizedBox(height: textFormSizedBoxHeight,),
 
-              // 생년월일
-              TextFormField(
-                  controller: userBirthController,
-                  validator: (value) =>
-                  value == '' ? 'Please enter your birth' : null,
+                // 비밀번호
+                TextFormField(
+                  controller: userPasswordController,
+                  validator: (value) {
+                    if( value == '' || value!.length < 6 ) {
+                      return 'Please enter your password longer';
 
-                  decoration: _getTextFormDecoration('생년월일 6자리')
+                    } else {
+                      return null;
+                    }
+                  },
 
-              ),
+                  decoration: _getTextFormDecoration('비밀번호(6 ~ 20자리 이내)'),
+                ),
 
-              SizedBox(height: textFormSizedBoxHeight,),
+                SizedBox(height: textFormSizedBoxHeight,),
 
-              // 휴대폰 번호
-              TextFormField(
-                  controller: userPhoneNumberController,
-                  validator: (value) =>
-                  value == '' ? 'Please enter your phone number' : null,
+                // 비밀번호 확인
+                TextFormField(
+                  validator: (value) {
+                    if( value == '' || value != userPasswordController.text ) {
+                      return 'Please check your password';
 
-                  decoration: _getTextFormDecoration('휴대폰번호')
+                    } else {
+                      return null;
+                    }
+                  },
 
-              ),
+                  decoration: _getTextFormDecoration('비밀번호 확인'),
+                ),
 
-              SizedBox(height: 30,),
+                SizedBox(height: textFormSizedBoxHeight,),
 
-              // 회원가입 버튼
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Palette.buttonColor1,
-                    borderRadius: BorderRadius.circular(12)
-                  ),
+                // 본인 인증 서비스
+                Text(
+                  '본인 인증 서비스 약관 전체 동의\n'
+                      '휴대폰 본인 인증 서비스 이용약관 동의(필수)'
+                ),
 
-                  child: GestureDetector(
-                    onTap: (){
-                      _tryValidation();
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(builder: (context) => BottomNavi())
-                      // );
-                    },
+                // 이름
+                TextFormField(
+                    controller: userNameController,
+                    validator: (value) =>
+                    value == '' ? 'Please enter your name' : null,
 
-                    child: Center(
-                      child: Text(
-                        'Sign Up',
-                          style: TextStyle(
-                            color: Palette.backgroundColor,
-                            fontSize: 16,
-                          )
+                    decoration: _getTextFormDecoration('이름')
+
+                ),
+
+                SizedBox(height: textFormSizedBoxHeight,),
+
+                // 생년월일
+                TextFormField(
+                    controller: userBirthController,
+                    validator: (value) =>
+                    value == '' ? 'Please enter your birth' : null,
+
+                    decoration: _getTextFormDecoration('생년월일 6자리')
+
+                ),
+
+                SizedBox(height: textFormSizedBoxHeight,),
+
+                // 휴대폰 번호
+                TextFormField(
+                    controller: userPhoneNumberController,
+                    validator: (value) =>
+                    value == '' ? 'Please enter your phone number' : null,
+
+                    decoration: _getTextFormDecoration('휴대폰번호')
+
+                ),
+
+                SizedBox(height: 30,),
+
+                // 회원가입 버튼
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Palette.buttonColor1,
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+
+                    child: GestureDetector(
+                      onTap: (){
+                        _tryValidation();
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => BottomNavi())
+                        // );
+                      },
+
+                      child: Center(
+                        child: Text(
+                          'Sign Up',
+                            style: TextStyle(
+                              color: Palette.backgroundColor,
+                              fontSize: 16,
+                            )
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
