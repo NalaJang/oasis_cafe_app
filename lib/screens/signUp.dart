@@ -21,6 +21,15 @@ class _SignUpState extends State<SignUp> {
   var userBirthController = TextEditingController();
   var userPhoneNumberController = TextEditingController();
 
+  void _tryValidation() {
+    final isValid = formKey.currentState!.validate();
+
+    // 폼 스테이트 값이 유효하다면 값을 저장
+    if( isValid) {
+      formKey.currentState!.save();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +47,12 @@ class _SignUpState extends State<SignUp> {
             children: [
               // 이메일
               TextFormField(
-                controller: userName,
+                controller: userEmailController,
+                validator: (value) =>
+                value == '' ? 'Please enter your name' : null,
+
                 decoration: InputDecoration(
-                  hintText: '이메일'
+                  labelText: '이메일'
                 ),
               ),
 
@@ -109,10 +121,11 @@ class _SignUpState extends State<SignUp> {
 
                   child: GestureDetector(
                     onTap: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BottomNavi())
-                      );
+                      _tryValidation();
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(builder: (context) => BottomNavi())
+                      // );
                     },
 
                     child: Center(
