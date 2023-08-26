@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
@@ -36,7 +37,7 @@ class _SignUpState extends State<SignUp> {
     return InputDecoration(
       labelText: labelText,
       labelStyle: const TextStyle(
-          color: Colors.black,
+          color: Colors.black54,
       ),
       focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -90,7 +91,7 @@ class _SignUpState extends State<SignUp> {
                   controller: userPasswordController,
                   validator: (value) {
                     if( value == '' || value!.length < 6 ) {
-                      return 'Please enter your password longer';
+                      return 'Password should be at least 6 characters';
 
                     } else {
                       return null;
@@ -171,8 +172,31 @@ class _SignUpState extends State<SignUp> {
                     ),
 
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () async {
+                        // 사용자 입력 값 유효성 검사
                         _tryValidation();
+
+                        try {
+                          final newUser = await _authentication.createUserWithEmailAndPassword(
+                              email: userEmailController.text, password: userPasswordController.text
+                          );
+
+                          await FirebaseFirestore.instance
+                          .collection('user')
+                          .doc(newUser.user!.uid)
+                          .set({
+                            // 데이터의 형식은 항상 map 의 형태
+                            'userEmail' : userEmailController,
+                            'userPassword' : userPasswordController,
+                            'userName' : userNameController,
+                            'userBirth' : userBirthController,
+                            'userPhoneNumber' : userPhoneNumberController
+                          });
+
+                        } catch (e) {
+                          print(e);
+
+                        }
                         // Navigator.push(
                         //     context,
                         //     MaterialPageRoute(builder: (context) => BottomNavi())
