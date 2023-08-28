@@ -4,6 +4,7 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:oasis_cafe_app/strings/strings.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -64,8 +65,8 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Sign up'
+        title: const Text(
+          Strings.signUp
         ),
       ),
 
@@ -82,10 +83,10 @@ class _SignUpState extends State<SignUp> {
                   TextFormField(
                     controller: userEmailController,
                     validator: (value) =>
-                    value == '' ? 'Please enter your email' : null,
+                    value == '' ? Strings.emailValidation : null,
 
                     cursorColor: Colors.black,
-                    decoration: _getTextFormDecoration('이메일')
+                    decoration: _getTextFormDecoration(Strings.email)
 
                   ),
 
@@ -96,7 +97,7 @@ class _SignUpState extends State<SignUp> {
                     controller: userPasswordController,
                     validator: (value) {
                       if( value == '' || value!.length < 6 ) {
-                        return 'Password should be at least 6 characters';
+                        return Strings.passwordValidation;
 
                       } else {
                         return null;
@@ -104,7 +105,7 @@ class _SignUpState extends State<SignUp> {
                     },
 
                     cursorColor: Colors.black,
-                    decoration: _getTextFormDecoration('비밀번호(6 ~ 20자리 이내)'),
+                    decoration: _getTextFormDecoration(Strings.password),
                   ),
 
                   SizedBox(height: textFormSizedBoxHeight,),
@@ -113,7 +114,7 @@ class _SignUpState extends State<SignUp> {
                   TextFormField(
                     validator: (value) {
                       if( value == '' || value != userPasswordController.text ) {
-                        return 'Please check your password';
+                        return Strings.confirmPasswordValidation;
 
                       } else {
                         return null;
@@ -121,7 +122,7 @@ class _SignUpState extends State<SignUp> {
                     },
 
                     cursorColor: Colors.black,
-                    decoration: _getTextFormDecoration('비밀번호 확인'),
+                    decoration: _getTextFormDecoration(Strings.confirmPassword),
                   ),
 
                   SizedBox(height: textFormSizedBoxHeight,),
@@ -136,10 +137,10 @@ class _SignUpState extends State<SignUp> {
                   TextFormField(
                       controller: userNameController,
                       validator: (value) =>
-                      value == '' ? 'Please enter your name' : null,
+                      value == '' ? Strings.nameValidation : null,
 
                       cursorColor: Colors.black,
-                      decoration: _getTextFormDecoration('이름')
+                      decoration: _getTextFormDecoration(Strings.name)
 
                   ),
 
@@ -149,10 +150,10 @@ class _SignUpState extends State<SignUp> {
                   TextFormField(
                       controller: userDateOfBirthController,
                       validator: (value) =>
-                      value == '' ? 'Please enter your birth' : null,
+                      value == '' ? Strings.dateOfBirthValidation : null,
 
                       cursorColor: Colors.black,
-                      decoration: _getTextFormDecoration('생년월일 6자리')
+                      decoration: _getTextFormDecoration(Strings.dateOfBirth)
 
                   ),
 
@@ -162,10 +163,10 @@ class _SignUpState extends State<SignUp> {
                   TextFormField(
                       controller: userMobileNumberController,
                       validator: (value) =>
-                      value == '' ? 'Please enter your phone number' : null,
+                      value == '' ? Strings.mobileNumberValidation : null,
 
                       cursorColor: Colors.black,
-                      decoration: _getTextFormDecoration('휴대폰번호')
+                      decoration: _getTextFormDecoration(Strings.mobileNumber)
 
                   ),
 
