@@ -241,7 +241,7 @@ class _SignUpState extends State<SignUp> {
                       child: Container(
                         padding: EdgeInsets.all(20.0),
                         decoration: BoxDecoration(
-                          color: Palette.buttonColor1,
+                          color: Colors.blue,
                           borderRadius: BorderRadius.circular(12.0)
                         ),
                         child: const Center(
