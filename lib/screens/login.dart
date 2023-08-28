@@ -69,7 +69,7 @@ class _LoginState extends State<Login> {
             // email
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: TextField(
+              child: TextFormField(
                 cursorColor: Colors.black,
                 decoration: _getDecoration(Strings.email),
               ),
@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
             // password
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: TextField(
+              child: TextFormField(
                 cursorColor: Colors.black,
                 decoration: _getDecoration(Strings.password),
               ),
