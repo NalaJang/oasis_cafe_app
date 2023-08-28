@@ -174,86 +174,83 @@ class _SignUpState extends State<SignUp> {
 
                   // 회원가입 버튼
                   Container(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: GestureDetector(
-                        onTap: () async {
+                    child: GestureDetector(
+                      onTap: () async {
 
-                          // 사용자 입력 값 유효성 검사
-                          _tryValidation();
+                        // 사용자 입력 값 유효성 검사
+                        _tryValidation();
 
-                          try {
+                        try {
+                          setState(() {
+                            showSpinner = true;
+                          });
+
+                          final newUser = await _authentication.createUserWithEmailAndPassword(
+                              email: userEmailController.text, password: userPasswordController.text
+                          );
+
+                          await FirebaseFirestore.instance
+                          .collection('user')
+                          .doc(newUser.user!.uid)
+                          .set({
+                            // 데이터의 형식은 항상 map 의 형태
+                            'userEmail' : userEmailController.text,
+                            'userPassword' : userPasswordController.text,
+                            'userName' : userNameController.text,
+                            'userDateOfBirth' : userDateOfBirthController.text,
+                            'userMobileNumber' : userMobileNumberController.text
+                          });
+
+                          if( newUser.user != null ) {
                             setState(() {
-                              showSpinner = true;
+                              showSpinner = false;
                             });
 
-                            final newUser = await _authentication.createUserWithEmailAndPassword(
-                                email: userEmailController.text, password: userPasswordController.text
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                    '회원가입이 완료되었습니다.',
+                                  ),
+                              )
                             );
 
-                            await FirebaseFirestore.instance
-                            .collection('user')
-                            .doc(newUser.user!.uid)
-                            .set({
-                              // 데이터의 형식은 항상 map 의 형태
-                              'userEmail' : userEmailController.text,
-                              'userPassword' : userPasswordController.text,
-                              'userName' : userNameController.text,
-                              'userDateOfBirth' : userDateOfBirthController.text,
-                              'userMobileNumber' : userMobileNumberController.text
-                            });
-
-                            if( newUser.user != null ) {
-                              setState(() {
-                                showSpinner = false;
-                              });
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                      '회원가입이 완료되었습니다.',
-                                    ),
-                                )
-                              );
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => BottomNavi())
-                              );
-                            }
-
-                          } catch (e) {
-                            print(e);
-                            if( mounted ) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                      e.toString()
-                                    )
-                                )
-                              );
-
-                              setState(() {
-                                showSpinner = false;
-                              });
-                            }
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => BottomNavi())
+                            );
                           }
-                        },
 
-                        child: Container(
-                          padding: EdgeInsets.all(20.0),
-                          decoration: BoxDecoration(
-                            color: Palette.buttonColor1,
-                            borderRadius: BorderRadius.circular(12.0)
-                          ),
-                          child: const Center(
-                            child: Text(
-                              Strings.signUp,
-                                style: TextStyle(
-                                  color: Palette.backgroundColor,
-                                  fontSize: 16,
-                                )
-                            ),
+                        } catch (e) {
+                          print(e);
+                          if( mounted ) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                    e.toString()
+                                  )
+                              )
+                            );
+
+                            setState(() {
+                              showSpinner = false;
+                            });
+                          }
+                        }
+                      },
+
+                      child: Container(
+                        padding: EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          color: Palette.buttonColor1,
+                          borderRadius: BorderRadius.circular(12.0)
+                        ),
+                        child: const Center(
+                          child: Text(
+                            Strings.signUp,
+                              style: TextStyle(
+                                color: Palette.backgroundColor,
+                                fontSize: 16,
+                              )
                           ),
                         ),
                       ),
