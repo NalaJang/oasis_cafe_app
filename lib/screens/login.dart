@@ -144,11 +144,23 @@ class _LoginState extends State<Login> {
                             );
 
                         if( newUser.user != null ) {
+                          setState(() {
+                            showSpinner = false;
+                          });
+
                           Navigator.push(
                             (context),
                             MaterialPageRoute(builder: (context) => BottomNavi())
                           );
                         }
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                '로그인 성공',
+                              ),
+                            )
+                        );
 
                       } catch (e) {
                         print(e);
