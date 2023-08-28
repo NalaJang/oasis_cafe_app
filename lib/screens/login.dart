@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:oasis_cafe_app/screens/signUp.dart';
@@ -14,6 +15,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
 
   var formKey = GlobalKey<FormState>();
+  bool showSpinner = false;
 
   void _tryValidation() {
     final isValid = formKey.currentState!.validate();
@@ -48,129 +50,142 @@ class _LoginState extends State<Login> {
         ),
       ),
 
-      body: Form(
-        key: formKey,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.coffee,
-                size: 80,
-              ),
-
-              SizedBox(height: 30,),
-
-              const Text(
-                Strings.hello,
-                style: TextStyle(
-                  fontSize: 20.0
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Form(
+          key: formKey,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.coffee,
+                  size: 80,
                 ),
-              ),
 
-              SizedBox(height: 10,),
+                SizedBox(height: 30,),
 
-              const Text(
-                Strings.welcome,
-                style: TextStyle(
+                const Text(
+                  Strings.hello,
+                  style: TextStyle(
                     fontSize: 20.0
+                  ),
                 ),
-              ),
 
-              SizedBox(height: 50,),
+                SizedBox(height: 10,),
 
-              // email
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: TextFormField(
-                  validator: (value) {
-                    value == '' ? Strings.emailValidation : null;
-                  },
-
-                  cursorColor: Colors.black,
-                  decoration: _getDecoration(Strings.email),
+                const Text(
+                  Strings.welcome,
+                  style: TextStyle(
+                      fontSize: 20.0
+                  ),
                 ),
-              ),
 
-              SizedBox(height: 10,),
+                SizedBox(height: 50,),
 
-              // password
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: TextFormField(
-                  validator: (value) {
-                    if( value == '' || value!.length < 6 ) {
-                      return Strings.passwordValidation;
+                // email
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: TextFormField(
+                    validator: (value) =>
+                    value == '' ? Strings.emailValidation : null,
 
-                    } else {
-                      return null;
-                    }
-                  },
-
-                  cursorColor: Colors.black,
-                  decoration: _getDecoration(Strings.password),
+                    cursorColor: Colors.black,
+                    decoration: _getDecoration(Strings.email),
+                  ),
                 ),
-              ),
 
-              SizedBox(height: 30,),
+                SizedBox(height: 20,),
 
-              // 로그인 버튼
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      (context),
-                      MaterialPageRoute(builder: (context) => BottomNavi())
-                    );
-                  },
+                // password
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: TextFormField(
+                    validator: (value) {
+                      if( value == '' || value!.length < 6 ) {
+                        return Strings.passwordValidation;
 
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(12)
-                    ),
+                      } else {
+                        return null;
+                      }
+                    },
 
-                    child: Center(
-                      child: Text(
-                        Strings.signIn,
-                        style: TextStyle(
-                          color: Palette.backgroundColor,
-                          fontSize: 16,
+                    cursorColor: Colors.black,
+                    decoration: _getDecoration(Strings.password),
+                  ),
+                ),
+
+                SizedBox(height: 30,),
+
+                // 로그인 버튼
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GestureDetector(
+                    onTap: (){
+
+                      _tryValidation();
+
+                      try {
+                        setState(() {
+                          showSpinner = true;
+                        });
+
+                      } catch (e) {
+                        print(e);
+                      }
+                      // Navigator.push(
+                      //   (context),
+                      //   MaterialPageRoute(builder: (context) => BottomNavi())
+                      // );
+                    },
+
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(12)
+                      ),
+
+                      child: Center(
+                        child: Text(
+                          Strings.signIn,
+                          style: TextStyle(
+                            color: Palette.backgroundColor,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
 
-              SizedBox(height: 20,),
+                SizedBox(height: 20,),
 
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                      Strings.forgottenPassword
-                  ),
-
-                  SizedBox(height: 10,),
-
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignUp())
-                      );
-                    },
-
-                    child: const Text(
-                        Strings.createAnAccount
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                        Strings.forgottenPassword
                     ),
-                  ),
-                ],
-              ),
-            ],
+
+                    SizedBox(height: 10,),
+
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignUp())
+                        );
+                      },
+
+                      child: const Text(
+                          Strings.createAnAccount
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
