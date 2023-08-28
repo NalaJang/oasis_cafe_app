@@ -20,8 +20,8 @@ class _SignUpState extends State<SignUp> {
   var userEmailController = TextEditingController();
   var userPasswordController = TextEditingController();
   var userNameController = TextEditingController();
-  var userBirthController = TextEditingController();
-  var userPhoneNumberController = TextEditingController();
+  var userDateOfBirthController = TextEditingController();
+  var userMobileNumberController = TextEditingController();
 
   final double textFormSizedBoxHeight = 30.0;
   bool showSpinner = false;
@@ -147,7 +147,7 @@ class _SignUpState extends State<SignUp> {
 
                   // 생년월일
                   TextFormField(
-                      controller: userBirthController,
+                      controller: userDateOfBirthController,
                       validator: (value) =>
                       value == '' ? 'Please enter your birth' : null,
 
@@ -160,7 +160,7 @@ class _SignUpState extends State<SignUp> {
 
                   // 휴대폰 번호
                   TextFormField(
-                      controller: userPhoneNumberController,
+                      controller: userMobileNumberController,
                       validator: (value) =>
                       value == '' ? 'Please enter your phone number' : null,
 
@@ -204,8 +204,8 @@ class _SignUpState extends State<SignUp> {
                               'userEmail' : userEmailController.text,
                               'userPassword' : userPasswordController.text,
                               'userName' : userNameController.text,
-                              'userBirth' : userBirthController.text,
-                              'userPhoneNumber' : userPhoneNumberController.text
+                              'userDateOfBirth' : userDateOfBirthController.text,
+                              'userMobileNumber' : userMobileNumberController.text
                             });
 
                             if( newUser.user != null ) {
