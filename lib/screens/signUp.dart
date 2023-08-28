@@ -246,9 +246,9 @@ class _SignUpState extends State<SignUp> {
                           }
                         },
 
-                        child: Center(
+                        child: const Center(
                           child: Text(
-                            'Sign Up',
+                            Strings.signUp,
                               style: TextStyle(
                                 color: Palette.backgroundColor,
                                 fontSize: 16,
