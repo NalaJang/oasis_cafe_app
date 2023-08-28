@@ -12,6 +12,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  InputDecoration _getDecoration(String hintText) {
+    return InputDecoration(
+      hintText: hintText,
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.blue
+        )
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +70,8 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: TextField(
-                decoration: InputDecoration(
-                  hintText: Strings.email
-                ),
+                cursorColor: Colors.black,
+                decoration: _getDecoration(Strings.email),
               ),
             ),
 
@@ -70,9 +81,8 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: TextField(
-                decoration: InputDecoration(
-                    hintText: Strings.password
-                ),
+                cursorColor: Colors.black,
+                decoration: _getDecoration(Strings.password),
               ),
             ),
 
@@ -92,7 +102,7 @@ class _LoginState extends State<Login> {
                 child: Container(
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Palette.buttonColor1,
+                    color: Colors.blue,
                     borderRadius: BorderRadius.circular(12)
                   ),
 
