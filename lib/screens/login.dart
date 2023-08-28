@@ -57,12 +57,10 @@ class _LoginState extends State<Login> {
             // email
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Container(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: Strings.email
-                    ),
-                  ),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: Strings.email
+                ),
               ),
             ),
 
@@ -71,11 +69,9 @@ class _LoginState extends State<Login> {
             // password
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Container(
-                child: TextField(
-                  decoration: InputDecoration(
-                      hintText: Strings.password
-                  ),
+              child: TextField(
+                decoration: InputDecoration(
+                    hintText: Strings.password
                 ),
               ),
             ),
