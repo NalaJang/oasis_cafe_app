@@ -13,6 +13,17 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
+  var formKey = GlobalKey<FormState>();
+
+  void _tryValidation() {
+    final isValid = formKey.currentState!.validate();
+
+    // 폼 스테이트 값이 유효하다면 값을 저장
+    if( isValid) {
+      formKey.currentState!.save();
+    }
+  }
+
   InputDecoration _getDecoration(String hintText) {
     return InputDecoration(
       hintText: hintText,
@@ -37,114 +48,130 @@ class _LoginState extends State<Login> {
         ),
       ),
 
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.coffee,
-              size: 80,
-            ),
-
-            SizedBox(height: 30,),
-
-            const Text(
-              Strings.hello,
-              style: TextStyle(
-                fontSize: 20.0
+      body: Form(
+        key: formKey,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.coffee,
+                size: 80,
               ),
-            ),
 
-            SizedBox(height: 10,),
+              SizedBox(height: 30,),
 
-            const Text(
-              Strings.welcome,
-              style: TextStyle(
+              const Text(
+                Strings.hello,
+                style: TextStyle(
                   fontSize: 20.0
+                ),
               ),
-            ),
 
-            SizedBox(height: 50,),
+              SizedBox(height: 10,),
 
-            // email
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: TextFormField(
-                cursorColor: Colors.black,
-                decoration: _getDecoration(Strings.email),
+              const Text(
+                Strings.welcome,
+                style: TextStyle(
+                    fontSize: 20.0
+                ),
               ),
-            ),
 
-            SizedBox(height: 10,),
+              SizedBox(height: 50,),
 
-            // password
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: TextFormField(
-                cursorColor: Colors.black,
-                decoration: _getDecoration(Strings.password),
+              // email
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: TextFormField(
+                  validator: (value) {
+                    value == '' ? Strings.emailValidation : null;
+                  },
+
+                  cursorColor: Colors.black,
+                  decoration: _getDecoration(Strings.email),
+                ),
               ),
-            ),
 
-            SizedBox(height: 30,),
+              SizedBox(height: 10,),
 
-            // 로그인 버튼
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GestureDetector(
-                onTap: (){
-                  Navigator.push(
-                    (context),
-                    MaterialPageRoute(builder: (context) => BottomNavi())
-                  );
-                },
+              // password
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: TextFormField(
+                  validator: (value) {
+                    if( value == '' || value!.length < 6 ) {
+                      return Strings.passwordValidation;
 
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(12)
-                  ),
+                    } else {
+                      return null;
+                    }
+                  },
 
-                  child: Center(
-                    child: Text(
-                      Strings.signIn,
-                      style: TextStyle(
-                        color: Palette.backgroundColor,
-                        fontSize: 16,
+                  cursorColor: Colors.black,
+                  decoration: _getDecoration(Strings.password),
+                ),
+              ),
+
+              SizedBox(height: 30,),
+
+              // 로그인 버튼
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      (context),
+                      MaterialPageRoute(builder: (context) => BottomNavi())
+                    );
+                  },
+
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+
+                    child: Center(
+                      child: Text(
+                        Strings.signIn,
+                        style: TextStyle(
+                          color: Palette.backgroundColor,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
 
-            SizedBox(height: 20,),
+              SizedBox(height: 20,),
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                    Strings.forgottenPassword
-                ),
-
-                SizedBox(height: 10,),
-
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUp())
-                    );
-                  },
-
-                  child: const Text(
-                      Strings.createAnAccount
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                      Strings.forgottenPassword
                   ),
-                ),
-              ],
-            ),
-          ],
+
+                  SizedBox(height: 10,),
+
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUp())
+                      );
+                    },
+
+                    child: const Text(
+                        Strings.createAnAccount
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
