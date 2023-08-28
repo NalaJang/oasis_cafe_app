@@ -173,15 +173,9 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 30,),
 
                   // 회원가입 버튼
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Palette.buttonColor1,
-                        borderRadius: BorderRadius.circular(12)
-                      ),
-
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: GestureDetector(
                         onTap: () async {
 
@@ -246,13 +240,20 @@ class _SignUpState extends State<SignUp> {
                           }
                         },
 
-                        child: const Center(
-                          child: Text(
-                            Strings.signUp,
-                              style: TextStyle(
-                                color: Palette.backgroundColor,
-                                fontSize: 16,
-                              )
+                        child: Container(
+                          padding: EdgeInsets.all(20.0),
+                          decoration: BoxDecoration(
+                            color: Palette.buttonColor1,
+                            borderRadius: BorderRadius.circular(12.0)
+                          ),
+                          child: const Center(
+                            child: Text(
+                              Strings.signUp,
+                                style: TextStyle(
+                                  color: Palette.backgroundColor,
+                                  fontSize: 16,
+                                )
+                            ),
                           ),
                         ),
                       ),
