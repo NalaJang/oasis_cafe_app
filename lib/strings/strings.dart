@@ -1,6 +1,11 @@
 class Strings {
+  static const String hello = 'Hello';
+  static const String welcome = 'Welcome to Oasis cafe';
+
   static const String signIn = 'Sign in';
   static const String signUp = 'Sign up';
+  static const String forgottenPassword = 'Forgotten password?';
+  static const String createAnAccount = 'Create an account';
 
   static const String cancel = 'Cancel';
   static const String confirm = 'Complete';

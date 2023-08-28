@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:oasis_cafe_app/screens/signUp.dart';
+import 'package:oasis_cafe_app/strings/strings.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -16,8 +17,8 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Palette.backgroundColor,
-        title: Text(
-          '로그인',
+        title: const Text(
+          Strings.signIn,
           style: TextStyle(
             color: Palette.textColor1
           ),
@@ -35,8 +36,8 @@ class _LoginState extends State<Login> {
 
             SizedBox(height: 30,),
 
-            Text(
-              'Hello',
+            const Text(
+              Strings.hello,
               style: TextStyle(
                 fontSize: 20.0
               ),
@@ -44,8 +45,8 @@ class _LoginState extends State<Login> {
 
             SizedBox(height: 10,),
 
-            Text(
-              'Welcome to OASIS CAFE',
+            const Text(
+              Strings.welcome,
               style: TextStyle(
                   fontSize: 20.0
               ),
@@ -59,7 +60,7 @@ class _LoginState extends State<Login> {
               child: Container(
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: 'Email'
+                      hintText: Strings.email
                     ),
                   ),
               ),
@@ -73,7 +74,7 @@ class _LoginState extends State<Login> {
               child: Container(
                 child: TextField(
                   decoration: InputDecoration(
-                      hintText: 'Password'
+                      hintText: Strings.password
                   ),
                 ),
               ),
@@ -101,7 +102,7 @@ class _LoginState extends State<Login> {
 
                   child: Center(
                     child: Text(
-                      'Log in',
+                      Strings.signIn,
                       style: TextStyle(
                         color: Palette.backgroundColor,
                         fontSize: 16,
@@ -118,7 +119,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                    'forgotten password?'
+                    Strings.forgottenPassword
                 ),
 
                 SizedBox(height: 10,),
@@ -131,8 +132,8 @@ class _LoginState extends State<Login> {
                     );
                   },
 
-                  child: Text(
-                      'Create an account'
+                  child: const Text(
+                      Strings.createAnAccount
                   ),
                 ),
               ],
