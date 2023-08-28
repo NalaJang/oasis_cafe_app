@@ -15,6 +15,6 @@ class Strings {
   static const String passwordValidation = 'Password should be at least 6 characters';
   static const String confirmPasswordValidation = 'The two Passwords do not match';
   static const String nameValidation = 'Please enter your name';
-  static const String dayOfBirthValidation = 'Please enter your date of birth';
+  static const String dateOfBirthValidation = 'Please enter your date of birth';
   static const String mobileNumberValidation = 'Please enter a valid mobile number';
 }
