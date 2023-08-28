@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
@@ -14,7 +15,11 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
+  final _authentication = FirebaseAuth.instance;
   var formKey = GlobalKey<FormState>();
+  var userEmailController = TextEditingController();
+  var userPasswordController = TextEditingController();
+
   bool showSpinner = false;
 
   void _tryValidation() {
@@ -87,6 +92,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: TextFormField(
+                    controller: userEmailController,
                     validator: (value) =>
                     value == '' ? Strings.emailValidation : null,
 
@@ -101,6 +107,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: TextFormField(
+                    controller: userPasswordController,
                     validator: (value) {
                       if( value == '' || value!.length < 6 ) {
                         return Strings.passwordValidation;
@@ -121,7 +128,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () async {
 
                       _tryValidation();
 
@@ -129,6 +136,19 @@ class _LoginState extends State<Login> {
                         setState(() {
                           showSpinner = true;
                         });
+
+                        final newUser =
+                            await _authentication.signInWithEmailAndPassword(
+                              email: userEmailController.text,
+                              password: userPasswordController.text
+                            );
+
+                        if( newUser.user != null ) {
+                          Navigator.push(
+                            (context),
+                            MaterialPageRoute(builder: (context) => BottomNavi())
+                          );
+                        }
 
                       } catch (e) {
                         print(e);
@@ -146,10 +166,6 @@ class _LoginState extends State<Login> {
                           });
                         }
                       }
-                      // Navigator.push(
-                      //   (context),
-                      //   MaterialPageRoute(builder: (context) => BottomNavi())
-                      // );
                     },
 
                     child: Container(
