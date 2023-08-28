@@ -132,6 +132,19 @@ class _LoginState extends State<Login> {
 
                       } catch (e) {
                         print(e);
+                        if( mounted ) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      e.toString()
+                                  )
+                              )
+                          );
+
+                          setState(() {
+                            showSpinner = false;
+                          });
+                        }
                       }
                       // Navigator.push(
                       //   (context),
