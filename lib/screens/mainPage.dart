@@ -36,7 +36,7 @@ class MainPage extends StatelessWidget {
                 ),
               ),
 
-              // 주문 상태
+              // 멤버쉽 카드 또는 주문 상태
               Container(
                 height: 200,
                 // margin: EdgeInsets.symmetric(horizontal: 20.0),
@@ -55,7 +55,7 @@ class MainPage extends StatelessWidget {
 
               SizedBox(height: 30,),
 
-              // 소식
+              // 소식(What's New)
               Row(
                 children: [
                   Icon(
@@ -92,7 +92,7 @@ class MainPage extends StatelessWidget {
 
               SizedBox(height: 30,),
 
-              // 디저트
+              // 디저트(하루가 달콤해지는 시간)
               Row(
                 children: [
                   Text(
