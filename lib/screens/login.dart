@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
-import 'package:oasis_cafe_app/model/view_model.dart';
 import 'package:oasis_cafe_app/screens/signUp.dart';
 import 'package:oasis_cafe_app/strings/strings.dart';
 
@@ -17,7 +16,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
 
   final _authentication = FirebaseAuth.instance;
-  final viewModel = ViewModel();
   var formKey = GlobalKey<FormState>();
   var userEmailController = TextEditingController();
   var userPasswordController = TextEditingController();
@@ -158,8 +156,6 @@ class _LoginState extends State<Login> {
                           setState(() {
                             showSpinner = false;
                           });
-
-                          viewModel.setCurrentUser(_authentication);
 
                           Navigator.push(
                             (context),
