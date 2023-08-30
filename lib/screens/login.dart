@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
+import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/signUp.dart';
 import 'package:oasis_cafe_app/strings/strings.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -143,33 +145,35 @@ class _LoginState extends State<Login> {
 
                       try {
                         setState(() {
-                          showSpinner = true;
+                          // showSpinner = true;
                         });
 
-                        final newUser =
-                            await _authentication.signInWithEmailAndPassword(
-                              email: userEmailController.text,
-                              password: userPasswordController.text
-                            );
+                        Provider.of<UserStateProvider>(context, listen: false).signIn(userEmailController.text, userPasswordController.text);
 
-                        if( newUser.user != null ) {
-                          setState(() {
-                            showSpinner = false;
-                          });
-
+                        // final newUser =
+                        //     await _authentication.signInWithEmailAndPassword(
+                        //       email: userEmailController.text,
+                        //       password: userPasswordController.text
+                        //     );
+                        //
+                        // if( newUser.user != null ) {
+                        //   setState(() {
+                        //     showSpinner = false;
+                        //   });
+                        //
                           Navigator.push(
                             (context),
                             MaterialPageRoute(builder: (context) => BottomNavi())
                           );
-                        }
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                '로그인 성공',
-                              ),
-                            )
-                        );
+                        // }
+                        //
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //     SnackBar(
+                        //       content: Text(
+                        //         '로그인 성공',
+                        //       ),
+                        //     )
+                        // );
 
                       } catch (e) {
                         print(e);

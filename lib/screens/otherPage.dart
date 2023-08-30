@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/provider/userStateProvider.dart';
+import 'package:provider/provider.dart';
 
 const double sizedBoxWidth = 110.0;
 const double sizedBoxHeight = 110.0;
@@ -80,7 +82,9 @@ class OtherPage extends StatelessWidget {
             SizedBox(height: 25,),
 
             // 고객 지원
-            CustomerServiceMenu()
+            CustomerServiceMenu(),
+            
+            Text('${Provider.of<UserStateProvider>(context).userMobileNumber}')
           ],
         ),
       ),
