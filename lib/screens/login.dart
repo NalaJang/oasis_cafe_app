@@ -145,35 +145,34 @@ class _LoginState extends State<Login> {
 
                       try {
                         setState(() {
-                          // showSpinner = true;
+                          showSpinner = true;
                         });
 
-                        Provider.of<UserStateProvider>(context, listen: false).signIn(userEmailController.text, userPasswordController.text);
+                        var isLogged = Provider
+                                      .of<UserStateProvider>(context, listen: false)
+                                      .signIn(
+                                      userEmailController.text,
+                                      userPasswordController.text
+                                  );
 
-                        // final newUser =
-                        //     await _authentication.signInWithEmailAndPassword(
-                        //       email: userEmailController.text,
-                        //       password: userPasswordController.text
-                        //     );
-                        //
-                        // if( newUser.user != null ) {
-                        //   setState(() {
-                        //     showSpinner = false;
-                        //   });
-                        //
+                        if( await isLogged ) {
+                          setState(() {
+                            showSpinner = false;
+                          });
+
                           Navigator.push(
-                            (context),
-                            MaterialPageRoute(builder: (context) => BottomNavi())
+                              (context),
+                              MaterialPageRoute(builder: (context) => BottomNavi())
                           );
-                        // }
-                        //
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //     SnackBar(
-                        //       content: Text(
-                        //         '로그인 성공',
-                        //       ),
-                        //     )
-                        // );
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '로그인 성공',
+                                ),
+                              )
+                          );
+                        }
 
                       } catch (e) {
                         print(e);

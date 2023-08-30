@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/provider/userStateProvider.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -140,29 +142,6 @@ class OrderStatus extends StatefulWidget {
 
 class _OrderStatusState extends State<OrderStatus> {
 
-  final _authentication = FirebaseAuth.instance;
-  User? loggedUser;
-
-  @override
-  void initState() {
-    super.initState();
-
-    getCurrentUser();
-  }
-
-  void getCurrentUser() {
-    try {
-      final user = _authentication.currentUser;
-      if (user != null) {
-        loggedUser = user;
-        print('loggedUser: ${loggedUser!.email}');
-      }
-
-    } catch(e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -180,7 +159,7 @@ class _OrderStatusState extends State<OrderStatus> {
           ]
       ),
 
-      child: Text(loggedUser!.uid.toString()),
+      child: Text('${Provider.of<UserStateProvider>(context).userDateOfBirth}'),
     );
   }
 }
