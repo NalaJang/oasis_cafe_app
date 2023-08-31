@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-final List<String> entries = ['추천', '에스프레소', '생과일 쥬스'];
-final List<String> subheading = ['Recommend', 'Espresso', 'Fresh juice'];
+final db = FirebaseFirestore.instance;
+CollectionReference _collectionReference = db.collection('beverage');
 
 class TabViewList extends StatelessWidget {
   const TabViewList(this.currentTabIndex, {Key? key}) : super(key: key);
@@ -10,44 +11,31 @@ class TabViewList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: entries.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          padding: const EdgeInsets.all(15.0),
-          child: Row(
-            children: [
-              Image.asset(
-                'image/IMG_espresso.png',
-                height: 80,
-              ),
+    return StreamBuilder(
+      stream: _collectionReference.snapshots(),
+      builder: (BuildContext context,
+          AsyncSnapshot<QuerySnapshot> streamSnapshot) {
 
-              SizedBox(width: 20,),
+        if( streamSnapshot.hasData ) {
+          return ListView.builder(
+            itemCount: streamSnapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
 
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    entries[index],
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  SizedBox(height: 3,),
+              return ListTile(
+                title: Text(documentSnapshot['title']),
+                subtitle: Text(documentSnapshot['subTitle']),
+              );
+            }
+          );
 
-                  Text(
-                    subheading[index],
-                    style: TextStyle(
-                      fontWeight: FontWeight.w200
-                    ),
-                  )
-                ],
-              )
-            ],
-          )
-        );
-      }
+        } else {
+          print('no data');
+        }
+
+        return Center(child: CircularProgressIndicator());
+
+      },
     );
   }
 }
