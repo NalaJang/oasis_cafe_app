@@ -151,8 +151,8 @@ class _LoginState extends State<Login> {
                         var isLogged = Provider
                                       .of<UserStateProvider>(context, listen: false)
                                       .signIn(
-                                      userEmailController.text,
-                                      userPasswordController.text
+                                      'test1@email.com',
+                                      '123456'
                                   );
 
                         if( await isLogged ) {

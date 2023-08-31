@@ -144,6 +144,8 @@ class _OrderStatusState extends State<OrderStatus> {
 
   @override
   Widget build(BuildContext context) {
+    String userName = Provider.of<UserStateProvider>(context).userName;
+
     return Container(
       height: 200,
       // margin: EdgeInsets.symmetric(horizontal: 20.0),
@@ -159,7 +161,23 @@ class _OrderStatusState extends State<OrderStatus> {
           ]
       ),
 
-      child: Text('${Provider.of<UserStateProvider>(context).userDateOfBirth}'),
+      child: Column(
+        children: [
+          Text(
+            '$userName 님의 주문을 1번째 메뉴로 준비 중입니다.',
+            style: TextStyle(
+              fontSize: 22.0,
+              fontWeight: FontWeight.bold
+            ),
+          ),
+
+          SizedBox(height: 5,),
+
+          Image.asset('image/IMG_order_status_graph.png'),
+
+          Text('주문내역 확인하기')
+        ],
+      ),
     );
   }
 }
