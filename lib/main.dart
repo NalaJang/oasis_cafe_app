@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:oasis_cafe_app/screens/menuDetail.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +44,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: white,
         ),
         home: Login(),
+
+        routes: {
+          '/menuDetail' : (context) => MenuDetailPage()
+        },
       ),
     );
   }
