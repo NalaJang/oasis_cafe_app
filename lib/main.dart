@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,9 +36,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserStateProvider(),
-
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserStateProvider()),
+        ChangeNotifierProvider(create: (context) => MenuDetailProvider())
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
