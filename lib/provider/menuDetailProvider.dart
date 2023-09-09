@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:oasis_cafe_app/model/model_item.dart';
 import 'package:oasis_cafe_app/strings/strings.dart';
 
 class MenuDetailProvider with ChangeNotifier {
   late CollectionReference _collectionReference;
   final db = FirebaseFirestore.instance;
 
-  List<String> items = [];
+  List<ItemModel> items = [];
 
   // MenuDetailProvider({reference}) {
   //   _collectionReference = reference ??
@@ -21,7 +22,7 @@ class MenuDetailProvider with ChangeNotifier {
   Future<void> fetchItems() async {
     items = await _collectionReference.get().then( (QuerySnapshot results) {
       return results.docs.map( (DocumentSnapshot document) {
-        return document.id;
+        return ItemModel.getSnapshotData(document);
       }).toList();
     });
     notifyListeners();
