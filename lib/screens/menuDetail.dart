@@ -7,16 +7,16 @@ class MenuDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final itemProvider = Provider.of<MenuDetailProvider>(context);
+    final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
 
     // TabViewList class 에서 넘어온 arguments 를 받는다.
-    final List items = ModalRoute.of(context)!.settings.arguments as List;
-    String documentName = items[0].toString();
-    String collectionName = items[1].toString();
-    itemProvider.setCollectionReference(documentName, collectionName);
+    final List arguments = ModalRoute.of(context)!.settings.arguments as List;
+    String documentName = arguments[0].toString();
+    String collectionName = arguments[1].toString();
+    menuDetailProvider.setCollectionReference(documentName, collectionName);
 
     return FutureBuilder(
-      future: itemProvider.fetchItems(),
+      future: menuDetailProvider.fetchItems(),
       builder: (context, snapshot) {
         return Scaffold(
             appBar: AppBar(
@@ -24,9 +24,9 @@ class MenuDetailPage extends StatelessWidget {
             ),
 
             body: ListView.builder(
-                itemCount: itemProvider.items.length,
+                itemCount: menuDetailProvider.items.length,
                 itemBuilder: (context, index) {
-                  return Text('${itemProvider.items[index]}');
+                  return Text('${menuDetailProvider.items[index]}');
                 }
             )
         );
