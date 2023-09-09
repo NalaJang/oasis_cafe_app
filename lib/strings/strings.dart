@@ -22,4 +22,9 @@ class Strings {
   static const String nameValidation = 'Please enter your name';
   static const String dateOfBirthValidation = 'Please enter your date of birth';
   static const String mobileNumberValidation = 'Please enter a valid mobile number';
+
+  static const String order = 'Order';
+  static const String beverage = 'Beverage';
+  static const String food = 'Food';
+  static const String merchandise = 'Merchandise';
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/tabViewList.dart';
 
+import '../strings/strings.dart';
+
 class OrderPage extends StatelessWidget {
   const OrderPage({Key? key}) : super(key: key);
 
@@ -20,7 +22,7 @@ class OrderPage extends StatelessWidget {
           title: const Padding(
             padding: EdgeInsets.only(top:10),
             child: Text(
-              'Order',
+              Strings.order,
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold
@@ -49,9 +51,9 @@ class OrderPage extends StatelessWidget {
             ),
 
             tabs: [
-              Tab(text: '음료',),
-              Tab(text: '푸드',),
-              Tab(text: '상품',)
+              Tab(text: Strings.order),
+              Tab(text: Strings.food),
+              Tab(text: Strings.merchandise,)
             ],
           ),
         ),
