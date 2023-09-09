@@ -15,22 +15,37 @@ class MenuDetailPage extends StatelessWidget {
     String collectionName = arguments[1].toString();
     menuDetailProvider.setCollectionReference(documentName, collectionName);
 
-    return FutureBuilder(
-      future: menuDetailProvider.fetchItems(),
-      builder: (context, snapshot) {
-        return Scaffold(
-            appBar: AppBar(
-              title: Text('menuDetail'),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('menuDetail'),
+      ),
 
-            body: ListView.builder(
+      body: FutureBuilder(
+        future: menuDetailProvider.fetchItems(),
+        builder: (context, snapshot) {
+
+          if( menuDetailProvider.items.isEmpty ) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+
+          } else {
+
+            return ListView.builder(
                 itemCount: menuDetailProvider.items.length,
                 itemBuilder: (context, index) {
-                  return Text('${menuDetailProvider.items[index]}');
+
+                  return ListTile(
+                    title: Text(menuDetailProvider.items[index].title),
+                    subtitle: Text(menuDetailProvider.items[index].subTitle),
+                    onTap: () {},
+                  );
+
                 }
-            )
-        );
-      },
+            );
+          }
+        },
+      ),
     );
   }
 }
