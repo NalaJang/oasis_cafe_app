@@ -17,34 +17,54 @@ class MenuDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('menuDetail'),
+        title: Text(collectionName),
       ),
 
-      body: FutureBuilder(
-        future: menuDetailProvider.fetchItems(),
-        builder: (context, snapshot) {
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: FutureBuilder(
+          future: menuDetailProvider.fetchItems(),
+          builder: (context, snapshot) {
 
-          if( menuDetailProvider.items.isEmpty ) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            if( menuDetailProvider.items.isEmpty ) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
 
-          } else {
+            } else {
 
-            return ListView.builder(
+              return ListView.builder(
                 itemCount: menuDetailProvider.items.length,
                 itemBuilder: (context, index) {
 
-                  return ListTile(
-                    title: Text(menuDetailProvider.items[index].title),
-                    subtitle: Text(menuDetailProvider.items[index].subTitle),
-                    onTap: () {},
-                  );
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'image/IMG_espresso.png',
+                          scale: 2.5,
+                        ),
 
+                        const SizedBox(width: 15,),
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(menuDetailProvider.items[index].title),
+                            Text(menuDetailProvider.items[index].subTitle),
+                            Text(menuDetailProvider.items[index].price),
+                          ],
+                        ),
+
+                      ],
+                    ),
+                  );
                 }
-            );
-          }
-        },
+              );
+            }
+          },
+        ),
       ),
     );
   }
