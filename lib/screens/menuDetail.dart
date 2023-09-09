@@ -56,7 +56,11 @@ class MenuDetailPage extends StatelessWidget {
                             Text(menuDetailProvider.items[index].price),
                           ],
                         ),
-
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context, '/selectedItem');
+                          },
+                        )
                       ],
                     ),
                   );
