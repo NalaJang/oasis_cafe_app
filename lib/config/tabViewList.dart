@@ -20,6 +20,8 @@ class TabViewList extends StatelessWidget {
         collectionName = Strings.beverage;
       } else if( currentTabIndex == 1 ) {
         collectionName = Strings.food;
+      } else if( currentTabIndex == 2 ) {
+        collectionName = Strings.merchandise;
       }
 
       return collectionName;
