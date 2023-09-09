@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-final db = FirebaseFirestore.instance;
-CollectionReference _collectionReference = db.collection('beverage');
-
 class TabViewList extends StatelessWidget {
   const TabViewList(this.currentTabIndex, {Key? key}) : super(key: key);
 
@@ -11,8 +8,26 @@ class TabViewList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final db = FirebaseFirestore.instance;
+    String collectionName = 'beverage';
+
+    String getCollectionName() {
+
+      if( currentTabIndex == 0 ) {
+        collectionName = 'beverage';
+      } else if( currentTabIndex == 1 ) {
+        collectionName = 'food';
+      }
+
+      return collectionName;
+    }
+
+    CollectionReference collectionReference = db.collection(getCollectionName());
+
+
     return StreamBuilder(
-      stream: _collectionReference.snapshots(),
+      stream: collectionReference.snapshots(),
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot> streamSnapshot) {
 

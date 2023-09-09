@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/tabViewList.dart';
 
 class OrderPage extends StatelessWidget {
@@ -16,8 +17,8 @@ class OrderPage extends StatelessWidget {
           // 뒤로가기 화살표 없애기
           automaticallyImplyLeading: false,
 
-          title: Padding(
-            padding: const EdgeInsets.only(top:10),
+          title: const Padding(
+            padding: EdgeInsets.only(top:10),
             child: Text(
               'Order',
               style: TextStyle(
@@ -39,6 +40,14 @@ class OrderPage extends StatelessWidget {
 
           bottom: const TabBar(
             padding: EdgeInsets.only(top: 20),
+            indicatorColor: Palette.buttonColor1,
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.bold
+            ),
+            unselectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.normal
+            ),
+
             tabs: [
               Tab(text: '음료',),
               Tab(text: '푸드',),
