@@ -45,7 +45,13 @@ class TabViewList extends StatelessWidget {
                 title: Text(documentSnapshot['title']),
                 subtitle: Text(documentSnapshot['subTitle']),
                 onTap: () {
-                  Navigator.pushNamed(context, '/menuDetail');
+                  Navigator.pushNamed(
+                    context, '/menuDetail',
+                    arguments: [
+                      getCollectionName(),
+                      documentSnapshot['subTitle']
+                    ]
+                  );
                 },
               );
             }

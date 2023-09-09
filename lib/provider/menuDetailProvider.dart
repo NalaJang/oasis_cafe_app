@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:oasis_cafe_app/strings/strings.dart';
 
 class MenuDetailProvider with ChangeNotifier {
   late CollectionReference _collectionReference;
@@ -7,9 +8,14 @@ class MenuDetailProvider with ChangeNotifier {
 
   List<String> items = [];
 
-  MenuDetailProvider({reference}) {
-    _collectionReference = reference ??
-    FirebaseFirestore.instance.collection('order').doc('beverage').collection('espresso');
+  // MenuDetailProvider({reference}) {
+  //   _collectionReference = reference ??
+  //   FirebaseFirestore.instance.collection('order').doc('beverage').collection('espresso');
+  // }
+
+  void setCollectionReference(String documentName, String collectionName) {
+    _collectionReference =
+        FirebaseFirestore.instance.collection(Strings.order).doc(documentName).collection(collectionName);
   }
 
   Future<void> fetchItems() async {

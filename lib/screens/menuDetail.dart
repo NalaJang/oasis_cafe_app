@@ -9,6 +9,12 @@ class MenuDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final itemProvider = Provider.of<MenuDetailProvider>(context);
 
+    // TabViewList class 에서 넘어온 arguments 를 받는다.
+    final List items = ModalRoute.of(context)!.settings.arguments as List;
+    String documentName = items[0].toString();
+    String collectionName = items[1].toString();
+    itemProvider.setCollectionReference(documentName, collectionName);
+
     return FutureBuilder(
       future: itemProvider.fetchItems(),
       builder: (context, snapshot) {
