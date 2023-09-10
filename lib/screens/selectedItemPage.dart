@@ -43,79 +43,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
                     ),
                   ),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: (){
-                            print('tap');
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(20.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black, width: 1),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(38.0),
-                                bottomLeft: Radius.circular(38.0)
-                              )
-                            ),
-
-                            child: Text(
-                              'HOT',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      Expanded(
-                        child: GestureDetector(
-                          child: Container(
-                            padding: EdgeInsets.all(20.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black, width: 1),
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(38.0),
-                                  bottomRight: Radius.circular(38.0)
-                              )
-                            ),
-
-                            child: Text(
-                                'ICED',
-                                textAlign: TextAlign.center
-                            ),
-                          ),
-
-                          onTap: (){},
-                        ),
-                      )
-                    ],
-                  )
-                  // Container(
-                  //   padding: EdgeInsets.all(8.0),
-                  //   decoration: BoxDecoration(
-                  //     // borderRadius: BorderRadius.circular(38),
-                  //     borderRadius: BorderRadius.only(
-                  //       topLeft: Radius.circular(38),
-                  //       bottomLeft: Radius.circular(38)
-                  //     ),
-                  //     border: Border.all(color: Colors.black, width: 1),
-                  //   ),
-                  //   child: Row(
-                  //     children: [
-                  //       GestureDetector(
-                  //         onTap: (){},
-                  //         child: Text('HOT'),
-                  //       ),
-                  //
-                  //       GestureDetector(
-                  //         onTap: (){},
-                  //         child: Text('HOT'),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
+                  HotNIcedButton()
 
                 ],
               ),
@@ -126,3 +54,66 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
     );
   }
 }
+
+class HotNIcedButton extends StatefulWidget {
+  const HotNIcedButton({Key? key}) : super(key: key);
+
+  @override
+  State<HotNIcedButton> createState() => _HotNIcedButtonState();
+}
+
+class _HotNIcedButtonState extends State<HotNIcedButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: (){
+              print('tap');
+            },
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(38.0),
+                      bottomLeft: Radius.circular(38.0)
+                  )
+              ),
+
+              child: Text(
+                'HOT',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+
+        Expanded(
+          child: GestureDetector(
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(38.0),
+                      bottomRight: Radius.circular(38.0)
+                  )
+              ),
+
+              child: Text(
+                  'ICED',
+                  textAlign: TextAlign.center
+              ),
+            ),
+
+            onTap: (){},
+          ),
+        )
+      ],
+    );
+  }
+}
+
