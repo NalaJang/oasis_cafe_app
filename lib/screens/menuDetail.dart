@@ -38,30 +38,20 @@ class MenuDetailPage extends StatelessWidget {
                 itemBuilder: (context, index) {
 
                   return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'image/IMG_espresso.png',
-                          scale: 2.5,
-                        ),
+                    padding: const EdgeInsets.all(5.0),
+                    child: ListTile(
 
-                        const SizedBox(width: 15,),
+                      leading: Image.asset(
+                        'image/IMG_espresso.png',
+                      ),
 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(menuDetailProvider.items[index].title),
-                            Text(menuDetailProvider.items[index].subTitle),
-                            Text(menuDetailProvider.items[index].price),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.pushNamed(context, '/selectedItem');
-                          },
-                        )
-                      ],
+                      title: Text(menuDetailProvider.items[index].title),
+                      subtitle: Text(menuDetailProvider.items[index].subTitle),
+
+                      onTap: (){
+                        Navigator.pushNamed(context, '/selectedItem'
+                        );
+                      },
                     ),
                   );
                 }
