@@ -36,8 +36,11 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
 
                   SizedBox(height: 20,),
 
-                  HotNIcedButton()
+                  HotNIcedButton(),
 
+                  Divider(height: 50, thickness: 1,),
+
+                  ItemInfo()
                 ],
               ),
             ),
@@ -54,7 +57,7 @@ class ItemDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           '아이스 카페 모카',
@@ -83,8 +86,6 @@ class ItemDescription extends StatelessWidget {
           ),
         )
       ],
-
-      crossAxisAlignment: CrossAxisAlignment.start,
     );
   }
 }
@@ -147,6 +148,36 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){},
           ),
         )
+      ],
+    );
+  }
+}
+
+class ItemInfo extends StatelessWidget {
+  const ItemInfo({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '제품 영양 정보',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        Divider(height: 50, thickness: 1,),
+
+        Text(
+          '알레르기 유발 요인',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ],
     );
   }
