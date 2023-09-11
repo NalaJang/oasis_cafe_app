@@ -12,6 +12,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 주문 버튼
       bottomNavigationBar: OrderButton(),
 
       body: CustomScrollView(
@@ -35,14 +36,17 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
+                  // 메뉴 설명
                   ItemDescription(),
 
                   SizedBox(height: 20,),
 
+                  // hot, iced button
                   HotNIcedButton(),
 
                   Divider(height: 50, thickness: 1,),
 
+                  // 제품 영양 정보, 알레르기 유발 요인
                   ItemInfo()
                 ],
               ),
