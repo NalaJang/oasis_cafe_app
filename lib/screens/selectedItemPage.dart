@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/palette.dart';
 
 class SelectedItemPage extends StatefulWidget {
   const SelectedItemPage({Key? key}) : super(key: key);
@@ -11,6 +12,8 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: OrderButton(),
+
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -50,6 +53,39 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
     );
   }
 }
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({Key? key}) : super(key: key);
+
+  @override
+  State<OrderButton> createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(15.0),
+      margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
+
+      decoration: BoxDecoration(
+        color: Palette.buttonColor1,
+        border: Border.all(color: Palette.buttonColor1, width: 1),
+        borderRadius: BorderRadius.circular(25.0),
+      ),
+
+      child: Text(
+        '주문하기',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+        ),
+      ),
+    );
+  }
+}
+
 
 class ItemDescription extends StatelessWidget {
   const ItemDescription({Key? key}) : super(key: key);
