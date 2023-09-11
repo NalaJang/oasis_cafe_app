@@ -38,43 +38,62 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
         title: Text('카페 모카'),
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '사이즈',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '사이즈',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                ),
               ),
-            ),
 
-            SizedBox(height: 10,),
+              SizedBox(height: 10,),
 
-            Row(
-              children: [
-                _setCupSizeButtonDesign('Short', '237'),
-                _setCupSizeButtonDesign('Tall', '355'),
-                _setCupSizeButtonDesign('Grande', '473'),
-              ],
-            ),
-
-            SizedBox(height: 30,),
-
-            Text(
-              '컵 선택',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
+              Row(
+                children: [
+                  _setCupSizeButtonDesign('Short', '237'),
+                  _setCupSizeButtonDesign('Tall', '355'),
+                  _setCupSizeButtonDesign('Grande', '473'),
+                ],
               ),
-            ),
 
-            SizedBox(height: 10,),
+              SizedBox(height: 30,),
 
-            CupSelectionButton()
-          ],
+              Text(
+                '컵 선택',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+
+              SizedBox(height: 10,),
+
+              CupSelectionButton(),
+
+              Divider(height: 70, thickness: 1,),
+
+              Text(
+                '퍼스널 옵션',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+
+              SizedBox(height: 10,),
+
+              GestureDetector(
+                onTap: (){},
+                child: Text('커피'),
+              )
+            ],
+          ),
         ),
       ),
     );
