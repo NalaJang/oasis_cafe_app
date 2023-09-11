@@ -32,38 +32,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  Column(
-                    children: [
-                      Text(
-                        '아이스 카페 모카',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      SizedBox(height: 10,),
-
-                      Text('Iced Caffe Mocha'),
-
-                      SizedBox(height: 10,),
-
-                      Text('진한 초콜릿 모카 시럽과 풍부한 에스트레소를 신선한 우유 그리고 얼음과 섞어 '
-                          '휘핑크림으로 마무리한 음료로 진한 에스프레소와 초콜릿 맛이 어우러진 커피'),
-
-                      SizedBox(height: 20,),
-
-                      Text(
-                        '5,500원',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
-                        ),
-                      )
-                    ],
-
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                  ),
+                  ItemDescription(),
 
                   SizedBox(height: 20,),
 
@@ -78,6 +47,48 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
     );
   }
 }
+
+class ItemDescription extends StatelessWidget {
+  const ItemDescription({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+
+      children: [
+        Text(
+          '아이스 카페 모카',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        SizedBox(height: 10,),
+
+        Text('Iced Caffe Mocha'),
+
+        SizedBox(height: 10,),
+
+        Text('진한 초콜릿 모카 시럽과 풍부한 에스트레소를 신선한 우유 그리고 얼음과 섞어 '
+            '휘핑크림으로 마무리한 음료로 진한 에스프레소와 초콜릿 맛이 어우러진 커피'),
+
+        SizedBox(height: 20,),
+
+        Text(
+          '5,500원',
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+          ),
+        )
+      ],
+
+      crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+}
+
 
 class HotNIcedButton extends StatefulWidget {
   const HotNIcedButton({Key? key}) : super(key: key);
