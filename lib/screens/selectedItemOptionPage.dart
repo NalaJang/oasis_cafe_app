@@ -70,9 +70,103 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                   fontWeight: FontWeight.bold
               ),
             ),
+
+            SizedBox(height: 10,),
+
+            CupSelectionButton()
           ],
         ),
       ),
     );
   }
 }
+
+class CupSelectionButton extends StatefulWidget {
+  const CupSelectionButton({Key? key}) : super(key: key);
+
+  @override
+  State<CupSelectionButton> createState() => _CupSelectionButtonState();
+}
+
+class _CupSelectionButtonState extends State<CupSelectionButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+
+        // 매장컵
+        Expanded(
+          child: GestureDetector(
+            onTap: (){
+              print('have here');
+            },
+            child: Container(
+              padding: EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(38.0),
+                      bottomLeft: Radius.circular(38.0)
+                  )
+              ),
+
+              child: Text(
+                '매장컵',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+
+        // 개인컵
+        Expanded(
+          child: GestureDetector(
+            onTap: (){
+              print('keep cup');
+            },
+            child: Container(
+              padding: EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  // borderRadius: BorderRadius.only(
+                  //     topLeft: Radius.circular(38.0),
+                  //     bottomLeft: Radius.circular(38.0)
+                  // )
+              ),
+
+              child: Text(
+                '개인컵',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+
+        // 일회용컵
+        Expanded(
+          child: GestureDetector(
+            onTap: (){
+              print('takeaway');
+            },
+            child: Container(
+              padding: EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(38.0),
+                      bottomRight: Radius.circular(38.0)
+                  )
+              ),
+
+              child: Text(
+                '일회용컵',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
