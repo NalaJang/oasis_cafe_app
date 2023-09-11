@@ -64,22 +64,27 @@ class OrderButton extends StatefulWidget {
 class _OrderButtonState extends State<OrderButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15.0),
-      margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
+    return GestureDetector(
+      onTap: (){
+        print('order');
+      },
+      child: Container(
+        padding: EdgeInsets.all(15.0),
+        margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
 
-      decoration: BoxDecoration(
-        color: Palette.buttonColor1,
-        border: Border.all(color: Palette.buttonColor1, width: 1),
-        borderRadius: BorderRadius.circular(25.0),
-      ),
+        decoration: BoxDecoration(
+          color: Palette.buttonColor1,
+          border: Border.all(color: Palette.buttonColor1, width: 1),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
 
-      child: Text(
-        '주문하기',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white
+        child: Text(
+          '주문하기',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
         ),
       ),
     );
