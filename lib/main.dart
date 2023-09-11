@@ -4,6 +4,7 @@ import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:oasis_cafe_app/screens/menuDetail.dart';
+import 'package:oasis_cafe_app/screens/selectedItemOptionPage.dart';
 import 'package:oasis_cafe_app/screens/selectedItemPage.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +52,8 @@ class MyApp extends StatelessWidget {
 
         routes: {
           '/menuDetail' : (context) => MenuDetailPage(),
-          '/selectedItem' : (context) => SelectedItemPage()
+          '/selectedItem' : (context) => SelectedItemPage(),
+          '/selectedItemOptionPage' : (context) => SelectedItemOptionPage()
         },
       ),
     );

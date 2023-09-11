@@ -71,7 +71,9 @@ class _OrderButtonState extends State<OrderButton> {
     return GestureDetector(
       onTap: (){
         print('order');
+        Navigator.pushNamed(context, '/selectedItemOptionPage');
       },
+
       child: Container(
         padding: EdgeInsets.all(15.0),
         margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
@@ -94,7 +96,6 @@ class _OrderButtonState extends State<OrderButton> {
     );
   }
 }
-
 
 class ItemDescription extends StatelessWidget {
   const ItemDescription({Key? key}) : super(key: key);
