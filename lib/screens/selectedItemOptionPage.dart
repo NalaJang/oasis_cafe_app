@@ -86,11 +86,91 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                 ),
               ),
 
-              SizedBox(height: 10,),
+              Divider(height: 30, thickness: 1,),
 
               GestureDetector(
-                onTap: (){},
-                child: Text('커피'),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '커피',
+                      style: TextStyle(
+                        fontSize: 17
+                      ),
+                    ),
+
+                    SizedBox(height: 5,),
+
+                    Text(
+                      '에스프레소 샷 1',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: (){
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        decoration: BoxDecoration(
+
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    '커피',
+                                    style: TextStyle(
+                                      fontSize: 18
+                                    ),
+                                  ),
+                                  Icon(Icons.close)
+                                ],
+                              ),
+
+                              Divider(height: 30, thickness: 10,),
+
+                              Text('기본 옵션'),
+
+                              Row(
+                                children: [
+                                  Text('에스프레소 샷')
+                                ],
+                              ),
+
+                              Text('추가 옵션'),
+                              Text('에스프레소 옵션'),
+
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: (){},
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.black, width: 1)
+                                      ),
+
+                                      child: Text(
+                                        '디카페인'
+                                      ),
+                                    )
+                                  )
+                                ],
+                              )
+
+                            ],
+                          ),
+                        )
+                      );
+                    }
+                  );
+                },
               )
             ],
           ),
