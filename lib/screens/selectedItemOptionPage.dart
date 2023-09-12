@@ -118,7 +118,7 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(25.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -137,23 +137,39 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                               Divider(height: 30, thickness: 10,),
 
                               Text('기본 옵션'),
+                              SizedBox(height: 15,),
 
                               Row(
                                 children: [
-                                  Text('에스프레소 샷')
+                                  Text('에스프레소 샷', style: TextStyle(fontSize: 17),),
+                                  Container(
+                                    width: 35,
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                      // color: Colors.grey,
+                                      border: Border.all(color: Colors.grey, width: 1),
+                                      borderRadius: BorderRadius.circular(38)
+                                    ),
+                                    child: Icon(Icons.minimize)
+                                  )
+
                                 ],
                               ),
 
+                              SizedBox(height: 35,),
                               Text('추가 옵션'),
-                              Text('에스프레소 옵션'),
+                              SizedBox(height: 15,),
+                              Text('에스프레소 옵션', style: TextStyle(fontSize: 17),),
+                              SizedBox(height: 12,),
 
                               Row(
                                 children: [
                                   GestureDetector(
                                     onTap: (){},
                                     child: Container(
+                                      padding: EdgeInsets.all(10),
                                       decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black, width: 1)
+                                        border: Border.all(color: Colors.grey, width: 1)
                                       ),
 
                                       child: Text(
