@@ -51,7 +51,7 @@ class MenuDetailPage extends StatelessWidget {
                       onTap: (){
                         Navigator.pushNamed(context, '/selectedItem',
                           arguments: [
-                            menuDetailProvider.items[index].subTitle
+                            menuDetailProvider.items[index]
                           ]
                         );
                       },

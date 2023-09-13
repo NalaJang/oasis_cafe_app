@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
+import 'package:oasis_cafe_app/model/model_item.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/menuDetailProvider.dart';
 import '../strings/strings.dart';
 
 class SelectedItemPage extends StatefulWidget {
@@ -14,8 +17,9 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
   @override
   Widget build(BuildContext context) {
 
-    final argument = ModalRoute.of(context)!.settings.arguments as List;
-    String selectedItemName = argument[0];
+    final argument = ModalRoute.of(context)!.settings.arguments as List<ItemModel>;
+    String selectedItemName = argument[0].subTitle;
+    String itemDescription = argument[0].description;
 
     return Scaffold(
       // 주문 버튼
@@ -43,7 +47,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
               child: Column(
                 children: [
                   // 메뉴 설명
-                  ItemDescription(selectedItemName: selectedItemName,),
+                  ItemDescription(selectedItemName: selectedItemName, itemDescription: itemDescription,),
 
                   SizedBox(height: 20,),
 
@@ -104,9 +108,10 @@ class _OrderButtonState extends State<OrderButton> {
 }
 
 class ItemDescription extends StatelessWidget {
-  const ItemDescription({Key? key, required this.selectedItemName, }) : super(key: key);
+  const ItemDescription({Key? key, required this.selectedItemName, required this.itemDescription}) : super(key: key);
 
   final String selectedItemName;
+  final String itemDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -123,12 +128,7 @@ class ItemDescription extends StatelessWidget {
 
         SizedBox(height: 10,),
 
-        Text('Iced Caffe Mocha'),
-
-        SizedBox(height: 10,),
-
-        Text('진한 초콜릿 모카 시럽과 풍부한 에스트레소를 신선한 우유 그리고 얼음과 섞어 '
-            '휘핑크림으로 마무리한 음료로 진한 에스프레소와 초콜릿 맛이 어우러진 커피'),
+        Text(itemDescription),
 
         SizedBox(height: 20,),
 
