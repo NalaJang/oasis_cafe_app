@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/screens/personalOptionPage.dart';
+import 'package:oasis_cafe_app/screens/personalOption/personalOptionPage_coffee.dart';
+import 'package:oasis_cafe_app/screens/personalOption/personalOptionPage_syrup.dart';
 
 class SelectedItemOptionPage extends StatefulWidget {
   const SelectedItemOptionPage({Key? key}) : super(key: key);
@@ -12,23 +13,23 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
   Container _setCupSizeButtonDesign(String name, String size) {
     return Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 1),
-            borderRadius: BorderRadius.circular(10)
-        ),
+      width: 80,
+      height: 100,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: 1),
+          borderRadius: BorderRadius.circular(10)
+      ),
 
-        child: Padding(
-          padding: const EdgeInsets.only(top: 18, bottom: 18, left: 15, right: 15),
-          child: Column(
-            children: [
-              Icon(Icons.coffee_outlined),
-              SizedBox(height: 11,),
-              Text(name),
-              SizedBox(height: 5,),
-              Text('${size}ml'),
-            ],
-          ),
-        )
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.coffee_outlined),
+          SizedBox(height: 11,),
+          Text(name),
+          SizedBox(height: 5,),
+          Text('${size}ml'),
+        ],
+      )
     );
   }
 
@@ -53,9 +54,10 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                 ),
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: 15,),
 
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _setCupSizeButtonDesign('Short', '237'),
                   _setCupSizeButtonDesign('Tall', '355'),
@@ -63,7 +65,7 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                 ],
               ),
 
-              SizedBox(height: 30,),
+              SizedBox(height: 55,),
 
               Text(
                 '컵 선택',
@@ -73,7 +75,7 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                 ),
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: 15,),
 
               CupSelectionButton(),
 
@@ -114,11 +116,44 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                   showModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) {
-                      return PersonalOptionPage();
+                      return PersonalOptionPage_coffee();
                     }
                   );
                 },
-              )
+              ),
+
+              Divider(height: 30, thickness: 1,),
+
+              GestureDetector(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '시럽',
+                      style: TextStyle(
+                          fontSize: 17
+                      ),
+                    ),
+
+                    SizedBox(height: 5,),
+
+                    Text(
+                      '모카 시럽 3',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: (){
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return PersonalOptionPage_syrup();
+                      }
+                  );
+                },
+              ),
             ],
           ),
         ),

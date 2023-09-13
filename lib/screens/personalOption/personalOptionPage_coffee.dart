@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 
-class PersonalOptionPage extends StatefulWidget {
-  const PersonalOptionPage({Key? key}) : super(key: key);
+class PersonalOptionPage_coffee extends StatefulWidget {
+  const PersonalOptionPage_coffee({Key? key}) : super(key: key);
 
   @override
-  State<PersonalOptionPage> createState() => _PersonalOptionPageState();
+  State<PersonalOptionPage_coffee> createState() => _PersonalOptionPage_coffeeState();
 }
 
-class _PersonalOptionPageState extends State<PersonalOptionPage> {
+class _PersonalOptionPage_coffeeState extends State<PersonalOptionPage_coffee> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
