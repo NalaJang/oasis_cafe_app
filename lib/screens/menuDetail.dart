@@ -49,7 +49,10 @@ class MenuDetailPage extends StatelessWidget {
                       subtitle: Text(menuDetailProvider.items[index].subTitle),
 
                       onTap: (){
-                        Navigator.pushNamed(context, '/selectedItem'
+                        Navigator.pushNamed(context, '/selectedItem',
+                          arguments: [
+                            menuDetailProvider.items[index].subTitle
+                          ]
                         );
                       },
                     ),

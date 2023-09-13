@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 
+import '../strings/strings.dart';
+
 class SelectedItemPage extends StatefulWidget {
   const SelectedItemPage({Key? key}) : super(key: key);
 
@@ -11,6 +13,10 @@ class SelectedItemPage extends StatefulWidget {
 class _SelectedItemPageState extends State<SelectedItemPage> {
   @override
   Widget build(BuildContext context) {
+
+    final argument = ModalRoute.of(context)!.settings.arguments as List;
+    String selectedItemName = argument[0];
+
     return Scaffold(
       // 주문 버튼
       bottomNavigationBar: OrderButton(),
@@ -37,7 +43,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
               child: Column(
                 children: [
                   // 메뉴 설명
-                  ItemDescription(),
+                  ItemDescription(selectedItemName: selectedItemName,),
 
                   SizedBox(height: 20,),
 
@@ -70,7 +76,6 @@ class _OrderButtonState extends State<OrderButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        print('order');
         Navigator.pushNamed(context, '/selectedItemOptionPage');
       },
 
@@ -84,11 +89,12 @@ class _OrderButtonState extends State<OrderButton> {
           borderRadius: BorderRadius.circular(25.0),
         ),
 
-        child: Text(
-          '주문하기',
+        child: const Text(
+          Strings.order,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontWeight: FontWeight.bold,
+            fontSize: 20,
+              fontWeight: FontWeight.w500,
               color: Colors.white
           ),
         ),
@@ -98,7 +104,9 @@ class _OrderButtonState extends State<OrderButton> {
 }
 
 class ItemDescription extends StatelessWidget {
-  const ItemDescription({Key? key}) : super(key: key);
+  const ItemDescription({Key? key, required this.selectedItemName, }) : super(key: key);
+
+  final String selectedItemName;
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +114,7 @@ class ItemDescription extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '아이스 카페 모카',
+          selectedItemName,
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
