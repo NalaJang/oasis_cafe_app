@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/screens/personalOptionPage.dart';
 
 class SelectedItemOptionPage extends StatefulWidget {
   const SelectedItemOptionPage({Key? key}) : super(key: key);
@@ -113,77 +114,7 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                   showModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) {
-                      return Container(
-                        decoration: BoxDecoration(
-
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    '커피',
-                                    style: TextStyle(
-                                      fontSize: 18
-                                    ),
-                                  ),
-                                  Icon(Icons.close)
-                                ],
-                              ),
-
-                              Divider(height: 30, thickness: 10,),
-
-                              Text('기본 옵션'),
-                              SizedBox(height: 15,),
-
-                              Row(
-                                children: [
-                                  Text('에스프레소 샷', style: TextStyle(fontSize: 17),),
-                                  Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                      // color: Colors.grey,
-                                      border: Border.all(color: Colors.grey, width: 1),
-                                      borderRadius: BorderRadius.circular(38)
-                                    ),
-                                    child: Icon(Icons.minimize)
-                                  )
-
-                                ],
-                              ),
-
-                              SizedBox(height: 35,),
-                              Text('추가 옵션'),
-                              SizedBox(height: 15,),
-                              Text('에스프레소 옵션', style: TextStyle(fontSize: 17),),
-                              SizedBox(height: 12,),
-
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: (){},
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey, width: 1)
-                                      ),
-
-                                      child: Text(
-                                        '디카페인'
-                                      ),
-                                    )
-                                  )
-                                ],
-                              )
-
-                            ],
-                          ),
-                        )
-                      );
+                      return PersonalOptionPage();
                     }
                   );
                 },
