@@ -27,4 +27,7 @@ class Strings {
   static const String beverage = 'Beverage';
   static const String food = 'Food';
   static const String merchandise = 'Merchandise';
+
+  static const String hot = 'HOT';
+  static const String iced = 'ICED';
 }

@@ -23,6 +23,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
     String itemPrice = argument[0].price;
 
     return Scaffold(
+
       // 주문 버튼
       bottomNavigationBar: OrderButton(),
 
@@ -54,7 +55,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
                     itemPrice: itemPrice,
                   ),
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 30,),
 
                   // hot, iced button
                   HotNIcedButton(),
@@ -103,8 +104,8 @@ class _OrderButtonState extends State<OrderButton> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
-              fontWeight: FontWeight.w500,
-              color: Colors.white
+            fontWeight: FontWeight.w500,
+            color: Colors.white
           ),
         ),
       ),
@@ -128,6 +129,8 @@ class ItemDescription extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
+        // 메뉴명
         Text(
           itemName,
           style: TextStyle(
@@ -136,21 +139,28 @@ class ItemDescription extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 10,),
+        SizedBox(height: 15,),
 
+        // 메뉴 설명
         SizedBox(
           // 메뉴 설명의 글이 짧아지자 텍스트가 중앙으로 모여졌다.
           // 그래서 텍스트 위젯이 화면 가로 전체를 차지하도록 설정
           width: double.infinity,
-          child: Text(itemDescription)
+          child: Text(
+            itemDescription,
+            style: TextStyle(
+              fontSize: 15
+            ),
+          )
         ),
 
-        SizedBox(height: 20,),
+        SizedBox(height: 15,),
 
+        // 메뉴 가격
         Text(
           itemPrice,
           style: TextStyle(
-              fontSize: 20,
+              fontSize: 25,
               fontWeight: FontWeight.bold
           ),
         )
@@ -168,20 +178,29 @@ class HotNIcedButton extends StatefulWidget {
 }
 
 class _HotNIcedButtonState extends State<HotNIcedButton> {
+
+  bool isSelectedHOT = false;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+
+        // 뜨거운 음료
         Expanded(
           child: GestureDetector(
             onTap: (){
-              print('tap');
+              setState(() {
+                isSelectedHOT = true;
+              });
             },
+
             child: Container(
               padding: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
+              color: isSelectedHOT == true ? Palette.buttonColor1 : Colors.white,
+                  border: Border.all(color: Colors.grey, width: 1),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(38.0),
                       bottomLeft: Radius.circular(38.0)
@@ -189,32 +208,48 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
               ),
 
               child: Text(
-                'HOT',
+                Strings.hot,
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: isSelectedHOT == true ? Colors.white : Colors.black,
+                  fontWeight: isSelectedHOT == true ? FontWeight.bold : FontWeight.normal
+                ),
               ),
             ),
           ),
         ),
 
+        // 차가운 음료
         Expanded(
           child: GestureDetector(
+            onTap: (){
+              setState(() {
+                isSelectedHOT = false;
+              });
+            },
+
             child: Container(
               padding: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(38.0),
-                      bottomRight: Radius.circular(38.0)
-                  )
+                color: isSelectedHOT == true ? Colors.white : Palette.buttonColor1,
+                border: Border.all(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(38.0),
+                    bottomRight: Radius.circular(38.0)
+                )
               ),
 
               child: Text(
-                  'ICED',
-                  textAlign: TextAlign.center
+                Strings.iced,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 15,
+                    color: isSelectedHOT == false ? Colors.white : Colors.black,
+                    fontWeight: isSelectedHOT == false ? FontWeight.bold : FontWeight.normal
+                ),
               ),
             ),
-
-            onTap: (){},
           ),
         )
       ],
@@ -229,11 +264,11 @@ class ItemInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: const [
         Text(
           '제품 영양 정보',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -243,7 +278,7 @@ class ItemInfo extends StatelessWidget {
         Text(
           '알레르기 유발 요인',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
