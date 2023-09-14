@@ -128,7 +128,12 @@ class ItemDescription extends StatelessWidget {
 
         SizedBox(height: 10,),
 
-        Text(itemDescription),
+        SizedBox(
+          // 메뉴 설명의 글이 짧아지자 텍스트가 중앙으로 모여졌다.
+          // 그래서 텍스트 위젯이 화면 가로 전체를 차지하도록 설정
+          width: double.infinity,
+          child: Text(itemDescription)
+        ),
 
         SizedBox(height: 20,),
 
