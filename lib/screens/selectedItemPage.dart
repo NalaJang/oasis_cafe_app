@@ -20,6 +20,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
     final argument = ModalRoute.of(context)!.settings.arguments as List<ItemModel>;
     String selectedItemName = argument[0].subTitle;
     String itemDescription = argument[0].description;
+    String itemPrice = argument[0].price;
 
     return Scaffold(
       // 주문 버튼
@@ -47,7 +48,11 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
               child: Column(
                 children: [
                   // 메뉴 설명
-                  ItemDescription(selectedItemName: selectedItemName, itemDescription: itemDescription,),
+                  ItemDescription(
+                    selectedItemName: selectedItemName,
+                    itemDescription: itemDescription,
+                    itemPrice: itemPrice,
+                  ),
 
                   SizedBox(height: 20,),
 
@@ -108,10 +113,15 @@ class _OrderButtonState extends State<OrderButton> {
 }
 
 class ItemDescription extends StatelessWidget {
-  const ItemDescription({Key? key, required this.selectedItemName, required this.itemDescription}) : super(key: key);
+  const ItemDescription({Key? key,
+    required this.selectedItemName,
+    required this.itemDescription,
+    required this.itemPrice
+    }) : super(key: key);
 
   final String selectedItemName;
   final String itemDescription;
+  final String itemPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +148,7 @@ class ItemDescription extends StatelessWidget {
         SizedBox(height: 20,),
 
         Text(
-          '5,500원',
+          itemPrice,
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold
