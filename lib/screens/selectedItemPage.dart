@@ -18,7 +18,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
   Widget build(BuildContext context) {
 
     final argument = ModalRoute.of(context)!.settings.arguments as List<ItemModel>;
-    String selectedItemName = argument[0].subTitle;
+    String itemName = argument[0].subTitle;
     String itemDescription = argument[0].description;
     String itemPrice = argument[0].price;
 
@@ -49,7 +49,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
                 children: [
                   // 메뉴 설명
                   ItemDescription(
-                    selectedItemName: selectedItemName,
+                    itemName: itemName,
                     itemDescription: itemDescription,
                     itemPrice: itemPrice,
                   ),
@@ -114,12 +114,12 @@ class _OrderButtonState extends State<OrderButton> {
 
 class ItemDescription extends StatelessWidget {
   const ItemDescription({Key? key,
-    required this.selectedItemName,
+    required this.itemName,
     required this.itemDescription,
     required this.itemPrice
     }) : super(key: key);
 
-  final String selectedItemName;
+  final String itemName;
   final String itemDescription;
   final String itemPrice;
 
@@ -129,7 +129,7 @@ class ItemDescription extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          selectedItemName,
+          itemName,
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
