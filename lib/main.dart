@@ -51,9 +51,11 @@ class MyApp extends StatelessWidget {
         home: Login(),
 
         routes: {
-          '/menuDetail' : (context) => MenuDetailPage(),
-          '/selectedItem' : (context) => SelectedItemPage(),
-          '/selectedItemOptionPage' : (context) => SelectedItemOptionPage()
+          '/menuDetail' : (context) => const MenuDetailPage(),
+          // MenuDetailPage -> SelectedItemPage
+          '/selectedItem' : (context) => const SelectedItemPage(),
+          // SelectedItemPage -> SelectedItemOptionPage
+          '/selectedItemOptionPage' : (context) => const SelectedItemOptionPage()
         },
       ),
     );

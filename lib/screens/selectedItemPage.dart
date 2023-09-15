@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
-import 'package:provider/provider.dart';
 
-import '../provider/menuDetailProvider.dart';
 import '../strings/strings.dart';
 
 class SelectedItemPage extends StatefulWidget {
