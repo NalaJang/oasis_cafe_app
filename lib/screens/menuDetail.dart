@@ -49,6 +49,9 @@ class MenuDetailPage extends StatelessWidget {
                       subtitle: Text(menuDetailProvider.items[index].subTitle),
 
                       onTap: (){
+                        String itemId = menuDetailProvider.items[index].id;
+                        menuDetailProvider.setIngredientsCollectionReference(documentName, collectionName, itemId);
+
                         Navigator.pushNamed(context, '/selectedItem',
                           arguments: [
                             menuDetailProvider.items[index]
