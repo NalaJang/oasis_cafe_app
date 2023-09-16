@@ -40,18 +40,20 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
   @override
   Widget build(BuildContext context) {
 
-    final itemId = ModalRoute.of(context)!.settings.arguments as List;
+    final argument = ModalRoute.of(context)!.settings.arguments as List;
+    final String itemId = argument[0];
+    final String itemName = argument[1];
     final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
     String documentName = menuDetailProvider.getDocumentName;
     String collectionName = menuDetailProvider.getCollectionName;
     menuDetailProvider.setIngredientsCollectionReference(documentName, collectionName, itemId[0]);
     CollectionReference _collectionReference =  FirebaseFirestore.instance.collection('Order')
         .doc(documentName).collection(collectionName)
-        .doc(itemId[0]).collection('ingredients');
+        .doc(itemId).collection('ingredients');
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('카페 모카'),
+        title: Text(itemName),
       ),
 
       body: SingleChildScrollView(
@@ -113,16 +115,105 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
                     return Column(
                       children: [
-                        Text(
-                          '커피',
-                          style: TextStyle(
-                            fontSize: 17
+                        if( collectionName == 'Espresso' )
+
+                          // 커피
+                          ListTile(
+                            title: Text(
+                              '커피',
+                              style: TextStyle(
+                                  fontSize: 17
+                              ),
+                            ),
+
+                            subtitle: Text(
+                                '에스프레소 샷 ${documentSnapshot['espresso']}'
+                            ),
+
+                            trailing: Icon(Icons.arrow_forward_ios),
                           ),
+
+                        Divider(height: 5, thickness: 1,),
+
+                        // 시럽
+                        ListTile(
+                          title: Text(
+                            '시럽',
+                            style: TextStyle(
+                                fontSize: 17
+                            ),
+                          ),
+
+                          subtitle: Text(
+                              '${documentSnapshot['syrup']}'
+                          ),
+
+                          trailing: Icon(Icons.arrow_forward_ios),
                         ),
 
-                        Text(
-                          '에스프레소 샷 ${documentSnapshot['espresso']}'
-                        )
+                        Divider(height: 5, thickness: 1,),
+
+                        // 물
+                        if( itemName == 'Americano' )
+                          ListTile(
+                            title: Text(
+                              '베이스',
+                              style: TextStyle(
+                                  fontSize: 17
+                              ),
+                            ),
+
+                            subtitle: Text(
+                                '${documentSnapshot['base']}'
+                            ),
+
+                            trailing: Icon(Icons.arrow_forward_ios),
+                          ),
+
+                        // 우유
+                        if( itemName != 'Americano' )
+                        ListTile(
+                          title: Text(
+                            '우유/음료 온도',
+                            style: TextStyle(
+                                fontSize: 17
+                            ),
+                          ),
+
+                          subtitle: Text(
+                              '${documentSnapshot['milk']}'
+                          ),
+
+                          trailing: Icon(Icons.arrow_forward_ios),
+                        ),
+
+                        Divider(height: 5, thickness: 1,),
+
+                        // 휘핑 크림
+                        ListTile(
+                          title: Text(
+                            '휘핑 크림',
+                            style: TextStyle(
+                                fontSize: 17
+                            ),
+                          ),
+
+                          trailing: Icon(Icons.arrow_forward_ios),
+                        ),
+
+                        Divider(height: 5, thickness: 1,),
+
+                        // 토핑
+                        ListTile(
+                          title: Text(
+                            '토핑',
+                            style: TextStyle(
+                                fontSize: 17
+                            ),
+                          ),
+
+                          trailing: Icon(Icons.arrow_forward_ios),
+                        ),
                       ],
                     );
 

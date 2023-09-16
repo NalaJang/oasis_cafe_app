@@ -24,7 +24,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
     return Scaffold(
 
       // 주문 버튼
-      bottomNavigationBar: OrderButton(itemId: itemId,),
+      bottomNavigationBar: OrderButton(itemId: itemId, itemName: itemName,),
 
       body: CustomScrollView(
         slivers: [
@@ -74,9 +74,10 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
 }
 
 class OrderButton extends StatefulWidget {
-  const OrderButton({required this.itemId, Key? key}) : super(key: key);
+  const OrderButton({required this.itemId, required this.itemName, Key? key}) : super(key: key);
 
   final String itemId;
+  final String itemName;
 
   @override
   State<OrderButton> createState() => _OrderButtonState();
@@ -89,7 +90,8 @@ class _OrderButtonState extends State<OrderButton> {
       onTap: (){
         Navigator.pushNamed(context, '/selectedItemOptionPage',
         arguments: [
-          widget.itemId
+          widget.itemId,
+          widget.itemName
         ]);
       },
 
