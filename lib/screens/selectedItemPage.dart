@@ -16,6 +16,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
   Widget build(BuildContext context) {
 
     final argument = ModalRoute.of(context)!.settings.arguments as List<ItemModel>;
+    String itemId = argument[0].id;
     String itemName = argument[0].subTitle;
     String itemDescription = argument[0].description;
     String itemPrice = argument[0].price;
@@ -23,7 +24,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
     return Scaffold(
 
       // 주문 버튼
-      bottomNavigationBar: OrderButton(),
+      bottomNavigationBar: OrderButton(itemId: itemId,),
 
       body: CustomScrollView(
         slivers: [
@@ -73,7 +74,9 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
 }
 
 class OrderButton extends StatefulWidget {
-  const OrderButton({Key? key}) : super(key: key);
+  const OrderButton({required this.itemId, Key? key}) : super(key: key);
+
+  final String itemId;
 
   @override
   State<OrderButton> createState() => _OrderButtonState();
@@ -84,7 +87,10 @@ class _OrderButtonState extends State<OrderButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, '/selectedItemOptionPage');
+        Navigator.pushNamed(context, '/selectedItemOptionPage',
+        arguments: [
+          widget.itemId
+        ]);
       },
 
       child: Container(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/screens/personalOption/personalOptionPage_coffee.dart';
 import 'package:oasis_cafe_app/screens/personalOption/personalOptionPage_syrup.dart';
@@ -39,7 +40,14 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
   @override
   Widget build(BuildContext context) {
 
+    final itemId = ModalRoute.of(context)!.settings.arguments as List;
     final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
+    String documentName = menuDetailProvider.getDocumentName;
+    String collectionName = menuDetailProvider.getCollectionName;
+    menuDetailProvider.setIngredientsCollectionReference(documentName, collectionName, itemId[0]);
+    CollectionReference _collectionReference =  FirebaseFirestore.instance.collection('Order')
+        .doc(documentName).collection(collectionName)
+        .doc(itemId[0]).collection('ingredients');
 
     return Scaffold(
       appBar: AppBar(
@@ -85,7 +93,7 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
               CupSelectionButton(),
 
-              Divider(height: 70, thickness: 1,),
+              SizedBox(height: 55,),
 
               Text(
                 '퍼스널 옵션',
@@ -95,30 +103,89 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                 ),
               ),
 
-              Divider(height: 30, thickness: 1,),
+              Divider(height: 25, thickness: 1,),
 
-              FutureBuilder(
-                future: menuDetailProvider.fetchIngredients(),
-                builder: (context, snapshot) {
+              StreamBuilder(
+                stream: _collectionReference.snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                  if( streamSnapshot.hasData ) {
+                    final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[0];
 
-                  if( menuDetailProvider.ingredients.isEmpty ) {
-                    print('menuDetailProvider.ingredients.isEmpty');
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return Column(
+                      children: [
+                        Text(
+                          '커피',
+                          style: TextStyle(
+                            fontSize: 17
+                          ),
+                        ),
+
+                        Text(
+                          '에스프레소 샷 ${documentSnapshot['espresso']}'
+                        )
+                      ],
                     );
 
-                  } else {
-                    return ListView.builder(
-                      itemCount: menuDetailProvider.ingredients.length,
-                      itemBuilder: (context, index) {
-                        return Text(
-                          '${menuDetailProvider.ingredients[index]}'
-                        );
-                      }
-                    );
                   }
+
+                  return Center(child: CircularProgressIndicator());
                 }
-              ),
+              )
+
+              // SizedBox(
+              //   height: 400,
+              //   child: FutureBuilder(
+              //     future: menuDetailProvider.fetchIngredients(),
+              //     builder: (context, snapshot) {
+              //
+              //     if( menuDetailProvider.ingredients.isEmpty ) {
+              //       // print('menuDetailProvider.ingredients.isEmpty');
+              //       return const Center(
+              //         child: CircularProgressIndicator(),
+              //       );
+              //
+              //       } else {
+              //         return ListView.builder(
+              //             itemCount: menuDetailProvider.ingredients.length,
+              //             itemBuilder: (context, index) {
+              //
+              //               return Column(
+              //                 children: [
+              //                   Text('커피'),
+              //                   Text(
+              //                     '에스프레소 샷 ${menuDetailProvider.ingredients[index].espresso}',
+              //                     style: TextStyle(
+              //                       fontSize: 15
+              //                     ),
+              //                   )
+              //                 ],
+              //               );
+              //               // return ListTile(
+              //               //
+              //               //   title: Padding(
+              //               //     padding: const EdgeInsets.only(bottom: 5),
+              //               //     child: Text(
+              //               //       '커피',
+              //               //       style: TextStyle(
+              //               //         fontSize: 18,
+              //               //       ),
+              //               //     ),
+              //               //   ),
+              //               //   subtitle: Text(
+              //               //     '에스프레소 샷 ${menuDetailProvider.ingredients[index].espresso}',
+              //               //     style: TextStyle(
+              //               //       fontSize: 15,
+              //               //     ),
+              //               //   ),
+              //               //
+              //               //   onTap: (){},
+              //               // );
+              //             }
+              //         );
+              //       }
+              //     }
+              //   ),
+              // ),
 
               // GestureDetector(
               //   child: Column(

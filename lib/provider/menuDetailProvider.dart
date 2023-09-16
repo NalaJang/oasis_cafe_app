@@ -12,18 +12,22 @@ class MenuDetailProvider with ChangeNotifier {
   List<ItemModel> items = [];
   List<IngredientsModel> ingredients = [];
 
+  String getDocumentName ='';
+  String getCollectionName = '';
+
   // MenuDetailProvider({reference}) {
   //   _collectionReference = reference ??
   //   FirebaseFirestore.instance.collection('order').doc('beverage').collection('espresso');
   // }
 
   void setCollectionReference(String documentName, String collectionName) {
+    getDocumentName = documentName;
+    getCollectionName = collectionName;
     _collectionReference =
         FirebaseFirestore.instance.collection(Strings.order).doc(documentName).collection(collectionName);
   }
 
   void setIngredientsCollectionReference(String documentName, String collectionName, String itemId) {
-    print('$itemId');
     _ingredientsCollectionReference =
         FirebaseFirestore.instance.collection(Strings.order)
             .doc(documentName).collection(collectionName)
