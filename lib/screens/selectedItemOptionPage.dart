@@ -5,6 +5,7 @@ import 'package:oasis_cafe_app/screens/personalOption/personalOptionPage_syrup.d
 import 'package:provider/provider.dart';
 
 import '../provider/menuDetailProvider.dart';
+import '../strings/strings.dart';
 
 class SelectedItemOptionPage extends StatefulWidget {
   const SelectedItemOptionPage({Key? key}) : super(key: key);
@@ -46,10 +47,13 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
     final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
     String documentName = menuDetailProvider.getDocumentName;
     String collectionName = menuDetailProvider.getCollectionName;
-    menuDetailProvider.setIngredientsCollectionReference(documentName, collectionName, itemId[0]);
-    CollectionReference _collectionReference =  FirebaseFirestore.instance.collection('Order')
-        .doc(documentName).collection(collectionName)
-        .doc(itemId).collection('ingredients');
+
+    CollectionReference collectionReference =  FirebaseFirestore.instance
+                                                  .collection(Strings.order)
+                                                  .doc(documentName)
+                                                  .collection(collectionName)
+                                                  .doc(itemId)
+                                                  .collection(Strings.ingredients);
 
     return Scaffold(
       appBar: AppBar(
@@ -62,8 +66,8 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '사이즈',
+              const Text(
+                Strings.drinkSize,
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold
@@ -83,7 +87,7 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
               SizedBox(height: 55,),
 
-              Text(
+              const Text(
                 '컵 선택',
                 style: TextStyle(
                     fontSize: 20,
@@ -97,8 +101,8 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
               SizedBox(height: 55,),
 
-              Text(
-                '퍼스널 옵션',
+              const Text(
+                Strings.personalOption,
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold
@@ -108,7 +112,7 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
               Divider(height: 25, thickness: 1,),
 
               StreamBuilder(
-                stream: _collectionReference.snapshots(),
+                stream: collectionReference.snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                   if( streamSnapshot.hasData ) {
                     final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[0];
@@ -119,8 +123,8 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
                           // 커피
                           ListTile(
-                            title: Text(
-                              '커피',
+                            title: const Text(
+                              Strings.coffee,
                               style: TextStyle(
                                   fontSize: 17
                               ),
@@ -151,68 +155,55 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                           trailing: Icon(Icons.arrow_forward_ios),
                         ),
 
-                        Divider(height: 5, thickness: 1,),
-
-                        // 물
-                        if( itemName == 'Americano' )
-                          ListTile(
-                            title: Text(
-                              '베이스',
-                              style: TextStyle(
-                                  fontSize: 17
-                              ),
-                            ),
-
-                            subtitle: Text(
-                                '${documentSnapshot['base']}'
-                            ),
-
-                            trailing: Icon(Icons.arrow_forward_ios),
-                          ),
-
                         // 우유
                         if( itemName != 'Americano' )
-                        ListTile(
-                          title: Text(
-                            '우유/음료 온도',
-                            style: TextStyle(
-                                fontSize: 17
+                        Column(
+                          children: [
+                            Divider(height: 5, thickness: 1,),
+
+                            ListTile(
+                              title: const Text(
+                                '우유/음료 온도',
+                                style: TextStyle(
+                                    fontSize: 17
+                                ),
+                              ),
+
+                              subtitle: Text(
+                                  '${documentSnapshot['milk']}'
+                              ),
+
+                              trailing: Icon(Icons.arrow_forward_ios),
                             ),
-                          ),
 
-                          subtitle: Text(
-                              '${documentSnapshot['milk']}'
-                          ),
+                            Divider(height: 5, thickness: 1,),
 
-                          trailing: Icon(Icons.arrow_forward_ios),
-                        ),
+                            // 휘핑 크림
+                            ListTile(
+                              title: Text(
+                                '휘핑 크림',
+                                style: TextStyle(
+                                    fontSize: 17
+                                ),
+                              ),
 
-                        Divider(height: 5, thickness: 1,),
-
-                        // 휘핑 크림
-                        ListTile(
-                          title: Text(
-                            '휘핑 크림',
-                            style: TextStyle(
-                                fontSize: 17
+                              trailing: Icon(Icons.arrow_forward_ios),
                             ),
-                          ),
 
-                          trailing: Icon(Icons.arrow_forward_ios),
-                        ),
+                            Divider(height: 5, thickness: 1,),
 
-                        Divider(height: 5, thickness: 1,),
+                            // 토핑
+                            ListTile(
+                              title: Text(
+                                '토핑',
+                                style: TextStyle(
+                                    fontSize: 17
+                                ),
+                              ),
 
-                        // 토핑
-                        ListTile(
-                          title: Text(
-                            '토핑',
-                            style: TextStyle(
-                                fontSize: 17
+                              trailing: Icon(Icons.arrow_forward_ios),
                             ),
-                          ),
-
-                          trailing: Icon(Icons.arrow_forward_ios),
+                          ],
                         ),
                       ],
                     );
@@ -222,248 +213,10 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                   return Center(child: CircularProgressIndicator());
                 }
               )
-
-              // SizedBox(
-              //   height: 400,
-              //   child: FutureBuilder(
-              //     future: menuDetailProvider.fetchIngredients(),
-              //     builder: (context, snapshot) {
-              //
-              //     if( menuDetailProvider.ingredients.isEmpty ) {
-              //       // print('menuDetailProvider.ingredients.isEmpty');
-              //       return const Center(
-              //         child: CircularProgressIndicator(),
-              //       );
-              //
-              //       } else {
-              //         return ListView.builder(
-              //             itemCount: menuDetailProvider.ingredients.length,
-              //             itemBuilder: (context, index) {
-              //
-              //               return Column(
-              //                 children: [
-              //                   Text('커피'),
-              //                   Text(
-              //                     '에스프레소 샷 ${menuDetailProvider.ingredients[index].espresso}',
-              //                     style: TextStyle(
-              //                       fontSize: 15
-              //                     ),
-              //                   )
-              //                 ],
-              //               );
-              //               // return ListTile(
-              //               //
-              //               //   title: Padding(
-              //               //     padding: const EdgeInsets.only(bottom: 5),
-              //               //     child: Text(
-              //               //       '커피',
-              //               //       style: TextStyle(
-              //               //         fontSize: 18,
-              //               //       ),
-              //               //     ),
-              //               //   ),
-              //               //   subtitle: Text(
-              //               //     '에스프레소 샷 ${menuDetailProvider.ingredients[index].espresso}',
-              //               //     style: TextStyle(
-              //               //       fontSize: 15,
-              //               //     ),
-              //               //   ),
-              //               //
-              //               //   onTap: (){},
-              //               // );
-              //             }
-              //         );
-              //       }
-              //     }
-              //   ),
-              // ),
-
-              // GestureDetector(
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         '커피',
-              //         style: TextStyle(
-              //             fontSize: 17
-              //         ),
-              //       ),
-              //
-              //       SizedBox(height: 5,),
-              //
-              //       Text(
-              //         '에스프레소 샷 1',
-              //         style: TextStyle(
-              //           fontSize: 14,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              //   onTap: (){
-              //     showModalBottomSheet(
-              //         context: context,
-              //         builder: (BuildContext context) {
-              //           return PersonalOptionPage_coffee();
-              //         }
-              //     );
-              //   },
-              // ),
-              //
-              // Divider(height: 30, thickness: 1,),
-              //
-              // GestureDetector(
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         '시럽',
-              //         style: TextStyle(
-              //             fontSize: 17
-              //         ),
-              //       ),
-              //
-              //       SizedBox(height: 5,),
-              //
-              //       Text(
-              //         '모카 시럽 3',
-              //         style: TextStyle(
-              //           fontSize: 14,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              //   onTap: (){
-              //     showModalBottomSheet(
-              //         context: context,
-              //         builder: (BuildContext context) {
-              //           return PersonalOptionPage_syrup();
-              //         }
-              //     );
-              //   },
-              // ),
             ],
           ),
         ),
       ),
-
-        // child: SingleChildScrollView(
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(20.0),
-        //     child: Column(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         Text(
-        //           '사이즈',
-        //           style: TextStyle(
-        //               fontSize: 20,
-        //               fontWeight: FontWeight.bold
-        //           ),
-        //         ),
-        //
-        //         SizedBox(height: 15,),
-        //
-        //         Row(
-        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //           children: [
-        //             _setCupSizeButtonDesign('Short', '237'),
-        //             _setCupSizeButtonDesign('Tall', '355'),
-        //             _setCupSizeButtonDesign('Grande', '473'),
-        //           ],
-        //         ),
-        //
-        //         SizedBox(height: 55,),
-        //
-        //         Text(
-        //           '컵 선택',
-        //           style: TextStyle(
-        //               fontSize: 20,
-        //               fontWeight: FontWeight.bold
-        //           ),
-        //         ),
-        //
-        //         SizedBox(height: 15,),
-        //
-        //         CupSelectionButton(),
-        //
-        //         Divider(height: 70, thickness: 1,),
-        //
-        //         Text(
-        //           '퍼스널 옵션',
-        //           style: TextStyle(
-        //               fontSize: 20,
-        //               fontWeight: FontWeight.bold
-        //           ),
-        //         ),
-        //
-        //         Divider(height: 30, thickness: 1,),
-        //
-        //         GestureDetector(
-        //           child: Column(
-        //             crossAxisAlignment: CrossAxisAlignment.start,
-        //             children: [
-        //               Text(
-        //                 '커피',
-        //                 style: TextStyle(
-        //                   fontSize: 17
-        //                 ),
-        //               ),
-        //
-        //               SizedBox(height: 5,),
-        //
-        //               Text(
-        //                 '에스프레소 샷 1',
-        //                 style: TextStyle(
-        //                   fontSize: 14,
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //           onTap: (){
-        //             showModalBottomSheet(
-        //               context: context,
-        //               builder: (BuildContext context) {
-        //                 return PersonalOptionPage_coffee();
-        //               }
-        //             );
-        //           },
-        //         ),
-        //
-        //         Divider(height: 30, thickness: 1,),
-        //
-        //         GestureDetector(
-        //           child: Column(
-        //             crossAxisAlignment: CrossAxisAlignment.start,
-        //             children: [
-        //               Text(
-        //                 '시럽',
-        //                 style: TextStyle(
-        //                     fontSize: 17
-        //                 ),
-        //               ),
-        //
-        //               SizedBox(height: 5,),
-        //
-        //               Text(
-        //                 '모카 시럽 3',
-        //                 style: TextStyle(
-        //                   fontSize: 14,
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //           onTap: (){
-        //             showModalBottomSheet(
-        //                 context: context,
-        //                 builder: (BuildContext context) {
-        //                   return PersonalOptionPage_syrup();
-        //                 }
-        //             );
-        //           },
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
     );
   }
 }

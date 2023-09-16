@@ -27,7 +27,17 @@ class Strings {
   static const String beverage = 'Beverage';
   static const String food = 'Food';
   static const String merchandise = 'Merchandise';
+  static const String ingredients = 'ingredients';
 
   static const String hot = 'HOT';
   static const String iced = 'ICED';
+
+  static const String drinkSize = 'Drink size';
+  static const String personalOption = 'Personal option';
+
+  static const String coffee = 'Coffee';
+  static const String espressoOptions = 'Espresso Options';
+  static const String shotOptions = 'Shot Options';
+  static const String milk = 'Milk';
+
 }
