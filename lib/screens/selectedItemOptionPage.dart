@@ -54,12 +54,12 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                 ),
               ),
 
-              SizedBox(height: 15,),
+              const SizedBox(height: 15,),
 
               // 음료 사이즈 선택
-              DrinkSizeSelectionButton(),
+              const DrinkSizeSelectionButton(),
 
-              SizedBox(height: 55,),
+              const SizedBox(height: 55,),
 
               const Text(
                 '컵 선택',
@@ -69,11 +69,12 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                 ),
               ),
 
-              SizedBox(height: 15,),
+              const SizedBox(height: 15,),
 
-              CupSelectionButton(),
+              // 컵 선택
+              const CupSelectionButton(),
 
-              SizedBox(height: 55,),
+              const SizedBox(height: 55,),
 
               const Text(
                 Strings.personalOption,
@@ -83,8 +84,9 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
                 ),
               ),
 
-              Divider(height: 25, thickness: 1,),
+              const Divider(height: 25, thickness: 1,),
 
+              // personal option list
               StreamBuilder(
                 stream: collectionReference.snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
