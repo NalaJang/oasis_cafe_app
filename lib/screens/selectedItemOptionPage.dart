@@ -17,28 +17,6 @@ class SelectedItemOptionPage extends StatefulWidget {
 
 class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
-  Container _setCupSizeButtonDesign(String name, String size) {
-    return Container(
-      width: 80,
-      height: 100,
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 1),
-          borderRadius: BorderRadius.circular(10)
-      ),
-
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.coffee_outlined),
-          SizedBox(height: 11,),
-          Text(name),
-          SizedBox(height: 5,),
-          Text('${size}ml'),
-        ],
-      )
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -78,14 +56,8 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
               SizedBox(height: 15,),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _setCupSizeButtonDesign('Short', '237'),
-                  _setCupSizeButtonDesign('Tall', '355'),
-                  _setCupSizeButtonDesign('Grande', '473'),
-                ],
-              ),
+              // 음료 사이즈 선택
+              DrinkSizeSelectionButton(),
 
               SizedBox(height: 55,),
 
@@ -142,6 +114,50 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DrinkSizeSelectionButton extends StatefulWidget {
+  const DrinkSizeSelectionButton({Key? key}) : super(key: key);
+
+  @override
+  State<DrinkSizeSelectionButton> createState() => _DrinkSizeSelectionButtonState();
+}
+
+class _DrinkSizeSelectionButtonState extends State<DrinkSizeSelectionButton> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _setCupSizeButtonDesign('Short', '237'),
+        _setCupSizeButtonDesign('Tall', '355'),
+        _setCupSizeButtonDesign('Grande', '473'),
+      ],
+    );
+  }
+
+  Container _setCupSizeButtonDesign(String name, String size) {
+    return Container(
+        width: 80,
+        height: 100,
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey, width: 1),
+            borderRadius: BorderRadius.circular(10)
+        ),
+
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.coffee_outlined),
+            SizedBox(height: 11,),
+            Text(name),
+            SizedBox(height: 5,),
+            Text('${size}ml'),
+          ],
+        )
     );
   }
 }
