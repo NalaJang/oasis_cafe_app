@@ -282,6 +282,11 @@ class CupSelectionButton extends StatefulWidget {
 }
 
 class _CupSelectionButtonState extends State<CupSelectionButton> {
+
+  bool isSelectedHaveHere = false;
+  bool isSelectedKeepCup = false;
+  bool isSelectedTakeaway = false;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -291,21 +296,29 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
         Expanded(
           child: GestureDetector(
             onTap: (){
-              print('have here');
+              setState(() {
+                isSelectedHaveHere = true;
+                isSelectedKeepCup = false;
+                isSelectedTakeaway = false;
+              });
             },
             child: Container(
               padding: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
+                  border: Border.all(color: Colors.grey, width: 1),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(38.0),
                       bottomLeft: Radius.circular(38.0)
-                  )
+                  ),
+                color: isSelectedHaveHere? Palette.buttonColor1 : Colors.white
               ),
 
               child: Text(
                 '매장컵',
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: isSelectedHaveHere? Colors.white : Colors.black
+                ),
               ),
             ),
           ),
@@ -315,17 +328,25 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
         Expanded(
           child: GestureDetector(
             onTap: (){
-              print('keep cup');
+              setState(() {
+                isSelectedHaveHere = false;
+                isSelectedKeepCup = true;
+                isSelectedTakeaway = false;
+              });
             },
             child: Container(
               padding: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
+                border: Border.all(color: Colors.grey, width: 1),
+                color: isSelectedKeepCup? Palette.buttonColor1 : Colors.white
               ),
 
               child: Text(
                 '개인컵',
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: isSelectedKeepCup? Colors.white : Colors.black
+                ),
               ),
             ),
           ),
@@ -335,21 +356,29 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
         Expanded(
           child: GestureDetector(
             onTap: (){
-              print('takeaway');
+              setState(() {
+                isSelectedHaveHere = false;
+                isSelectedKeepCup = false;
+                isSelectedTakeaway = true;
+              });
             },
             child: Container(
               padding: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
+                  border: Border.all(color: Colors.grey, width: 1),
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(38.0),
                       bottomRight: Radius.circular(38.0)
-                  )
+                  ),
+                color: isSelectedTakeaway? Palette.buttonColor1 : Colors.white
               ),
 
               child: Text(
                 '일회용컵',
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: isSelectedTakeaway? Colors.white : Colors.black
+                ),
               ),
             ),
           ),
