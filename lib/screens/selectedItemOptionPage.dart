@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/screens/personalOption/personalOptionPage_coffee.dart';
+import 'package:oasis_cafe_app/screens/personalOption/selectedEspressoItem.dart';
 import 'package:oasis_cafe_app/screens/personalOption/personalOptionPage_syrup.dart';
 import 'package:provider/provider.dart';
 
@@ -114,103 +114,22 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
               StreamBuilder(
                 stream: collectionReference.snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+
                   if( streamSnapshot.hasData ) {
                     final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[0];
 
-                    return Column(
-                      children: [
-                        if( collectionName == 'Espresso' )
+                    if( itemId == Strings.espresso ) {
+                      return SelectedEspressoItem(
+                        documentSnapshot: documentSnapshot,
+                        itemName: itemName,
+                      );
 
-                          // 커피
-                          ListTile(
-                            title: const Text(
-                              Strings.coffee,
-                              style: TextStyle(
-                                  fontSize: 17
-                              ),
-                            ),
+                    }
 
-                            subtitle: Text(
-                                '에스프레소 샷 ${documentSnapshot['espresso']}'
-                            ),
-
-                            trailing: Icon(Icons.arrow_forward_ios),
-                          ),
-
-                        Divider(height: 5, thickness: 1,),
-
-                        // 시럽
-                        ListTile(
-                          title: Text(
-                            '시럽',
-                            style: TextStyle(
-                                fontSize: 17
-                            ),
-                          ),
-
-                          subtitle: Text(
-                              '${documentSnapshot['syrup']}'
-                          ),
-
-                          trailing: Icon(Icons.arrow_forward_ios),
-                        ),
-
-                        // 우유
-                        if( itemName != 'Americano' )
-                        Column(
-                          children: [
-                            Divider(height: 5, thickness: 1,),
-
-                            ListTile(
-                              title: const Text(
-                                '우유/음료 온도',
-                                style: TextStyle(
-                                    fontSize: 17
-                                ),
-                              ),
-
-                              subtitle: Text(
-                                  '${documentSnapshot['milk']}'
-                              ),
-
-                              trailing: Icon(Icons.arrow_forward_ios),
-                            ),
-
-                            Divider(height: 5, thickness: 1,),
-
-                            // 휘핑 크림
-                            ListTile(
-                              title: Text(
-                                '휘핑 크림',
-                                style: TextStyle(
-                                    fontSize: 17
-                                ),
-                              ),
-
-                              trailing: Icon(Icons.arrow_forward_ios),
-                            ),
-
-                            Divider(height: 5, thickness: 1,),
-
-                            // 토핑
-                            ListTile(
-                              title: Text(
-                                '토핑',
-                                style: TextStyle(
-                                    fontSize: 17
-                                ),
-                              ),
-
-                              trailing: Icon(Icons.arrow_forward_ios),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
 
                   }
 
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
               )
             ],
