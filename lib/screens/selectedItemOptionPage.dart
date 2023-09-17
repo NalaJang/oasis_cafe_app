@@ -4,6 +4,7 @@ import 'package:oasis_cafe_app/screens/personalOption/selectedEspressoItem.dart'
 import 'package:oasis_cafe_app/screens/personalOption/selectedFreshJuiceItem.dart';
 import 'package:provider/provider.dart';
 
+import '../config/palette.dart';
 import '../provider/menuDetailProvider.dart';
 import '../strings/strings.dart';
 
@@ -60,6 +61,7 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
         title: Text(itemName),
       ),
 
+      bottomNavigationBar: SubmitButton(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -117,13 +119,15 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
                   if( streamSnapshot.hasData ) {
                     final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[0];
-// print('itemId: $collectionName');
+
+                    // 커피 퍼스널 옵션
                     if( collectionName == Strings.espresso ) {
                       return SelectedEspressoItem(
                         documentSnapshot: documentSnapshot,
                         itemName: itemName,
                       );
 
+                      // 생과일 쥬스 퍼스널 옵션
                     } else if( collectionName == Strings.freshJuice ) {
                       return SelectedFreshJuiceItem(documentSnapshot: documentSnapshot);
                     }
@@ -189,10 +193,6 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
               padding: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black, width: 1),
-                  // borderRadius: BorderRadius.only(
-                  //     topLeft: Radius.circular(38.0),
-                  //     bottomLeft: Radius.circular(38.0)
-                  // )
               ),
 
               child: Text(
@@ -227,6 +227,44 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class SubmitButton extends StatefulWidget {
+  const SubmitButton({Key? key}) : super(key: key);
+
+  @override
+  State<SubmitButton> createState() => _SubmitButtonState();
+}
+
+class _SubmitButtonState extends State<SubmitButton> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        print('submit');
+      },
+
+      child: Container(
+        padding: EdgeInsets.all(15.0),
+        margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
+
+        decoration: BoxDecoration(
+            color: Palette.buttonColor1,
+            border: Border.all(color: Palette.buttonColor1, width: 1),
+            borderRadius: BorderRadius.circular(25.0)
+        ),
+
+        child: Text(
+          '적용하기',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
+        ),
+      ),
     );
   }
 }
