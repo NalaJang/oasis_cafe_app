@@ -8,14 +8,8 @@ import '../config/palette.dart';
 import '../provider/menuDetailProvider.dart';
 import '../strings/strings.dart';
 
-class SelectedItemOptionPage extends StatefulWidget {
+class SelectedItemOptionPage extends StatelessWidget {
   const SelectedItemOptionPage({Key? key}) : super(key: key);
-
-  @override
-  State<SelectedItemOptionPage> createState() => _SelectedItemOptionPageState();
-}
-
-class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
   @override
   Widget build(BuildContext context) {
