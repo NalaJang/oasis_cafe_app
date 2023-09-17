@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/screens/personalOption/selectedEspressoItem.dart';
-import 'package:oasis_cafe_app/screens/personalOption/personalOptionPage_syrup.dart';
+import 'package:oasis_cafe_app/screens/personalOption/selectedFreshJuiceItem.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/menuDetailProvider.dart';
@@ -117,13 +117,15 @@ class _SelectedItemOptionPageState extends State<SelectedItemOptionPage> {
 
                   if( streamSnapshot.hasData ) {
                     final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[0];
-
-                    if( itemId == Strings.espresso ) {
+// print('itemId: $collectionName');
+                    if( collectionName == Strings.espresso ) {
                       return SelectedEspressoItem(
                         documentSnapshot: documentSnapshot,
                         itemName: itemName,
                       );
 
+                    } else if( collectionName == Strings.freshJuice ) {
+                      return SelectedFreshJuiceItem(documentSnapshot: documentSnapshot);
                     }
 
 

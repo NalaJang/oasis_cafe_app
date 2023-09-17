@@ -28,6 +28,7 @@ class Strings {
   static const String food = 'Food';
   static const String merchandise = 'Merchandise';
   static const String espresso = 'Espresso';
+  static const String freshJuice = 'Fresh juice';
   static const String ingredients = 'ingredients';
 
   static const String hot = 'HOT';

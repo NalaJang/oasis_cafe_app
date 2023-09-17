@@ -47,11 +47,29 @@ class SelectedEspressoItem extends StatelessWidget {
           trailing: Icon(Icons.arrow_forward_ios),
         ),
 
+        Divider(height: 5, thickness: 1,),
+
+        if( itemName == 'Americano' )
+          ListTile(
+            title: const Text(
+              '베이스',
+              style: TextStyle(
+                  fontSize: 17
+              ),
+            ),
+
+            subtitle: Text(
+                '${documentSnapshot['base']}'
+            ),
+
+            trailing: Icon(Icons.arrow_forward_ios),
+          ),
+
+
         // 우유
         if( itemName != 'Americano' )
           Column(
             children: [
-              Divider(height: 5, thickness: 1,),
 
               ListTile(
                 title: const Text(
