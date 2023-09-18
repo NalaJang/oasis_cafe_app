@@ -49,72 +49,48 @@ class SelectedEspressoItem extends StatelessWidget {
 
         Divider(height: 5, thickness: 1,),
 
-        if( itemName == 'Americano' )
-          ListTile(
-            title: const Text(
-              '베이스',
-              style: TextStyle(
-                  fontSize: 17
-              ),
+        ListTile(
+          title: const Text(
+            '베이스',
+            style: TextStyle(
+                fontSize: 17
             ),
-
-            subtitle: Text(
-                '${documentSnapshot['base']}'
-            ),
-
-            trailing: Icon(Icons.arrow_forward_ios),
           ),
 
-
-        // 우유
-        if( itemName != 'Americano' )
-          Column(
-            children: [
-
-              ListTile(
-                title: const Text(
-                  '우유/음료 온도',
-                  style: TextStyle(
-                      fontSize: 17
-                  ),
-                ),
-
-                subtitle: Text(
-                    '${documentSnapshot['milk']}'
-                ),
-
-                trailing: Icon(Icons.arrow_forward_ios),
-              ),
-
-              Divider(height: 5, thickness: 1,),
-
-              // 휘핑 크림
-              ListTile(
-                title: Text(
-                  '휘핑 크림',
-                  style: TextStyle(
-                      fontSize: 17
-                  ),
-                ),
-
-                trailing: Icon(Icons.arrow_forward_ios),
-              ),
-
-              Divider(height: 5, thickness: 1,),
-
-              // 토핑
-              ListTile(
-                title: Text(
-                  '토핑',
-                  style: TextStyle(
-                      fontSize: 17
-                  ),
-                ),
-
-                trailing: Icon(Icons.arrow_forward_ios),
-              ),
-            ],
+          subtitle: Text(
+              '${documentSnapshot['base']}'
           ),
+
+          trailing: Icon(Icons.arrow_forward_ios),
+        ),
+
+        Divider(height: 5, thickness: 1,),
+
+        // 휘핑 크림
+        ListTile(
+          title: Text(
+            '휘핑 크림',
+            style: TextStyle(
+                fontSize: 17
+            ),
+          ),
+
+          trailing: Icon(Icons.arrow_forward_ios),
+        ),
+
+        Divider(height: 5, thickness: 1,),
+
+        // 토핑
+        ListTile(
+          title: Text(
+            '토핑',
+            style: TextStyle(
+                fontSize: 17
+            ),
+          ),
+
+          trailing: Icon(Icons.arrow_forward_ios),
+        ),
       ],
     );
   }
