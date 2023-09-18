@@ -8,6 +8,9 @@ import '../config/palette.dart';
 import '../provider/menuDetailProvider.dart';
 import '../strings/strings.dart';
 
+
+late DocumentSnapshot documentSnapshot;
+
 class SelectedItemOptionPage extends StatelessWidget {
   const SelectedItemOptionPage({Key? key}) : super(key: key);
 
@@ -86,7 +89,7 @@ class SelectedItemOptionPage extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
 
                   if( streamSnapshot.hasData ) {
-                    final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[0];
+                    documentSnapshot = streamSnapshot.data!.docs[0];
 
                     // 커피 퍼스널 옵션
                     if( collectionName == Strings.espresso ) {
@@ -394,7 +397,7 @@ class _SubmitButtonState extends State<SubmitButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        print('submit');
+        print('submit ==> ${documentSnapshot['syrup']}');
       },
 
       child: Container(
