@@ -142,21 +142,6 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 
           ],
         ),
-        // 커피
-        //   ListTile(
-        //     title: const Text(
-        //       Strings.coffee,
-        //       style: TextStyle(
-        //           fontSize: 17
-        //       ),
-        //     ),
-        //
-        //     subtitle: Text(
-        //         '에스프레소 샷 ${documentSnapshot['espresso']}'
-        //     ),
-        //
-        //     trailing: Icon(Icons.arrow_forward_ios),
-        //   ),
 
         Divider(height: 5, thickness: 1,),
 
