@@ -308,52 +308,54 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                   ),
                 )
             ),
+
+            // 베이스
+            ExpansionPanelRadio(
+              canTapOnHeader: true,
+              backgroundColor: setExpansionPanelBackgroundColor(),
+              value: 2,
+              headerBuilder: (BuildContext context, bool isExpanded) {
+                return ListTile(
+                  title: const Text(
+                    '베이스',
+                    style: TextStyle(
+                        fontSize: 17
+                    ),
+                  ),
+
+                  subtitle: Text(
+                      '${widget.documentSnapshot['base']}'
+                  ),
+
+                );
+              },
+
+              body: Text('')
+            ),
+
+            // 휘핑 크림
+            ExpansionPanelRadio(
+                canTapOnHeader: true,
+                backgroundColor: setExpansionPanelBackgroundColor(),
+                value: 3,
+                headerBuilder: (BuildContext context, bool isExpanded) {
+                  return ListTile(
+                    title: const Text(
+                      '휘핑 크림',
+                      style: TextStyle(
+                          fontSize: 17
+                      ),
+                    ),
+                  );
+                },
+
+                body: Row(
+                  children: [
+
+                  ],
+                )
+            ),
           ],
-        ),
-
-        Divider(height: 5, thickness: 1,),
-
-        ListTile(
-          title: const Text(
-            '베이스',
-            style: TextStyle(
-                fontSize: 17
-            ),
-          ),
-
-          subtitle: Text(
-              '${widget.documentSnapshot['base']}'
-          ),
-
-          trailing: Icon(Icons.arrow_forward_ios),
-        ),
-
-        Divider(height: 5, thickness: 1,),
-
-        // 휘핑 크림
-        ListTile(
-          title: Text(
-            '휘핑 크림',
-            style: TextStyle(
-                fontSize: 17
-            ),
-          ),
-
-          trailing: Icon(Icons.arrow_forward_ios),
-        ),
-
-        Divider(height: 5, thickness: 1,),
-
-        // 토핑
-        ListTile(
-          title: Text(
-            '토핑',
-            style: TextStyle(
-                fontSize: 17
-            ),
-          ),
-
-          trailing: Icon(Icons.arrow_forward_ios),
         ),
       ],
     );
