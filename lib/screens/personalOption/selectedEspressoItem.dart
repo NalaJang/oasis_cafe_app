@@ -48,6 +48,7 @@ class SelectedEspressoItem extends StatelessWidget {
                 body: Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         decoration: BoxDecoration(
@@ -57,7 +58,7 @@ class SelectedEspressoItem extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Text(
-                            '디카페인'
+                            '디카페인',
                           ),
                         ),
                       ),
