@@ -20,11 +20,11 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 
   int shotOption = documentSnapshot['espresso'];
 
-  Color setBackgroundColor() {
+  Color setExpansionPanelBackgroundColor() {
     return const Color.fromARGB(250, 250, 250, 250);
   }
 
-  TextStyle setTitleTextStyle() {
+  TextStyle setListTitleTextStyle() {
     return const TextStyle(
         fontSize: 17
     );
@@ -42,13 +42,13 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
             ExpansionPanelRadio(
               // header 를 클릭했을 때도 펼치고 접을 수 있도록 설정
               canTapOnHeader: true,
-              backgroundColor: setBackgroundColor(),
+              backgroundColor: setExpansionPanelBackgroundColor(),
               value: 0,
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
                   title: Text(
                     '커피',
-                    style: setTitleTextStyle(),
+                    style: setListTitleTextStyle(),
                   ),
 
                   subtitle: Text(
