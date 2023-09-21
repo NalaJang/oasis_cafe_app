@@ -22,6 +22,8 @@ class SelectedEspressoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int shotOption = documentSnapshot['espresso'];
+
     return Column(
       children: [
         ExpansionPanelList.radio(
@@ -46,7 +48,7 @@ class SelectedEspressoItem extends StatelessWidget {
               },
 
                 body: Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -82,7 +84,7 @@ class SelectedEspressoItem extends StatelessWidget {
                                 Icon(CupertinoIcons.minus_circle),
                                 SizedBox(width: 20,),
                                 Text(
-                                  '${documentSnapshot['espresso']}',
+                                  '$shotOption',
                                   style: TextStyle(
                                       fontSize: 15
                                   )
@@ -91,9 +93,10 @@ class SelectedEspressoItem extends StatelessWidget {
                                 Icon(CupertinoIcons.plus_circle)
                               ],
                             )
-                          )
+                          ),
                         ],
-                      )
+                      ),
+                      SizedBox(height: 30,),
                     ],
                   ),
                 )
