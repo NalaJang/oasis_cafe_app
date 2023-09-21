@@ -350,7 +350,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                       ),
                     ),
 
-                    subtitle: Text(selectedWhippedCreamOption[0]),
+                    subtitle: selectedWhippedCreamOption.isEmpty ? Text('') : Text('${selectedWhippedCreamOption[0]}'),
                   );
                 },
 
