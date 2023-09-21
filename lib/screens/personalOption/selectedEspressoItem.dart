@@ -4,12 +4,17 @@ import 'package:oasis_cafe_app/config/palette.dart';
 
 import '../../strings/strings.dart';
 
-class SelectedEspressoItem extends StatelessWidget {
+class SelectedEspressoItem extends StatefulWidget {
   const SelectedEspressoItem({required this.documentSnapshot, required this.itemName, Key? key}) : super(key: key);
 
   final documentSnapshot;
   final itemName;
 
+  @override
+  State<SelectedEspressoItem> createState() => _SelectedEspressoItemState();
+}
+
+class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
   Color setBackgroundColor() {
     return const Color.fromARGB(250, 250, 250, 250);
   }
@@ -22,7 +27,7 @@ class SelectedEspressoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int shotOption = documentSnapshot['espresso'];
+    int shotOption = widget.documentSnapshot['espresso'];
 
     return Column(
       children: [
@@ -42,7 +47,7 @@ class SelectedEspressoItem extends StatelessWidget {
                   ),
 
                   subtitle: Text(
-                    '에스프레소 샷 ${documentSnapshot['espresso']}',
+                    '에스프레소 샷 ${widget.documentSnapshot['espresso']}',
                   ),
                 );
               },
@@ -132,7 +137,7 @@ class SelectedEspressoItem extends StatelessWidget {
           ),
 
           subtitle: Text(
-              '${documentSnapshot['syrup']}'
+              '${widget.documentSnapshot['syrup']}'
           ),
 
           trailing: Icon(Icons.arrow_forward_ios),
@@ -149,7 +154,7 @@ class SelectedEspressoItem extends StatelessWidget {
           ),
 
           subtitle: Text(
-              '${documentSnapshot['base']}'
+              '${widget.documentSnapshot['base']}'
           ),
 
           trailing: Icon(Icons.arrow_forward_ios),
