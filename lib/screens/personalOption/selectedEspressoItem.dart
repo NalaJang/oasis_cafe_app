@@ -26,6 +26,9 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
   int mochaSyrup = 0;
   int vanillaSyrup = 0;
   int caramelSyrup = 0;
+  // 휘핑 크림
+  var whippedCreamOption = ['None', 'Less', 'Regular', 'Extra'];
+  List<String> selectedWhippedCreamOption = [];
 
   Color setExpansionPanelBackgroundColor() {
     return const Color.fromARGB(250, 250, 250, 250);
@@ -346,12 +349,41 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                           fontSize: 17
                       ),
                     ),
+
+                    subtitle: Text(selectedWhippedCreamOption[0]),
                   );
                 },
 
                 body: Row(
                   children: [
+                    for( var i = 0; i < whippedCreamOption.length; i++ )
+                    GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          selectedWhippedCreamOption.clear();
+                          selectedWhippedCreamOption.add(whippedCreamOption[i]);
+                        });
+                      },
 
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.circular(10),
+                          color: selectedWhippedCreamOption.contains(whippedCreamOption[i]) ? Palette.buttonColor1 : Colors.white
+                        ),
+
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Text(
+                            whippedCreamOption[i],
+                            style: TextStyle(
+                              color: selectedWhippedCreamOption.contains(whippedCreamOption[i]) ? Colors.white : Colors.grey
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 )
             ),
