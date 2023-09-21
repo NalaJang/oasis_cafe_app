@@ -1,20 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 
 import '../../strings/strings.dart';
+import '../selectedItemOptionPage.dart';
 
 class SelectedEspressoItem extends StatefulWidget {
   const SelectedEspressoItem({required this.documentSnapshot, required this.itemName, Key? key}) : super(key: key);
 
-  final documentSnapshot;
-  final itemName;
+  final DocumentSnapshot documentSnapshot;
+  final String itemName;
 
   @override
   State<SelectedEspressoItem> createState() => _SelectedEspressoItemState();
 }
 
 class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
+
+  int shotOption = documentSnapshot['espresso'];
+
   Color setBackgroundColor() {
     return const Color.fromARGB(250, 250, 250, 250);
   }
@@ -27,7 +32,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 
   @override
   Widget build(BuildContext context) {
-    int shotOption = widget.documentSnapshot['espresso'];
+    // int shotOption = widget.documentSnapshot['espresso'];
 
     return Column(
       children: [
@@ -47,7 +52,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                   ),
 
                   subtitle: Text(
-                    '에스프레소 샷 ${widget.documentSnapshot['espresso']}',
+                    '에스프레소 샷 $shotOption',
                   ),
                 );
               },
@@ -86,16 +91,44 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                           Expanded(
                               child: Row(
                               children: [
-                                Icon(CupertinoIcons.minus_circle),
+                                GestureDetector(
+                                  onTap: (){
+                                    setState(() {
+                                      if( shotOption > 1 ) {
+                                        shotOption--;
+                                      }
+                                    });
+                                  },
+                                  child: Icon(
+                                    CupertinoIcons.minus_circle,
+                                    color: shotOption < 2 ? Colors.grey : Colors.black,
+                                  ),
+                                ),
+
                                 SizedBox(width: 20,),
+
                                 Text(
                                   '$shotOption',
                                   style: TextStyle(
                                       fontSize: 15
                                   )
                                 ),
+
                                 SizedBox(width: 20,),
-                                Icon(CupertinoIcons.plus_circle)
+
+                                GestureDetector(
+                                  onTap: (){
+                                    setState(() {
+                                      if( shotOption < 8 ) {
+                                        shotOption++;
+                                      }
+                                    });
+                                  },
+                                  child: Icon(
+                                    CupertinoIcons.plus_circle,
+                                    color: shotOption > 7 ? Colors.grey : Colors.black,
+                                  ),
+                                )
                               ],
                             )
                           ),
