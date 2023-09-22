@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 
 class UserStateProvider with ChangeNotifier {
   final _authentication = FirebaseAuth.instance;
+  final db = FirebaseFirestore.instance;
+  // final CollectionReference itemCollectionReference = FirebaseFirestore.instance.collection('user');
 
   bool isLogged = false;
   String userUid = '';
@@ -38,5 +40,16 @@ class UserStateProvider with ChangeNotifier {
     }
 
     return isLogged;
+  }
+
+  Future<void> addItemsToCart(String selectedItem, int espressoOption, String syrupOption, String whippedCreamOption) async {
+    await db.collection('user').doc(userUid).collection('user_cart').add(
+      {
+        'selectedItem' : selectedItem,
+        'espressoOption' : espressoOption,
+        'syrupOption' : syrupOption,
+        'whippedCreamOption' : whippedCreamOption
+      }
+    );
   }
 }

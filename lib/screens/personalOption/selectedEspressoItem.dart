@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
+import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
+import 'package:provider/provider.dart';
 
 import '../../strings/strings.dart';
 import '../selectedItemOptionPage.dart';
@@ -42,6 +44,10 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 
   @override
   Widget build(BuildContext context) {
+
+    final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
+    personalOptionProvider.selectedShotOption = shotOption;
+
     return Column(
       children: [
         ExpansionPanelList.radio(
@@ -161,8 +167,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                       style: setListTitleTextStyle(),
                     ),
 
-                    subtitle:
-                    Container(
+                    subtitle: Container(
                       child: (() {
                         String selectedSyrup = '';
                         if( vanillaSyrup > syrupOptionMinimumValue ) {
@@ -175,6 +180,8 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                             caramelSyrup <= syrupOptionMinimumValue ) {
                           selectedSyrup = '$syrupOption';
                         }
+
+                        personalOptionProvider.selectedSyrupOption = syrupOption;
                         return Text(selectedSyrup);
                       }) (),
                     ),
@@ -362,6 +369,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                         setState(() {
                           selectedWhippedCreamOption.clear();
                           selectedWhippedCreamOption.add(whippedCreamOption[i]);
+                          personalOptionProvider.selectedWhippedCreamOption = whippedCreamOption[i];
                         });
                       },
 

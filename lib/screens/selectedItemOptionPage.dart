@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
+import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/personalOption/selectedEspressoItem.dart';
 import 'package:oasis_cafe_app/screens/personalOption/selectedFreshJuiceItem.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +38,7 @@ class SelectedItemOptionPage extends StatelessWidget {
         title: Text(itemName),
       ),
 
-      bottomNavigationBar: SubmitButton(),
+      bottomNavigationBar: SubmitButton(itemName: itemName,),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -386,7 +388,9 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
 }
 
 class SubmitButton extends StatefulWidget {
-  const SubmitButton({Key? key}) : super(key: key);
+  const SubmitButton({required this.itemName, Key? key}) : super(key: key);
+
+  final String itemName;
 
   @override
   State<SubmitButton> createState() => _SubmitButtonState();
@@ -395,9 +399,17 @@ class SubmitButton extends StatefulWidget {
 class _SubmitButtonState extends State<SubmitButton> {
   @override
   Widget build(BuildContext context) {
+
+    final userStateProvider = Provider.of<UserStateProvider>(context);
+    final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
+
     return GestureDetector(
       onTap: (){
-        print('submit ==> ${documentSnapshot['syrup']}');
+        var selectedShotOption = personalOptionProvider.selectedShotOption;
+        var selectedSyrupOption = personalOptionProvider.selectedSyrupOption;
+        var selectedWhippedCreamOption = personalOptionProvider.selectedWhippedCreamOption;
+
+        userStateProvider.addItemsToCart(widget.itemName, selectedShotOption, selectedSyrupOption, selectedWhippedCreamOption);
       },
 
       child: Container(
@@ -410,7 +422,7 @@ class _SubmitButtonState extends State<SubmitButton> {
             borderRadius: BorderRadius.circular(25.0)
         ),
 
-        child: Text(
+        child: const Text(
           '적용하기',
           textAlign: TextAlign.center,
           style: TextStyle(
