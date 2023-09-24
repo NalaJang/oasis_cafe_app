@@ -22,7 +22,7 @@ class SelectedItemOptionPage extends StatelessWidget {
     final argument = ModalRoute.of(context)!.settings.arguments as List;
     final String itemId = argument[0];
     final String itemName = argument[1];
-    final bool isHot = argument[2];
+    final String hotOrIced = argument[2];
     final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
     String documentName = menuDetailProvider.getDocumentName;
     String collectionName = menuDetailProvider.getCollectionName;
@@ -40,7 +40,7 @@ class SelectedItemOptionPage extends StatelessWidget {
       ),
 
       // 옵션 적용하기 버튼
-      bottomNavigationBar: SubmitButton(itemName: itemName, isHot: isHot,),
+      bottomNavigationBar: SubmitButton(itemName: itemName, hotOrIced: hotOrIced,),
 
       body: SingleChildScrollView(
         child: Padding(
@@ -391,10 +391,10 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
 }
 
 class SubmitButton extends StatefulWidget {
-  const SubmitButton({required this.itemName, required this.isHot, Key? key}) : super(key: key);
+  const SubmitButton({required this.itemName, required this.hotOrIced, Key? key}) : super(key: key);
 
   final String itemName;
-  final bool isHot;
+  final String hotOrIced;
 
   @override
   State<SubmitButton> createState() => _SubmitButtonState();
@@ -409,12 +409,17 @@ class _SubmitButtonState extends State<SubmitButton> {
 
     return GestureDetector(
       onTap: (){
-        print('isHot? ${widget.isHot}');
         var selectedShotOption = personalOptionProvider.selectedShotOption;
         var selectedSyrupOption = personalOptionProvider.selectedSyrupOption;
         var selectedWhippedCreamOption = personalOptionProvider.selectedWhippedCreamOption;
 
-        userStateProvider.addItemsToCart(widget.itemName, selectedShotOption, selectedSyrupOption, selectedWhippedCreamOption);
+        userStateProvider.addItemsToCart(
+          widget.hotOrIced,
+          widget.itemName,
+          selectedShotOption,
+          selectedSyrupOption,
+          selectedWhippedCreamOption
+        );
       },
 
       child: Container(

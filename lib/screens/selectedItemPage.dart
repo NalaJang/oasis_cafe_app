@@ -93,7 +93,7 @@ class _OrderButtonState extends State<OrderButton> {
         arguments: [
           widget.itemId,
           widget.itemName,
-          isHot
+          hotOrIced
         ]);
       },
 
@@ -177,7 +177,7 @@ class ItemDescription extends StatelessWidget {
   }
 }
 
-bool isHot = true;
+String hotOrIced = 'Hot';
 class HotNIcedButton extends StatefulWidget {
   const HotNIcedButton({Key? key}) : super(key: key);
 
@@ -201,7 +201,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){
               setState(() {
                 isSelectedHOT = true;
-                isHot = true;
+                hotOrIced = 'Hot';
               });
             },
 
@@ -235,7 +235,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){
               setState(() {
                 isSelectedHOT = false;
-                isHot = false;
+                hotOrIced = 'Iced';
               });
             },
 

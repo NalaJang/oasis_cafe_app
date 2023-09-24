@@ -42,9 +42,15 @@ class UserStateProvider with ChangeNotifier {
     return isLogged;
   }
 
-  Future<void> addItemsToCart(String selectedItem, int espressoOption, String syrupOption, String whippedCreamOption) async {
+  Future<void> addItemsToCart(
+      String hotOrIced,
+      String selectedItem,
+      int espressoOption,
+      String syrupOption,
+      String whippedCreamOption) async {
     await db.collection('user').doc(userUid).collection('user_cart').add(
       {
+        'hotOrIced' : hotOrIced,
         'selectedItem' : selectedItem,
         'espressoOption' : espressoOption,
         'syrupOption' : syrupOption,
