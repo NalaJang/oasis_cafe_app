@@ -206,101 +206,54 @@ class CupSelectionButton extends StatefulWidget {
 
 class _CupSelectionButtonState extends State<CupSelectionButton> {
 
-  bool isSelectedHaveHere = false;
-  bool isSelectedKeepCup = false;
-  bool isSelectedTakeaway = false;
+  var cupOption = ['매장컵', '개인컵', '일회용컵'];
+  var selectedCupOption = [];
+
+  BorderRadius? setBorderRadius(int i) {
+    if( i == 0 ) {
+      return const BorderRadius.only(
+          topLeft: Radius.circular(38.0),
+          bottomLeft: Radius.circular(38.0)
+      );
+
+    } else if( i == 2 ) {
+      return const BorderRadius.only(
+        topRight: Radius.circular(38.0),
+        bottomRight: Radius.circular(38.0)
+      );
+    }
+
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
 
-        // 매장컵
+        for( var i = 0; i < cupOption.length; i++ )
         Expanded(
           child: GestureDetector(
             onTap: (){
               setState(() {
-                isSelectedHaveHere = true;
-                isSelectedKeepCup = false;
-                isSelectedTakeaway = false;
+                selectedCupOption.clear();
+                selectedCupOption.add(cupOption[i]);
               });
             },
+
             child: Container(
               padding: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(38.0),
-                      bottomLeft: Radius.circular(38.0)
-                  ),
-                color: isSelectedHaveHere? Palette.buttonColor1 : Colors.white
+                  borderRadius: setBorderRadius(i),
+                  color: selectedCupOption.contains(cupOption[i]) ? Palette.buttonColor1 : Colors.white
               ),
 
               child: Text(
-                '매장컵',
+                cupOption[i],
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: isSelectedHaveHere? Colors.white : Colors.black
-                ),
-              ),
-            ),
-          ),
-        ),
-
-        // 개인컵
-        Expanded(
-          child: GestureDetector(
-            onTap: (){
-              setState(() {
-                isSelectedHaveHere = false;
-                isSelectedKeepCup = true;
-                isSelectedTakeaway = false;
-              });
-            },
-            child: Container(
-              padding: EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 1),
-                color: isSelectedKeepCup? Palette.buttonColor1 : Colors.white
-              ),
-
-              child: Text(
-                '개인컵',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: isSelectedKeepCup? Colors.white : Colors.black
-                ),
-              ),
-            ),
-          ),
-        ),
-
-        // 일회용컵
-        Expanded(
-          child: GestureDetector(
-            onTap: (){
-              setState(() {
-                isSelectedHaveHere = false;
-                isSelectedKeepCup = false;
-                isSelectedTakeaway = true;
-              });
-            },
-            child: Container(
-              padding: EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(38.0),
-                      bottomRight: Radius.circular(38.0)
-                  ),
-                color: isSelectedTakeaway? Palette.buttonColor1 : Colors.white
-              ),
-
-              child: Text(
-                '일회용컵',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: isSelectedTakeaway? Colors.white : Colors.black
+                    color: selectedCupOption.contains(cupOption[i]) ? Colors.white : Colors.black
                 ),
               ),
             ),
