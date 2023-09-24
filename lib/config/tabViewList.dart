@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/screens/cartPage.dart';
 
 import '../strings/strings.dart';
 
@@ -33,7 +34,13 @@ class TabViewList extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CartPage()
+            )
+          );
+        },
         child: Icon(CupertinoIcons.cart),
       ),
 
