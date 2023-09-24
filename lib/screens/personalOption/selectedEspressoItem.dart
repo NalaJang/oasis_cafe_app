@@ -181,7 +181,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                           selectedSyrup = '$syrupOption';
                         }
 
-                        personalOptionProvider.selectedSyrupOption = syrupOption;
+                        personalOptionProvider.selectedSyrupOption = selectedSyrup;
                         return Text(selectedSyrup);
                       }) (),
                     ),
