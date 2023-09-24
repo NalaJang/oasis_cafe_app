@@ -19,6 +19,13 @@ class _SelectedFreshJuiceItemState extends State<SelectedFreshJuiceItem> {
   var iceOption = ['None', 'Less', 'Regular'];
   var selectedIcoOption = [];
 
+  String setSubTitleText() {
+    if( selectedIcoOption.isEmpty ) {
+      selectedIcoOption.add(iceOption[2]);
+    }
+    return selectedIcoOption[0];
+  }
+
   Color setExpansionPanelBackgroundColor() {
     return const Color.fromARGB(250, 250, 250, 250);
   }
@@ -46,7 +53,7 @@ class _SelectedFreshJuiceItemState extends State<SelectedFreshJuiceItem> {
                   ),
 
                   subtitle: Text(
-                    selectedIcoOption.isEmpty ? iceOption[2] : selectedIcoOption[0]
+                      setSubTitleText()
                   )
                 );
               },
