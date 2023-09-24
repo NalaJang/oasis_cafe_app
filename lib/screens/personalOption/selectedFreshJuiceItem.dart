@@ -14,7 +14,7 @@ class SelectedFreshJuiceItem extends StatefulWidget {
 
 class _SelectedFreshJuiceItemState extends State<SelectedFreshJuiceItem> {
 
-  var iceOption = ['Less', 'Regular'];
+  var iceOption = ['None', 'Less', 'Regular'];
   var selectedIcoOption = [];
 
   Color setExpansionPanelBackgroundColor() {
