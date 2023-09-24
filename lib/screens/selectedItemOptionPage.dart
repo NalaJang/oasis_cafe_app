@@ -131,146 +131,64 @@ class DrinkSizeSelectionButton extends StatefulWidget {
 
 class _DrinkSizeSelectionButtonState extends State<DrinkSizeSelectionButton> {
 
-  bool isSelectedSmall = false;
-  bool isSelectedMedium = false;
-  bool isSelectedLarge = false;
+  var sizeOption = ['Small', 'Medium', 'Large'];
+  var weightOption = ['237ml', '355ml', '473ml'];
+  List<String> selectedSizeOption = [];
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        // small
+
+        for( var i = 0; i < sizeOption.length; i++ )
         GestureDetector(
           onTap: () {
             setState(() {
-              isSelectedSmall = true;
-              isSelectedMedium = false;
-              isSelectedLarge = false;
+              selectedSizeOption.clear();
+              selectedSizeOption.add(sizeOption[i]);
             });
           },
           child: Container(
-            width: 80,
-            height: 100,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.circular(10),
-                color: isSelectedSmall ? Palette.buttonColor1 : Colors.white
-            ),
+              width: 80,
+              height: 100,
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                  color: selectedSizeOption.contains(sizeOption[i]) ?
+                          Palette.buttonColor1 : Colors.white
+              ),
 
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.coffee_outlined,
-                  color: isSelectedSmall ? Colors.white : Colors.black,
-                ),
-                SizedBox(height: 11,),
-                Text(
-                  'Small',
-                  style: TextStyle(
-                      color: isSelectedSmall ? Colors.white : Colors.black
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.coffee_outlined,
+                    color: selectedSizeOption.contains(sizeOption[i]) ?
+                            Colors.white : Colors.black,
                   ),
-                ),
-                SizedBox(height: 5,),
-                Text(
-                  '237ml',
-                  style: TextStyle(
-                      color: isSelectedSmall ? Colors.white : Colors.black
+
+                  SizedBox(height: 11,),
+
+                  Text(
+                    sizeOption[i],
+                    style: TextStyle(
+                        color: selectedSizeOption.contains(sizeOption[i]) ?
+                                Colors.white : Colors.black
+                    ),
                   ),
-                ),
-              ],
-            )
+                  SizedBox(height: 5,),
+                  Text(
+                    weightOption[i],
+                    style: TextStyle(
+                        color: selectedSizeOption.contains(sizeOption[i]) ?
+                                Colors.white : Colors.black
+                    ),
+                  ),
+                ],
+              )
           ),
         ),
-
-        // medium
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              isSelectedSmall = false;
-              isSelectedMedium = true;
-              isSelectedLarge = false;
-            });
-          },
-          child: Container(
-            width: 80,
-            height: 100,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.circular(10),
-                color: isSelectedMedium ? Palette.buttonColor1 : Colors.white
-            ),
-
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.coffee_outlined,
-                  color: isSelectedMedium ? Colors.white : Colors.black,
-                ),
-                SizedBox(height: 11,),
-                Text(
-                  'Medium',
-                  style: TextStyle(
-                      color: isSelectedMedium ? Colors.white : Colors.black
-                  ),
-                ),
-                SizedBox(height: 5,),
-                Text(
-                  '355ml',
-                  style: TextStyle(
-                      color: isSelectedMedium ? Colors.white : Colors.black
-                  ),
-                ),
-              ],
-            )
-          ),
-        ),
-
-        // large
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              isSelectedSmall = false;
-              isSelectedMedium = false;
-              isSelectedLarge = true;
-            });
-          },
-          child: Container(
-            width: 80,
-            height: 100,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.circular(10),
-                color: isSelectedLarge ? Palette.buttonColor1 : Colors.white
-            ),
-
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.coffee_outlined,
-                  color: isSelectedLarge ? Colors.white : Colors.black,
-                ),
-                SizedBox(height: 11,),
-                Text(
-                  'Large',
-                  style: TextStyle(
-                      color: isSelectedLarge ? Colors.white : Colors.black
-                  ),
-                ),
-                SizedBox(height: 5,),
-                Text(
-                  '473ml',
-                  style: TextStyle(
-                      color: isSelectedLarge ? Colors.white : Colors.black
-                  ),
-                ),
-              ],
-            )
-          ),
-        )
       ],
     );
   }
