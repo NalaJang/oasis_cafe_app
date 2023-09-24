@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../strings/strings.dart';
@@ -30,40 +31,47 @@ class TabViewList extends StatelessWidget {
     CollectionReference collectionReference = db.collection(getCollectionName());
 
 
-    return StreamBuilder(
-      stream: collectionReference.snapshots(),
-      builder: (BuildContext context,
-          AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){},
+        child: Icon(CupertinoIcons.cart),
+      ),
 
-        if( streamSnapshot.hasData ) {
-          return ListView.builder(
-            itemCount: streamSnapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
+      body: StreamBuilder(
+        stream: collectionReference.snapshots(),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot> streamSnapshot) {
 
-              return ListTile(
-                title: Text(documentSnapshot['title']),
-                subtitle: Text(documentSnapshot['subTitle']),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context, '/menuDetail',
-                    arguments: [
-                      getCollectionName(),
-                      documentSnapshot['subTitle']
-                    ]
-                  );
-                },
-              );
-            }
-          );
+          if( streamSnapshot.hasData ) {
+            return ListView.builder(
+              itemCount: streamSnapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
 
-        } else {
-          print('no data');
-        }
+                return ListTile(
+                  title: Text(documentSnapshot['title']),
+                  subtitle: Text(documentSnapshot['subTitle']),
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context, '/menuDetail',
+                      arguments: [
+                        getCollectionName(),
+                        documentSnapshot['subTitle']
+                      ]
+                    );
+                  },
+                );
+              }
+            );
 
-        return Center(child: CircularProgressIndicator());
+          } else {
+            print('no data');
+          }
 
-      },
+          return Center(child: CircularProgressIndicator());
+
+        },
+      ),
     );
   }
 }
