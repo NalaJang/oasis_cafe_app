@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
 import 'package:provider/provider.dart';
+
+import 'cartPage.dart';
 
 class MenuDetailPage extends StatelessWidget {
   const MenuDetailPage({Key? key}) : super(key: key);
@@ -18,6 +21,18 @@ class MenuDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(collectionName),
+      ),
+
+      // 장바구니 버튼
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CartPage()
+              )
+          );
+        },
+        child: Icon(CupertinoIcons.cart),
       ),
 
       body: Padding(
