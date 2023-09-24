@@ -238,6 +238,7 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
               setState(() {
                 selectedCupOption.clear();
                 selectedCupOption.add(cupOption[i]);
+                Provider.of<PersonalOptionProvider>(context, listen: false).selectedCupOption = cupOption[i];
               });
             },
 
@@ -284,12 +285,14 @@ class _SubmitButtonState extends State<SubmitButton> {
     return GestureDetector(
       onTap: (){
         var selectedDrinkSizeOption = personalOptionProvider.selectedDrinkSizeOption;
+        var selectedCupOption = personalOptionProvider.selectedCupOption;
         var selectedShotOption = personalOptionProvider.selectedShotOption;
         var selectedSyrupOption = personalOptionProvider.selectedSyrupOption;
         var selectedWhippedCreamOption = personalOptionProvider.selectedWhippedCreamOption;
 
         userStateProvider.addItemsToCart(
           selectedDrinkSizeOption,
+          selectedCupOption,
           widget.hotOrIced,
           widget.itemName,
           selectedShotOption,

@@ -44,6 +44,7 @@ class UserStateProvider with ChangeNotifier {
 
   Future<void> addItemsToCart(
       String drinkSize,
+      String cup,
       String hotOrIced,
       String selectedItem,
       int espressoOption,
@@ -52,6 +53,7 @@ class UserStateProvider with ChangeNotifier {
     await db.collection('user').doc(userUid).collection('user_cart').add(
       {
         'drinkSize' : drinkSize,
+        'cup' : cup,
         'hotOrIced' : hotOrIced,
         'selectedItem' : selectedItem,
         'espressoOption' : espressoOption,
