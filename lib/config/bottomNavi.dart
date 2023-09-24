@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/screens/mainPage.dart';
-import 'package:oasis_cafe_app/screens/orderPage.dart';
-import 'package:oasis_cafe_app/screens/otherPage.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/main/mainPage.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/order/orderPage.dart';
 
+import '../screens/mainMenus/other/otherPage.dart';
 import 'palette.dart';
 
 class BottomNavi extends StatefulWidget {

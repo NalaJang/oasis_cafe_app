@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
-import 'package:oasis_cafe_app/screens/login.dart';
+import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:oasis_cafe_app/screens/menuDetail.dart';
-import 'package:oasis_cafe_app/screens/selectedItemOptionPage.dart';
-import 'package:oasis_cafe_app/screens/selectedItemPage.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_first.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/order/itemOption.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_second.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
@@ -53,11 +53,11 @@ class MyApp extends StatelessWidget {
         home: Login(),
 
         routes: {
-          '/menuDetail' : (context) => const MenuDetailPage(),
+          '/menuDetail' : (context) => const MenuListFirst(),
           // MenuDetailPage -> SelectedItemPage
-          '/selectedItem' : (context) => const SelectedItemPage(),
+          '/selectedItem' : (context) => const MenuListSecond(),
           // SelectedItemPage -> SelectedItemOptionPage
-          '/selectedItemOptionPage' : (context) => const SelectedItemOptionPage()
+          '/selectedItemOptionPage' : (context) => const ItemOption()
         },
       ),
     );

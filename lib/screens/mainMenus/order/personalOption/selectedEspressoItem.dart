@@ -5,8 +5,8 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:provider/provider.dart';
 
-import '../../strings/strings.dart';
-import '../selectedItemOptionPage.dart';
+import '../../../../strings/strings.dart';
+import '../itemOption.dart';
 
 class SelectedEspressoItem extends StatefulWidget {
   const SelectedEspressoItem({required this.documentSnapshot, required this.itemName, Key? key}) : super(key: key);

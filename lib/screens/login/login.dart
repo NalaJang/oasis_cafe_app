@@ -4,7 +4,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
-import 'package:oasis_cafe_app/screens/signUp.dart';
+import 'package:oasis_cafe_app/screens/signUp/signUp.dart';
 import 'package:oasis_cafe_app/strings/strings.dart';
 import 'package:provider/provider.dart';
 

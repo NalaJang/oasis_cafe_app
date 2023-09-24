@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
 import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
-import 'package:oasis_cafe_app/screens/menuDetail.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_first.dart';
 import 'package:provider/provider.dart';
 
-import '../strings/strings.dart';
+import '../../../strings/strings.dart';
 
-class SelectedItemPage extends StatefulWidget {
-  const SelectedItemPage({Key? key}) : super(key: key);
+class MenuListSecond extends StatefulWidget {
+  const MenuListSecond({Key? key}) : super(key: key);
 
   @override
-  State<SelectedItemPage> createState() => _SelectedItemPageState();
+  State<MenuListSecond> createState() => _MenuListSecondState();
 }
 
-class _SelectedItemPageState extends State<SelectedItemPage> {
+class _MenuListSecondState extends State<MenuListSecond> {
   @override
   Widget build(BuildContext context) {
 

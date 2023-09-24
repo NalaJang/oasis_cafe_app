@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
 import 'package:provider/provider.dart';
 
-import 'cartPage.dart';
+import 'cart.dart';
 
-class MenuDetailPage extends StatelessWidget {
-  const MenuDetailPage({Key? key}) : super(key: key);
+class MenuListFirst extends StatelessWidget {
+  const MenuListFirst({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class MenuDetailPage extends StatelessWidget {
         onPressed: (){
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CartPage()
+              MaterialPageRoute(builder: (context) => Cart()
               )
           );
         },

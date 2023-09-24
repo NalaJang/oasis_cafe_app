@@ -2,19 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
-import 'package:oasis_cafe_app/screens/personalOption/selectedEspressoItem.dart';
-import 'package:oasis_cafe_app/screens/personalOption/selectedFreshJuiceItem.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/order/personalOption/selectedEspressoItem.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/order/personalOption/selectedFreshJuiceItem.dart';
 import 'package:provider/provider.dart';
 
-import '../config/palette.dart';
-import '../provider/menuDetailProvider.dart';
-import '../strings/strings.dart';
+import '../../../config/palette.dart';
+import '../../../provider/menuDetailProvider.dart';
+import '../../../strings/strings.dart';
 
 
 late DocumentSnapshot documentSnapshot;
 
-class SelectedItemOptionPage extends StatelessWidget {
-  const SelectedItemOptionPage({Key? key}) : super(key: key);
+class ItemOption extends StatelessWidget {
+  const ItemOption({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
