@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
+import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
+import 'package:oasis_cafe_app/screens/menuDetail.dart';
+import 'package:provider/provider.dart';
 
 import '../strings/strings.dart';
 
@@ -21,6 +24,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
     String itemName = argument[0].subTitle;
     String itemDescription = argument[0].description;
     String itemPrice = argument[0].price;
+    String collectionName = Provider.of<MenuDetailProvider>(context, listen: false).getCollectionName;
 
     return Scaffold(
 
@@ -55,9 +59,11 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
                     itemPrice: itemPrice,
                   ),
 
-                  SizedBox(height: 30,),
+                  if( collectionName == 'Espresso' )
+                  SizedBox(height: 10,),
 
                   // hot, iced button
+                  if( collectionName == 'Espresso' )
                   HotNIcedButton(),
 
                   Divider(height: 50, thickness: 1,),
