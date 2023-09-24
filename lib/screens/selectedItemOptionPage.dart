@@ -289,6 +289,7 @@ class _SubmitButtonState extends State<SubmitButton> {
         var selectedShotOption = personalOptionProvider.selectedShotOption;
         var selectedSyrupOption = personalOptionProvider.selectedSyrupOption;
         var selectedWhippedCreamOption = personalOptionProvider.selectedWhippedCreamOption;
+        var selectedIceOption = personalOptionProvider.selectedIceOption;
 
         userStateProvider.addItemsToCart(
           selectedDrinkSizeOption,
@@ -297,7 +298,8 @@ class _SubmitButtonState extends State<SubmitButton> {
           widget.itemName,
           selectedShotOption,
           selectedSyrupOption,
-          selectedWhippedCreamOption
+          selectedWhippedCreamOption,
+          selectedIceOption
         );
       },
 

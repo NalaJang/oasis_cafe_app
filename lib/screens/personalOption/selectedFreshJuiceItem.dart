@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
+import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
+import 'package:provider/provider.dart';
 
 import '../../strings/strings.dart';
 
@@ -44,7 +46,7 @@ class _SelectedFreshJuiceItemState extends State<SelectedFreshJuiceItem> {
                   ),
 
                   subtitle: Text(
-                    selectedIcoOption.isEmpty ? iceOption[1] : selectedIcoOption[0]
+                    selectedIcoOption.isEmpty ? iceOption[2] : selectedIcoOption[0]
                   )
                 );
               },
@@ -57,6 +59,7 @@ class _SelectedFreshJuiceItemState extends State<SelectedFreshJuiceItem> {
                     onTap: (){
                       selectedIcoOption.clear();
                       selectedIcoOption.add(iceOption[i]);
+                      Provider.of<PersonalOptionProvider>(context, listen: false).selectedIceOption = iceOption[i];
                     },
 
                     child: Container(
