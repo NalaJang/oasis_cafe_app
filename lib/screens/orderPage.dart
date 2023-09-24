@@ -7,7 +7,7 @@ import '../strings/strings.dart';
 class OrderPage extends StatelessWidget {
   const OrderPage({Key? key}) : super(key: key);
 
-  final tabBarLength = 3;
+  final tabBarLength = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,6 @@ class OrderPage extends StatelessWidget {
             tabs: [
               Tab(text: Strings.order),
               Tab(text: Strings.food),
-              Tab(text: Strings.merchandise,)
             ],
           ),
         ),
