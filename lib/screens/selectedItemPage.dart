@@ -92,7 +92,8 @@ class _OrderButtonState extends State<OrderButton> {
         Navigator.pushNamed(context, '/selectedItemOptionPage',
         arguments: [
           widget.itemId,
-          widget.itemName
+          widget.itemName,
+          isHot
         ]);
       },
 
@@ -176,7 +177,7 @@ class ItemDescription extends StatelessWidget {
   }
 }
 
-
+bool isHot = true;
 class HotNIcedButton extends StatefulWidget {
   const HotNIcedButton({Key? key}) : super(key: key);
 
@@ -186,7 +187,7 @@ class HotNIcedButton extends StatefulWidget {
 
 class _HotNIcedButtonState extends State<HotNIcedButton> {
 
-  bool isSelectedHOT = false;
+  bool isSelectedHOT = true;
 
   @override
   Widget build(BuildContext context) {
@@ -200,6 +201,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){
               setState(() {
                 isSelectedHOT = true;
+                isHot = true;
               });
             },
 
@@ -233,6 +235,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){
               setState(() {
                 isSelectedHOT = false;
+                isHot = false;
               });
             },
 
