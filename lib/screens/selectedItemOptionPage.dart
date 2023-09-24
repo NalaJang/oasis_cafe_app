@@ -34,6 +34,8 @@ class SelectedItemOptionPage extends StatelessWidget {
                                                   .doc(itemId)
                                                   .collection(Strings.ingredients);
 
+    final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(itemName),
@@ -147,6 +149,7 @@ class _DrinkSizeSelectionButtonState extends State<DrinkSizeSelectionButton> {
             setState(() {
               selectedSizeOption.clear();
               selectedSizeOption.add(sizeOption[i]);
+              Provider.of<PersonalOptionProvider>(context, listen: false).selectedDrinkSizeOption = sizeOption[i];
             });
           },
           child: Container(
@@ -327,11 +330,13 @@ class _SubmitButtonState extends State<SubmitButton> {
 
     return GestureDetector(
       onTap: (){
+        var selectedDrinkSizeOption = personalOptionProvider.selectedDrinkSizeOption;
         var selectedShotOption = personalOptionProvider.selectedShotOption;
         var selectedSyrupOption = personalOptionProvider.selectedSyrupOption;
         var selectedWhippedCreamOption = personalOptionProvider.selectedWhippedCreamOption;
 
         userStateProvider.addItemsToCart(
+          selectedDrinkSizeOption,
           widget.hotOrIced,
           widget.itemName,
           selectedShotOption,
