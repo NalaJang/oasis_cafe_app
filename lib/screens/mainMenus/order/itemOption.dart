@@ -22,6 +22,7 @@ class ItemOption extends StatelessWidget {
     final argument = ModalRoute.of(context)!.settings.arguments as List;
     final String itemId = argument[0];
     final String itemName = argument[1];
+    final String itemPrice = argument[2];
     final menuDetailProvider = Provider.of<ItemProvider>(context);
     String documentName = menuDetailProvider.getDocumentName;
     String collectionName = menuDetailProvider.getCollectionName;
@@ -46,7 +47,7 @@ class ItemOption extends StatelessWidget {
       ),
 
       // 옵션 적용하기 버튼
-      bottomNavigationBar: SubmitButton(itemName: itemName,),
+      bottomNavigationBar: SubmitButton(itemName: itemName, itemPrice: itemPrice,),
 
       body: SingleChildScrollView(
         child: Padding(
@@ -264,9 +265,10 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
 }
 
 class SubmitButton extends StatefulWidget {
-  const SubmitButton({required this.itemName, Key? key}) : super(key: key);
+  const SubmitButton({required this.itemName, required this.itemPrice, Key? key}) : super(key: key);
 
   final String itemName;
+  final String itemPrice;
 
   @override
   State<SubmitButton> createState() => _SubmitButtonState();
@@ -296,6 +298,7 @@ class _SubmitButtonState extends State<SubmitButton> {
           selectedCupOption,
           hotOrIcedOption,
           widget.itemName,
+          widget.itemPrice,
           selectedShotOption,
           selectedSyrupOption,
           selectedWhippedCreamOption,

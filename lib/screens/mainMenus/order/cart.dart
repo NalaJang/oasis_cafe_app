@@ -25,7 +25,6 @@ class Cart extends StatelessWidget {
             itemCount: itemProvider.cartItems.length,
             itemBuilder: (context, index) {
 
-              return
             }
           );
 

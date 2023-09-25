@@ -4,6 +4,7 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/order/itemOption.dart';
 import 'package:provider/provider.dart';
 
 import '../../../strings/strings.dart';
@@ -29,7 +30,7 @@ class _MenuListSecondState extends State<MenuListSecond> {
     return Scaffold(
 
       // 주문 버튼
-      bottomNavigationBar: OrderButton(itemId: itemId, itemName: itemName,),
+      bottomNavigationBar: OrderButton(itemId: itemId, itemName: itemName, itemPrice: itemPrice,),
 
       body: CustomScrollView(
         slivers: [
@@ -81,10 +82,11 @@ class _MenuListSecondState extends State<MenuListSecond> {
 }
 
 class OrderButton extends StatefulWidget {
-  const OrderButton({required this.itemId, required this.itemName, Key? key}) : super(key: key);
+  const OrderButton({required this.itemId, required this.itemName, required this.itemPrice, Key? key}) : super(key: key);
 
   final String itemId;
   final String itemName;
+  final String itemPrice;
 
   @override
   State<OrderButton> createState() => _OrderButtonState();
@@ -99,6 +101,7 @@ class _OrderButtonState extends State<OrderButton> {
         arguments: [
           widget.itemId,
           widget.itemName,
+          widget.itemPrice
         ]);
       },
 
