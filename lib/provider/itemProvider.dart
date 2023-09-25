@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:oasis_cafe_app/model/model_cartItem.dart';
 import 'package:oasis_cafe_app/model/model_ingredients.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
 import 'package:oasis_cafe_app/strings/strings.dart';
@@ -11,6 +12,7 @@ class ItemProvider with ChangeNotifier {
 
   List<ItemModel> items = [];
   List<IngredientsModel> ingredients = [];
+  List<CartItemModel> cartItems = [];
 
   String getDocumentName ='';
   String getCollectionName = '';
@@ -72,6 +74,17 @@ class ItemProvider with ChangeNotifier {
           'iceOption' : iceOption
         }
     );
+  }
+
+  Future<void> getItemsFromCart(String userUid) async {
+    var carCollection = db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart);
+
+    cartItems = await carCollection.get().then( (QuerySnapshot results) {
+      return results.docs.map( (DocumentSnapshot document) {
+        return CartItemModel.getSnapshotDataFromCart(document);
+      }).toList();
+    });
+    notifyListeners();
   }
 
   // getIngredients() {
