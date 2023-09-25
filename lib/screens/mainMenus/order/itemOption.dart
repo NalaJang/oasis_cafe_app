@@ -277,6 +277,7 @@ class _SubmitButtonState extends State<SubmitButton> {
   Widget build(BuildContext context) {
 
     final userStateProvider = Provider.of<UserStateProvider>(context);
+    final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
     final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
 
     return GestureDetector(
@@ -289,7 +290,8 @@ class _SubmitButtonState extends State<SubmitButton> {
         var selectedWhippedCreamOption = personalOptionProvider.selectedWhippedCreamOption;
         var selectedIceOption = personalOptionProvider.selectedIceOption;
 
-        userStateProvider.addItemsToCart(
+        menuDetailProvider.addItemsToCart(
+          userStateProvider.userUid,
           selectedDrinkSizeOption,
           selectedCupOption,
           hotOrIcedOption,

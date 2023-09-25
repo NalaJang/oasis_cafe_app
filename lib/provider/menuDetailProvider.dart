@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:oasis_cafe_app/model/model_ingredients.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
@@ -46,6 +47,32 @@ class MenuDetailProvider with ChangeNotifier {
       }).toList();
     });
     notifyListeners();
+  }
+
+  // 장바구니에 선택한 음료 담기
+  Future<void> addItemsToCart(
+      String userUid,
+      String drinkSize,
+      String cup,
+      String hotOrIced,
+      String selectedItem,
+      int espressoOption,
+      String syrupOption,
+      String whippedCreamOption,
+      String iceOption
+      ) async {
+    await db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart).add(
+        {
+          'drinkSize' : drinkSize,
+          'cup' : cup,
+          'hotOrIced' : hotOrIced,
+          'selectedItem' : selectedItem,
+          'espressoOption' : espressoOption,
+          'syrupOption' : syrupOption,
+          'whippedCreamOption' : whippedCreamOption,
+          'iceOption' : iceOption
+        }
+    );
   }
 
   // getIngredients() {

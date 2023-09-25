@@ -44,28 +44,4 @@ class UserStateProvider with ChangeNotifier {
     return isLogged;
   }
 
-  // 장바구니에 선택한 음료 담기
-  Future<void> addItemsToCart(
-      String drinkSize,
-      String cup,
-      String hotOrIced,
-      String selectedItem,
-      int espressoOption,
-      String syrupOption,
-      String whippedCreamOption,
-      String iceOption
-      ) async {
-    await db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart).add(
-      {
-        'drinkSize' : drinkSize,
-        'cup' : cup,
-        'hotOrIced' : hotOrIced,
-        'selectedItem' : selectedItem,
-        'espressoOption' : espressoOption,
-        'syrupOption' : syrupOption,
-        'whippedCreamOption' : whippedCreamOption,
-        'iceOption' : iceOption
-      }
-    );
-  }
 }
