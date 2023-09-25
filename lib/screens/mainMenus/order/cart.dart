@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
@@ -24,10 +25,60 @@ class Cart extends StatelessWidget {
           return ListView.builder(
             itemCount: itemProvider.cartItems.length,
             itemBuilder: (context, index) {
+              String itemName = itemProvider.cartItems[index].itemName;
+              String itemPrice = itemProvider.cartItems[index].itemPrice;
+              String drinkSize = itemProvider.cartItems[index].drinkSize;
+              String cup = itemProvider.cartItems[index].cup;
+              String espressoOption = itemProvider.cartItems[index].espressoOption;
+              String hotOrIced = itemProvider.cartItems[index].hotOrIced;
+              String syrupOption = itemProvider.cartItems[index].syrupOption;
+              String whippedCreamOption = itemProvider.cartItems[index].whippedCreamOption;
+              String iceOption = itemProvider.cartItems[index].iceOption;
 
+              return Row(
+                children: [
+                  Image.asset(
+                    'image/IMG_espresso.png',
+                    scale: 3.0,
+                  ),
+
+                  // 아이템 이름
+                  Column(
+                    children: [
+                      Text(
+                        '${itemName}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                      Text(drinkSize),
+                      Text(cup),
+                      Text(hotOrIced),
+                      // 수량 및 가격
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){},
+                            child: Icon(CupertinoIcons.minus_circle),
+                          ),
+
+                          Text('1'),
+
+                          GestureDetector(
+                            onTap: (){},
+                            child: Icon(CupertinoIcons.plus_circle),
+                          ),
+
+                          Text('${itemPrice}'),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              );
             }
           );
-
         }
       ),
     );
