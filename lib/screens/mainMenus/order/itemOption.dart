@@ -7,7 +7,7 @@ import 'package:oasis_cafe_app/screens/mainMenus/order/personalOption/selectedFr
 import 'package:provider/provider.dart';
 
 import '../../../config/palette.dart';
-import '../../../provider/menuDetailProvider.dart';
+import '../../../provider/itemProvider.dart';
 import '../../../strings/strings.dart';
 
 
@@ -22,7 +22,7 @@ class ItemOption extends StatelessWidget {
     final argument = ModalRoute.of(context)!.settings.arguments as List;
     final String itemId = argument[0];
     final String itemName = argument[1];
-    final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
+    final menuDetailProvider = Provider.of<ItemProvider>(context);
     String documentName = menuDetailProvider.getDocumentName;
     String collectionName = menuDetailProvider.getCollectionName;
 
@@ -277,7 +277,7 @@ class _SubmitButtonState extends State<SubmitButton> {
   Widget build(BuildContext context) {
 
     final userStateProvider = Provider.of<UserStateProvider>(context);
-    final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
+    final menuDetailProvider = Provider.of<ItemProvider>(context);
     final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
 
     return GestureDetector(

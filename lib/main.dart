@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
+import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserStateProvider()),
-        ChangeNotifierProvider(create: (context) => MenuDetailProvider()),
+        ChangeNotifierProvider(create: (context) => ItemProvider()),
         ChangeNotifierProvider(create: (context) => PersonalOptionProvider()),
       ],
       child: MaterialApp(

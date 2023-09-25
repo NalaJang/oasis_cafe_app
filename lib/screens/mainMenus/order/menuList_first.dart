@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
+import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../strings/strings.dart';
@@ -11,7 +11,7 @@ class MenuListFirst extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
+    final menuDetailProvider = Provider.of<ItemProvider>(context);
 
     // TabViewList class 에서 넘어온 arguments 를 받는다.
     final List arguments = ModalRoute.of(context)!.settings.arguments as List;
