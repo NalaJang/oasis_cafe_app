@@ -22,7 +22,6 @@ class ItemOption extends StatelessWidget {
     final argument = ModalRoute.of(context)!.settings.arguments as List;
     final String itemId = argument[0];
     final String itemName = argument[1];
-    final String hotOrIced = argument[2];
     final menuDetailProvider = Provider.of<MenuDetailProvider>(context);
     String documentName = menuDetailProvider.getDocumentName;
     String collectionName = menuDetailProvider.getCollectionName;
@@ -34,7 +33,12 @@ class ItemOption extends StatelessWidget {
                                                   .doc(itemId)
                                                   .collection(Strings.ingredients);
 
-    final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
+    TextStyle setTitleTextStyle() {
+      return const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -42,7 +46,7 @@ class ItemOption extends StatelessWidget {
       ),
 
       // 옵션 적용하기 버튼
-      bottomNavigationBar: SubmitButton(itemName: itemName, hotOrIced: hotOrIced,),
+      bottomNavigationBar: SubmitButton(itemName: itemName,),
 
       body: SingleChildScrollView(
         child: Padding(
@@ -50,12 +54,9 @@ class ItemOption extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 Strings.drinkSize,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ),
+                style: setTitleTextStyle(),
               ),
 
               const SizedBox(height: 15,),
@@ -65,12 +66,9 @@ class ItemOption extends StatelessWidget {
 
               const SizedBox(height: 55,),
 
-              const Text(
-                '컵 선택',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ),
+              Text(
+                Strings.cupOption,
+                style: setTitleTextStyle(),
               ),
 
               const SizedBox(height: 15,),
@@ -80,12 +78,9 @@ class ItemOption extends StatelessWidget {
 
               const SizedBox(height: 55,),
 
-              const Text(
+              Text(
                 Strings.personalOption,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ),
+                style: setTitleTextStyle()
               ),
 
               const Divider(height: 25, thickness: 1,),
@@ -152,6 +147,7 @@ class _DrinkSizeSelectionButtonState extends State<DrinkSizeSelectionButton> {
               Provider.of<PersonalOptionProvider>(context, listen: false).selectedDrinkSizeOption = sizeOption[i];
             });
           },
+
           child: Container(
               width: 80,
               height: 100,
@@ -180,7 +176,9 @@ class _DrinkSizeSelectionButtonState extends State<DrinkSizeSelectionButton> {
                                 Colors.white : Colors.black
                     ),
                   ),
+
                   SizedBox(height: 5,),
+
                   Text(
                     weightOption[i],
                     style: TextStyle(
@@ -266,10 +264,9 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
 }
 
 class SubmitButton extends StatefulWidget {
-  const SubmitButton({required this.itemName, required this.hotOrIced, Key? key}) : super(key: key);
+  const SubmitButton({required this.itemName, Key? key}) : super(key: key);
 
   final String itemName;
-  final String hotOrIced;
 
   @override
   State<SubmitButton> createState() => _SubmitButtonState();
@@ -286,6 +283,7 @@ class _SubmitButtonState extends State<SubmitButton> {
       onTap: (){
         var selectedDrinkSizeOption = personalOptionProvider.selectedDrinkSizeOption;
         var selectedCupOption = personalOptionProvider.selectedCupOption;
+        var hotOrIcedOption = personalOptionProvider.hotOrIcedOption;
         var selectedShotOption = personalOptionProvider.selectedShotOption;
         var selectedSyrupOption = personalOptionProvider.selectedSyrupOption;
         var selectedWhippedCreamOption = personalOptionProvider.selectedWhippedCreamOption;
@@ -294,7 +292,7 @@ class _SubmitButtonState extends State<SubmitButton> {
         userStateProvider.addItemsToCart(
           selectedDrinkSizeOption,
           selectedCupOption,
-          widget.hotOrIced,
+          hotOrIcedOption,
           widget.itemName,
           selectedShotOption,
           selectedSyrupOption,
@@ -314,11 +312,12 @@ class _SubmitButtonState extends State<SubmitButton> {
         ),
 
         child: const Text(
-          '적용하기',
+          Strings.submit,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.white
           ),
         ),
       ),

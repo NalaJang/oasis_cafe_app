@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_first.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/itemOption.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_second.dart';
+import 'package:oasis_cafe_app/strings/strings.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
@@ -53,11 +54,13 @@ class MyApp extends StatelessWidget {
         home: Login(),
 
         routes: {
-          '/menuDetail' : (context) => const MenuListFirst(),
-          // MenuDetailPage -> SelectedItemPage
-          '/selectedItem' : (context) => const MenuListSecond(),
-          // SelectedItemPage -> SelectedItemOptionPage
-          '/selectedItemOptionPage' : (context) => const ItemOption()
+          Strings.menuListFirst : (context) => const MenuListFirst(),
+
+          // MenuListFirst -> MenuListSecond
+          Strings.menuListSecond : (context) => const MenuListSecond(),
+
+          // MenuListSecond -> ItemOption
+          Strings.itemOption : (context) => const ItemOption()
         },
       ),
     );

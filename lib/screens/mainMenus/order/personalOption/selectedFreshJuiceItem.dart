@@ -95,7 +95,6 @@ class _SelectedFreshJuiceItemState extends State<SelectedFreshJuiceItem> {
             )
           ],
         )
-        // Divider(height: 5, thickness: 1,),
       ],
     );
   }

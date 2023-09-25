@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
 import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
-import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_first.dart';
+import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../strings/strings.dart';
@@ -95,11 +95,10 @@ class _OrderButtonState extends State<OrderButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, '/selectedItemOptionPage',
+        Navigator.pushNamed(context, Strings.itemOption,
         arguments: [
           widget.itemId,
           widget.itemName,
-          hotOrIced
         ]);
       },
 
@@ -183,7 +182,6 @@ class ItemDescription extends StatelessWidget {
   }
 }
 
-String hotOrIced = 'Hot';
 class HotNIcedButton extends StatefulWidget {
   const HotNIcedButton({Key? key}) : super(key: key);
 
@@ -207,7 +205,6 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){
               setState(() {
                 isSelectedHOT = true;
-                hotOrIced = 'Hot';
               });
             },
 
@@ -241,7 +238,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){
               setState(() {
                 isSelectedHOT = false;
-                hotOrIced = 'Iced';
+                Provider.of<PersonalOptionProvider>(context, listen: false).hotOrIcedOption = 'Iced';
               });
             },
 

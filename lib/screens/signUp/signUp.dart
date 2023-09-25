@@ -202,7 +202,7 @@ class _SignUpState extends State<SignUp> {
                           );
 
                           await FirebaseFirestore.instance
-                          .collection('user')
+                          .collection(Strings.collection_user)
                           .doc(newUser.user!.uid)
                           .set({
                             // 데이터의 형식은 항상 map 의 형태
@@ -256,11 +256,12 @@ class _SignUpState extends State<SignUp> {
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(12.0)
                         ),
+
                         child: const Center(
                           child: Text(
                             Strings.signUp,
                               style: TextStyle(
-                                color: Palette.backgroundColor,
+                                color: Colors.white,
                                 fontSize: 16,
                               )
                           ),

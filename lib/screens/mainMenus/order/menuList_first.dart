@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/menuDetailProvider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../strings/strings.dart';
 import 'cart.dart';
 
 class MenuListFirst extends StatelessWidget {
@@ -64,7 +65,7 @@ class MenuListFirst extends StatelessWidget {
                       subtitle: Text(menuDetailProvider.items[index].subTitle),
 
                       onTap: (){
-                        Navigator.pushNamed(context, '/selectedItem',
+                        Navigator.pushNamed(context, Strings.menuListSecond,
                           arguments: [
                             menuDetailProvider.items[index]
                           ]

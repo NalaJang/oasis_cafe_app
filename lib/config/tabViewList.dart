@@ -31,6 +31,8 @@ class TabViewList extends StatelessWidget {
 
 
     return Scaffold(
+
+      // 장바구니 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           Navigator.push(
@@ -58,7 +60,7 @@ class TabViewList extends StatelessWidget {
                   subtitle: Text(documentSnapshot['subTitle']),
                   onTap: () {
                     Navigator.pushNamed(
-                      context, '/menuDetail',
+                      context, Strings.menuListFirst,
                       arguments: [
                         getCollectionName(),
                         documentSnapshot['subTitle']

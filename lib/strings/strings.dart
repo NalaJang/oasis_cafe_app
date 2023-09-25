@@ -1,4 +1,12 @@
 class Strings {
+  static const String menuListFirst = '/menuListFirst';
+  static const String menuListSecond = '/menuListSecond';
+  static const String itemOption = '/itemOption';
+
+  static const String collection_user = 'user';
+  static const String collection_userCart = 'user_cart';
+  static const String collection_ingredients = 'ingredients';
+
   static const String hello = 'Hello';
   static const String welcome = 'Welcome to Oasis cafe';
 
@@ -26,7 +34,6 @@ class Strings {
   static const String order = 'Order';
   static const String beverage = 'Beverage';
   static const String food = 'Food';
-  static const String merchandise = 'Merchandise';
   static const String espresso = 'Espresso';
   static const String freshJuice = 'Fresh juice';
   static const String ingredients = 'ingredients';
@@ -35,11 +42,14 @@ class Strings {
   static const String iced = 'ICED';
 
   static const String drinkSize = 'Drink size';
+  static const String cupOption = 'Cup option';
   static const String personalOption = 'Personal option';
 
   static const String coffee = 'Coffee';
   static const String espressoOptions = 'Espresso Options';
   static const String shotOptions = 'Shot Options';
   static const String milk = 'Milk';
+
+  static const String submit = 'Submit';
 
 }

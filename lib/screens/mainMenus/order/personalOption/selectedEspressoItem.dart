@@ -26,8 +26,6 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
   int shotOption = documentSnapshot['espresso'];
   String syrupOption = documentSnapshot['syrup'];
   int mochaSyrup = 0;
-  int vanillaSyrup = 0;
-  int caramelSyrup = 0;
   // 휘핑 크림
   var whippedCreamOption = ['None', 'Less', 'Regular', 'Extra'];
   List<String> selectedWhippedCreamOption = [];
@@ -169,19 +167,27 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 
                     subtitle: Container(
                       child: (() {
-                        String selectedSyrup = '';
+                        String selectedSyrup = syrupOption;
+                        int vanillaSyrup = personalOptionProvider.vanillaSyrup;
+                        int caramelSyrup = personalOptionProvider.caramelSyrup;
+
+                        if( selectedSyrup == '0' ) {
+                          selectedSyrup = '';
+
+                        } else if( selectedSyrup != '0' ) {
+                          if( vanillaSyrup > syrupOptionMinimumValue ||
+                              caramelSyrup > syrupOptionMinimumValue ) {
+                            selectedSyrup = '$syrupOption \n';
+                          }
+                        }
+
                         if( vanillaSyrup > syrupOptionMinimumValue ) {
-                          selectedSyrup = '바닐라 시럽 $vanillaSyrup \n';
+                          selectedSyrup = '$selectedSyrup바닐라 시럽 $vanillaSyrup \n';
                         }
                         if( caramelSyrup > syrupOptionMinimumValue ) {
                           selectedSyrup = '$selectedSyrup카라멜 시럽 $caramelSyrup';
                         }
-                        if( vanillaSyrup <= syrupOptionMinimumValue  &&
-                            caramelSyrup <= syrupOptionMinimumValue ) {
-                          selectedSyrup = '$syrupOption';
-                        }
 
-                        personalOptionProvider.selectedSyrupOption = selectedSyrup;
                         return Text(selectedSyrup);
                       }) (),
                     ),
@@ -192,126 +198,14 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: const [
                       // 바닐라 시럽
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Text(
-                                '바닐라 시럽',
-                                style: TextStyle(
-                                    fontSize: 15
-                                ),
-                              )
-                          ),
-                          Expanded(child: Text('')),
-                          Expanded(
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: (){
-                                      setState(() {
-                                        if( vanillaSyrup > syrupOptionMinimumValue ) {
-                                          vanillaSyrup--;
-                                        }
-                                      });
-                                    },
-                                    child: Icon(
-                                      CupertinoIcons.minus_circle,
-                                      color: vanillaSyrup <= syrupOptionMinimumValue ? Colors.grey : Colors.black,
-                                    ),
-                                  ),
-
-                                  SizedBox(width: 20,),
-
-                                  Text(
-                                      '$vanillaSyrup',
-                                      style: TextStyle(
-                                          fontSize: 15
-                                      )
-                                  ),
-
-                                  SizedBox(width: 20,),
-
-                                  GestureDetector(
-                                    onTap: (){
-                                      setState(() {
-                                        if( vanillaSyrup < optionMaximumValue ) {
-                                          vanillaSyrup++;
-                                        }
-                                      });
-                                    },
-                                    child: Icon(
-                                      CupertinoIcons.plus_circle,
-                                      color: vanillaSyrup >= optionMaximumValue ? Colors.grey : Colors.black,
-                                    ),
-                                  )
-                                ],
-                              )
-                          ),
-                        ],
-                      ),
+                      SyrupOptions(syrupName: '바닐라 시럽',),
 
                       SizedBox(height: 20,),
 
                       // 카라멜 시럽
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Text(
-                                '카라멜 시럽',
-                                style: TextStyle(
-                                    fontSize: 15
-                                ),
-                              )
-                          ),
-                          Expanded(child: Text('')),
-                          Expanded(
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: (){
-                                      setState(() {
-                                        if( caramelSyrup > syrupOptionMinimumValue ) {
-                                          caramelSyrup--;
-                                        }
-                                      });
-                                    },
-                                    child: Icon(
-                                      CupertinoIcons.minus_circle,
-                                      color: caramelSyrup <= syrupOptionMinimumValue ? Colors.grey : Colors.black,
-                                    ),
-                                  ),
-
-                                  SizedBox(width: 20,),
-
-                                  Text(
-                                      '$caramelSyrup',
-                                      style: TextStyle(
-                                          fontSize: 15
-                                      )
-                                  ),
-
-                                  SizedBox(width: 20,),
-
-                                  GestureDetector(
-                                    onTap: (){
-                                      setState(() {
-                                        if( caramelSyrup < optionMaximumValue ) {
-                                          caramelSyrup++;
-                                        }
-                                      });
-                                    },
-                                    child: Icon(
-                                      CupertinoIcons.plus_circle,
-                                      color: caramelSyrup >= optionMaximumValue ? Colors.grey : Colors.black,
-                                    ),
-                                  )
-                                ],
-                              )
-                          ),
-                        ],
-                      ),
+                      SyrupOptions(syrupName: '카라멜 시럽',),
 
                       SizedBox(height: 30,),
                     ],
@@ -396,6 +290,93 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                 )
             ),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class SyrupOptions extends StatefulWidget {
+  const SyrupOptions({required this.syrupName, Key? key}) : super(key: key);
+
+  final String syrupName;
+
+  @override
+  State<SyrupOptions> createState() => _SyrupOptionsState();
+}
+
+class _SyrupOptionsState extends State<SyrupOptions> {
+
+  @override
+  Widget build(BuildContext context) {
+
+    int syrupAmount = 0;
+    const int minimumValue = 0;
+    const int maximumValue = 9;
+    final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
+
+    if( widget.syrupName == '바닐라 시럽' ) {
+      syrupAmount = personalOptionProvider.vanillaSyrup;
+    } else if( widget.syrupName == '카라멜 시럽' ) {
+      syrupAmount = personalOptionProvider.caramelSyrup;
+    }
+
+    return Row(
+      children: [
+        Expanded(
+            child: Text(
+              widget.syrupName,
+              style: TextStyle(
+                  fontSize: 15
+              ),
+            )
+        ),
+        Expanded(child: Text('')),
+        Expanded(
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    setState(() {
+
+                      if( syrupAmount > minimumValue ) {
+                        personalOptionProvider.changeSyrupAmount(widget.syrupName, false);
+                      }
+
+                    });
+                  },
+                  child: Icon(
+                    CupertinoIcons.minus_circle,
+                    color: syrupAmount <= minimumValue ? Colors.grey : Colors.black,
+                  ),
+                ),
+
+                SizedBox(width: 20,),
+
+                Text(
+                    '$syrupAmount',
+                    style: TextStyle(
+                        fontSize: 15
+                    )
+                ),
+
+                SizedBox(width: 20,),
+
+                GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      if( syrupAmount < maximumValue ) {
+                        personalOptionProvider.changeSyrupAmount(widget.syrupName, true);
+                      }
+                    });
+                  },
+                  child: Icon(
+                    CupertinoIcons.plus_circle,
+                    color: syrupAmount >= maximumValue ? Colors.grey : Colors.black,
+                  ),
+                )
+              ],
+            )
         ),
       ],
     );

@@ -15,10 +15,6 @@ class MenuDetailProvider with ChangeNotifier {
   String getDocumentName ='';
   String getCollectionName = '';
 
-  // MenuDetailProvider({reference}) {
-  //   _collectionReference = reference ??
-  //   FirebaseFirestore.instance.collection('order').doc('beverage').collection('espresso');
-  // }
 
   void setCollectionReference(String documentName, String collectionName) {
     getDocumentName = documentName;
@@ -31,7 +27,7 @@ class MenuDetailProvider with ChangeNotifier {
     _ingredientsCollectionReference =
         FirebaseFirestore.instance.collection(Strings.order)
             .doc(documentName).collection(collectionName)
-            .doc(itemId).collection('ingredients');
+            .doc(itemId).collection(Strings.ingredients);
   }
 
   Future<void> fetchItems() async {

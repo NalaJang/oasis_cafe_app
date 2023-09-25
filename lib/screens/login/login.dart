@@ -17,7 +17,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-  final _authentication = FirebaseAuth.instance;
   var formKey = GlobalKey<FormState>();
   var userEmailController = TextEditingController();
   var userPasswordController = TextEditingController();
@@ -36,7 +35,7 @@ class _LoginState extends State<Login> {
   InputDecoration _getDecoration(String hintText) {
     return InputDecoration(
       hintText: hintText,
-      focusedBorder: UnderlineInputBorder(
+      focusedBorder: const UnderlineInputBorder(
         borderSide: BorderSide(
           color: Colors.blue
         )
@@ -57,7 +56,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Palette.backgroundColor,
         title: const Text(
           Strings.signIn,
           style: TextStyle(
@@ -164,14 +162,6 @@ class _LoginState extends State<Login> {
                               (context),
                               MaterialPageRoute(builder: (context) => BottomNavi())
                           );
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  '로그인 성공',
-                                ),
-                              )
-                          );
                         }
 
                       } catch (e) {
@@ -179,9 +169,9 @@ class _LoginState extends State<Login> {
                         if( mounted ) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content: Text(
-                                      e.toString()
-                                  )
+                                content: Text(
+                                    e.toString()
+                                )
                               )
                           );
 
@@ -189,9 +179,11 @@ class _LoginState extends State<Login> {
                             showSpinner = false;
                           });
                         }
+
                       }
                     },
 
+                    // sign in button
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -199,11 +191,11 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(12)
                       ),
 
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           Strings.signIn,
                           style: TextStyle(
-                            color: Palette.backgroundColor,
+                            color: Colors.white,
                             fontSize: 16,
                           ),
                         ),

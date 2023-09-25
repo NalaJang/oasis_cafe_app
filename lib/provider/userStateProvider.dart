@@ -2,10 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../strings/strings.dart';
+
 class UserStateProvider with ChangeNotifier {
   final _authentication = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
-  // final CollectionReference itemCollectionReference = FirebaseFirestore.instance.collection('user');
 
   bool isLogged = false;
   String userUid = '';
@@ -14,6 +15,7 @@ class UserStateProvider with ChangeNotifier {
   String userDateOfBirth = '';
   String userMobileNumber = '';
 
+  // 회원가입
   Future<bool> signIn(String email, String password) async {
     final newUser = await _authentication.signInWithEmailAndPassword(
         email: email,
@@ -23,7 +25,7 @@ class UserStateProvider with ChangeNotifier {
     if (newUser.user != null) {
       userUid = newUser.user!.uid;
 
-      await FirebaseFirestore.instance.collection('user')
+      await FirebaseFirestore.instance.collection(Strings.collection_user)
           .doc(userUid)
           .get()
           .then((value) =>
@@ -53,7 +55,7 @@ class UserStateProvider with ChangeNotifier {
       String whippedCreamOption,
       String iceOption
       ) async {
-    await db.collection('user').doc(userUid).collection('user_cart').add(
+    await db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart).add(
       {
         'drinkSize' : drinkSize,
         'cup' : cup,
