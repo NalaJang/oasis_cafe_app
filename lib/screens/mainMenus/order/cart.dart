@@ -4,6 +4,9 @@ import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/palette.dart';
+import '../../../strings/strings.dart';
+
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);
 
@@ -15,6 +18,7 @@ class Cart extends StatelessWidget {
         title: Text('CartPage'),
       ),
 
+      bottomNavigationBar: _OrderButton(),
       body: CartItems(),
 
     );
@@ -136,6 +140,43 @@ class CartItems extends StatelessWidget {
           }
         );
       }
+    );
+  }
+}
+
+class _OrderButton extends StatefulWidget {
+  const _OrderButton({Key? key}) : super(key: key);
+
+  @override
+  State<_OrderButton> createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<_OrderButton> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){},
+
+      child: Container(
+        padding: EdgeInsets.all(15.0),
+        margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
+
+        decoration: BoxDecoration(
+          color: Palette.buttonColor1,
+          border: Border.all(color: Palette.buttonColor1, width: 1),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+
+        child: const Text(
+          Strings.order,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Colors.white
+          ),
+        ),
+      ),
     );
   }
 }
