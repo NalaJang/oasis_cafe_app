@@ -208,6 +208,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){
               setState(() {
                 isSelectedHOT = true;
+                Provider.of<PersonalOptionProvider>(context, listen: false).hotOrIcedOption = 'Hot';
               });
             },
 
