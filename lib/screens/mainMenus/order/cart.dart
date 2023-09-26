@@ -32,38 +32,49 @@ class CartItems extends StatelessWidget {
     final String userUid = userStateProvider.userUid;
 
     return FutureBuilder(
-        future: itemProvider.getItemsFromCart(userUid),
-        builder: (context, snapshot) {
-          return ListView.builder(
-              itemCount: itemProvider.cartItems.length,
-              itemBuilder: (context, index) {
-                String itemName = itemProvider.cartItems[index].itemName;
-                String itemPrice = itemProvider.cartItems[index].itemPrice;
-                String drinkSize = itemProvider.cartItems[index].drinkSize;
-                String cup = itemProvider.cartItems[index].cup;
-                int espressoOption = itemProvider.cartItems[index].espressoOption;
-                String hotOrIced = itemProvider.cartItems[index].hotOrIced;
-                String syrupOption = itemProvider.cartItems[index].syrupOption;
-                String whippedCreamOption = itemProvider.cartItems[index].whippedCreamOption;
-                String iceOption = itemProvider.cartItems[index].iceOption;
+      future: itemProvider.getItemsFromCart(userUid),
+      builder: (context, snapshot) {
+        return ListView.separated(
+          separatorBuilder: (BuildContext context, int index) => const Divider(
+            color: Colors.grey,
+          ),
 
-                return Row(
-                  children: [
-                    Image.asset(
-                      'image/IMG_espresso.png',
-                      scale: 3.0,
-                    ),
+          itemCount: itemProvider.cartItems.length,
+          itemBuilder: (context, index) {
+            String itemName = itemProvider.cartItems[index].itemName;
+            String itemPrice = itemProvider.cartItems[index].itemPrice;
+            String drinkSize = itemProvider.cartItems[index].drinkSize;
+            String cup = itemProvider.cartItems[index].cup;
+            int espressoOption = itemProvider.cartItems[index].espressoOption;
+            String hotOrIced = itemProvider.cartItems[index].hotOrIced;
+            String syrupOption = itemProvider.cartItems[index].syrupOption;
+            String whippedCreamOption = itemProvider.cartItems[index].whippedCreamOption;
+            String iceOption = itemProvider.cartItems[index].iceOption;
 
-                    // 아이템 이름
-                    Column(
+            return Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'image/IMG_espresso.png',
+                    scale: 2.0,
+                  ),
+
+                  // 아이템 정보
+                  Container(
+                    margin: EdgeInsets.only(left: 20),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           '${itemName}',
                           style: TextStyle(
+                            fontSize: 17,
                               fontWeight: FontWeight.bold
                           ),
                         ),
+
+                        SizedBox(height: 10,),
 
                         // hotOrIced, 사이즈, 컵 옵션
                         Row(
@@ -76,34 +87,55 @@ class CartItems extends StatelessWidget {
                           ],
                         ),
 
-                        // 옵션 사항
+                        //// 옵션 사항
+                        // 에스프레소
+                        espressoOption != 2 ? Text('$espressoOption') : SizedBox(height: 0,),
+                        // 시럽
+                        syrupOption != "" ? Text(syrupOption) : SizedBox(height: 0,),
+                        // 휘핑 크림
+                        whippedCreamOption != "" ? Text(whippedCreamOption) : SizedBox(height: 0,),
+                        // 얼음
+                        iceOption != "" ? Text('얼음 $iceOption') : SizedBox(height: 0,),
 
+                        SizedBox(height: 20,),
 
                         // 수량 및 가격
                         Row(
                           children: [
-                            GestureDetector(
-                              onTap: (){},
-                              child: Icon(CupertinoIcons.minus_circle),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: (){},
+                                  child: Icon(CupertinoIcons.minus_circle),
+                                ),
+
+                                Container(
+                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                  child: Text('1'),
+                                ),
+
+                                GestureDetector(
+                                  onTap: (){},
+                                  child: Icon(CupertinoIcons.plus_circle),
+                                ),
+
+                              ],
                             ),
 
-                            Text('1'),
+                            SizedBox(width: 50,),
 
-                            GestureDetector(
-                              onTap: (){},
-                              child: Icon(CupertinoIcons.plus_circle),
-                            ),
-
-                            Text('${itemPrice}'),
+                            Text('NZD $itemPrice'),
                           ],
-                        )
+                        ),
                       ],
                     ),
-                  ],
-                );
-              }
-          );
-        }
+                  ),
+                ],
+              ),
+            );
+          }
+        );
+      }
     );
   }
 }
