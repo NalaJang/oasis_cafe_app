@@ -6,7 +6,7 @@ class CartItemModel {
   late String itemPrice;
   late String drinkSize;
   late String cup;
-  late String espressoOption;
+  late int espressoOption;
   late String hotOrIced;
   late String syrupOption;
   late String whippedCreamOption;

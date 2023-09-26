@@ -29,7 +29,7 @@ class Cart extends StatelessWidget {
               String itemPrice = itemProvider.cartItems[index].itemPrice;
               String drinkSize = itemProvider.cartItems[index].drinkSize;
               String cup = itemProvider.cartItems[index].cup;
-              String espressoOption = itemProvider.cartItems[index].espressoOption;
+              int espressoOption = itemProvider.cartItems[index].espressoOption;
               String hotOrIced = itemProvider.cartItems[index].hotOrIced;
               String syrupOption = itemProvider.cartItems[index].syrupOption;
               String whippedCreamOption = itemProvider.cartItems[index].whippedCreamOption;
@@ -54,7 +54,7 @@ class Cart extends StatelessWidget {
 
                       Text(drinkSize),
                       Text(cup),
-                      Text(hotOrIced),
+                      // Text(hotOrIced),
                       // 수량 및 가격
                       Row(
                         children: [
