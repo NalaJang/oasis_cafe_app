@@ -48,23 +48,48 @@ class _CartItemsState extends State<CartItems> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Text('선택한 메뉴를 삭제하시겠습니까?'),
-
+              content: Text('선택한 메뉴를 삭제하시겠습니까?',),
               actions: [
                 ElevatedButton(
-                    onPressed: (){
-                      Navigator.of(context).pop();
-                    },
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
 
-                    child: Text('아니오')
+                  child: Text('아니오'),
+
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)
+                    ),
+                    side: BorderSide(
+                      color: Colors.teal,
+                      width: 1
+                    )
+                  ),
                 ),
 
-                ElevatedButton(
-                    onPressed: (){
-                      itemProvider.deleteItemFromCart(itemId, context);
-                    },
+                SizedBox(width: 10,),
 
-                    child: Text('삭제')
+                ElevatedButton(
+                  onPressed: (){
+                    itemProvider.deleteItemFromCart(itemId, context);
+                  },
+
+                  child: Text('삭제'),
+
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.teal,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)
+                    ),
+                    side: BorderSide(
+                        color: Colors.teal,
+                        width: 1
+                    )
+                  ),
                 )
               ],
             );
