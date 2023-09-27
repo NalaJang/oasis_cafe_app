@@ -53,6 +53,7 @@ class _CartItemsState extends State<CartItems> {
 
           itemCount: itemProvider.cartItems.length,
           itemBuilder: (context, index) {
+            String itemId = itemProvider.cartItems[index].id;
             String itemName = itemProvider.cartItems[index].itemName;
             String itemPrice = itemProvider.cartItems[index].itemPrice;
             String drinkSize = itemProvider.cartItems[index].drinkSize;
@@ -81,7 +82,9 @@ class _CartItemsState extends State<CartItems> {
                       ),
 
                       IconButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            itemProvider.deleteItemFromCart(itemId, context);
+                          },
                           icon: Icon(CupertinoIcons.xmark_circle)
                       ),
                     ],

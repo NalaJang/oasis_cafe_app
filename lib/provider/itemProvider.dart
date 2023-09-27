@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/model/model_cartItem.dart';
 import 'package:oasis_cafe_app/model/model_ingredients.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
@@ -8,6 +9,7 @@ import 'package:oasis_cafe_app/strings/strings.dart';
 class ItemProvider with ChangeNotifier {
   late CollectionReference _collectionReference;
   late CollectionReference _ingredientsCollectionReference;
+  late CollectionReference _carCollection;
   final db = FirebaseFirestore.instance;
 
   List<ItemModel> items = [];
@@ -25,12 +27,12 @@ class ItemProvider with ChangeNotifier {
         FirebaseFirestore.instance.collection(Strings.order).doc(documentName).collection(collectionName);
   }
 
-  void setIngredientsCollectionReference(String documentName, String collectionName, String itemId) {
-    _ingredientsCollectionReference =
-        FirebaseFirestore.instance.collection(Strings.order)
-            .doc(documentName).collection(collectionName)
-            .doc(itemId).collection(Strings.ingredients);
-  }
+  // void setIngredientsCollectionReference(String documentName, String collectionName, String itemId) {
+  //   _ingredientsCollectionReference =
+  //       FirebaseFirestore.instance.collection(Strings.order)
+  //           .doc(documentName).collection(collectionName)
+  //           .doc(itemId).collection(Strings.ingredients);
+  // }
 
   Future<void> fetchItems() async {
     items = await _collectionReference.get().then( (QuerySnapshot results) {
@@ -79,14 +81,30 @@ class ItemProvider with ChangeNotifier {
   }
 
   Future<void> getItemsFromCart(String userUid) async {
-    var carCollection = db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart);
+    _carCollection = db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart);
 
-    cartItems = await carCollection.get().then( (QuerySnapshot results) {
+    cartItems = await _carCollection.get().then( (QuerySnapshot results) {
       return results.docs.map( (DocumentSnapshot document) {
         return CartItemModel.getSnapshotDataFromCart(document);
       }).toList();
     });
     notifyListeners();
+  }
+
+  Future<void> deleteItemFromCart(String itemId, BuildContext context) async {
+    await _carCollection.doc(itemId).delete();
+
+    // ScaffoldMessenger.of(context) 에
+    // 'Don't use 'BuildContext's across async gaps.' 라는 경고가 떠 있었다.
+    // 비동기 시 BuildContext 를 암시적으로 저장되고 쉽게 충돌 진단이 어려울 수 있다.
+    // 때문에 async 사용 후엔 반드시 BuildContext 가 mount 되었는 지 확인해주어야 한다고 한다.
+    if( context.mounted ) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('삭제되었습니다.')
+          )
+      );
+    }
   }
 
   // getIngredients() {
