@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CartItemModel {
 
+  late String id;
   late String itemName;
   late String itemPrice;
   late String drinkSize;
@@ -15,6 +16,7 @@ class CartItemModel {
   CartItemModel.getSnapshotDataFromCart(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
 
+    id = snapshot.id;
     itemName = data['itemName'];
     itemPrice = data['itemPrice'];
     drinkSize = data['drinkSize'];
