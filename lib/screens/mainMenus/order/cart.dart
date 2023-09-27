@@ -43,6 +43,35 @@ class _CartItemsState extends State<CartItems> {
 
     bool _isChecked = false;
 
+    void setShowDialog(String itemId) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('선택한 메뉴를 삭제하시겠습니까?'),
+
+              actions: [
+                ElevatedButton(
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+
+                    child: Text('아니오')
+                ),
+
+                ElevatedButton(
+                    onPressed: (){
+                      itemProvider.deleteItemFromCart(itemId, context);
+                    },
+
+                    child: Text('삭제')
+                )
+              ],
+            );
+          }
+      );
+    }
+
     return FutureBuilder(
       future: itemProvider.getItemsFromCart(userUid),
       builder: (context, snapshot) {
@@ -81,9 +110,10 @@ class _CartItemsState extends State<CartItems> {
                           }
                       ),
 
+                      // 아이템 삭제
                       IconButton(
                           onPressed: (){
-                            itemProvider.deleteItemFromCart(itemId, context);
+                            setShowDialog(itemId);
                           },
                           icon: Icon(CupertinoIcons.xmark_circle)
                       ),

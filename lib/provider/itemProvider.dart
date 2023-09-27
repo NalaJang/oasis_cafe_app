@@ -99,6 +99,8 @@ class ItemProvider with ChangeNotifier {
     // 비동기 시 BuildContext 를 암시적으로 저장되고 쉽게 충돌 진단이 어려울 수 있다.
     // 때문에 async 사용 후엔 반드시 BuildContext 가 mount 되었는 지 확인해주어야 한다고 한다.
     if( context.mounted ) {
+      Navigator.of(context).pop();
+
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               content: Text('삭제되었습니다.')
