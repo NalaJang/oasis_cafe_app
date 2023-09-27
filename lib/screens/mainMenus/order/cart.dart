@@ -19,23 +19,29 @@ class Cart extends StatelessWidget {
       ),
 
       bottomNavigationBar: _OrderButton(),
-      body: SingleChildScrollView(
-        child: CartItems()
-      ),
+
+      body: CartItems(),
 
     );
   }
 }
 
-class CartItems extends StatelessWidget {
+class CartItems extends StatefulWidget {
   const CartItems({Key? key}) : super(key: key);
 
+  @override
+  State<CartItems> createState() => _CartItemsState();
+}
+
+class _CartItemsState extends State<CartItems> {
   @override
   Widget build(BuildContext context) {
 
     final userStateProvider = Provider.of<UserStateProvider>(context);
     final itemProvider = Provider.of<ItemProvider>(context);
     final String userUid = userStateProvider.userUid;
+
+    bool _isChecked = false;
 
     return FutureBuilder(
       future: itemProvider.getItemsFromCart(userUid),
@@ -59,82 +65,106 @@ class CartItems extends StatelessWidget {
 
             return Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Row(
+              child: Column(
                 children: [
-                  Image.asset(
-                    'image/IMG_espresso.png',
-                    scale: 2.0,
+
+                  Row(
+                    children: [
+                      Checkbox(
+                          value: _isChecked,
+                          onChanged: (value) {
+                            setState(() {
+                              _isChecked = value!;
+                              print('_isChecked >> ${_isChecked}');
+                            });
+                          }
+                      ),
+
+                      IconButton(
+                          onPressed: (){},
+                          icon: Icon(CupertinoIcons.xmark_circle)
+                      ),
+                    ],
                   ),
 
-                  // 아이템 정보
-                  Container(
-                    margin: EdgeInsets.only(left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${itemName}',
-                          style: TextStyle(
-                            fontSize: 17,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
+                  Row(
+                    children: [
+                      Image.asset(
+                        'image/IMG_espresso.png',
+                        scale: 2.0,
+                      ),
 
-                        SizedBox(height: 10,),
-
-                        // hotOrIced, 사이즈, 컵 옵션
-                        Row(
+                      // 아이템 정보
+                      Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(hotOrIced),
-                            Text(' | '),
-                            Text(drinkSize),
-                            Text(' | '),
-                            Text(cup)
-                          ],
-                        ),
+                            Text(
+                              '${itemName}',
+                              style: TextStyle(
+                                fontSize: 17,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
 
-                        //// 옵션 사항
-                        // 에스프레소
-                        espressoOption != 2 ? Text('$espressoOption') : SizedBox(height: 0,),
-                        // 시럽
-                        syrupOption != "" ? Text(syrupOption) : SizedBox(height: 0,),
-                        // 휘핑 크림
-                        whippedCreamOption != "" ? Text(whippedCreamOption) : SizedBox(height: 0,),
-                        // 얼음
-                        iceOption != "" ? Text('얼음 $iceOption') : SizedBox(height: 0,),
+                            SizedBox(height: 10,),
 
-                        SizedBox(height: 20,),
-
-                        // 수량 및 가격
-                        Row(
-                          children: [
+                            // hotOrIced, 사이즈, 컵 옵션
                             Row(
                               children: [
-                                GestureDetector(
-                                  onTap: (){},
-                                  child: Icon(CupertinoIcons.minus_circle),
-                                ),
-
-                                Container(
-                                  margin: EdgeInsets.only(left: 20, right: 20),
-                                  child: Text('1'),
-                                ),
-
-                                GestureDetector(
-                                  onTap: (){},
-                                  child: Icon(CupertinoIcons.plus_circle),
-                                ),
-
+                                Text(hotOrIced),
+                                Text(' | '),
+                                Text(drinkSize),
+                                Text(' | '),
+                                Text(cup)
                               ],
                             ),
 
-                            SizedBox(width: 50,),
+                            //// 옵션 사항
+                            // 에스프레소
+                            espressoOption != 2 ? Text('$espressoOption') : SizedBox(height: 0,),
+                            // 시럽
+                            syrupOption != "" ? Text(syrupOption) : SizedBox(height: 0,),
+                            // 휘핑 크림
+                            whippedCreamOption != "" ? Text(whippedCreamOption) : SizedBox(height: 0,),
+                            // 얼음
+                            iceOption != "" ? Text('얼음 $iceOption') : SizedBox(height: 0,),
 
-                            Text('NZD $itemPrice'),
+                            SizedBox(height: 20,),
+
+                            // 수량 및 가격
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: (){},
+                                      child: Icon(CupertinoIcons.minus_circle),
+                                    ),
+
+                                    Container(
+                                      margin: EdgeInsets.only(left: 20, right: 20),
+                                      child: Text('1'),
+                                    ),
+
+                                    GestureDetector(
+                                      onTap: (){},
+                                      child: Icon(CupertinoIcons.plus_circle),
+                                    ),
+
+                                  ],
+                                ),
+
+                                SizedBox(width: 50,),
+
+                                Text('NZD $itemPrice'),
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
