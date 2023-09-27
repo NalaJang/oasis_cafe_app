@@ -19,7 +19,9 @@ class Cart extends StatelessWidget {
       ),
 
       bottomNavigationBar: _OrderButton(),
-      body: CartItems(),
+      body: SingleChildScrollView(
+        child: CartItems()
+      ),
 
     );
   }
