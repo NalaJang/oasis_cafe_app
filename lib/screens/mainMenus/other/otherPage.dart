@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/other/settings.dart';
 import 'package:provider/provider.dart';
 
 const double sizedBoxWidth = 110.0;
@@ -54,6 +55,7 @@ class OtherPage extends StatelessWidget {
 
              SizedBox(height: 30,),
 
+             // 전자영수증, 개인정보 관리, 설정
              Row(
                children: [
                  Spacer(),
@@ -134,12 +136,21 @@ class CardMenuRow extends StatelessWidget {
 
             // 설정
             if( menuIndex == 2)
-              Column(
-                children: [
-                  Icon(Icons.settings),
-                  SizedBox(height: 10,),
-                  Text(cardMenuRow[2]),
-                ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Settings())
+                  );
+                },
+
+                child: Column(
+                  children: [
+                    Icon(Icons.settings),
+                    SizedBox(height: 10,),
+                    Text(cardMenuRow[2]),
+                  ],
+                ),
               ),
           ],
         ),
