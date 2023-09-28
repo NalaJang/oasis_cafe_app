@@ -14,6 +14,9 @@ class OtherPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var userName = Provider.of<UserStateProvider>(context, listen: false).userName;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -26,6 +29,7 @@ class OtherPage extends StatelessWidget {
         ),
 
         actions: [
+          // 알람 아이콘
           IconButton(
             onPressed: (){},
             icon: Icon(CupertinoIcons.bell)
@@ -37,7 +41,19 @@ class OtherPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             // 카드 메뉴
+
+            // 환영 문구
+            Text(
+              '$userName님\n환영합니다! 🙌🏻',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+
+             SizedBox(height: 30,),
+
              Row(
                children: [
                  Spacer(),
@@ -69,8 +85,7 @@ class OtherPage extends StatelessWidget {
 
             // 고객 지원
             CustomerServiceMenu(),
-            
-            Text('${Provider.of<UserStateProvider>(context).userMobileNumber}')
+
           ],
         ),
       ),
