@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../../../config/palette.dart';
 import '../../../strings/strings.dart';
@@ -231,28 +232,47 @@ class _OrderButton extends StatefulWidget {
 }
 
 class _OrderButtonState extends State<_OrderButton> {
+  var color = Color(0xffe8e8e8);
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){},
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(
+          color: color
+        )),
+        boxShadow: [
+          BoxShadow(
+            color: color,
+            spreadRadius: 5,
+            blurRadius: 10,
+            offset: Offset(3, 0)
+          )
+        ]
 
-      child: Container(
-        padding: EdgeInsets.all(15.0),
-        margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
+      ),
+      child: GestureDetector(
+        onTap: (){},
 
-        decoration: BoxDecoration(
-          color: Palette.buttonColor1,
-          border: Border.all(color: Palette.buttonColor1, width: 1),
-          borderRadius: BorderRadius.circular(25.0),
-        ),
+        child: Container(
+          padding: EdgeInsets.all(15.0),
+          margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
 
-        child: const Text(
-          Strings.order,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              color: Colors.white
+          decoration: BoxDecoration(
+            color: Palette.buttonColor1,
+            border: Border.all(color: Palette.buttonColor1, width: 1),
+            borderRadius: BorderRadius.circular(25.0),
+          ),
+
+          child: const Text(
+            Strings.order,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Colors.white
+            ),
           ),
         ),
       ),
