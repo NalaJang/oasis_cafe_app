@@ -41,8 +41,6 @@ class _CartItemsState extends State<CartItems> {
     final itemProvider = Provider.of<ItemProvider>(context);
     final String userUid = userStateProvider.userUid;
 
-    bool _isChecked = false;
-
     void setShowDialog(String itemId) {
       showDialog(
           context: context,
@@ -125,15 +123,6 @@ class _CartItemsState extends State<CartItems> {
 
                   Row(
                     children: [
-                      Checkbox(
-                          value: _isChecked,
-                          onChanged: (value) {
-                            setState(() {
-                              _isChecked = value!;
-                              print('_isChecked >> ${_isChecked}');
-                            });
-                          }
-                      ),
 
                       // 아이템 삭제
                       IconButton(
