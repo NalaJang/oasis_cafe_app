@@ -14,6 +14,8 @@ class UserStateProvider with ChangeNotifier {
   String userEmail = '';
   String userDateOfBirth = '';
   String userMobileNumber = '';
+  bool notification = false;
+  bool shakeToPay = false;
 
   // 회원가입
   Future<bool> signIn(String email, String password) async {
@@ -33,7 +35,9 @@ class UserStateProvider with ChangeNotifier {
         userName = value.data()!['userName'],
         userEmail = value.data()!['userEmail'],
         userDateOfBirth = value.data()!['userDateOfBirth'],
-        userMobileNumber = value.data()!['userMobileNumber']
+        userMobileNumber = value.data()!['userMobileNumber'],
+        notification = value.data()!['notification'],
+        shakeToPay = value.data()!['shakeToPay']
       });
     }
 
