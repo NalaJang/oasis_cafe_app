@@ -77,6 +77,7 @@ class _PreferencesState extends State<Preferences> {
                 } else if( menuName == 'Shake To Pay') {
                   switchButton.shakeToPay = _isSelected;
                 }
+                Provider.of<UserStateProvider>(context, listen: false).updatePreferences(menuName, _isSelected);
               });
             }
         )

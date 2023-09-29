@@ -7,6 +7,7 @@ import '../strings/strings.dart';
 class UserStateProvider with ChangeNotifier {
   final _authentication = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+  CollectionReference userInfo = FirebaseFirestore.instance.collection('user');
 
   bool isLogged = false;
   String userUid = '';
@@ -27,7 +28,7 @@ class UserStateProvider with ChangeNotifier {
     if (newUser.user != null) {
       userUid = newUser.user!.uid;
 
-      await FirebaseFirestore.instance.collection(Strings.collection_user)
+      await db.collection(Strings.collection_user)
           .doc(userUid)
           .get()
           .then((value) =>
@@ -48,4 +49,18 @@ class UserStateProvider with ChangeNotifier {
     return isLogged;
   }
 
+  // update 메소드를 나누는 게 나은지, 하나의 메소드 안에서 if 문으로 나누는 게 나은지..
+  Future<void> updatePreferences(String menuName, bool selectedSwitchButton) async {
+    if( menuName == 'Notification' ) {
+      await userInfo.doc(userUid).update({
+        'notification' : selectedSwitchButton
+      });
+
+    } else if( menuName == 'Shake To Pay' ) {
+      await userInfo.doc(userUid).update({
+        'shakeToPay' : selectedSwitchButton
+      });
+    }
+
+  }
 }
