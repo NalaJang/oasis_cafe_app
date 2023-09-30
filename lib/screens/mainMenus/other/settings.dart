@@ -116,12 +116,28 @@ class About extends StatelessWidget {
       child: ListView.builder(
         itemCount: aboutList.length,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              aboutList[index],
-              style: TextStyle(
-                fontSize: 18
+          return GestureDetector(
+            onTap: (){
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    content: Text(
+                      'clicked ${aboutList[index]}',
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
+              );
+            },
+
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                aboutList[index],
+                style: TextStyle(
+                  fontSize: 18
+                ),
               ),
             ),
           );
