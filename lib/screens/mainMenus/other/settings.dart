@@ -11,6 +11,7 @@ class Settings extends StatelessWidget {
       appBar: AppBar(
         title: Text('Settings'),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -21,7 +22,10 @@ class Settings extends StatelessWidget {
             Divider(color: Colors.grey,),
 
             // 이용약관, 개인정보 처리 방침, 버전 정보
-            About()
+            About(),
+
+            SignOut(),
+
           ],
         ),
       )
@@ -146,5 +150,48 @@ class About extends StatelessWidget {
     );
   }
 }
+
+class SignOut extends StatefulWidget {
+  const SignOut({Key? key}) : super(key: key);
+
+  @override
+  State<SignOut> createState() => _SignOutState();
+}
+
+class _SignOutState extends State<SignOut> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: (){},
+
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30)
+          ),
+          side: BorderSide(
+            color: Colors.teal,
+          )
+        ),
+
+        child: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(top: 15, bottom: 15),
+          child: const Text(
+            'Sign out',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.teal,
+              fontWeight: FontWeight.bold
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 
