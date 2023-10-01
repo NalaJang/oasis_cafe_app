@@ -25,8 +25,13 @@ class Settings extends StatelessWidget {
             // 이용약관, 개인정보 처리 방침, 버전 정보
             About(),
 
+            // 로그아웃
             SignOut(),
 
+            SizedBox(height: 20,),
+
+            // 계정 삭제
+            DeleteAccount()
           ],
         ),
       )
@@ -205,5 +210,91 @@ class _SignOutState extends State<SignOut> {
   }
 }
 
+class DeleteAccount extends StatelessWidget {
+  const DeleteAccount({Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
 
+    void setDialog() {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Delete Account'),
+              content: Text(
+                  'By deleting your Oasis account, '
+                      'all saved information will be lost. This action is irreversible. \n\n'
+                      'Would you like to proceed?'
+              ),
+
+              actions: [
+                ElevatedButton(
+                  onPressed: (){
+                    Provider.of<UserStateProvider>(context, listen: false).deleteAccount();
+
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Login()
+                        ), (route) => false
+                    );
+                  },
+
+                  child: Text('Proceed'),
+
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)
+                      ),
+                      side: BorderSide(
+                          color: Colors.teal,
+                          width: 1
+                      )
+                  ),
+                ),
+
+                SizedBox(width: 10,),
+
+                ElevatedButton(
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+
+                  child: Text('Close'),
+
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.teal,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)
+                      ),
+                      side: BorderSide(
+                          color: Colors.teal,
+                          width: 1
+                      )
+                  ),
+                )
+              ],
+            );
+          }
+      );
+    }
+
+    return GestureDetector(
+      onTap: (){
+        setDialog();
+      },
+
+      child: const Text(
+        'Delete Account',
+        style: TextStyle(
+          color: Colors.red,
+          decoration: TextDecoration.underline
+        ),
+      )
+    );
+  }
+}

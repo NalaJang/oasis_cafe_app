@@ -49,6 +49,7 @@ class UserStateProvider with ChangeNotifier {
     return isLogged;
   }
 
+  // 로그아웃
   Future<void> signOut() async{
     try {
       await _authentication.signOut();
@@ -71,5 +72,15 @@ class UserStateProvider with ChangeNotifier {
       });
     }
 
+  }
+
+  // 계정 삭제
+  Future<void> deleteAccount() async {
+    try {
+      await _authentication.currentUser?.delete();
+      print('deleteAccount');
+    } catch(e) {
+      print(e.toString());
+    }
   }
 }
