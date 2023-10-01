@@ -167,6 +167,9 @@ class _SignOutState extends State<SignOut> {
       child: ElevatedButton(
         onPressed: (){
           Provider.of<UserStateProvider>(context, listen: false).signOut();
+
+          // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
+          // true 를 반환할 때까지 이전 경로를 모두 제거한다.
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
