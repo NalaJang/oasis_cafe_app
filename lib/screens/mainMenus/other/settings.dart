@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
+import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatelessWidget {
@@ -164,7 +165,15 @@ class _SignOutState extends State<SignOut> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
-        onPressed: (){},
+        onPressed: (){
+          Provider.of<UserStateProvider>(context, listen: false).signOut();
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Login()
+            ), (route) => false
+          );
+        },
 
         style: ElevatedButton.styleFrom(
           elevation: 0,
