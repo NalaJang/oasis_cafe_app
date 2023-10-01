@@ -18,7 +18,7 @@ class UserStateProvider with ChangeNotifier {
   bool notification = false;
   bool shakeToPay = false;
 
-  // 회원가입
+  // 로그인
   Future<bool> signIn(String email, String password) async {
     final newUser = await _authentication.signInWithEmailAndPassword(
         email: email,
