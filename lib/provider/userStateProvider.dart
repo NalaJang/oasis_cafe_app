@@ -78,6 +78,7 @@ class UserStateProvider with ChangeNotifier {
   Future<void> deleteAccount() async {
     try {
       await _authentication.currentUser?.delete();
+      await userInfo.doc(userUid).delete();
       print('deleteAccount');
     } catch(e) {
       print(e.toString());
