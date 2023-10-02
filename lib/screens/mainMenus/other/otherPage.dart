@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/other/accountTransactionHistory.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/other/personalInfo.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/settings.dart';
 import 'package:provider/provider.dart';
 
@@ -116,22 +118,38 @@ class CardMenuRow extends StatelessWidget {
 
             // 전자영수증
             if( menuIndex == 0 )
-              Column(
-                children: [
-                  Icon(Icons.receipt_long_sharp),
-                  SizedBox(height: 10,),
-                  Text(cardMenuRow[0]),
-                ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AccountTransactionHistory())
+                  );
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.receipt_long_sharp),
+                    SizedBox(height: 10,),
+                    Text(cardMenuRow[0]),
+                  ],
+                ),
               ),
 
             // 개인정보 관리
             if( menuIndex == 1)
-              Column(
-                children: [
-                  Icon(Icons.person),
-                  SizedBox(height: 10,),
-                  Text(cardMenuRow[1]),
-                ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PersonalInfo())
+                  );
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.person),
+                    SizedBox(height: 10,),
+                    Text(cardMenuRow[1]),
+                  ],
+                ),
               ),
 
             // 설정
