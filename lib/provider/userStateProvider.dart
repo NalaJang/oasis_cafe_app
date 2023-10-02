@@ -75,6 +75,7 @@ class UserStateProvider with ChangeNotifier {
   }
 
   // 계정 삭제
+  // todo: 삭제 결과가 db 에 반영되기까지 약간의 시간이 걸리는 부분에 대한 대안(?) 필요
   Future<void> deleteAccount() async {
     try {
       await _authentication.currentUser?.delete();
