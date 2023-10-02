@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
+import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 import '../../../config/palette.dart';
 import '../../../strings/strings.dart';
@@ -236,6 +238,12 @@ class _OrderButtonState extends State<_OrderButton> {
 
   @override
   Widget build(BuildContext context) {
+
+    final userStateProvider = Provider.of<UserStateProvider>(context);
+    final itemProvider = Provider.of<ItemProvider>(context);
+    final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context);
+    final String userUid = userStateProvider.userUid;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -253,7 +261,30 @@ class _OrderButtonState extends State<_OrderButton> {
 
       ),
       child: GestureDetector(
-        onTap: (){},
+        onTap: (){
+          var now = DateTime.now();
+          var year = now.year.toString();
+          var month = now.month.toString();
+          var day = now.day.toString();
+          var dateFormatter = DateFormat('Hms');
+          var time = dateFormatter.format(now);
+
+          for( var i = 0; i < itemProvider.cartItems.length; i++ ) {
+            String itemName = itemProvider.cartItems[i].itemName;
+            String itemPrice = itemProvider.cartItems[i].itemPrice;
+            String drinkSize = itemProvider.cartItems[i].drinkSize;
+            String cup = itemProvider.cartItems[i].cup;
+            int espressoOption = itemProvider.cartItems[i].espressoOption;
+            String hotOrIced = itemProvider.cartItems[i].hotOrIced;
+            String syrupOption = itemProvider.cartItems[i].syrupOption;
+            String whippedCreamOption = itemProvider.cartItems[i].whippedCreamOption;
+            String iceOption = itemProvider.cartItems[i].iceOption;
+
+            transactionHistoryProvider.orderItems(userUid, year, month, day, time,
+                itemName, itemPrice, drinkSize, cup, hotOrIced,
+                espressoOption, syrupOption, whippedCreamOption, iceOption);
+          }
+        },
 
         child: Container(
           padding: EdgeInsets.all(15.0),

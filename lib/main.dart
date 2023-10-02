@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
+import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserStateProvider()),
         ChangeNotifierProvider(create: (context) => ItemProvider()),
         ChangeNotifierProvider(create: (context) => PersonalOptionProvider()),
+        ChangeNotifierProvider(create: (context) => TransactionHistoryProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
