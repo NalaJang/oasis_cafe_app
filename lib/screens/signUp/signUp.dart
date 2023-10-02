@@ -4,6 +4,7 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:oasis_cafe_app/strings/strings.dart';
 
 class SignUp extends StatefulWidget {
@@ -206,11 +207,14 @@ class _SignUpState extends State<SignUp> {
                           .doc(newUser.user!.uid)
                           .set({
                             // 데이터의 형식은 항상 map 의 형태
+                            'signUpTime' : DateTime.now(),
                             'userEmail' : userEmailController.text,
                             'userPassword' : userPasswordController.text,
                             'userName' : userNameController.text,
                             'userDateOfBirth' : userDateOfBirthController.text,
-                            'userMobileNumber' : userMobileNumberController.text
+                            'userMobileNumber' : userMobileNumberController.text,
+                            'notification' : false,
+                            'shakeToPay' : false
                           });
 
                           if( newUser.user != null ) {
@@ -228,7 +232,7 @@ class _SignUpState extends State<SignUp> {
 
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => BottomNavi())
+                                MaterialPageRoute(builder: (context) => Login())
                             );
                           }
 
