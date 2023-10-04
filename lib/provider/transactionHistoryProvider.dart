@@ -51,4 +51,16 @@ class TransactionHistoryProvider with ChangeNotifier {
         }
     );
   }
+
+  Future<void> getOrderHistory(String userUid, String year, String month, String day) async {
+    await db.collection(Strings.collection_user).doc(userUid)
+        .collection('user_order').doc(year)
+        .collection(month).doc(day)
+        .get()
+        .then((value) => {
+          cup = value.data()!['cup'],
+    });
+
+    print('getOrderHistory , cup >> $cup');
+  }
 }
