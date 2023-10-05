@@ -60,11 +60,29 @@ class AccountTransactionHistory extends StatelessWidget {
 
             itemCount: transactionHistoryProvider.historyList.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                leading: Icon(Icons.credit_card),
-                title: Text('NZD ${transactionHistoryProvider.historyList[index].itemPrice}'),
-                subtitle: Text('${transactionHistoryProvider.historyList[index].itemName}'),
-                trailing: Text('${transactionHistoryProvider.historyList[index].id}'),
+              String price = transactionHistoryProvider.historyList[index].itemPrice;
+              String itemName = transactionHistoryProvider.historyList[index].itemName;
+              String time = transactionHistoryProvider.historyList[index].id;
+
+              return Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 0),
+                child: ListTile(
+
+                  // 결제 수단
+                  leading: Icon(Icons.credit_card),
+
+                  // 가격
+                  title: Text('NZD $price'),
+
+                  // 결제한 아이템 이름
+                  subtitle: Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Text(itemName)
+                  ),
+
+                  // 결제 시간
+                  trailing: Text(time),
+                ),
               );
             },
           );
