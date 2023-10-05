@@ -1,22 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:oasis_cafe_app/model/model_transactionHistory.dart';
 
 import '../strings/strings.dart';
 
 class TransactionHistoryProvider with ChangeNotifier {
-  late String id;
-  late String itemName;
-  late String itemPrice;
-  late String drinkSize;
-  late String cup;
-  late int espressoOption;
-  late String hotOrIced;
-  late String syrupOption;
-  late String whippedCreamOption;
-  late String iceOption;
-
   final db = FirebaseFirestore.instance;
+  List<TransactionHistoryModel> historyList = [];
 
+  // 주문하기
   Future<void> orderItems(
       String userUid,
       String year,
@@ -33,11 +25,10 @@ class TransactionHistoryProvider with ChangeNotifier {
       String whippedCreamOption,
       String iceOption
       ) async {
-    await db.collection(Strings.collection_user).doc(userUid)
-        .collection('user_order').doc(year)
-        .collection(month).doc(day)
-        .collection(time)
-        .add(
+    await db.collection('user_order').doc(userUid)
+        .collection(year).doc(month)
+        .collection(day).doc(time)
+        .set(
         {
           'itemName' : itemName,
           'itemPrice' : itemPrice,
@@ -53,14 +44,36 @@ class TransactionHistoryProvider with ChangeNotifier {
   }
 
   Future<void> getOrderHistory(String userUid, String year, String month, String day) async {
-    await db.collection(Strings.collection_user).doc(userUid)
-        .collection('user_order').doc(year)
-        .collection(month).doc(day)
-        .get()
-        .then((value) => {
-          cup = value.data()!['cup'],
-    });
+    // await db.collection(Strings.collection_user).doc(userUid)
+    //     .collection('user_order').doc(year)
+    //     .collection(month).doc(day)
+    //     .get()
+    //     .then((DocumentSnapshot snapshot) {
+    //       final data = snapshot.data() as Map<String, dynamic>;
+    //       print('data >. $data');
+    // });
 
-    print('getOrderHistory , cup >> $cup');
+    // await db.collection('user_order').doc(userUid)
+    //     .collection(year).doc(month)
+    //     .collection(day)
+    //     .get().then(
+    //       (querySnapshot) {
+    //     for (var docSnapshot in querySnapshot.docs) {
+    //       print('day ==> $day, ${docSnapshot.id} => ${docSnapshot.data()}');
+    //     }
+    //   },
+    //   onError: (e) => print("Error completing: $e"),
+    // );
+
+    historyList = await db.collection('user_order').doc(userUid)
+                          .collection(year).doc(month)
+                          .collection(day)
+                          .get()
+                          .then((querySnapshot) {
+                            return querySnapshot.docs.map((document) {
+                              return TransactionHistoryModel.getSnapshotDataFromUserOrder(document);
+                            }).toList();
+                          });
+    notifyListeners();
   }
 }
