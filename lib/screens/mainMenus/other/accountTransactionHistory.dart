@@ -52,8 +52,59 @@ class AccountTransactionHistory extends StatelessWidget {
 
       body: Column(
         children: [
-          Text('ddddd'),
-          Divider(height: 10, thickness: 1, color: Colors.grey,),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Theme(
+              data: ThemeData(
+                dividerColor: Colors.transparent
+              ),
+
+              child: ExpansionTile(
+                // 조회된 날짜
+                title: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    '2022.10.07 - 2023.10.06',
+                    style: TextStyle(
+                      color: Colors.black
+                    ),
+                  ),
+                ),
+
+                // 상세 조회 버튼
+                trailing: ElevatedButton(
+                  onPressed: (){},
+
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)
+                    ),
+                    side: const BorderSide(
+                      color: Colors.brown,
+                      width: 1
+                    )
+                  ),
+
+                  child: const Text(
+                    '상세 조회',
+                    style: TextStyle(
+                        color: Colors.brown,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
+
+                children: [
+                  Text('ExpansionTile children')
+                ],
+              ),
+            ),
+          ),
+
+          const Divider(thickness: 1, color: Colors.brown,),
+
           FutureBuilder(
             future: transactionHistoryProvider.getOrderHistory(userUid, year.toString(), month.toString(), '5'),
             builder: (context, snapshot) {
