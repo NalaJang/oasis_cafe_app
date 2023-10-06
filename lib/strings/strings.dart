@@ -31,6 +31,7 @@ class Strings {
   static const String dateOfBirthValidation = 'Please enter your date of birth';
   static const String mobileNumberValidation = 'Please enter a valid mobile number';
 
+  //// Order
   static const String order = 'Order';
   static const String beverage = 'Beverage';
   static const String food = 'Food';
@@ -52,4 +53,7 @@ class Strings {
 
   static const String submit = 'Submit';
 
+
+  //// Setting
+  static const String personalInfo = 'Personal Info';
 }
