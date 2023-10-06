@@ -72,27 +72,9 @@ class AccountTransactionHistory extends StatelessWidget {
                 ),
 
                 // 상세 조회 버튼
-                trailing: ElevatedButton(
-                  onPressed: (){},
-
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)
-                    ),
-                    side: const BorderSide(
-                      color: Colors.brown,
-                      width: 1
-                    )
-                  ),
-
-                  child: const Text(
-                    '상세 조회',
-                    style: TextStyle(
-                        color: Colors.brown,
-                        fontWeight: FontWeight.bold
-                    ),
+                trailing: Text('상세 조회',
+                  style: TextStyle(
+                    color: Colors.black
                   ),
                 ),
 
