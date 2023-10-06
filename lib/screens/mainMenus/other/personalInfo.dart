@@ -16,6 +16,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
   final formKey = GlobalKey<FormState>();
   var userNameController = TextEditingController();
   var userEmailController = TextEditingController();
+  var userDateOfBirthController = TextEditingController();
+  var userMobileNumberController = TextEditingController();
+
+
+  void _tryValidation() {
+    final isValid = formKey.currentState!.validate();
+
+    // 폼 스테이트 값이 유효하다면 값을 저장
+    if( isValid) {
+      formKey.currentState!.save();
+    }
+  }
 
   InputDecoration setTextFormDecoration(String labelText) {
     return InputDecoration(
@@ -36,9 +48,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
     final userStateProvider = Provider.of<UserStateProvider>(context, listen: false);
     var userName = userStateProvider.userName;
     var userEmail = userStateProvider.userEmail;
+    var userDateOfBirth = userStateProvider.userDateOfBirth;
+    var userMobileNumber = userStateProvider.userMobileNumber;
 
     userNameController.text = userName;
     userEmailController.text = userEmail;
+    userDateOfBirthController.text = userDateOfBirth;
+    userMobileNumberController.text = userMobileNumber;
+  }
+
+
+  @override
+  void dispose() {
+    userNameController.dispose();
+    userEmailController.dispose();
+    userDateOfBirthController.dispose();
+    userMobileNumberController.dispose();
   }
 
   @override
@@ -55,9 +80,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
           child: Column(
             children: [
 
+              // 이름, 이메일 정보
               memberInformation(),
 
+              SizedBox(height: 30,),
 
+              // 생일 정보
+              birthday(),
+
+              SizedBox(height: 30,),
+
+              // update 버튼
+              update()
             ],
           ),
         ),
@@ -65,18 +99,19 @@ class _PersonalInfoState extends State<PersonalInfo> {
     );
   }
 
+  // 이름, 이메일 정보
   Column memberInformation() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Member Information(*)',
+        const Text(
+          Strings.memberInfo,
           style: TextStyle(
             fontWeight: FontWeight.bold
           ),
         ),
 
-        SizedBox(height: 20,),
+        SizedBox(height: 15,),
 
         // 이름
         TextFormField(
@@ -92,6 +127,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             height: 1.6,
             color: Colors.black,
           ),
+          cursorColor: Colors.black,
           decoration: setTextFormDecoration(Strings.name),
         ),
 
@@ -111,4 +147,75 @@ class _PersonalInfoState extends State<PersonalInfo> {
       ],
     );
   }
+
+  // 생일 정보(옵션 사항)
+  Column birthday() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          Strings.memberBirth,
+          style: TextStyle(
+              fontWeight: FontWeight.bold
+          ),
+        ),
+
+        SizedBox(height: 15,),
+
+        // 생일
+        TextFormField(
+          controller: userDateOfBirthController,
+          validator: (value) {
+            if( value!.length < 6 ) {
+              Strings.dateOfBirthValidation;
+            }
+            return null;
+          },
+          style: TextStyle(
+            height: 1.6,
+            color: Colors.black,
+          ),
+          cursorColor: Colors.black,
+          decoration: setTextFormDecoration(Strings.dateOfBirth),
+        ),
+      ],
+    );
+  }
+
+  // 정보 수정 제출 버튼
+  ElevatedButton update() {
+    return ElevatedButton(
+      onPressed: (){
+        // 사용자 입력 값 유효성 검사
+        _tryValidation();
+
+        Provider.of<UserStateProvider>(context, listen: false).updateUserInfo(
+          userNameController.text,
+          userDateOfBirthController.text,
+          userMobileNumberController.text
+        );
+      },
+
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        backgroundColor: Colors.teal,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+        ),
+        side: BorderSide(
+            color: Colors.teal,
+            width: 1
+        )
+      ),
+
+      child: Text(
+        'Update',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold
+        ),
+      )
+    );
+  }
+
 }

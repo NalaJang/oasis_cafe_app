@@ -59,6 +59,15 @@ class UserStateProvider with ChangeNotifier {
     }
   }
 
+  // 사용자 정보 수정
+  Future<void> updateUserInfo(String name, String dateOfBirth, String mobileNumber) async {
+    await userInfo.doc(userUid).update({
+      'userName' : name,
+      'userDateOfBirth' : dateOfBirth,
+      'userMobileNumber' : mobileNumber,
+    });
+  }
+
   // update 메소드를 나누는 게 나은지, 하나의 메소드 안에서 if 문으로 나누는 게 나은지..
   Future<void> updatePreferences(String menuName, bool selectedSwitchButton) async {
     if( menuName == 'Notification' ) {
