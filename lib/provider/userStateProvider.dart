@@ -66,6 +66,18 @@ class UserStateProvider with ChangeNotifier {
       'userDateOfBirth' : dateOfBirth,
       'userMobileNumber' : mobileNumber,
     });
+
+    await db.collection(Strings.collection_user)
+        .doc(userUid)
+        .get()
+        .then((value) =>
+    {
+      userName = value.data()!['userName'],
+      userDateOfBirth = value.data()!['userDateOfBirth'],
+      userMobileNumber = value.data()!['userMobileNumber'],
+    });
+
+    notifyListeners();
   }
 
   // update 메소드를 나누는 게 나은지, 하나의 메소드 안에서 if 문으로 나누는 게 나은지..
