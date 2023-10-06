@@ -72,14 +72,68 @@ class AccountTransactionHistory extends StatelessWidget {
                 ),
 
                 // 상세 조회 버튼
-                trailing: Text('상세 조회',
+                trailing: const Text(
+                  '상세 조회',
                   style: TextStyle(
                     color: Colors.black
                   ),
                 ),
 
                 children: [
-                  Text('ExpansionTile children')
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(width: 5,),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1),
+                          ),
+                          child: const Text(
+                            '1개월',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(width: 5,),
+
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1),
+                          ),
+                          child: const Text(
+                            '1년',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(width: 5,),
+
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1),
+                          ),
+                          child: const Text(
+                            '기간 설정',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 5,),
+                    ],
+                  ),
+
+                  ElevatedButton(
+                    onPressed: (){},
+                    child: Text('조회')
+                  )
                 ],
               ),
             ),
