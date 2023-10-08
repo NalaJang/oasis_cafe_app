@@ -68,11 +68,13 @@ class ItemProvider with ChangeNotifier {
       ) async {
     await db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart).add(
         {
+          'quantity'  : 1,
           'drinkSize' : drinkSize,
           'cup' : cup,
           'hotOrIced' : hotOrIced,
           'itemName' : selectedItem,
           'itemPrice' : selectedItemPrice,
+          'totalPrice' : 0,
           'espressoOption' : espressoOption,
           'syrupOption' : syrupOption,
           'whippedCreamOption' : whippedCreamOption,
@@ -95,10 +97,16 @@ class ItemProvider with ChangeNotifier {
 
   // 장바구니 수량 및 가격 업데이트
   Future<void> updateItemQuantity(String itemId, int quantity, double totalPrice) async {
+
     await _cartCollection.doc(itemId).update({
       'quantity' : quantity,
       'totalPrice' : totalPrice
     });
+
+    await _cartCollection.doc(itemId).get().then((value) => {
+      CartItemModel.getUpdatedQuantityAndPrice(value)
+    });
+
     notifyListeners();
   }
 

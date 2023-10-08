@@ -104,13 +104,10 @@ class _CartItemsState extends State<CartItems> {
     }
 
     // 아이템 수량
-    Text setQuantity(String itemId, int quantity, double price) {
+    // 변경된 수량 및 가격 업데이트
+    setQuantity(String itemId, int quantity, double price) {
       double totalPrice = quantity * price;
       itemProvider.updateItemQuantity(itemId, quantity, totalPrice);
-
-      return Text(
-        '$quantity'
-      );
     }
 
     return FutureBuilder(
@@ -123,10 +120,11 @@ class _CartItemsState extends State<CartItems> {
 
           itemCount: itemProvider.cartItems.length,
           itemBuilder: (context, index) {
-            int initialQuantity = itemProvider.cartItems[index].quantity;
+            int quantity = itemProvider.cartItems[index].quantity;
             String itemId = itemProvider.cartItems[index].id;
             String itemName = itemProvider.cartItems[index].itemName;
             String itemPrice = itemProvider.cartItems[index].itemPrice;
+            double totalPrice = itemProvider.cartItems[index].totalPrice;
             String drinkSize = itemProvider.cartItems[index].drinkSize;
             String cup = itemProvider.cartItems[index].cup;
             int espressoOption = itemProvider.cartItems[index].espressoOption;
@@ -209,7 +207,7 @@ class _CartItemsState extends State<CartItems> {
                                         if( quantity > 1 ) {
                                           quantity--;
                                         }
-                                        initialQuantity = quantity;
+                                        setQuantity(itemId, quantity, double.parse(itemPrice));
                                       },
                                       child: Icon(
                                         CupertinoIcons.minus_circle,
@@ -219,13 +217,13 @@ class _CartItemsState extends State<CartItems> {
 
                                     Container(
                                       margin: EdgeInsets.only(left: 20, right: 20),
-                                      child: setQuantity(itemId, quantity, double.parse(itemPrice)),
+                                      child: Text('$quantity'),
                                     ),
 
                                     GestureDetector(
                                       onTap: (){
                                         quantity++;
-                                        initialQuantity = quantity;
+                                        setQuantity(itemId, quantity, double.parse(itemPrice));
                                       },
                                       child: Icon(CupertinoIcons.plus_circle),
                                     ),
@@ -235,7 +233,7 @@ class _CartItemsState extends State<CartItems> {
 
                                 SizedBox(width: 50,),
 
-                                Text('NZD ${quantity * double.parse(itemPrice)}'),
+                                Text('NZD $totalPrice')
                               ],
                             ),
                           ],
