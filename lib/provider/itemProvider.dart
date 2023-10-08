@@ -9,7 +9,7 @@ import 'package:oasis_cafe_app/strings/strings.dart';
 class ItemProvider with ChangeNotifier {
   late CollectionReference _collectionReference;
   late CollectionReference _ingredientsCollectionReference;
-  late CollectionReference _carCollection;
+  late CollectionReference _cartCollection;
   final db = FirebaseFirestore.instance;
 
   List<ItemModel> items = [];
@@ -81,9 +81,9 @@ class ItemProvider with ChangeNotifier {
   }
 
   Future<void> getItemsFromCart(String userUid) async {
-    _carCollection = db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart);
+    _cartCollection = db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart);
 
-    cartItems = await _carCollection.get().then( (QuerySnapshot results) {
+    cartItems = await _cartCollection.get().then( (QuerySnapshot results) {
       return results.docs.map( (DocumentSnapshot document) {
         return CartItemModel.getSnapshotDataFromCart(document);
       }).toList();
@@ -91,8 +91,18 @@ class ItemProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+  // 장바구니 수량 및 가격 업데이트
+  Future<void> updateItemQuantity(String itemId, int quantity, double totalPrice) async {
+    await _cartCollection.doc(itemId).update({
+      'quantity' : quantity,
+      'totalPrice' : totalPrice
+    });
+    notifyListeners();
+}
+
   Future<void> deleteItemFromCart(String itemId, BuildContext context) async {
-    await _carCollection.doc(itemId).delete();
+    await _cartCollection.doc(itemId).delete();
 
     // ScaffoldMessenger.of(context) 에
     // 'Don't use 'BuildContext's across async gaps.' 라는 경고가 떠 있었다.

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CartItemModel {
 
   late String id;
+  late int quantity;
   late String itemName;
   late String itemPrice;
   late String drinkSize;
@@ -17,6 +18,7 @@ class CartItemModel {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
 
     id = snapshot.id;
+    quantity = data['quantity'];
     itemName = data['itemName'];
     itemPrice = data['itemPrice'];
     drinkSize = data['drinkSize'];

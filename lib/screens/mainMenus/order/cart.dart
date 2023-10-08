@@ -37,6 +37,9 @@ class CartItems extends StatefulWidget {
 }
 
 class _CartItemsState extends State<CartItems> {
+
+  int quantity = 1;
+
   @override
   Widget build(BuildContext context) {
 
@@ -98,6 +101,15 @@ class _CartItemsState extends State<CartItems> {
       );
     }
 
+    Text setQuantity(String itemId, int quantity, double price) {
+      double totalPrice = quantity * price;
+      itemProvider.updateItemQuantity(itemId, quantity, totalPrice);
+
+      return Text(
+        '$quantity'
+      );
+    }
+
     return FutureBuilder(
       future: itemProvider.getItemsFromCart(userUid),
       builder: (context, snapshot) {
@@ -108,6 +120,7 @@ class _CartItemsState extends State<CartItems> {
 
           itemCount: itemProvider.cartItems.length,
           itemBuilder: (context, index) {
+            int initialQuantity = itemProvider.cartItems[index].quantity;
             String itemId = itemProvider.cartItems[index].id;
             String itemName = itemProvider.cartItems[index].itemName;
             String itemPrice = itemProvider.cartItems[index].itemPrice;
@@ -189,17 +202,28 @@ class _CartItemsState extends State<CartItems> {
                                 Row(
                                   children: [
                                     GestureDetector(
-                                      onTap: (){},
-                                      child: Icon(CupertinoIcons.minus_circle),
+                                      onTap: (){
+                                        if( quantity > 1 ) {
+                                          quantity--;
+                                        }
+                                        initialQuantity = quantity;
+                                      },
+                                      child: Icon(
+                                        CupertinoIcons.minus_circle,
+                                        color: quantity > 1 ? Colors.black : Colors.grey,
+                                      ),
                                     ),
 
                                     Container(
                                       margin: EdgeInsets.only(left: 20, right: 20),
-                                      child: Text('1'),
+                                      child: setQuantity(itemId, quantity, double.parse(itemPrice)),
                                     ),
 
                                     GestureDetector(
-                                      onTap: (){},
+                                      onTap: (){
+                                        quantity++;
+                                        initialQuantity = quantity;
+                                      },
                                       child: Icon(CupertinoIcons.plus_circle),
                                     ),
 
@@ -208,7 +232,7 @@ class _CartItemsState extends State<CartItems> {
 
                                 SizedBox(width: 50,),
 
-                                Text('NZD $itemPrice'),
+                                Text('NZD ${quantity * double.parse(itemPrice)}'),
                               ],
                             ),
                           ],
@@ -270,6 +294,7 @@ class _OrderButtonState extends State<_OrderButton> {
           var time = dateFormatter.format(now);
 
           for( var i = 0; i < itemProvider.cartItems.length; i++ ) {
+            int quantity = itemProvider.cartItems[i].quantity;
             String itemName = itemProvider.cartItems[i].itemName;
             String itemPrice = itemProvider.cartItems[i].itemPrice;
             String drinkSize = itemProvider.cartItems[i].drinkSize;
