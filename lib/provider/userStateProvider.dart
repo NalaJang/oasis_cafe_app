@@ -10,6 +10,7 @@ class UserStateProvider with ChangeNotifier {
   CollectionReference userInfo = FirebaseFirestore.instance.collection('user');
 
   bool isLogged = false;
+  bool isUpdated = false;
   String userUid = '';
   String userName = '';
   String userEmail = '';
@@ -60,7 +61,7 @@ class UserStateProvider with ChangeNotifier {
   }
 
   // 사용자 정보 수정
-  Future<void> updateUserInfo(String name, String dateOfBirth, String mobileNumber) async {
+  Future<bool> updateUserInfo(String name, String dateOfBirth, String mobileNumber) async {
     await userInfo.doc(userUid).update({
       'userName' : name,
       'userDateOfBirth' : dateOfBirth,
@@ -75,9 +76,13 @@ class UserStateProvider with ChangeNotifier {
       userName = value.data()!['userName'],
       userDateOfBirth = value.data()!['userDateOfBirth'],
       userMobileNumber = value.data()!['userMobileNumber'],
-    });
 
-    notifyListeners();
+      isUpdated = true
+    },
+    onError: (e) => isUpdated = false
+    );
+
+    return isUpdated;
   }
 
   // update 메소드를 나누는 게 나은지, 하나의 메소드 안에서 if 문으로 나누는 게 나은지..

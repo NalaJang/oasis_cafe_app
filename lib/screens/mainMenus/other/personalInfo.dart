@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -18,26 +19,30 @@ class _PersonalInfoState extends State<PersonalInfo> {
   var userEmailController = TextEditingController();
   var userDateOfBirthController = TextEditingController();
   var userMobileNumberController = TextEditingController();
+  bool showSpinner = false;
 
-
-  void _tryValidation() {
+  bool _tryValidation() {
     final isValid = formKey.currentState!.validate();
 
     // 폼 스테이트 값이 유효하다면 값을 저장
-    if( isValid) {
+    if( isValid ) {
       formKey.currentState!.save();
     }
+    return isValid;
   }
 
   InputDecoration setTextFormDecoration(String labelText) {
     return InputDecoration(
-        labelText: labelText,
-        labelStyle: TextStyle(
-          color: Colors.grey[850],
-        ),
-        focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.black)
-        )
+      labelText: labelText,
+      labelStyle: const TextStyle(
+        color: Colors.black54,
+      ),
+      focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black)
+      ),
+      errorBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.red)
+      )
     );
   }
 
@@ -75,26 +80,29 @@ class _PersonalInfoState extends State<PersonalInfo> {
         title: const Text(Strings.personalInfo),
       ),
 
-      body: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(
-            children: [
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Form(
+          key: formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(
+              children: [
 
-              // 이름, 이메일 정보
-              memberInformation(),
+                // 이름, 이메일 정보
+                memberInformation(),
 
-              SizedBox(height: 30,),
+                SizedBox(height: 30,),
 
-              // 생일 정보
-              birthday(),
+                // 생일 정보
+                birthday(),
 
-              SizedBox(height: 30,),
+                SizedBox(height: 30,),
 
-              // update 버튼
-              update()
-            ],
+                // update 버튼
+                update()
+              ],
+            ),
           ),
         ),
       )
@@ -167,13 +175,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
         // 생일
         TextFormField(
           controller: userDateOfBirthController,
-          validator: (value) {
-            if( value!.length < 6 ) {
-              Strings.dateOfBirthValidation;
-            }
-            return null;
-          },
-          style: TextStyle(
+          validator: (value) =>
+            value!.length < 6 ? Strings.dateOfBirthValidation : null,
+
+          style: const TextStyle(
             height: 1.6,
             color: Colors.black,
           ),
@@ -187,15 +192,33 @@ class _PersonalInfoState extends State<PersonalInfo> {
   // 정보 수정 제출 버튼
   ElevatedButton update() {
     return ElevatedButton(
-      onPressed: (){
+      onPressed: () async {
         // 사용자 입력 값 유효성 검사
-        _tryValidation();
+        var isValid = _tryValidation();
 
-        Provider.of<UserStateProvider>(context, listen: false).updateUserInfo(
-          userNameController.text,
-          userDateOfBirthController.text,
-          userMobileNumberController.text
-        );
+        if( isValid ) {
+
+          try {
+            setState(() {
+              showSpinner = true;
+            });
+
+            var isUpdated = Provider.of<UserStateProvider>(context, listen: false).updateUserInfo(
+                            userNameController.text,
+                            userDateOfBirthController.text,
+                            userMobileNumberController.text
+                        );
+
+            if( await isUpdated ) {
+              setState(() {
+                showSpinner = false;
+              });
+            }
+          } catch(e) {
+            print(e);
+          }
+        }
+
       },
 
       style: ElevatedButton.styleFrom(
