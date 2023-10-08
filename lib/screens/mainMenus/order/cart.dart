@@ -38,8 +38,6 @@ class CartItems extends StatefulWidget {
 
 class _CartItemsState extends State<CartItems> {
 
-  int quantity = 1;
-
   @override
   Widget build(BuildContext context) {
 
@@ -105,7 +103,7 @@ class _CartItemsState extends State<CartItems> {
 
     // 아이템 수량
     // 변경된 수량 및 가격 업데이트
-    setQuantity(String itemId, int quantity, double price) {
+    void setQuantity(String itemId, int quantity, double price) {
       double totalPrice = quantity * price;
       itemProvider.updateItemQuantity(itemId, quantity, totalPrice);
     }
@@ -298,6 +296,7 @@ class _OrderButtonState extends State<_OrderButton> {
             int quantity = itemProvider.cartItems[i].quantity;
             String itemName = itemProvider.cartItems[i].itemName;
             String itemPrice = itemProvider.cartItems[i].itemPrice;
+            double totalPrice = itemProvider.cartItems[i].totalPrice;
             String drinkSize = itemProvider.cartItems[i].drinkSize;
             String cup = itemProvider.cartItems[i].cup;
             int espressoOption = itemProvider.cartItems[i].espressoOption;
@@ -307,7 +306,7 @@ class _OrderButtonState extends State<_OrderButton> {
             String iceOption = itemProvider.cartItems[i].iceOption;
 
             transactionHistoryProvider.orderItems(userUid, year, month, day, time,
-                itemName, itemPrice, drinkSize, cup, hotOrIced,
+                quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
                 espressoOption, syrupOption, whippedCreamOption, iceOption);
           }
         },

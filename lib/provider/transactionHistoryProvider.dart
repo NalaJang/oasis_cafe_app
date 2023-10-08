@@ -15,8 +15,10 @@ class TransactionHistoryProvider with ChangeNotifier {
       String month,
       String day,
       String time,
+      int quantity,
       String itemName,
       String itemPrice,
+      double totalPrice,
       String drinkSize,
       String cup,
       String hotOrIced,
@@ -30,8 +32,10 @@ class TransactionHistoryProvider with ChangeNotifier {
         .collection(day).doc(time)
         .set(
         {
+          'quantity' : quantity,
           'itemName' : itemName,
           'itemPrice' : itemPrice,
+          'totalPrice' : totalPrice,
           'drinkSize' : drinkSize,
           'cup' : cup,
           'hotOrIced' : hotOrIced,
