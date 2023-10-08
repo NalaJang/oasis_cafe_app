@@ -92,15 +92,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 // 이름, 이메일 정보
                 memberInformation(),
 
-                SizedBox(height: 30,),
+                SizedBox(height: 50,),
 
                 // 생일 정보
                 birthday(),
 
                 SizedBox(height: 30,),
 
+                Spacer(),
                 // update 버튼
-                update()
+                update(),
+
+                SizedBox(height: 50,)
               ],
             ),
           ),
@@ -233,11 +236,16 @@ class _PersonalInfoState extends State<PersonalInfo> {
         )
       ),
 
-      child: Text(
-        'Update',
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 15, bottom: 15),
+        child: Text(
+          'Update',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold
+          ),
         ),
       )
     );
