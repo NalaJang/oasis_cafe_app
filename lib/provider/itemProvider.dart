@@ -52,6 +52,7 @@ class ItemProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
   // 장바구니에 선택한 음료 담기
   Future<void> addItemsToCart(
       String userUid,
@@ -99,8 +100,10 @@ class ItemProvider with ChangeNotifier {
       'totalPrice' : totalPrice
     });
     notifyListeners();
-}
+  }
 
+
+  // 장바구니에서 아이템 삭제
   Future<void> deleteItemFromCart(String itemId, BuildContext context) async {
     await _cartCollection.doc(itemId).delete();
 

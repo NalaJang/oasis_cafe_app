@@ -47,6 +47,8 @@ class _CartItemsState extends State<CartItems> {
     final itemProvider = Provider.of<ItemProvider>(context);
     final String userUid = userStateProvider.userUid;
 
+
+    // 메뉴 삭제 다이얼로그
     void setShowDialog(String itemId) {
       showDialog(
           context: context,
@@ -101,6 +103,7 @@ class _CartItemsState extends State<CartItems> {
       );
     }
 
+    // 아이템 수량
     Text setQuantity(String itemId, int quantity, double price) {
       double totalPrice = quantity * price;
       itemProvider.updateItemQuantity(itemId, quantity, totalPrice);
