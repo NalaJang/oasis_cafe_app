@@ -46,6 +46,8 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 
     Provider.of<PersonalOptionProvider>(context, listen: false).vanillaSyrup = 0;
     Provider.of<PersonalOptionProvider>(context, listen: false).caramelSyrup = 0;
+    Provider.of<PersonalOptionProvider>(context, listen: false).selectedSyrupOption = '';
+    Provider.of<PersonalOptionProvider>(context, listen: false).selectedWhippedCreamOption = '';
   }
 
   @override
