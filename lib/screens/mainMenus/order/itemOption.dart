@@ -133,6 +133,16 @@ class _DrinkSizeSelectionButtonState extends State<DrinkSizeSelectionButton> {
   var weightOption = ['237ml', '355ml', '473ml'];
   List<String> selectedSizeOption = [];
 
+
+  @override
+  void initState() {
+    super.initState();
+
+    // drink size, cup option 값 초기화
+    Provider.of<PersonalOptionProvider>(context, listen: false).selectedDrinkSizeOption = '';
+    Provider.of<PersonalOptionProvider>(context, listen: false).selectedCupOption = '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
