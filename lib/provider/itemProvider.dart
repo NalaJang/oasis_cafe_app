@@ -87,7 +87,6 @@ class ItemProvider with ChangeNotifier {
     _cartCollection = db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart);
 
     cartItems = await _cartCollection.get().then( (QuerySnapshot results) {
-      print('${results.docs.length}');
       return results.docs.map( (DocumentSnapshot document) {
         return CartItemModel.getSnapshotDataFromCart(document);
       }).toList();
