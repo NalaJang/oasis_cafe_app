@@ -41,6 +41,14 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    Provider.of<PersonalOptionProvider>(context, listen: false).vanillaSyrup = 0;
+    Provider.of<PersonalOptionProvider>(context, listen: false).caramelSyrup = 0;
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
