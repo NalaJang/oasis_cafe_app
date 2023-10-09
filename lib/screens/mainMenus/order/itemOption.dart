@@ -139,7 +139,8 @@ class _DrinkSizeSelectionButtonState extends State<DrinkSizeSelectionButton> {
     super.initState();
 
     // drink size, cup option 값 초기화
-    Provider.of<PersonalOptionProvider>(context, listen: false).selectedDrinkSizeOption = '';
+    selectedSizeOption.add(sizeOption[1]);
+    Provider.of<PersonalOptionProvider>(context, listen: false).selectedDrinkSizeOption = 'Medium';
     Provider.of<PersonalOptionProvider>(context, listen: false).selectedCupOption = '';
   }
 
