@@ -303,18 +303,39 @@ class _SubmitButtonState extends State<SubmitButton> {
         var selectedWhippedCreamOption = personalOptionProvider.selectedWhippedCreamOption;
         var selectedIceOption = personalOptionProvider.selectedIceOption;
 
-        menuDetailProvider.addItemsToCart(
-          userStateProvider.userUid,
-          selectedDrinkSizeOption,
-          selectedCupOption,
-          hotOrIcedOption,
-          widget.itemName,
-          widget.itemPrice,
-          selectedShotOption,
-          selectedSyrupOption,
-          selectedWhippedCreamOption,
-          selectedIceOption
-        );
+        // 컵이 선택되지 않았을 경우
+        if( selectedCupOption == '' ) {
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  '컵이 선택되지 않았습니다.'
+                )
+              )
+          );
+
+        } else {
+          menuDetailProvider.addItemsToCart(
+              userStateProvider.userUid,
+              selectedDrinkSizeOption,
+              selectedCupOption,
+              hotOrIcedOption,
+              widget.itemName,
+              widget.itemPrice,
+              selectedShotOption,
+              selectedSyrupOption,
+              selectedWhippedCreamOption,
+              selectedIceOption
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text(
+                      '장바구니에 추가되었습니다.'
+                  )
+              )
+          );
+        }
       },
 
       child: Container(
