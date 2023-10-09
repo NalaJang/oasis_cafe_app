@@ -17,12 +17,13 @@ class CartItemModel {
 
   CartItemModel.getSnapshotDataFromCart(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-
+print('getSnapshotDataFromCart id >> ${snapshot.id}');
     id = snapshot.id;
     quantity = data['quantity'];
     itemName = data['itemName'];
     itemPrice = data['itemPrice'];
     totalPrice = data['totalPrice'];
+    print('object');
     drinkSize = data['drinkSize'];
     cup = data['cup'];
     espressoOption = data['espressoOption'];

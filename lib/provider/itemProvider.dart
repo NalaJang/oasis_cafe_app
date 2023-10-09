@@ -74,7 +74,7 @@ class ItemProvider with ChangeNotifier {
           'hotOrIced' : hotOrIced,
           'itemName' : selectedItem,
           'itemPrice' : selectedItemPrice,
-          'totalPrice' : 0,
+          'totalPrice' : 0.0,
           'espressoOption' : espressoOption,
           'syrupOption' : syrupOption,
           'whippedCreamOption' : whippedCreamOption,
@@ -87,6 +87,7 @@ class ItemProvider with ChangeNotifier {
     _cartCollection = db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart);
 
     cartItems = await _cartCollection.get().then( (QuerySnapshot results) {
+      print('${results.docs.length}');
       return results.docs.map( (DocumentSnapshot document) {
         return CartItemModel.getSnapshotDataFromCart(document);
       }).toList();
@@ -98,14 +99,14 @@ class ItemProvider with ChangeNotifier {
   // 장바구니 수량 및 가격 업데이트
   Future<void> updateItemQuantity(String itemId, int quantity, double totalPrice) async {
 
-    await _cartCollection.doc(itemId).update({
-      'quantity' : quantity,
-      'totalPrice' : totalPrice
-    });
-
-    await _cartCollection.doc(itemId).get().then((value) => {
-      CartItemModel.getUpdatedQuantityAndPrice(value)
-    });
+    // await _cartCollection.doc(itemId).update({
+    //   'quantity' : quantity,
+    //   'totalPrice' : totalPrice
+    // });
+    //
+    // await _cartCollection.doc(itemId).get().then((value) => {
+    //   CartItemModel.getUpdatedQuantityAndPrice(value)
+    // });
 
     notifyListeners();
   }

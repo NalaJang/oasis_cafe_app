@@ -111,6 +111,7 @@ class _CartItemsState extends State<CartItems> {
     return FutureBuilder(
       future: itemProvider.getItemsFromCart(userUid),
       builder: (context, snapshot) {
+        print('itemProvider.cartItems.length >> ${itemProvider.cartItems.length}');
         return ListView.separated(
           separatorBuilder: (BuildContext context, int index) => const Divider(
             color: Colors.grey,
