@@ -4,6 +4,7 @@ class Strings {
   static const String itemOption = '/itemOption';
 
   static const String collection_user = 'user';
+  static const String collection_userOrder = 'user_order';
   static const String collection_userCart = 'user_cart';
   static const String collection_ingredients = 'ingredients';
 

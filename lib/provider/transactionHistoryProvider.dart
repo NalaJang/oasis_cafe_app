@@ -27,11 +27,37 @@ class TransactionHistoryProvider with ChangeNotifier {
       String whippedCreamOption,
       String iceOption
       ) async {
-    await db.collection('user_order').doc(userUid)
-        .collection(year).doc(month)
-        .collection(day).doc(time)
+
+    // user 정보에 저장되는 데이터베이스 경로
+    await db.collection(Strings.collection_user).doc(userUid)
+        .collection(Strings.collection_userOrder).doc(year)
+        .collection(month).doc(day)
+        .collection(time).doc()
         .set(
         {
+          'userUid' : userUid,
+          'quantity' : quantity,
+          'itemName' : itemName,
+          'itemPrice' : itemPrice,
+          'totalPrice' : totalPrice,
+          'drinkSize' : drinkSize,
+          'cup' : cup,
+          'hotOrIced' : hotOrIced,
+          'espressoOption' : espressoOption,
+          'syrupOption' : syrupOption,
+          'whippedCreamOption' : whippedCreamOption,
+          'iceOption' : iceOption
+        }
+    );
+
+
+    // 매장에서 볼 데이터베이스 경로
+    await db.collection('user_order').doc(year)
+        .collection(month).doc(day)
+        .collection(time).doc()
+        .set(
+        {
+          'userUid' : userUid,
           'quantity' : quantity,
           'itemName' : itemName,
           'itemPrice' : itemPrice,
