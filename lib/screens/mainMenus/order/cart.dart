@@ -38,6 +38,20 @@ class CartItems extends StatefulWidget {
 
 class _CartItemsState extends State<CartItems> {
 
+  List<int> quantities = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    // itemBuilder 에서 quantity 를 불러오면 값이 변경안되는 등 각 각 조절하기가 어려웠다.
+    // 그래서 아이템들의 수량을 따로 따로 조절하기 위해 아이템 인덱스에 맞는 수량을 quantities 에 담아주었다.
+    for( var i = 0; i < Provider.of<ItemProvider>(context, listen: false).cartItems.length; i++ ) {
+      quantities.add(Provider.of<ItemProvider>(context, listen: false).cartItems[i].quantity);
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -118,7 +132,6 @@ class _CartItemsState extends State<CartItems> {
 
           itemCount: itemProvider.cartItems.length,
           itemBuilder: (context, index) {
-            int quantity = itemProvider.cartItems[index].quantity;
             String itemId = itemProvider.cartItems[index].id;
             String itemName = itemProvider.cartItems[index].itemName;
             String itemPrice = itemProvider.cartItems[index].itemPrice;
@@ -202,26 +215,26 @@ class _CartItemsState extends State<CartItems> {
                                   children: [
                                     GestureDetector(
                                       onTap: (){
-                                        if( quantity > 1 ) {
-                                          quantity--;
+                                        if( quantities[index] > 1 ) {
+                                          quantities[index]--;
                                         }
-                                        setQuantity(itemId, quantity, double.parse(itemPrice));
+                                        setQuantity(itemId, quantities[index], double.parse(itemPrice));
                                       },
                                       child: Icon(
                                         CupertinoIcons.minus_circle,
-                                        color: quantity > 1 ? Colors.black : Colors.grey,
+                                        color: quantities[index] > 1 ? Colors.black : Colors.grey,
                                       ),
                                     ),
 
                                     Container(
                                       margin: EdgeInsets.only(left: 20, right: 20),
-                                      child: Text('$quantity'),
+                                      child: Text('${quantities[index]}'),
                                     ),
 
                                     GestureDetector(
                                       onTap: (){
-                                        quantity++;
-                                        setQuantity(itemId, quantity, double.parse(itemPrice));
+                                        quantities[index]++;
+                                        setQuantity(itemId, quantities[index], double.parse(itemPrice));
                                       },
                                       child: Icon(CupertinoIcons.plus_circle),
                                     ),

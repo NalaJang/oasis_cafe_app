@@ -74,7 +74,7 @@ class ItemProvider with ChangeNotifier {
           'hotOrIced' : hotOrIced,
           'itemName' : selectedItem,
           'itemPrice' : selectedItemPrice,
-          'totalPrice' : 0.0,
+          'totalPrice' : double.parse(selectedItemPrice),
           'espressoOption' : espressoOption,
           'syrupOption' : syrupOption,
           'whippedCreamOption' : whippedCreamOption,
@@ -98,14 +98,14 @@ class ItemProvider with ChangeNotifier {
   // 장바구니 수량 및 가격 업데이트
   Future<void> updateItemQuantity(String itemId, int quantity, double totalPrice) async {
 
-    // await _cartCollection.doc(itemId).update({
-    //   'quantity' : quantity,
-    //   'totalPrice' : totalPrice
-    // });
-    //
-    // await _cartCollection.doc(itemId).get().then((value) => {
-    //   CartItemModel.getUpdatedQuantityAndPrice(value)
-    // });
+    await _cartCollection.doc(itemId).update({
+      'quantity' : quantity,
+      'totalPrice' : totalPrice
+    });
+
+    await _cartCollection.doc(itemId).get().then((value) => {
+      CartItemModel.getUpdatedQuantityAndPrice(value)
+    });
 
     notifyListeners();
   }
