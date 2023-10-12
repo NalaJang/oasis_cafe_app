@@ -7,9 +7,11 @@ import '../strings/strings.dart';
 class TransactionHistoryProvider with ChangeNotifier {
   final db = FirebaseFirestore.instance;
   List<TransactionHistoryModel> historyList = [];
+  bool isOrdered = true;
+
 
   // 주문하기
-  Future<void> orderItems(
+  Future<bool> orderItems(
       String userUid,
       String year,
       String month,
@@ -46,9 +48,13 @@ class TransactionHistoryProvider with ChangeNotifier {
           'espressoOption' : espressoOption,
           'syrupOption' : syrupOption,
           'whippedCreamOption' : whippedCreamOption,
-          'iceOption' : iceOption
+          'iceOption' : iceOption,
         }
-    );
+    )
+    .onError((error, stackTrace) => {
+      print('order error >> $error'),
+      isOrdered = false
+    });
 
 
     // 매장에서 볼 데이터베이스 경로
@@ -70,7 +76,13 @@ class TransactionHistoryProvider with ChangeNotifier {
           'whippedCreamOption' : whippedCreamOption,
           'iceOption' : iceOption
         }
-    );
+    ).onError((error, stackTrace) => {
+      print('order error >> $error'),
+      isOrdered = false
+    });
+
+    print('isOrdered >>> ${isOrdered}');
+    return isOrdered;
   }
 
   Future<void> getOrderHistory(String userUid, String year, String month, String day) async {

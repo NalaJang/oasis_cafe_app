@@ -18,9 +18,10 @@ class Cart extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('CartPage'),
+        title: Text('Review Order'),
       ),
 
+      // 주문하기
       bottomNavigationBar: _OrderButton(),
 
       body: CartItems(),
@@ -143,6 +144,19 @@ class _CartItemsState extends State<CartItems> {
             String syrupOption = itemProvider.cartItems[index].syrupOption;
             String whippedCreamOption = itemProvider.cartItems[index].whippedCreamOption;
             String iceOption = itemProvider.cartItems[index].iceOption;
+
+            if( quantities.isEmpty ) {
+              // 1. itemBuilder 에서 quantity 를 불러오면 값이 변경안되는 등 각 각 조절하기가 어려웠다.
+              // 그래서 아이템들의 수량을 따로 따로 조절하기 위해 아이템 인덱스에 맞는 수량을 quantities 에 담아주었다.
+              // 2. initState()에서 값이 담기기 전에 뷰를 먼저 그리게 되므로 quantities.size = 0 이었다.
+              // 그래서 발생한 에러 => RangeError (index): Invalid value: Valid value range is empty: 0
+              // 그래서 initState()의 코드를 여기로 옮겼다.
+              for( var i = 0; i < Provider.of<ItemProvider>(context, listen: false).cartItems.length; i++ ) {
+                quantities.add(Provider.of<ItemProvider>(context, listen: false).cartItems[i].quantity);
+              }
+            } else {
+              // print('not empty');
+            }
 
             return Padding(
               padding: const EdgeInsets.all(15.0),
@@ -297,31 +311,66 @@ class _OrderButtonState extends State<_OrderButton> {
 
       ),
       child: GestureDetector(
-        onTap: (){
+        onTap: () async {
           var now = DateTime.now();
           var year = now.year.toString();
           var month = now.month.toString();
           var day = now.day.toString();
           var dateFormatter = DateFormat('Hms');
           var time = dateFormatter.format(now);
+          List<String> orderedItemsId = [];
+          var isOrdered;
 
-          for( var i = 0; i < itemProvider.cartItems.length; i++ ) {
-            int quantity = itemProvider.cartItems[i].quantity;
-            String itemName = itemProvider.cartItems[i].itemName;
-            String itemPrice = itemProvider.cartItems[i].itemPrice;
-            double totalPrice = itemProvider.cartItems[i].totalPrice;
-            String drinkSize = itemProvider.cartItems[i].drinkSize;
-            String cup = itemProvider.cartItems[i].cup;
-            int espressoOption = itemProvider.cartItems[i].espressoOption;
-            String hotOrIced = itemProvider.cartItems[i].hotOrIced;
-            String syrupOption = itemProvider.cartItems[i].syrupOption;
-            String whippedCreamOption = itemProvider.cartItems[i].whippedCreamOption;
-            String iceOption = itemProvider.cartItems[i].iceOption;
+          try {
 
-            transactionHistoryProvider.orderItems(userUid, year, month, day, time,
-                quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
-                espressoOption, syrupOption, whippedCreamOption, iceOption);
+            for( var i = 0; i < itemProvider.cartItems.length; i++ ) {
+              int quantity = itemProvider.cartItems[i].quantity;
+              String itemName = itemProvider.cartItems[i].itemName;
+              String itemPrice = itemProvider.cartItems[i].itemPrice;
+              double totalPrice = itemProvider.cartItems[i].totalPrice;
+              String drinkSize = itemProvider.cartItems[i].drinkSize;
+              String cup = itemProvider.cartItems[i].cup;
+              int espressoOption = itemProvider.cartItems[i].espressoOption;
+              String hotOrIced = itemProvider.cartItems[i].hotOrIced;
+              String syrupOption = itemProvider.cartItems[i].syrupOption;
+              String whippedCreamOption = itemProvider.cartItems[i].whippedCreamOption;
+              String iceOption = itemProvider.cartItems[i].iceOption;
+
+              orderedItemsId.add(itemProvider.cartItems[i].id);
+
+              isOrdered = transactionHistoryProvider.orderItems(userUid, year, month, day, time,
+                  quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
+                  espressoOption, syrupOption, whippedCreamOption, iceOption);
+            }
+
+            if( await isOrdered ) {
+
+              // 주문한 아이템 장바구니에서 삭제
+              itemProvider.deleteAllItemsFromCart(orderedItemsId);
+
+              if( mounted ) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                        '주문이 완료되었습니다.'
+                    )
+                  )
+                );
+              }
+            }
+
+          } catch(e) {
+            if( mounted ) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                      e.toString()
+                  )
+                )
+              );
+            }
           }
+
         },
 
         child: Container(

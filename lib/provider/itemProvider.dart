@@ -130,6 +130,14 @@ class ItemProvider with ChangeNotifier {
     }
   }
 
+  // 주문한 아이템 장바구니에서 삭제
+  Future<void> deleteAllItemsFromCart(List<String> itemList) async {
+
+    for( var i = 0; i < itemList.length; i++ ) {
+      await _cartCollection.doc(itemList[i]).delete();
+    }
+  }
+
   // getIngredients() {
   //   db.collection('Order').doc('Beverage').collection('Espresso')
   //       .doc().collection('ingredients')
