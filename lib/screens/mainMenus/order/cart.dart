@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/model/model_cartItem.dart';
+import 'package:oasis_cafe_app/provider/cartProvider.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
@@ -39,29 +41,13 @@ class CartItems extends StatefulWidget {
 
 class _CartItemsState extends State<CartItems> {
 
-  List<int> quantities = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    // itemBuilder 에서 quantity 를 불러오면 값이 변경안되는 등 각 각 조절하기가 어려웠다.
-    // 그래서 아이템들의 수량을 따로 따로 조절하기 위해 아이템 인덱스에 맞는 수량을 quantities 에 담아주었다.
-    for( var i = 0; i < Provider.of<ItemProvider>(context, listen: false).cartItems.length; i++ ) {
-      quantities.add(Provider.of<ItemProvider>(context, listen: false).cartItems[i].quantity);
-    }
-
-  }
-
   @override
   Widget build(BuildContext context) {
 
-    final userStateProvider = Provider.of<UserStateProvider>(context);
-    final itemProvider = Provider.of<ItemProvider>(context);
-    final String userUid = userStateProvider.userUid;
+    final cartProvider = Provider.of<CartProvider>(context);
 
 
-    // 메뉴 삭제 다이얼로그
+    // 아이템 삭제 다이얼로그
     void setShowDialog(String itemId) {
       showDialog(
           context: context,
@@ -69,6 +55,8 @@ class _CartItemsState extends State<CartItems> {
             return AlertDialog(
               content: Text('선택한 메뉴를 삭제하시겠습니까?',),
               actions: [
+
+                // 취소 버튼
                 ElevatedButton(
                   onPressed: (){
                     Navigator.of(context).pop();
@@ -90,9 +78,39 @@ class _CartItemsState extends State<CartItems> {
 
                 SizedBox(width: 10,),
 
+                // 삭제 버튼
                 ElevatedButton(
-                  onPressed: (){
-                    itemProvider.deleteItemFromCart(itemId, context);
+                  onPressed: () async {
+                    try {
+                      var isDeleted = cartProvider.deleteItemFromCart(itemId);
+
+                      if( await isDeleted ) {
+                        // ScaffoldMessenger.of(context) 에
+                        // 'Don't use 'BuildContext's across async gaps.' 라는 경고가 떠 있었다.
+                        // 비동기 시 BuildContext 를 암시적으로 저장되고 쉽게 충돌 진단이 어려울 수 있다.
+                        // 때문에 async 사용 후엔 반드시 BuildContext 가 mount 되었는 지 확인해주어야 한다고 한다.
+                        if( mounted ) {
+                          Navigator.of(context).pop();
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('삭제되었습니다.')
+                              )
+                          );
+                        }
+                      }
+
+                    } catch(e) {
+                      if( mounted ) {
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(e.toString())
+                            )
+                        );
+                      }
+                    }
+
                   },
 
                   child: Text('삭제'),
@@ -120,157 +138,159 @@ class _CartItemsState extends State<CartItems> {
     // 변경된 수량 및 가격 업데이트
     void setQuantity(String itemId, int quantity, double price) {
       double totalPrice = quantity * price;
-      itemProvider.updateItemQuantity(itemId, quantity, totalPrice);
+      cartProvider.updateItemQuantity(itemId, quantity, totalPrice);
     }
 
-    return FutureBuilder(
-      future: itemProvider.getItemsFromCart(userUid),
-      builder: (context, snapshot) {
-        return ListView.separated(
-          separatorBuilder: (BuildContext context, int index) => const Divider(
-            color: Colors.grey,
-          ),
+    // 변경 FutureBuilder -> StreamBuilder
+    // FutureBuilder 의 future 속성에서야 item 을 가져오다보니
+    // 아이템을 새로 장바구니에 넣고 장바구니 화면으로 올 때마다 달라진 length 를 늦게 가져오게 되고
+    // 아이템 수량 변경을 위해 전역 변수로 선언한 quantities 의 값도 늦게 변하게 되면서
+    // RangeError (index) 가 장바구니 아이템 개수가 변할 때마다 발생했다.
+    // 따라서 StreamBuilder 로 바꾸어서 실시간으로 fireStore 변화를 읽게 하도록 했다.
+    return StreamBuilder(
+      stream: cartProvider.cartCollection.snapshots(),
+      builder: (BuildContext context , AsyncSnapshot<QuerySnapshot> streamSnapshot) {
 
-          itemCount: itemProvider.cartItems.length,
-          itemBuilder: (context, index) {
-            String itemId = itemProvider.cartItems[index].id;
-            String itemName = itemProvider.cartItems[index].itemName;
-            String itemPrice = itemProvider.cartItems[index].itemPrice;
-            double totalPrice = itemProvider.cartItems[index].totalPrice;
-            String drinkSize = itemProvider.cartItems[index].drinkSize;
-            String cup = itemProvider.cartItems[index].cup;
-            int espressoOption = itemProvider.cartItems[index].espressoOption;
-            String hotOrIced = itemProvider.cartItems[index].hotOrIced;
-            String syrupOption = itemProvider.cartItems[index].syrupOption;
-            String whippedCreamOption = itemProvider.cartItems[index].whippedCreamOption;
-            String iceOption = itemProvider.cartItems[index].iceOption;
+        if( streamSnapshot.hasData ) {
 
-            if( quantities.isEmpty ) {
-              // 1. itemBuilder 에서 quantity 를 불러오면 값이 변경안되는 등 각 각 조절하기가 어려웠다.
-              // 그래서 아이템들의 수량을 따로 따로 조절하기 위해 아이템 인덱스에 맞는 수량을 quantities 에 담아주었다.
-              // 2. initState()에서 값이 담기기 전에 뷰를 먼저 그리게 되므로 quantities.size = 0 이었다.
-              // 그래서 발생한 에러 => RangeError (index): Invalid value: Valid value range is empty: 0
-              // 그래서 initState()의 코드를 여기로 옮겼다.
-              for( var i = 0; i < Provider.of<ItemProvider>(context, listen: false).cartItems.length; i++ ) {
-                quantities.add(Provider.of<ItemProvider>(context, listen: false).cartItems[i].quantity);
-              }
-            } else {
-              // print('not empty');
-            }
+          return ListView.separated(
+            separatorBuilder: (BuildContext context, int index) => const Divider(
+              color: Colors.grey,
+            ),
+            itemCount: streamSnapshot.data!.docs.length,
+            itemBuilder: (context, index) {
 
-            return Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
+              final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
+              String itemId = documentSnapshot.id;
+              String itemName = documentSnapshot['itemName'];
+              String itemPrice = documentSnapshot['itemPrice'];
+              double totalPrice = documentSnapshot['totalPrice'];
+              int quantity  = documentSnapshot['quantity'];
+              String drinkSize = documentSnapshot['drinkSize'];
+              String cup = documentSnapshot['cup'];
+              int espressoOption = documentSnapshot['espressoOption'];
+              String hotOrIced = documentSnapshot['hotOrIced'];
+              String syrupOption = documentSnapshot['syrupOption'];
+              String whippedCreamOption = documentSnapshot['whippedCreamOption'];
+              String iceOption = documentSnapshot['iceOption'];
 
-                  Row(
-                    children: [
+              return Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
 
-                      // 아이템 삭제
-                      IconButton(
-                          onPressed: (){
-                            setShowDialog(itemId);
-                          },
-                          icon: Icon(CupertinoIcons.xmark_circle)
-                      ),
-                    ],
-                  ),
+                    Row(
+                      children: [
 
-                  Row(
-                    children: [
-                      Image.asset(
-                        'image/IMG_espresso.png',
-                        scale: 2.0,
-                      ),
-
-                      // 아이템 정보
-                      Container(
-                        margin: EdgeInsets.only(left: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${itemName}',
-                              style: TextStyle(
-                                fontSize: 17,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-
-                            SizedBox(height: 10,),
-
-                            // hotOrIced, 사이즈, 컵 옵션
-                            Row(
-                              children: [
-                                Text(hotOrIced),
-                                Text(' | '),
-                                Text(drinkSize),
-                                Text(' | '),
-                                Text(cup)
-                              ],
-                            ),
-
-                            //// 옵션 사항
-                            // 에스프레소
-                            espressoOption != 2 ? Text('$espressoOption') : SizedBox(height: 0,),
-                            // 시럽
-                            syrupOption != "" ? Text(syrupOption) : SizedBox(height: 0,),
-                            // 휘핑 크림
-                            whippedCreamOption != "" ? Text(whippedCreamOption) : SizedBox(height: 0,),
-                            // 얼음
-                            iceOption != "" ? Text('얼음 $iceOption') : SizedBox(height: 0,),
-
-                            SizedBox(height: 20,),
-
-                            // 수량 및 가격
-                            Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: (){
-                                        if( quantities[index] > 1 ) {
-                                          quantities[index]--;
-                                        }
-                                        setQuantity(itemId, quantities[index], double.parse(itemPrice));
-                                      },
-                                      child: Icon(
-                                        CupertinoIcons.minus_circle,
-                                        color: quantities[index] > 1 ? Colors.black : Colors.grey,
-                                      ),
-                                    ),
-
-                                    Container(
-                                      margin: EdgeInsets.only(left: 20, right: 20),
-                                      child: Text('${quantities[index]}'),
-                                    ),
-
-                                    GestureDetector(
-                                      onTap: (){
-                                        quantities[index]++;
-                                        setQuantity(itemId, quantities[index], double.parse(itemPrice));
-                                      },
-                                      child: Icon(CupertinoIcons.plus_circle),
-                                    ),
-
-                                  ],
-                                ),
-
-                                SizedBox(width: 50,),
-
-                                Text('NZD $totalPrice')
-                              ],
-                            ),
-                          ],
+                        // 아이템 삭제
+                        IconButton(
+                            onPressed: (){
+                              setShowDialog(itemId);
+                            },
+                            icon: Icon(CupertinoIcons.xmark_circle)
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          }
-        );
+                      ],
+                    ),
+
+                    Row(
+                      children: [
+                        Image.asset(
+                          'image/IMG_espresso.png',
+                          scale: 2.0,
+                        ),
+
+                        // 아이템 정보
+                        Container(
+                          margin: EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${itemName}',
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+
+                              SizedBox(height: 10,),
+
+                              // hotOrIced, 사이즈, 컵 옵션
+                              Row(
+                                children: [
+                                  Text(hotOrIced),
+                                  Text(' | '),
+                                  Text(drinkSize),
+                                  Text(' | '),
+                                  Text(cup)
+                                ],
+                              ),
+
+                              //// 옵션 사항
+                              // 에스프레소
+                              espressoOption != 2 ? Text('$espressoOption') : SizedBox(height: 0,),
+                              // 시럽
+                              syrupOption != "" ? Text(syrupOption) : SizedBox(height: 0,),
+                              // 휘핑 크림
+                              whippedCreamOption != "" ? Text(whippedCreamOption) : SizedBox(height: 0,),
+                              // 얼음
+                              iceOption != "" ? Text('얼음 $iceOption') : SizedBox(height: 0,),
+
+                              SizedBox(height: 20,),
+
+                              // 수량 및 가격
+                              Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: (){
+                                          if( quantity > 1 ) {
+                                            quantity--;
+                                            print('quantity >> ${quantity}');
+                                          }
+                                          setQuantity(itemId, quantity, double.parse(itemPrice));
+                                        },
+                                        child: Icon(
+                                          CupertinoIcons.minus_circle,
+                                          color: quantity > 1 ? Colors.black : Colors.grey,
+                                        ),
+                                      ),
+
+                                      Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        child: Text('${quantity}'),
+                                      ),
+
+                                      GestureDetector(
+                                        onTap: (){
+                                          quantity++;
+                                          print('quantity++ >> ${quantity}');
+                                          setQuantity(itemId, quantity, double.parse(itemPrice));
+                                        },
+                                        child: Icon(CupertinoIcons.plus_circle),
+                                      ),
+
+                                    ],
+                                  ),
+
+                                  SizedBox(width: 50,),
+
+                                  Text('NZD $totalPrice')
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        }
+        return Center(child: CircularProgressIndicator());
       }
     );
   }

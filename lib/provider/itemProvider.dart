@@ -27,12 +27,6 @@ class ItemProvider with ChangeNotifier {
         FirebaseFirestore.instance.collection(Strings.order).doc(documentName).collection(collectionName);
   }
 
-  // void setIngredientsCollectionReference(String documentName, String collectionName, String itemId) {
-  //   _ingredientsCollectionReference =
-  //       FirebaseFirestore.instance.collection(Strings.order)
-  //           .doc(documentName).collection(collectionName)
-  //           .doc(itemId).collection(Strings.ingredients);
-  // }
 
   Future<void> fetchItems() async {
     items = await _collectionReference.get().then( (QuerySnapshot results) {
@@ -83,52 +77,6 @@ class ItemProvider with ChangeNotifier {
     );
   }
 
-  Future<void> getItemsFromCart(String userUid) async {
-    _cartCollection = db.collection(Strings.collection_user).doc(userUid).collection(Strings.collection_userCart);
-
-    cartItems = await _cartCollection.get().then( (QuerySnapshot results) {
-      return results.docs.map( (DocumentSnapshot document) {
-        return CartItemModel.getSnapshotDataFromCart(document);
-      }).toList();
-    });
-    notifyListeners();
-  }
-
-
-  // 장바구니 수량 및 가격 업데이트
-  Future<void> updateItemQuantity(String itemId, int quantity, double totalPrice) async {
-
-    await _cartCollection.doc(itemId).update({
-      'quantity' : quantity,
-      'totalPrice' : totalPrice
-    });
-
-    await _cartCollection.doc(itemId).get().then((value) => {
-      CartItemModel.getUpdatedQuantityAndPrice(value)
-    });
-
-    notifyListeners();
-  }
-
-
-  // 장바구니에서 아이템 삭제
-  Future<void> deleteItemFromCart(String itemId, BuildContext context) async {
-    await _cartCollection.doc(itemId).delete();
-
-    // ScaffoldMessenger.of(context) 에
-    // 'Don't use 'BuildContext's across async gaps.' 라는 경고가 떠 있었다.
-    // 비동기 시 BuildContext 를 암시적으로 저장되고 쉽게 충돌 진단이 어려울 수 있다.
-    // 때문에 async 사용 후엔 반드시 BuildContext 가 mount 되었는 지 확인해주어야 한다고 한다.
-    if( context.mounted ) {
-      Navigator.of(context).pop();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('삭제되었습니다.')
-          )
-      );
-    }
-  }
 
   // 주문한 아이템 장바구니에서 삭제
   Future<void> deleteAllItemsFromCart(List<String> itemList) async {
