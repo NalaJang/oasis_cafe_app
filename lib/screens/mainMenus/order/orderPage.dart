@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/tabViewList.dart';
 
-import '../../../strings/strings.dart';
+import '../../../strings/strings_en.dart';
 
 class OrderPage extends StatelessWidget {
   const OrderPage({Key? key}) : super(key: key);

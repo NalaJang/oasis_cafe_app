@@ -5,7 +5,7 @@ import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
-import 'package:oasis_cafe_app/strings/strings.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);

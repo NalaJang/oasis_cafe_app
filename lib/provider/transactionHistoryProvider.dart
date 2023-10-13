@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:oasis_cafe_app/model/model_transactionHistory.dart';
 
-import '../strings/strings.dart';
+import '../strings/strings_en.dart';
 
 class TransactionHistoryProvider with ChangeNotifier {
   final db = FirebaseFirestore.instance;

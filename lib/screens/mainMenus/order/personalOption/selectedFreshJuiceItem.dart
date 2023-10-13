@@ -3,7 +3,7 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../strings/strings.dart';
+import '../../../../strings/strings_en.dart';
 
 class SelectedFreshJuiceItem extends StatefulWidget {
   const SelectedFreshJuiceItem({required this.documentSnapshot, Key? key}) : super(key: key);

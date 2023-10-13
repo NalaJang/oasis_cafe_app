@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 import '../../../config/palette.dart';
-import '../../../strings/strings.dart';
+import '../../../strings/strings_en.dart';
 
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);

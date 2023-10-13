@@ -3,6 +3,8 @@ import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:provider/provider.dart';
 
+import '../../../strings/strings_en.dart';
+
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
 
@@ -10,7 +12,7 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(Strings.settings),
       ),
 
       body: Padding(

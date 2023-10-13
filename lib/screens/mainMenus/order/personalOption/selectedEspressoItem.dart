@@ -5,7 +5,7 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../strings/strings.dart';
+import '../../../../strings/strings_en.dart';
 import '../itemOption.dart';
 
 class SelectedEspressoItem extends StatefulWidget {

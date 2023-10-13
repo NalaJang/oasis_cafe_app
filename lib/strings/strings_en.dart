@@ -55,7 +55,11 @@ class Strings {
   static const String submit = 'Submit';
 
 
-  //// Setting
+  //// Other
+  static const String other = 'Other';
+  static const String transactionHistory = 'Transaction History';
+  static const String personalInformation = 'Personal Information';
+  static const String settings = 'Settings';
   static const String personalInfo = 'Personal Info';
   static const String memberInfo = 'Member Information(*)';
   static const String memberBirth = 'Birthday (Optional)';

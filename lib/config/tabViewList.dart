@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/cart.dart';
 
-import '../strings/strings.dart';
+import '../strings/strings_en.dart';
 
 class TabViewList extends StatelessWidget {
   const TabViewList(this.currentTabIndex, {Key? key}) : super(key: key);

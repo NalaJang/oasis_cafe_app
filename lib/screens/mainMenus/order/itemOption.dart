@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../config/palette.dart';
 import '../../../provider/itemProvider.dart';
-import '../../../strings/strings.dart';
+import '../../../strings/strings_en.dart';
 
 
 late DocumentSnapshot documentSnapshot;

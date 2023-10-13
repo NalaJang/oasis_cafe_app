@@ -6,9 +6,11 @@ import 'package:oasis_cafe_app/screens/mainMenus/other/personalInfo.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/settings.dart';
 import 'package:provider/provider.dart';
 
+import '../../../strings/strings_en.dart';
+
 const double sizedBoxWidth = 110.0;
 const double sizedBoxHeight = 110.0;
-final List<String> cardMenuRow = ['전자영수증', '개인정보 관리', '설정'];
+final List<String> cardMenuRow = [Strings.transactionHistory, Strings.personalInformation, Strings.settings];
 final List<String> customerServiceMenuList = ['고객의 소리', '매장 정보', '내 리뷰'];
 final List<IconData> customerServiceMenuIcon = [CupertinoIcons.speaker_2, CupertinoIcons.location_solid, Icons.edit_note];
 
@@ -23,8 +25,8 @@ class OtherPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(
-          'Other',
+        title: const Text(
+          Strings.other,
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold
@@ -129,7 +131,7 @@ class CardMenuRow extends StatelessWidget {
                   children: [
                     Icon(Icons.receipt_long_sharp),
                     SizedBox(height: 10,),
-                    Text(cardMenuRow[0]),
+                    Text(cardMenuRow[0], textAlign: TextAlign.center,),
                   ],
                 ),
               ),
@@ -147,7 +149,7 @@ class CardMenuRow extends StatelessWidget {
                   children: [
                     Icon(Icons.person),
                     SizedBox(height: 10,),
-                    Text(cardMenuRow[1]),
+                    Text(cardMenuRow[1], textAlign: TextAlign.center),
                   ],
                 ),
               ),
@@ -166,7 +168,7 @@ class CardMenuRow extends StatelessWidget {
                   children: [
                     Icon(Icons.settings),
                     SizedBox(height: 10,),
-                    Text(cardMenuRow[2]),
+                    Text(cardMenuRow[2], textAlign: TextAlign.center),
                   ],
                 ),
               ),

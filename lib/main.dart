@@ -9,7 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_first.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/itemOption.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_second.dart';
-import 'package:oasis_cafe_app/strings/strings.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 

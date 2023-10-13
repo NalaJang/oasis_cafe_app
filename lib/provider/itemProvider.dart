@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/model/model_ingredients.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
-import 'package:oasis_cafe_app/strings/strings.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 
 class ItemProvider with ChangeNotifier {
   late CollectionReference _collectionReference;

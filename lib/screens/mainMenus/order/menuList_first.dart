@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../strings/strings.dart';
+import '../../../strings/strings_en.dart';
 import 'cart.dart';
 
 class MenuListFirst extends StatelessWidget {

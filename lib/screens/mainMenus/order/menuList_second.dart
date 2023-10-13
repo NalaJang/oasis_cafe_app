@@ -7,7 +7,7 @@ import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/itemOption.dart';
 import 'package:provider/provider.dart';
 
-import '../../../strings/strings.dart';
+import '../../../strings/strings_en.dart';
 
 class MenuListSecond extends StatefulWidget {
   const MenuListSecond({Key? key}) : super(key: key);
