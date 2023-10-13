@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/model/model_cartItem.dart';
 import 'package:oasis_cafe_app/model/model_ingredients.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
 import 'package:oasis_cafe_app/strings/strings.dart';
@@ -9,12 +8,10 @@ import 'package:oasis_cafe_app/strings/strings.dart';
 class ItemProvider with ChangeNotifier {
   late CollectionReference _collectionReference;
   late CollectionReference _ingredientsCollectionReference;
-  late CollectionReference _cartCollection;
   final db = FirebaseFirestore.instance;
 
   List<ItemModel> items = [];
   List<IngredientsModel> ingredients = [];
-  List<CartItemModel> cartItems = [];
 
   String getDocumentName ='';
   String getCollectionName = '';
@@ -75,15 +72,6 @@ class ItemProvider with ChangeNotifier {
           'iceOption' : iceOption
         }
     );
-  }
-
-
-  // 주문한 아이템 장바구니에서 삭제
-  Future<void> deleteAllItemsFromCart(List<String> itemList) async {
-
-    for( var i = 0; i < itemList.length; i++ ) {
-      await _cartCollection.doc(itemList[i]).delete();
-    }
   }
 
   // getIngredients() {
