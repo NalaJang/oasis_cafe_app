@@ -5,9 +5,14 @@ import 'package:provider/provider.dart';
 
 import '../../../strings/strings_en.dart';
 
-class AccountTransactionHistory extends StatelessWidget {
+class AccountTransactionHistory extends StatefulWidget {
   const AccountTransactionHistory({Key? key}) : super(key: key);
 
+  @override
+  State<AccountTransactionHistory> createState() => _AccountTransactionHistoryState();
+}
+
+class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
   @override
   Widget build(BuildContext context) {
 
