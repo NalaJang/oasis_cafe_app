@@ -29,27 +29,14 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
     var newDateTime = DateTime(year, month, day);
     // 29일 전
     var before29days = newDateTime.subtract(Duration(days: 29));
-    var getLastDay = DateTime(year, month, 0);
-    var lastDay = getLastDay.day;
-    // print('before29days >> ${before29days}');
+    var getLastDay = DateTime(year, before29days.month +1, 0).day;
+    print('before29days.month >> ${before29days.month}');
+    print('before29days.day >> ${before29days.day}');
     // print('lastMonth >> ${getLastDay.month}');
-    // print('lastDay >> ${lastDay}');
+    print('lastDay >> ${getLastDay}');
+    // print('now.day = ${day}');
+    // print('day - 1 = ${day - 14}');
     // print('nowMonth >> ${month}');
-
-    List<int> days = [];
-
-    for(var day = before29days.day; day <= lastDay; day++ ) {
-      // print('day >> $day');
-      // transactionHistoryProvider.getOrderHistory(userUid, year.toString(), getLastDay.month.toString(), day.toString());
-
-    }
-
-    for(var currentDay = 1; currentDay <= day; currentDay++ ) {
-      // print('currentDay >> $currentDay');
-      // transactionHistoryProvider.getOrderHistory(userUid, year.toString(), month.toString(), currentDay.toString());
-      days.add(currentDay);
-    }
-    // transactionHistoryProvider.getOrderHistory(userUid, year.toString(), month.toString(), '5');
 
 
     return Scaffold(
@@ -92,14 +79,20 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
                     children: [
                       SizedBox(width: 5,),
                       Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                          ),
-                          child: const Text(
-                            '1개월',
-                            textAlign: TextAlign.center,
+                        child: GestureDetector(
+                          onTap: (){
+                            transactionHistoryProvider.getOrderHistoryForOneMonth(before29days.month, before29days.day, getLastDay, month, day);
+
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                            ),
+                            child: const Text(
+                              '1개월',
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ),
@@ -148,51 +141,56 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
 
           const Divider(thickness: 1, color: Colors.brown,),
 
-          FutureBuilder(
-            future: transactionHistoryProvider.getOrderHistory(userUid, year.toString(), month.toString(), '5'),
-            builder: (context, snapshot) {
+          // todo: step 1 > 1개월 전 데이터부터 오늘 데이터까지 모두 가져오게 하기.
+          // 1개월 전 ~ 오늘 데이터를 리스트에 담아준다.
+          // 예) 9월 12일, 13일 ... 지난 달의 마지막 날까지 day++
+          // 10월 1일, 2일 ... 이번 달 첫 날부터 오늘 날짜까지 day++
 
-              if( transactionHistoryProvider.historyList.isEmpty ) {
-                return Text('is empty');
-
-              } else {
-                return ListView.separated(
-                  shrinkWrap: true,
-                  separatorBuilder: (BuildContext context, int index) => Divider(
-                    color: Colors.grey,
-                  ),
-
-                  itemCount: transactionHistoryProvider.historyList.length,
-                  itemBuilder: (context, index) {
-                    String price = transactionHistoryProvider.historyList[index].itemPrice;
-                    String itemName = transactionHistoryProvider.historyList[index].itemName;
-                    String time = transactionHistoryProvider.historyList[index].id;
-
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 0),
-                      child: ListTile(
-
-                        // 결제 수단
-                        leading: Icon(Icons.credit_card),
-
-                        // 가격
-                        title: Text('NZD $price'),
-
-                        // 결제한 아이템 이름
-                        subtitle: Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: Text(itemName)
-                        ),
-
-                        // 결제 시간
-                        trailing: Text(time),
-                      ),
-                    );
-                  },
-                );
-              }
-            },
-          ),
+          // FutureBuilder(
+          //   future: transactionHistoryProvider.getOrderHistory(userUid, year.toString(), month.toString(), '5'),
+          //   builder: (context, snapshot) {
+          //
+          //     if( transactionHistoryProvider.historyList.isEmpty ) {
+          //       return Text('is empty');
+          //
+          //     } else {
+          //       return ListView.separated(
+          //         shrinkWrap: true,
+          //         separatorBuilder: (BuildContext context, int index) => Divider(
+          //           color: Colors.grey,
+          //         ),
+          //
+          //         itemCount: transactionHistoryProvider.historyList.length,
+          //         itemBuilder: (context, index) {
+          //           String price = transactionHistoryProvider.historyList[index].itemPrice;
+          //           String itemName = transactionHistoryProvider.historyList[index].itemName;
+          //           String time = transactionHistoryProvider.historyList[index].id;
+          //
+          //           return Padding(
+          //             padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 0),
+          //             child: ListTile(
+          //
+          //               // 결제 수단
+          //               leading: Icon(Icons.credit_card),
+          //
+          //               // 가격
+          //               title: Text('NZD $price'),
+          //
+          //               // 결제한 아이템 이름
+          //               subtitle: Container(
+          //                   margin: EdgeInsets.only(top: 10),
+          //                   child: Text(itemName)
+          //               ),
+          //
+          //               // 결제 시간
+          //               trailing: Text(time),
+          //             ),
+          //           );
+          //         },
+          //       );
+          //     }
+          //   },
+          // ),
         ],
       ),
     );

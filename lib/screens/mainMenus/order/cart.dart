@@ -334,6 +334,7 @@ class _OrderButtonState extends State<_OrderButton> {
           var year = now.year.toString();
           var month = now.month.toString();
           var day = now.day.toString();
+          var hour = now.hour.toString();
           var dateFormatter = DateFormat('Hms');
           var time = dateFormatter.format(now);
           List<String> orderedItemsId = [];
@@ -354,7 +355,7 @@ class _OrderButtonState extends State<_OrderButton> {
               String whippedCreamOption = cartProvider.cartItems[i].whippedCreamOption;
               String iceOption = cartProvider.cartItems[i].iceOption;
 
-              isOrdered = transactionHistoryProvider.orderItems(userUid, year, month, day, time,
+              isOrdered = transactionHistoryProvider.orderItems(userUid, year, month, day, hour, time,
                         quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
                         espressoOption, syrupOption, whippedCreamOption, iceOption);
 
