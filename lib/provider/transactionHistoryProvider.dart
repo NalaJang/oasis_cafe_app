@@ -140,9 +140,28 @@ class TransactionHistoryProvider with ChangeNotifier {
 
   }
 
+  Future<List<TransactionHistoryModel>> getTodayHistory(String year, String month, String day) async {
+
+    historyList.clear();
+
+    for( var hour = 1; hour < 24; hour++ ) {
+      await db.collection(Strings.collection_user).doc(userUid)
+          .collection(Strings.collection_userOrder).doc(year)
+          .collection(month).doc(day)
+          .collection(hour.toString())
+          .get()
+          .then((querySnapshot) {
+            for (var document in querySnapshot.docs) {
+              historyList.add(TransactionHistoryModel.getSnapshotDataFromUserOrder(document));
+            }
+      });
+    }
+    print('length >> ${historyList.length}');
+    return historyList;
+  }
 
   // 오늘 날짜의 주문 내역 가져오기
-  Future<void> getOrderHistory(String userUid, String year, String month, String day) async {
+  Future<void> getOrderHistory(String year, String month, String day) async {
 
     for( var hour = 1; hour < 24; hour++ ) {
       historyList = await db.collection(Strings.collection_user).doc(userUid)
