@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/model/model_cartItem.dart';
 import 'package:oasis_cafe_app/provider/cartProvider.dart';
-import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
-import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -153,6 +151,9 @@ class _CartItemsState extends State<CartItems> {
 
         if( streamSnapshot.hasData ) {
 
+          // provider 에 데이터를 리스트 형태로 저장
+          cartProvider.fetchCartItems();
+
           return ListView.separated(
             separatorBuilder: (BuildContext context, int index) => const Divider(
               color: Colors.grey,
@@ -247,7 +248,6 @@ class _CartItemsState extends State<CartItems> {
                                         onTap: (){
                                           if( quantity > 1 ) {
                                             quantity--;
-                                            print('quantity >> ${quantity}');
                                           }
                                           setQuantity(itemId, quantity, double.parse(itemPrice));
                                         },
@@ -265,7 +265,6 @@ class _CartItemsState extends State<CartItems> {
                                       GestureDetector(
                                         onTap: (){
                                           quantity++;
-                                          print('quantity++ >> ${quantity}');
                                           setQuantity(itemId, quantity, double.parse(itemPrice));
                                         },
                                         child: Icon(CupertinoIcons.plus_circle),
@@ -309,10 +308,9 @@ class _OrderButtonState extends State<_OrderButton> {
   @override
   Widget build(BuildContext context) {
 
-    final userStateProvider = Provider.of<UserStateProvider>(context);
-    final itemProvider = Provider.of<ItemProvider>(context);
     final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context);
-    final String userUid = userStateProvider.userUid;
+    final String userUid = FirebaseAuth.instance.currentUser!.uid;
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -341,32 +339,32 @@ class _OrderButtonState extends State<_OrderButton> {
           List<String> orderedItemsId = [];
           var isOrdered;
 
+
           try {
-
-            for( var i = 0; i < itemProvider.cartItems.length; i++ ) {
-              int quantity = itemProvider.cartItems[i].quantity;
-              String itemName = itemProvider.cartItems[i].itemName;
-              String itemPrice = itemProvider.cartItems[i].itemPrice;
-              double totalPrice = itemProvider.cartItems[i].totalPrice;
-              String drinkSize = itemProvider.cartItems[i].drinkSize;
-              String cup = itemProvider.cartItems[i].cup;
-              int espressoOption = itemProvider.cartItems[i].espressoOption;
-              String hotOrIced = itemProvider.cartItems[i].hotOrIced;
-              String syrupOption = itemProvider.cartItems[i].syrupOption;
-              String whippedCreamOption = itemProvider.cartItems[i].whippedCreamOption;
-              String iceOption = itemProvider.cartItems[i].iceOption;
-
-              orderedItemsId.add(itemProvider.cartItems[i].id);
+            for( var i = 0; i < cartProvider.cartItems.length; i++ ) {
+              int quantity = cartProvider.cartItems[i].quantity;
+              String itemName = cartProvider.cartItems[i].itemName;
+              String itemPrice = cartProvider.cartItems[i].itemPrice;
+              double totalPrice = cartProvider.cartItems[i].totalPrice;
+              String drinkSize = cartProvider.cartItems[i].drinkSize;
+              String cup = cartProvider.cartItems[i].cup;
+              int espressoOption = cartProvider.cartItems[i].espressoOption;
+              String hotOrIced = cartProvider.cartItems[i].hotOrIced;
+              String syrupOption = cartProvider.cartItems[i].syrupOption;
+              String whippedCreamOption = cartProvider.cartItems[i].whippedCreamOption;
+              String iceOption = cartProvider.cartItems[i].iceOption;
 
               isOrdered = transactionHistoryProvider.orderItems(userUid, year, month, day, time,
-                  quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
-                  espressoOption, syrupOption, whippedCreamOption, iceOption);
+                        quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
+                        espressoOption, syrupOption, whippedCreamOption, iceOption);
+
+              orderedItemsId.add(cartProvider.cartItems[i].id);
             }
 
+            // 주문이 정상 처리됐을 경우
             if( await isOrdered ) {
-
               // 주문한 아이템 장바구니에서 삭제
-              itemProvider.deleteAllItemsFromCart(orderedItemsId);
+              cartProvider.deleteAllItemsFromCart(orderedItemsId);
 
               if( mounted ) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -390,7 +388,6 @@ class _OrderButtonState extends State<_OrderButton> {
               );
             }
           }
-
         },
 
         child: Container(

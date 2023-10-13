@@ -7,6 +7,8 @@ import '../strings/strings.dart';
 class CartProvider with ChangeNotifier {
   final db = FirebaseFirestore.instance;
   late CollectionReference cartCollection;
+  late int itemCount;
+  List<CartProvider> cartItems = [];
 
   late String id;
   late int quantity;
@@ -28,6 +30,35 @@ class CartProvider with ChangeNotifier {
                       .collection(Strings.collection_userCart);
   }
 
+
+  // 데이터 가져와서 변수에 할당
+  CartProvider.getCartSnapshotData(DocumentSnapshot snapshot) {
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    id = snapshot.id;
+    quantity = data['quantity'];
+    itemName = data['itemName'];
+    itemPrice = data['itemPrice'];
+    totalPrice = data['totalPrice'];
+    drinkSize = data['drinkSize'];
+    cup = data['cup'];
+    espressoOption = data['espressoOption'];
+    hotOrIced = data['hotOrIced'];
+    syrupOption = data['syrupOption'];
+    whippedCreamOption = data['whippedCreamOption'];
+    iceOption = data['iceOption'];
+
+  }
+
+
+  Future<void> fetchCartItems() async {
+    cartItems = await cartCollection.get().then( (QuerySnapshot results) {
+      return results.docs.map( (DocumentSnapshot document) {
+        return CartProvider.getCartSnapshotData(document);
+      }).toList();
+    });
+
+    notifyListeners();
+  }
 
   // 장바구니 수량 및 가격 업데이트
   Future<void> updateItemQuantity(String itemId, int quantity, double totalPrice) async {
