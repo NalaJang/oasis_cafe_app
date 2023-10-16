@@ -6,11 +6,19 @@ import 'package:oasis_cafe_app/model/model_transactionHistory.dart';
 import '../strings/strings_en.dart';
 
 class TransactionHistoryProvider with ChangeNotifier {
+
+  late int fromSelectedYear;
+  late int fromSelectedMonth;
+  late int fromSelectedDay;
+  late int toSelectedYear;
+  late int toSelectedMonth;
+  late int toSelectedDay;
+
   final db = FirebaseFirestore.instance;
+  late CollectionReference transactionCollection;
   final userUid = FirebaseAuth.instance.currentUser!.uid;
   List<TransactionHistoryModel> historyList = [];
   bool isOrdered = true;
-
 
   // 주문하기
   Future<bool> orderItems(
@@ -35,9 +43,7 @@ class TransactionHistoryProvider with ChangeNotifier {
 
     // user 정보에 저장되는 데이터베이스 경로
     await db.collection(Strings.collection_user).doc(userUid)
-        .collection(Strings.collection_userOrder).doc(year)
-        .collection(month).doc(day)
-        .collection(hour).doc()
+        .collection(Strings.collection_userOrder).doc()
         .set(
         {
           'orderTime' : time,
@@ -54,17 +60,16 @@ class TransactionHistoryProvider with ChangeNotifier {
           'whippedCreamOption' : whippedCreamOption,
           'iceOption' : iceOption,
         }
-    )
-    .onError((error, stackTrace) => {
+
+    ).onError((error, stackTrace) => {
       print('order error >> $error'),
       isOrdered = false
     });
 
 
     // 매장에서 볼 데이터베이스 경로
-    await db.collection('user_order').doc(year)
-        .collection(month).doc(day)
-        .collection(hour).doc()
+    await db.collection('user_order')
+        .doc()
         .set(
         {
           'orderTime' : time,
@@ -90,113 +95,46 @@ class TransactionHistoryProvider with ChangeNotifier {
     return isOrdered;
   }
 
-
-  // 1개월 주문 내역 가져오기
-  Future<void> getOrderHistoryForOneMonth(int startMonth, int startDay, int theLastDayOfStartMonth,
-                              int lastMonth, int lastDay) async {
-
-    if( startMonth != lastMonth ) {
-      // for( var i = startDay; i <= theLastDayOfStartMonth; i++ ) {
-      //   print('i = $i');
-      //
-      //   db.collection('user_order').doc(userUid)
-      //       .collection('2023').doc(startMonth.toString())
-      //       .collection(i.toString())
-      //       .get().then(
-      //         (querySnapshot) {
-      //       for (var docSnapshot in querySnapshot.docs) {
-      //         print('day ==> $i, ${docSnapshot.id} => ${docSnapshot.data()}');
-      //       }
-      //     },
-      //     onError: (e) => print("Error completing: $e"),
-      //   );
-      // }
-
-      for( var i = 1; i <= lastDay; i++ ) {
-
-        print('day = $i');
-
-        for( var j = 1; j < 24; j++ ) {
-
-          historyList = await db.collection('user').doc(userUid).collection('user_order').doc('2023')
-              .collection(lastMonth.toString()).doc(i.toString())
-              .collection(j.toString())
-              .get().then(
-                (querySnapshot) {
-                  return querySnapshot.docs.map((docSnapshot) {
-                    return TransactionHistoryModel.getSnapshotDataFromUserOrder(docSnapshot);
-                  }).toList();
-                  // for (var docSnapshot in querySnapshot.docs) {
-                  //   print('data time ==> $j, ${docSnapshot.id} => ${docSnapshot.data()}');
-                  //   TransactionHistoryModel.getSnapshotDataFromUserOrder(docSnapshot);
-                  // }
-
-            },
-            onError: (e) => print("Error completing: $e"),
-          );
-        }
-      }
-    }
-
+  TransactionHistoryProvider() {
+    transactionCollection = db.collection('user').doc(userUid).collection('user_order');
   }
 
-  Future<List<TransactionHistoryModel>> getTodayHistory(String year, String month, String day) async {
 
-    historyList.clear();
+  // 거래 내역 가져오기
+  Future<void> getTransactionHistory() async {
 
-    for( var hour = 1; hour < 24; hour++ ) {
-      await db.collection(Strings.collection_user).doc(userUid)
-          .collection(Strings.collection_userOrder).doc(year)
-          .collection(month).doc(day)
-          .collection(hour.toString())
-          .get()
-          .then((querySnapshot) {
-            for (var document in querySnapshot.docs) {
-              historyList.add(TransactionHistoryModel.getSnapshotDataFromUserOrder(document));
-            }
-      });
-    }
-    print('length >> ${historyList.length}');
-    return historyList;
-  }
-
-  // 오늘 날짜의 주문 내역 가져오기
-  Future<void> getOrderHistory(String year, String month, String day) async {
-
-    for( var hour = 1; hour < 24; hour++ ) {
-      historyList = await db.collection(Strings.collection_user).doc(userUid)
-          .collection(Strings.collection_userOrder).doc(year)
-          .collection(month).doc(day)
-          .collection(hour.toString())
-          .get()
-          .then((querySnapshot) {
-            return querySnapshot.docs.map((document) {
-              return TransactionHistoryModel.getSnapshotDataFromUserOrder(document);
-            }).toList();
-      });
-    }
+    historyList = await transactionCollection
+        .where('orderTime', isGreaterThan: '$fromSelectedYear-$toSelectedMonth-$toSelectedDay')
+        .where('orderTime', isLessThan: '$toSelectedYear-$toSelectedMonth-${toSelectedDay +1}')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+          return querySnapshot.docs.map((DocumentSnapshot document) {
+            return TransactionHistoryModel.getSnapshotDataFromUserOrder(document);
+          }).toList();
+        });
 
     notifyListeners();
-
-    // await db.collection(Strings.collection_user).doc(userUid)
-    //     .collection('user_order').doc(year)
-    //     .collection(month).doc(day)
-    //     .get()
-    //     .then((DocumentSnapshot snapshot) {
-    //       final data = snapshot.data() as Map<String, dynamic>;
-    //       print('data >. $data');
-    // });
-
-    // await db.collection('user_order').doc(userUid)
-    //     .collection(year).doc(month)
-    //     .collection(day)
-    //     .get().then(
-    //       (querySnapshot) {
-    //     for (var docSnapshot in querySnapshot.docs) {
-    //       print('day ==> $day, ${docSnapshot.id} => ${docSnapshot.data()}');
-    //     }
-    //   },
-    //   onError: (e) => print("Error completing: $e"),
-    // );
   }
+
+
+
+  // Future<List<TransactionHistoryModel>> getTodayHistory(String year, String month, String day) async {
+  //
+  //   historyList.clear();
+  //
+  //   for( var hour = 1; hour < 24; hour++ ) {
+  //     await db.collection(Strings.collection_user).doc(userUid)
+  //         .collection(Strings.collection_userOrder).doc(year)
+  //         .collection(month).doc(day)
+  //         .collection(hour.toString())
+  //         .get()
+  //         .then((querySnapshot) {
+  //           for (var document in querySnapshot.docs) {
+  //             historyList.add(TransactionHistoryModel.getSnapshotDataFromUserOrder(document));
+  //           }
+  //     });
+  //   }
+  //   return historyList;
+  // }
+
 }

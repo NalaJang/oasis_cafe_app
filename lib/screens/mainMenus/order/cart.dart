@@ -335,7 +335,7 @@ class _OrderButtonState extends State<_OrderButton> {
           var month = now.month.toString();
           var day = now.day.toString();
           var hour = now.hour.toString();
-          var dateFormatter = DateFormat('Hms');
+          var dateFormatter = DateFormat('yyyy-MM-dd H:m:s');
           var time = dateFormatter.format(now);
           List<String> orderedItemsId = [];
           var isOrdered;

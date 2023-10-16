@@ -14,30 +14,40 @@ class AccountTransactionHistory extends StatefulWidget {
 }
 
 class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
+
+  late DateTime now;
+  late int year, month, day;
+  late DateTime aMonthAgo;
+  late int yearOfAMonthAgo, monthOfAMonthAgo, dayOfAMonthAgo;
+
+  @override
+  void initState() {
+    super.initState();
+
+    now = DateTime.now();
+    // 한 달 전
+    aMonthAgo = now.subtract(Duration(days: 29));
+    yearOfAMonthAgo = aMonthAgo.year;
+    monthOfAMonthAgo = aMonthAgo.month;
+    dayOfAMonthAgo = aMonthAgo.day;
+    // 현재
+    year = now.year;
+    month = now.month;
+    day = now.day;
+
+    final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context, listen: false);
+
+    transactionHistoryProvider.fromSelectedYear = yearOfAMonthAgo;
+    transactionHistoryProvider.fromSelectedMonth = monthOfAMonthAgo;
+    transactionHistoryProvider.fromSelectedDay = dayOfAMonthAgo;
+    transactionHistoryProvider.toSelectedYear = year;
+    transactionHistoryProvider.toSelectedMonth = month;
+    transactionHistoryProvider.toSelectedDay = day;
+  }
   @override
   Widget build(BuildContext context) {
 
-    final auth = FirebaseAuth.instance;
-    final userUid = auth.currentUser!.uid;
     final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context);
-
-    var now = DateTime.now();
-    var year = now.year;
-    var month = now.month;
-    var day = now.day;
-
-    var newDateTime = DateTime(year, month, day);
-    // 29일 전
-    var before29days = newDateTime.subtract(Duration(days: 29));
-    var getLastDay = DateTime(year, before29days.month +1, 0).day;
-    print('before29days.month >> ${before29days.month}');
-    print('before29days.day >> ${before29days.day}');
-    // print('lastMonth >> ${getLastDay.month}');
-    print('lastDay >> ${getLastDay}');
-    // print('now.day = ${day}');
-    // print('day - 1 = ${day - 14}');
-    // print('nowMonth >> ${month}');
-
 
     return Scaffold(
       appBar: AppBar(
@@ -48,102 +58,54 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Theme(
-              data: ThemeData(
-                dividerColor: Colors.transparent
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                // 화면 로딩 시 기본 1개월 내역 보여주기
+                Text(
+                  '$yearOfAMonthAgo.$monthOfAMonthAgo.$dayOfAMonthAgo - '
+                      '$year.$month.$day',
+                  style: const TextStyle(
+                    fontSize: 15.0
+                  ),
+                ),
 
-              child: ExpansionTile(
-                // 조회된 날짜
-                title: Container(
-                  alignment: Alignment.center,
+                // 상세 조회
+                ElevatedButton(
+                  onPressed: (){
+                    transactionHistoryProvider.fromSelectedYear = yearOfAMonthAgo;
+                    transactionHistoryProvider.fromSelectedMonth = monthOfAMonthAgo;
+                    transactionHistoryProvider.fromSelectedDay = dayOfAMonthAgo;
+                    transactionHistoryProvider.toSelectedYear = year;
+                    transactionHistoryProvider.toSelectedMonth = month;
+                    transactionHistoryProvider.toSelectedDay = day;
+
+                    transactionHistoryProvider.getTransactionHistory();
+                  },
+
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)
+                      ),
+                      side: BorderSide(
+                        color: Colors.brown,
+                      )
+                  ),
+
                   child: Text(
-                    '2022.10.07 - 2023.10.06',
+                    '상세 조회',
                     style: TextStyle(
-                      color: Colors.black
+                      color: Colors.brown
                     ),
-                  ),
-                ),
-
-                // 상세 조회 버튼
-                trailing: const Text(
-                  '상세 조회',
-                  style: TextStyle(
-                    color: Colors.black
-                  ),
-                ),
-
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(width: 5,),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: (){
-                            transactionHistoryProvider.getOrderHistoryForOneMonth(before29days.month, before29days.day, getLastDay, month, day);
-
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 1),
-                            ),
-                            child: const Text(
-                              '1개월',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(width: 5,),
-
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                          ),
-                          child: const Text(
-                            '1년',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(width: 5,),
-
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                          ),
-                          child: const Text(
-                            '기간 설정',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 5,),
-                    ],
-                  ),
-
-                  ElevatedButton(
-                    onPressed: (){},
-                    child: Text('조회')
                   )
-                ],
-              ),
+                )
+              ],
             ),
           ),
 
           const Divider(thickness: 1, color: Colors.brown,),
 
-          // 1개월 전 ~ 오늘 데이터를 리스트에 담아준다.
-          // 예) 9월 12일, 13일 ... 지난 달의 마지막 날까지 day++
-          // 10월 1일, 2일 ... 이번 달 첫 날부터 오늘 날짜까지 day++
           TransactionHistoryList()
         ],
       ),
@@ -158,21 +120,19 @@ class TransactionHistoryList extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context);
-    var now = DateTime.now();
-    var year = now.year.toString();
-    var month = now.month.toString();
-    var day = now.day.toString();
 
     return FutureBuilder(
-      // todo: 1개월 버튼 클릭 시 bool 값을 불러와서 결과에 따라 future 값 변경?
-      future: transactionHistoryProvider.getTodayHistory(year, month, day),
+      future: transactionHistoryProvider.getTransactionHistory(),
       builder: (context, snapshot) {
+        if (transactionHistoryProvider.historyList.isEmpty) {
+          return const Center(child: CircularProgressIndicator(),);
+        } else {
 
-        if( snapshot.hasData ) {
           return ListView.separated(
-            // todo: shrinkWrap -> slivers 로 변경?
+            // list 위젯의 높이를 유연하게 조절하기 위한 shrinkWrap
             shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) => const Divider(
+            separatorBuilder: (BuildContext context, int index) =>
+            const Divider(
               color: Colors.grey,
             ),
 
@@ -183,7 +143,9 @@ class TransactionHistoryList extends StatelessWidget {
               String time = transactionHistoryProvider.historyList[index].orderTime;
 
               return Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 0),
+                padding: const EdgeInsets.only(
+                    left: 10, right: 10, top: 5, bottom: 0
+                ),
                 child: ListTile(
 
                   // 결제 수단
@@ -205,8 +167,7 @@ class TransactionHistoryList extends StatelessWidget {
             },
           );
         }
-        return Center(child: CircularProgressIndicator(),);
-      },
+      }
     );
   }
 }

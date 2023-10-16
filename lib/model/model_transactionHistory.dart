@@ -32,7 +32,5 @@ class TransactionHistoryModel {
     syrupOption = data['syrupOption'];
     whippedCreamOption = data['whippedCreamOption'];
     iceOption = data['iceOption'];
-
-    print('orderTime >> ${orderTime}');
   }
 }
