@@ -6,23 +6,34 @@ import 'package:provider/provider.dart';
 
 import '../../../strings/strings_en.dart';
 
-class AccountTransactionHistory extends StatelessWidget {
+class AccountTransactionHistory extends StatefulWidget {
   const AccountTransactionHistory({Key? key}) : super(key: key);
 
+  @override
+  State<AccountTransactionHistory> createState() => _AccountTransactionHistoryState();
+}
+
+class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
+
+  late DateTime now;
+  late DateTime aMonthAgo;
+  late int yearOfAMonthAgo, monthOfAMonthAgo, dayOfAMonthAgo;
+  late int year, month, day;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
 
-    var now = DateTime.now();
+    now = DateTime.now();
     // 한 달 전
-    var aMonthAgo = now.subtract(Duration(days: 29));
-    var yearOfAMonthAgo = aMonthAgo.year;
-    var monthOfAMonthAgo = aMonthAgo.month;
-    var dayOfAMonthAgo = aMonthAgo.day;
+    aMonthAgo = now.subtract(Duration(days: 29));
+    yearOfAMonthAgo = aMonthAgo.year;
+    monthOfAMonthAgo = aMonthAgo.month;
+    dayOfAMonthAgo = aMonthAgo.day;
     // 현재
-    var year = now.year;
-    var month = now.month;
-    var day = now.day;
+    year = now.year;
+    month = now.month;
+    day = now.day;
 
     final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context, listen: false);
 
@@ -32,8 +43,10 @@ class AccountTransactionHistory extends StatelessWidget {
     transactionHistoryProvider.toSelectedYear = year;
     transactionHistoryProvider.toSelectedMonth = month;
     transactionHistoryProvider.toSelectedDay = day;
+  }
 
-
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.transactionHistory),
@@ -78,9 +91,123 @@ class AccountTransactionHistory extends StatelessWidget {
                   ),
                 ),
 
-                children: const [
-                  // 날짜 선택 화면
-                  DetailedTransactionHistory()
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+
+                      // 조회 시작 날짜
+                      Row(
+                        children: [
+                          Text(
+                            '$yearOfAMonthAgo.$monthOfAMonthAgo.$dayOfAMonthAgo',
+                            style: const TextStyle(
+                            ),
+                          ),
+
+                          const SizedBox(width: 5,),
+
+                          GestureDetector(
+                            onTap: () async {
+                              final fromSelectedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: now,
+                                  firstDate: DateTime(2018),
+                                  lastDate: now,
+                                  initialEntryMode: DatePickerEntryMode.calendarOnly
+                              );
+
+                              if( fromSelectedDate != null ) {
+                                setState(() {
+                                  yearOfAMonthAgo = fromSelectedDate.year;
+                                  monthOfAMonthAgo = fromSelectedDate.month;
+                                  dayOfAMonthAgo = fromSelectedDate.day;
+                                });
+                              }
+
+                            },
+
+                            child: const Icon(
+                              Icons.calendar_month_outlined,
+                              color: Colors.brown,
+                            ),
+                          )
+                        ],
+                      ),
+
+                      const Text(' ~ '),
+
+                      // 조회 끝 날짜
+                      Row(
+                        children: [
+                          Text(
+                            '$year.$month.$day',
+                            style: const TextStyle(
+                                fontSize: 15.0
+                            ),
+                          ),
+
+                          const SizedBox(width: 5,),
+
+                          GestureDetector(
+                            onTap: () async {
+                              final toSelectedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: now,
+                                  firstDate: DateTime(2018),
+                                  lastDate: now,
+                                  initialEntryMode: DatePickerEntryMode.calendarOnly
+                              );
+
+                              if( toSelectedDate != null ) {
+                                setState(() {
+                                  year = toSelectedDate.year;
+                                  month = toSelectedDate.month;
+                                  day = toSelectedDate.day;
+                                });
+                              }
+                            },
+                            child: const Icon(
+                              Icons.calendar_month_outlined,
+                              color: Colors.brown,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+
+                  // 조회 버튼
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: (){
+                        final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context, listen: false);
+
+                        transactionHistoryProvider.fromSelectedYear = yearOfAMonthAgo;
+                        transactionHistoryProvider.fromSelectedMonth = monthOfAMonthAgo;
+                        transactionHistoryProvider.fromSelectedDay = dayOfAMonthAgo;
+                        transactionHistoryProvider.toSelectedYear = year;
+                        transactionHistoryProvider.toSelectedMonth = month;
+                        transactionHistoryProvider.toSelectedDay = day;
+                      },
+
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: Colors.teal,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          side: BorderSide(
+                              color: Colors.teal,
+                              width: 1
+                          )
+                      ),
+
+                      child: Text('조회'),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -88,140 +215,9 @@ class AccountTransactionHistory extends StatelessWidget {
 
           const Divider(thickness: 1, color: Colors.brown,),
 
-          // 거래 내역 리스트
           const TransactionHistoryList()
         ],
       ),
-    );
-  }
-}
-
-
-
-class DetailedTransactionHistory extends StatefulWidget {
-  const DetailedTransactionHistory({Key? key}) : super(key: key);
-
-  @override
-  State<DetailedTransactionHistory> createState() => _DetailedTransactionHistoryState();
-}
-
-class _DetailedTransactionHistoryState extends State<DetailedTransactionHistory> {
-
-  late DateTime now;
-  late DateTime aMonthAgo;
-  late int yearOfAMonthAgo, monthOfAMonthAgo, dayOfAMonthAgo;
-  late int year, month, day;
-
-  @override
-  void initState() {
-    super.initState();
-
-    now = DateTime.now();
-    // 한 달 전
-    aMonthAgo = now.subtract(Duration(days: 29));
-    yearOfAMonthAgo = aMonthAgo.year;
-    monthOfAMonthAgo = aMonthAgo.month;
-    dayOfAMonthAgo = aMonthAgo.day;
-    // 현재
-    year = now.year;
-    month = now.month;
-    day = now.day;
-
-    final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context, listen: false);
-
-    transactionHistoryProvider.fromSelectedYear = yearOfAMonthAgo;
-    transactionHistoryProvider.fromSelectedMonth = monthOfAMonthAgo;
-    transactionHistoryProvider.fromSelectedDay = dayOfAMonthAgo;
-    transactionHistoryProvider.toSelectedYear = year;
-    transactionHistoryProvider.toSelectedMonth = month;
-    transactionHistoryProvider.toSelectedDay = day;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-
-        // 조회 시작 날짜
-        Row(
-          children: [
-            Text(
-              '$yearOfAMonthAgo.$monthOfAMonthAgo.$dayOfAMonthAgo',
-              style: const TextStyle(
-              ),
-            ),
-
-            const SizedBox(width: 5,),
-
-            GestureDetector(
-              onTap: () async {
-                final fromSelectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: now,
-                    firstDate: DateTime(2018),
-                    lastDate: now,
-                    initialEntryMode: DatePickerEntryMode.calendarOnly
-                );
-
-                if( fromSelectedDate != null ) {
-                  setState(() {
-                    yearOfAMonthAgo = fromSelectedDate.year;
-                    monthOfAMonthAgo = fromSelectedDate.month;
-                    dayOfAMonthAgo = fromSelectedDate.day;
-                  });
-                }
-
-              },
-
-              child: const Icon(
-                Icons.calendar_month_outlined,
-                color: Colors.brown,
-              ),
-            )
-          ],
-        ),
-
-        const Text(' ~ '),
-
-        // 조회 끝 날짜
-        Row(
-          children: [
-            Text(
-              '$year.$month.$day',
-              style: const TextStyle(
-                  fontSize: 15.0
-              ),
-            ),
-
-            const SizedBox(width: 5,),
-
-            GestureDetector(
-              onTap: () async {
-                final toSelectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: now,
-                    firstDate: DateTime(2018),
-                    lastDate: now,
-                    initialEntryMode: DatePickerEntryMode.calendarOnly
-                );
-
-                if( toSelectedDate != null ) {
-                  setState(() {
-                    year = toSelectedDate.year;
-                    month = toSelectedDate.month;
-                    day = toSelectedDate.day;
-                  });
-                }
-              },
-              child: const Icon(
-                Icons.calendar_month_outlined,
-                color: Colors.brown,
-              ),
-            )
-          ],
-        ),
-      ],
     );
   }
 }
