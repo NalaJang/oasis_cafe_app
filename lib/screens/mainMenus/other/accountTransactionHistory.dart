@@ -58,55 +58,150 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+            child: Theme(
+              data: ThemeData(
+                dividerColor: Colors.transparent,
+              ),
+
+              child: ExpansionTile(
                 // 화면 로딩 시 기본 1개월 내역 보여주기
-                Text(
-                  '$yearOfAMonthAgo.$monthOfAMonthAgo.$dayOfAMonthAgo - '
-                      '$year.$month.$day',
-                  style: const TextStyle(
-                    fontSize: 15.0
+                title: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    '$yearOfAMonthAgo.$monthOfAMonthAgo.$dayOfAMonthAgo - '
+                        '$year.$month.$day',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15.0
+                    ),
                   ),
                 ),
 
-                // 상세 조회
-                ElevatedButton(
-                  onPressed: (){
-                    transactionHistoryProvider.fromSelectedYear = yearOfAMonthAgo;
-                    transactionHistoryProvider.fromSelectedMonth = monthOfAMonthAgo;
-                    transactionHistoryProvider.fromSelectedDay = dayOfAMonthAgo;
-                    transactionHistoryProvider.toSelectedYear = year;
-                    transactionHistoryProvider.toSelectedMonth = month;
-                    transactionHistoryProvider.toSelectedDay = day;
+                trailing: ElevatedButton(
+                    onPressed: (){
+                      transactionHistoryProvider.fromSelectedYear = yearOfAMonthAgo;
+                      transactionHistoryProvider.fromSelectedMonth = monthOfAMonthAgo;
+                      transactionHistoryProvider.fromSelectedDay = dayOfAMonthAgo;
+                      transactionHistoryProvider.toSelectedYear = year;
+                      transactionHistoryProvider.toSelectedMonth = month;
+                      transactionHistoryProvider.toSelectedDay = day;
 
-                    transactionHistoryProvider.getTransactionHistory();
-                  },
+                      transactionHistoryProvider.getTransactionHistory();
 
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)
-                      ),
-                      side: BorderSide(
-                        color: Colors.brown,
-                      )
-                  ),
+                    },
 
-                  child: Text(
-                    '상세 조회',
-                    style: TextStyle(
-                      color: Colors.brown
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)
+                        ),
+                        side: const BorderSide(
+                          color: Colors.brown,
+                        )
                     ),
-                  )
-                )
-              ],
+
+                    child: const Text(
+                      '상세 조회',
+                      style: TextStyle(
+                          color: Colors.brown
+                      ),
+                    )
+                ),
+
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+
+                      // 조회 시작 날짜
+                      Row(
+                        children: [
+                          Text(
+                            '$yearOfAMonthAgo.$monthOfAMonthAgo.$dayOfAMonthAgo',
+                            style: const TextStyle(
+                            ),
+                          ),
+
+                          const SizedBox(width: 5,),
+
+                          GestureDetector(
+                            onTap: () async {
+                              final fromSelectedDate = await showDatePicker(
+                                context: context,
+                                initialDate: now,
+                                firstDate: DateTime(2018),
+                                lastDate: now,
+                                initialEntryMode: DatePickerEntryMode.calendarOnly
+                              );
+
+                              if( fromSelectedDate != null ) {
+                                setState(() {
+                                  yearOfAMonthAgo = fromSelectedDate.year;
+                                  monthOfAMonthAgo = fromSelectedDate.month;
+                                  dayOfAMonthAgo = fromSelectedDate.day;
+                                });
+                              }
+
+                            },
+
+                            child: const Icon(
+                              Icons.calendar_month_outlined,
+                              color: Colors.brown,
+                            ),
+                          )
+                        ],
+                      ),
+
+                      const Text(' ~ '),
+
+                      // 조회 끝 날짜
+                      Row(
+                        children: [
+                          Text(
+                            '$year.$month.$day',
+                            style: const TextStyle(
+                                fontSize: 15.0
+                            ),
+                          ),
+
+                          const SizedBox(width: 5,),
+
+                          GestureDetector(
+                            onTap: () async {
+                              final toSelectedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: now,
+                                  firstDate: DateTime(2018),
+                                  lastDate: now,
+                                  initialEntryMode: DatePickerEntryMode.calendarOnly
+                              );
+
+                              if( toSelectedDate != null ) {
+                                setState(() {
+                                  year = toSelectedDate.year;
+                                  month = toSelectedDate.month;
+                                  day = toSelectedDate.day;
+                                });
+                              }
+                            },
+                            child: const Icon(
+                              Icons.calendar_month_outlined,
+                              color: Colors.brown,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
 
           const Divider(thickness: 1, color: Colors.brown,),
 
-          TransactionHistoryList()
+          const TransactionHistoryList()
         ],
       ),
     );
