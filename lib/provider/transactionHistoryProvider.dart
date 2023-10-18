@@ -71,8 +71,6 @@ class TransactionHistoryProvider with ChangeNotifier {
     // 매장에서 볼 데이터베이스 경로
     await db.collection('user_order')
         .doc()
-        .collection('new')
-        .doc()
         .set(
         {
           'orderTime' : time,
