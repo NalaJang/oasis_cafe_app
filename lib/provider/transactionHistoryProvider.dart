@@ -59,6 +59,7 @@ class TransactionHistoryProvider with ChangeNotifier {
           'syrupOption' : syrupOption,
           'whippedCreamOption' : whippedCreamOption,
           'iceOption' : iceOption,
+          'processState' : 'new'
         }
 
     ).onError((error, stackTrace) => {
@@ -69,6 +70,8 @@ class TransactionHistoryProvider with ChangeNotifier {
 
     // 매장에서 볼 데이터베이스 경로
     await db.collection('user_order')
+        .doc()
+        .collection('new')
         .doc()
         .set(
         {
@@ -84,7 +87,8 @@ class TransactionHistoryProvider with ChangeNotifier {
           'espressoOption' : espressoOption,
           'syrupOption' : syrupOption,
           'whippedCreamOption' : whippedCreamOption,
-          'iceOption' : iceOption
+          'iceOption' : iceOption,
+          'processState' : 'new'
         }
     ).onError((error, stackTrace) => {
       print('order error >> $error'),
@@ -96,7 +100,7 @@ class TransactionHistoryProvider with ChangeNotifier {
   }
 
   TransactionHistoryProvider() {
-    transactionCollection = db.collection('user').doc(userUid).collection('user_order');
+    transactionCollection = db.collection('user').doc(userUid).collection('user_order').doc().collection('aa');
   }
 
 
