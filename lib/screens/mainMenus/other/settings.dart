@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/main.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:provider/provider.dart';
@@ -180,7 +181,7 @@ class _SignOutState extends State<SignOut> {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => Login()
+              builder: (context) => const MyApp()
             ), (route) => false
           );
         },
