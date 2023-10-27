@@ -31,7 +31,10 @@ class _SignUpState extends State<SignUp> {
   bool _isCheckedTermsOfUse = false;
   bool _isCheckedPrivacyPolicyAgreed = false;
   bool _isCheckedMarketingConsentAgreed = false;
-
+  bool _isCheckBoxError = false;
+  bool checkBoxError() {
+    return _isCheckBoxError;
+  }
 
   final double textFormSizedBoxHeight = 30.0;
 
@@ -198,6 +201,11 @@ class _SignUpState extends State<SignUp> {
                           });
                         },
                         checkColor: Colors.blue,
+                        side: MaterialStateBorderSide.resolveWith((states) =>
+                        _isCheckBoxError == true ?
+                            const BorderSide(width: 2.0, color: Colors.red) :
+                            const BorderSide(width: 2.0, color: Colors.black54)
+                        ),
                       ),
                     ],
                   ),
@@ -220,6 +228,11 @@ class _SignUpState extends State<SignUp> {
                           });
                         },
                         checkColor: Colors.blue,
+                        side: MaterialStateBorderSide.resolveWith((states) =>
+                        _isCheckBoxError == true ?
+                        const BorderSide(width: 2.0, color: Colors.red) :
+                        const BorderSide(width: 2.0, color: Colors.black54)
+                        ),
                       ),
                     ],
                   ),
@@ -250,12 +263,23 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: textFormSizedBoxHeight,),
 
                   // 회원가입 버튼
-                  Container(
-                    child: GestureDetector(
-                      onTap: () async {
+                  GestureDetector(
+                    onTap: () async {
 
-                        // 사용자 입력 값 유효성 검사
-                        _tryValidation();
+                      // 사용자 입력 값 유효성 검사
+                      _tryValidation();
+
+                      if( _isCheckedTermsOfUse && _isCheckedPrivacyPolicyAgreed ) {
+                        _isCheckBoxError = false;
+                      } else {
+                        _isCheckBoxError = true;
+                      }
+
+                      setState(() {
+                        checkBoxError();
+                      });
+
+                      if( !checkBoxError() ) {
 
                         try {
                           setState(() {
@@ -286,19 +310,21 @@ class _SignUpState extends State<SignUp> {
                               showSpinner = false;
                             });
 
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text(
-                                    '회원가입이 완료되었습니다.',
-                                  ),
-                              )
-                            );
+                              if( mounted ) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        '회원가입이 완료되었습니다.',
+                                      ),
+                                    )
+                                );
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Login())
-                            );
-                          }
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Login())
+                                );
+                              }
+                            }
 
                         } catch (e) {
                           print(e);
@@ -316,23 +342,23 @@ class _SignUpState extends State<SignUp> {
                             });
                           }
                         }
-                      },
+                      }
+                    },
 
-                      child: Container(
-                        padding: EdgeInsets.all(20.0),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(12.0)
-                        ),
+                    child: Container(
+                      padding: EdgeInsets.all(20.0),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(12.0)
+                      ),
 
-                        child: const Center(
-                          child: Text(
-                            Strings.signUp,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              )
-                          ),
+                      child: const Center(
+                        child: Text(
+                          Strings.signUp,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            )
                         ),
                       ),
                     ),
