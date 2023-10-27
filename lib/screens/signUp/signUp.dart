@@ -19,10 +19,9 @@ class _SignUpState extends State<SignUp> {
   var formKey = GlobalKey<FormState>();
   final _authentication = FirebaseAuth.instance;
 
+  var userNameController = TextEditingController();
   var userEmailController = TextEditingController();
   var userPasswordController = TextEditingController();
-  var userNameController = TextEditingController();
-  var userDateOfBirthController = TextEditingController();
   var userMobileNumberController = TextEditingController();
 
   final double textFormSizedBoxHeight = 30.0;
@@ -43,20 +42,10 @@ class _SignUpState extends State<SignUp> {
       labelStyle: const TextStyle(
           color: Colors.black54,
       ),
-      focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+      border: const UnderlineInputBorder(
           borderSide: BorderSide(color: Palette.iconColor)
       ),
-      enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          borderSide: BorderSide(color: Palette.iconColor)
-      ),
-      errorBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          borderSide: BorderSide(color: Palette.iconColor)
-      ),
-      focusedErrorBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+      focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Palette.iconColor)
       ),
     );
@@ -67,10 +56,9 @@ class _SignUpState extends State<SignUp> {
   void dispose() {
     super.dispose();
 
+    userNameController.dispose();
     userEmailController.dispose();
     userPasswordController.dispose();
-    userNameController.dispose();
-    userDateOfBirthController.dispose();
     userMobileNumberController.dispose();
   }
 
@@ -92,6 +80,20 @@ class _SignUpState extends State<SignUp> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+
+                  // 이름
+                  TextFormField(
+                      controller: userNameController,
+                      validator: (value) =>
+                      value == '' ? Strings.nameValidation : null,
+
+                      cursorColor: Colors.black,
+                      decoration: _getTextFormDecoration(Strings.name)
+
+                  ),
+
+                  SizedBox(height: textFormSizedBoxHeight,),
+
                   // 이메일
                   TextFormField(
                     controller: userEmailController,
@@ -140,38 +142,6 @@ class _SignUpState extends State<SignUp> {
 
                   SizedBox(height: textFormSizedBoxHeight,),
 
-                  // 본인 인증 서비스
-                  Text(
-                    '본인 인증 서비스 약관 전체 동의\n'
-                        '휴대폰 본인 인증 서비스 이용약관 동의(필수)'
-                  ),
-
-                  // 이름
-                  TextFormField(
-                      controller: userNameController,
-                      validator: (value) =>
-                      value == '' ? Strings.nameValidation : null,
-
-                      cursorColor: Colors.black,
-                      decoration: _getTextFormDecoration(Strings.name)
-
-                  ),
-
-                  SizedBox(height: textFormSizedBoxHeight,),
-
-                  // 생년월일
-                  TextFormField(
-                      controller: userDateOfBirthController,
-                      validator: (value) =>
-                      value == '' ? Strings.dateOfBirthValidation : null,
-
-                      cursorColor: Colors.black,
-                      decoration: _getTextFormDecoration(Strings.dateOfBirth)
-
-                  ),
-
-                  SizedBox(height: textFormSizedBoxHeight,),
-
                   // 휴대폰 번호
                   TextFormField(
                       controller: userMobileNumberController,
@@ -183,7 +153,13 @@ class _SignUpState extends State<SignUp> {
 
                   ),
 
-                  SizedBox(height: 30,),
+                  SizedBox(height: textFormSizedBoxHeight,),
+
+                  // 본인 인증 서비스
+                  Text(''),
+
+
+                  SizedBox(height: textFormSizedBoxHeight,),
 
                   // 회원가입 버튼
                   Container(
@@ -211,7 +187,7 @@ class _SignUpState extends State<SignUp> {
                             'userEmail' : userEmailController.text,
                             'userPassword' : userPasswordController.text,
                             'userName' : userNameController.text,
-                            'userDateOfBirth' : userDateOfBirthController.text,
+                            'userDateOfBirth' : '',
                             'userMobileNumber' : userMobileNumberController.text,
                             'notification' : false,
                             'shakeToPay' : false
