@@ -32,6 +32,14 @@ class Strings {
   static const String dateOfBirthValidation = 'Please enter your date of birth';
   static const String mobileNumberValidation = 'Please enter a valid mobile number';
 
+  static const String required = '(Required)';
+  static const String optional = '(Optional)';
+  static const String agreeToAllTermsConditions = 'Agree to terms and conditions';
+  static const String termsOfUseAgreed = 'Terms of use agreed';
+  static const String privacyPolicyAgreed = 'Privacy policy agreed';
+  static const String marketingConsentAgreed = 'Marketing consent agreed';
+
+
   //// Order
   static const String order = 'Order';
   static const String beverage = 'Beverage';

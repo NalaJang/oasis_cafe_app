@@ -4,8 +4,10 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:oasis_cafe_app/strings/strings_en.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
 
+  bool showSpinner = false;
   var formKey = GlobalKey<FormState>();
   final _authentication = FirebaseAuth.instance;
 
@@ -24,8 +27,13 @@ class _SignUpState extends State<SignUp> {
   var userPasswordController = TextEditingController();
   var userMobileNumberController = TextEditingController();
 
+  bool _isCheckedTermsOfUse = false;
+  bool _isCheckedPrivacyPolicyAgreed = false;
+  bool _isCheckedMarketingConsentAgreed = false;
+
+
   final double textFormSizedBoxHeight = 30.0;
-  bool showSpinner = false;
+
 
   void _tryValidation() {
     final isValid = formKey.currentState!.validate();
@@ -34,21 +42,6 @@ class _SignUpState extends State<SignUp> {
     if( isValid) {
       formKey.currentState!.save();
     }
-  }
-
-  InputDecoration _getTextFormDecoration(String labelText) {
-    return InputDecoration(
-      labelText: labelText,
-      labelStyle: const TextStyle(
-          color: Colors.black54,
-      ),
-      border: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Palette.iconColor)
-      ),
-      focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Palette.iconColor)
-      ),
-    );
   }
 
 
@@ -155,8 +148,71 @@ class _SignUpState extends State<SignUp> {
 
                   SizedBox(height: textFormSizedBoxHeight,),
 
-                  // 본인 인증 서비스
-                  Text(''),
+                  // 이용약관 동의
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _setTermsAndConditionsDecoration(Strings.termsOfUseAgreed),
+                      Checkbox(
+                        value: _isCheckedTermsOfUse,
+                        onChanged: (value) {
+                          setState(() {
+                            _isCheckedTermsOfUse = value!;
+                            if( _isCheckedTermsOfUse ) {
+                              context.read<UserStateProvider>().addCheck(Strings.termsOfUseAgreed);
+                            } else {
+                              context.read<UserStateProvider>().removeCheck(Strings.termsOfUseAgreed);
+                            }
+                          });
+                        },
+                        checkColor: Colors.blue,
+                      ),
+                    ],
+                  ),
+
+                  // 개인정보 수집 및 이용동의
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _setTermsAndConditionsDecoration(Strings.privacyPolicyAgreed),
+                      Checkbox(
+                        value: _isCheckedPrivacyPolicyAgreed,
+                        onChanged: (value) {
+                          setState(() {
+                            _isCheckedPrivacyPolicyAgreed = value!;
+                            if( _isCheckedPrivacyPolicyAgreed ) {
+                              context.read<UserStateProvider>().addCheck(Strings.privacyPolicyAgreed);
+                            } else {
+                              context.read<UserStateProvider>().removeCheck(Strings.privacyPolicyAgreed);
+                            }
+                          });
+                        },
+                        checkColor: Colors.blue,
+                      ),
+                    ],
+                  ),
+
+                  // 광고성 정보 수신 동의
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _setMarketingConsentDecoration(),
+                      Checkbox(
+                        value: _isCheckedMarketingConsentAgreed,
+                        onChanged: (value) {
+                          setState(() {
+                            _isCheckedMarketingConsentAgreed = value!;
+                            if( _isCheckedMarketingConsentAgreed ) {
+                              context.read<UserStateProvider>().addCheck(Strings.marketingConsentAgreed);
+                            } else {
+                              context.read<UserStateProvider>().removeCheck(Strings.marketingConsentAgreed);
+                            }
+                          });
+                        },
+                        checkColor: Colors.blue,
+                      ),
+                    ],
+                  ),
 
 
                   SizedBox(height: textFormSizedBoxHeight,),
@@ -255,6 +311,79 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
       ),
+    );
+  }
+
+
+  InputDecoration _getTextFormDecoration(String labelText) {
+    return InputDecoration(
+      labelText: labelText,
+      labelStyle: const TextStyle(
+        color: Colors.black54,
+      ),
+      border: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Palette.iconColor)
+      ),
+      focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Palette.iconColor)
+      ),
+    );
+  }
+
+  // 필수 약관 UI
+  Row _setTermsAndConditionsDecoration(String policyName) {
+    return Row(
+      children: [
+        const Text(
+          Strings.required,
+          style: TextStyle(
+              color: Colors.deepOrange,
+              fontWeight: FontWeight.bold,
+              fontSize: 15.0
+          ),
+        ),
+        const SizedBox(width: 5,),
+        Text(
+          policyName,
+          style: const TextStyle(
+              fontSize: 15.0
+          ),
+        ),
+        const SizedBox(width: 10,),
+        const Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.black54,
+          size: 17.0,
+        )
+      ],
+    );
+  }
+
+  // 광고성 정보 수신 동의 UI
+  Row _setMarketingConsentDecoration() {
+    return Row(
+      children: const [
+        Text(
+          Strings.optional,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15.0
+          ),
+        ),
+        SizedBox(width: 5,),
+        Text(
+          Strings.marketingConsentAgreed,
+          style: TextStyle(
+              fontSize: 15.0
+          ),
+        ),
+        SizedBox(width: 10,),
+        Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.black54,
+          size: 17.0,
+        )
+      ],
     );
   }
 }
