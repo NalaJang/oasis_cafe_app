@@ -193,11 +193,6 @@ class _SignUpState extends State<SignUp> {
                         onChanged: (value) {
                           setState(() {
                             _isCheckedTermsOfUse = value!;
-                            if( _isCheckedTermsOfUse ) {
-                              context.read<UserStateProvider>().addCheck(Strings.termsOfUseAgreed);
-                            } else {
-                              context.read<UserStateProvider>().removeCheck(Strings.termsOfUseAgreed);
-                            }
                           });
                         },
                         checkColor: Colors.blue,
@@ -220,11 +215,6 @@ class _SignUpState extends State<SignUp> {
                         onChanged: (value) {
                           setState(() {
                             _isCheckedPrivacyPolicyAgreed = value!;
-                            if( _isCheckedPrivacyPolicyAgreed ) {
-                              context.read<UserStateProvider>().addCheck(Strings.privacyPolicyAgreed);
-                            } else {
-                              context.read<UserStateProvider>().removeCheck(Strings.privacyPolicyAgreed);
-                            }
                           });
                         },
                         checkColor: Colors.blue,
@@ -247,11 +237,6 @@ class _SignUpState extends State<SignUp> {
                         onChanged: (value) {
                           setState(() {
                             _isCheckedMarketingConsentAgreed = value!;
-                            if( _isCheckedMarketingConsentAgreed ) {
-                              context.read<UserStateProvider>().addCheck(Strings.marketingConsentAgreed);
-                            } else {
-                              context.read<UserStateProvider>().removeCheck(Strings.marketingConsentAgreed);
-                            }
                           });
                         },
                         checkColor: Colors.blue,
