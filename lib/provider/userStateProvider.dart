@@ -23,12 +23,10 @@ class UserStateProvider with ChangeNotifier {
   // 선택된 약관 동의
   void addCheck(String checkedItem) {
     var index = data.indexWhere((element) => element.toString() == data.toString());
-    print('index >> $index');
     if( index == -1 ) {
       data.add(checkedItem);
       notifyListeners();
     }
-    print('data.length >> ${data.length}');
   }
 
   // 선택 해제된 약관 동의

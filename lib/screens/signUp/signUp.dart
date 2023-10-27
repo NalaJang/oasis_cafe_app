@@ -27,6 +27,7 @@ class _SignUpState extends State<SignUp> {
   var userPasswordController = TextEditingController();
   var userMobileNumberController = TextEditingController();
 
+  bool _checkAll = false;
   bool _isCheckedTermsOfUse = false;
   bool _isCheckedPrivacyPolicyAgreed = false;
   bool _isCheckedMarketingConsentAgreed = false;
@@ -147,6 +148,37 @@ class _SignUpState extends State<SignUp> {
                   ),
 
                   SizedBox(height: textFormSizedBoxHeight,),
+
+                  // 약관 전체 동의 및 해제
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        Strings.agreeToAllTermsConditions,
+                        style: TextStyle(
+                          fontSize: 15.0
+                        ),
+                      ),
+                      Checkbox(
+                        value: _checkAll,
+                        checkColor: Colors.blue,
+                        onChanged: (value) {
+                          setState(() {
+                            _checkAll = value!;
+                            if( _checkAll ) {
+                              _isCheckedTermsOfUse = true;
+                              _isCheckedPrivacyPolicyAgreed = true;
+                              _isCheckedMarketingConsentAgreed = true;
+                            } else {
+                              _isCheckedTermsOfUse = false;
+                              _isCheckedPrivacyPolicyAgreed = false;
+                              _isCheckedMarketingConsentAgreed = false;
+                            }
+                          });
+                        }
+                      )
+                    ],
+                  ),
 
                   // 이용약관 동의
                   Row(
