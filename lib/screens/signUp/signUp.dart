@@ -358,6 +358,7 @@ class _SignUpState extends State<SignUp> {
   }
 
 
+  // textForm UI
   InputDecoration _getTextFormDecoration(String labelText) {
     return InputDecoration(
       labelText: labelText,
