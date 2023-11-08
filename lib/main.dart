@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/cartProvider.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
+import 'package:oasis_cafe_app/provider/orderStateProvider.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserStateProvider()),
+        ChangeNotifierProvider(create: (context) => OrderStateProvider()),
         ChangeNotifierProvider(create: (context) => ItemProvider()),
         ChangeNotifierProvider(create: (context) => PersonalOptionProvider()),
         ChangeNotifierProvider(create: (context) => TransactionHistoryProvider()),

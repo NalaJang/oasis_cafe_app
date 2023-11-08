@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/provider/orderStateProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -82,8 +83,16 @@ class MainPage extends StatelessWidget {
 
               Column(
                 children: [
-                  Image.asset(
-                      'image/IMG_banner1.PNG'
+                  GestureDetector(
+                    onTap: () async {
+                      var aa = Provider.of<OrderStateProvider>(context, listen: false).getOrderState();
+                      if( await aa ) {
+                        print('true >> ${aa}');
+                      }
+                    },
+                    child: Image.asset(
+                        'image/IMG_banner1.PNG'
+                    ),
                   ),
 
                   SizedBox(height: 10,),
