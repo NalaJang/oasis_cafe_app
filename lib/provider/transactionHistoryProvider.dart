@@ -19,6 +19,22 @@ class TransactionHistoryProvider with ChangeNotifier {
   final userUid = FirebaseAuth.instance.currentUser!.uid;
   List<TransactionHistoryModel> historyList = [];
   bool isOrdered = true;
+  String lastOrderUid = '';
+
+
+  // 마지막 주문 uid 가져오기
+  Future<void> getLastOrderId() async {
+
+    await db.collection(Strings.collection_user)
+        .doc(userUid)
+        .collection(Strings.collection_userOrder)
+        .orderBy('orderTime', descending: false)
+        .get()
+        .then((querySnapshot) {
+
+          lastOrderUid = querySnapshot.docs.last.id;
+    });
+  }
 
   // 주문하기
   Future<bool> orderItems(
@@ -63,10 +79,13 @@ class TransactionHistoryProvider with ChangeNotifier {
         }
 
     ).onError((error, stackTrace) => {
-      print('order error >> $error'),
+      print('user order error >> $error'),
       isOrdered = false
     });
 
+
+    // 마지막 주문 uid 를 가져와 매장 데이터베이스에 저장
+    await getLastOrderId();
 
     // 매장에서 볼 데이터베이스 경로
     await db.collection('user_order_new')
@@ -74,6 +93,7 @@ class TransactionHistoryProvider with ChangeNotifier {
         .set(
         {
           'orderTime' : time,
+          'orderUid' : lastOrderUid,
           'userUid' : userUid,
           'quantity' : quantity,
           'itemName' : itemName,
@@ -89,7 +109,7 @@ class TransactionHistoryProvider with ChangeNotifier {
           'processState' : 'new'
         }
     ).onError((error, stackTrace) => {
-      print('order error >> $error'),
+      print('order save error >> $error'),
       isOrdered = false
     });
 
