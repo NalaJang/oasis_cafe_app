@@ -172,15 +172,19 @@ class _OrderStatusState extends State<OrderStatus> {
           var document = snapshot.data!.docs[0];
           var documentId = document.id;
           var processState = document['processState'];
-          String cardPhrase = '';
+          String cardTitlePhrase = '';
+          String cardSubTitlePhrase = '';
 
           if( processState == 'new' ) {
-            cardPhrase = '주문을 확인하고 있습니다.';
+            cardTitlePhrase = '주문을 확인하고 있습니다. 🏃🏻‍♀️';
+            cardSubTitlePhrase = '주문 상황에 따라 준비가 늦어질 수 있습니다. 본인이 직접 메뉴를 수령해 주세요.';
+
           } else if( processState == 'inProcess' ) {
-            cardPhrase = '$userName 님의 주문을 1번째 메뉴로 준비 중입니다.';
+            cardTitlePhrase = '$userName 님의 주문을 1번째 메뉴로 준비 중입니다.';
+            cardSubTitlePhrase = '주문 승인 즉시 메뉴 준비가 시작됩니다. 완성 후, 빠르게 픽업해 주세요.';
           }
 
-          return orderProcessStateCard(cardPhrase);
+          return orderProcessStateCard(cardTitlePhrase, cardSubTitlePhrase);
         }
         return const CircularProgressIndicator();
       }
@@ -188,10 +192,11 @@ class _OrderStatusState extends State<OrderStatus> {
   }
 
 
-  Widget orderProcessStateCard(String cardPhrase) {
+
+  Widget orderProcessStateCard(String cardTitlePhrase, String cardSubTitlePhrase) {
     return Container(
       height: 200,
-      // margin: EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
@@ -205,15 +210,24 @@ class _OrderStatusState extends State<OrderStatus> {
       ),
 
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            cardPhrase,
+            cardTitlePhrase,
             style: const TextStyle(
-                fontSize: 22.0,
+                fontSize: 24.0,
                 fontWeight: FontWeight.bold
             ),
           ),
 
+          const SizedBox(height: 10.0,),
+          Text(
+            cardSubTitlePhrase,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Colors.black54
+            ),
+          ),
 
           Image.asset('image/IMG_order_status_graph.png'),
 
