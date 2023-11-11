@@ -146,8 +146,49 @@ class _OrderStatusState extends State<OrderStatus> {
 
   @override
   Widget build(BuildContext context) {
+    var orderStateProvider = Provider.of<OrderStateProvider>(context);
     String userName = Provider.of<UserStateProvider>(context).userName;
 
+
+    /*
+    .where('processState', isNotEqualTo: 'done') ==> isEqualTo -> isNotEqualTo 로 변경하자 발생한 에러.
+    .orderBy('orderTime', descending: false)
+
+    The initial orderBy() field "[[FieldPath([orderTime]), false]][0][0]" has to be the same
+    as the where() field parameter "FieldPath([processState])"
+    when an inequality operator is invoked.
+
+    .orderBy('processState') 를 추가해주었다.
+    */
+    return StreamBuilder(
+      stream: orderStateProvider.orderStateCollection
+                                .where('processState', isNotEqualTo: 'done')
+                                .orderBy('processState')
+                                .orderBy('orderTime', descending: false)
+                                .snapshots(),
+
+      builder: (context, snapshot) {
+        if( snapshot.hasData ) {
+          var document = snapshot.data!.docs[0];
+          var documentId = document.id;
+          var processState = document['processState'];
+          String cardPhrase = '';
+
+          if( processState == 'new' ) {
+            cardPhrase = '주문을 확인하고 있습니다.';
+          } else if( processState == 'inProcess' ) {
+            cardPhrase = '$userName 님의 주문을 1번째 메뉴로 준비 중입니다.';
+          }
+
+          return orderProcessStateCard(cardPhrase);
+        }
+        return const CircularProgressIndicator();
+      }
+    );
+  }
+
+
+  Widget orderProcessStateCard(String cardPhrase) {
     return Container(
       height: 200,
       // margin: EdgeInsets.symmetric(horizontal: 20.0),
@@ -156,9 +197,9 @@ class _OrderStatusState extends State<OrderStatus> {
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              blurRadius: 5,
-              spreadRadius: 2
+                color: Colors.grey.withOpacity(0.3),
+                blurRadius: 5,
+                spreadRadius: 2
             )
           ]
       ),
@@ -166,10 +207,10 @@ class _OrderStatusState extends State<OrderStatus> {
       child: Column(
         children: [
           Text(
-            '$userName 님의 주문을 1번째 메뉴로 준비 중입니다.',
-            style: TextStyle(
-              fontSize: 22.0,
-              fontWeight: FontWeight.bold
+            cardPhrase,
+            style: const TextStyle(
+                fontSize: 22.0,
+                fontWeight: FontWeight.bold
             ),
           ),
 
