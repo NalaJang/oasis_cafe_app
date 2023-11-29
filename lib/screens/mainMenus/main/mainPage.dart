@@ -19,7 +19,7 @@ class MainPage extends StatelessWidget {
 
               // 'Hello'
               Container(
-                height: 210.0,
+                // height: 210.0,
                 padding: const EdgeInsets.only(top: 100, left: 10),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,26 +40,11 @@ class MainPage extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 30,),
 
-              // 멤버쉽 카드 또는 주문 상태
-              // Container(
-              //   height: 200,
-              //   // margin: EdgeInsets.symmetric(horizontal: 20.0),
-              //   decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       borderRadius: BorderRadius.circular(5),
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: Colors.grey.withOpacity(0.3),
-              //           blurRadius: 5,
-              //           spreadRadius: 2
-              //         )
-              //       ]
-              //   ),
-              // ),
-              OrderStatus(),
+              const OrderStatus(),
 
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
 
               // 소식(What's New)
               Row(
@@ -187,6 +172,7 @@ class _OrderStatusState extends State<OrderStatus> {
             graphImage = 'image/IMG_order_status_inProcess.png';
           }
 
+          // 카드 이미지
           return orderProcessStateCard(cardTitlePhrase, cardSubTitlePhrase, graphImage);
         }
         return const CircularProgressIndicator();
@@ -195,19 +181,18 @@ class _OrderStatusState extends State<OrderStatus> {
   }
 
 
-
+// 카드 이미지
   Widget orderProcessStateCard(String cardTitlePhrase, String cardSubTitlePhrase, String graphImage) {
     return Container(
-      height: 200,
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(0.3),
-                blurRadius: 5,
-                spreadRadius: 2
+                blurRadius: 1,
+                // spreadRadius: 2
             )
           ]
       ),
@@ -215,6 +200,7 @@ class _OrderStatusState extends State<OrderStatus> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // 주문 상태 메인 문구
           Text(
             cardTitlePhrase,
             style: const TextStyle(
@@ -223,7 +209,8 @@ class _OrderStatusState extends State<OrderStatus> {
             ),
           ),
 
-          const SizedBox(height: 10.0,),
+          const SizedBox(height: 15.0,),
+          // 주문 상태 설명 문구
           Text(
             cardSubTitlePhrase,
             style: const TextStyle(
@@ -232,9 +219,13 @@ class _OrderStatusState extends State<OrderStatus> {
             ),
           ),
 
+          const SizedBox(height: 25,),
+
+          // 주문 상태 그래프 이미지
           Image.asset(graphImage),
 
-          Text('주문내역 확인하기')
+          const SizedBox(height: 15,),
+          const Text('주문내역 확인하기')
         ],
       ),
     );
