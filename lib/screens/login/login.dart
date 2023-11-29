@@ -69,167 +69,169 @@ class _LoginState extends State<Login> {
         child: Form(
           key: formKey,
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.coffee,
-                  size: 80,
-                ),
-
-                SizedBox(height: 30,),
-
-                const Text(
-                  Strings.hello,
-                  style: TextStyle(
-                    fontSize: 20.0
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.coffee,
+                    size: 80,
                   ),
-                ),
 
-                SizedBox(height: 10,),
+                  SizedBox(height: 30,),
 
-                const Text(
-                  Strings.welcome,
-                  style: TextStyle(
+                  const Text(
+                    Strings.hello,
+                    style: TextStyle(
                       fontSize: 20.0
+                    ),
                   ),
-                ),
 
-                SizedBox(height: 50,),
+                  SizedBox(height: 10,),
 
-                // email
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: TextFormField(
-                    controller: userEmailController,
-                    validator: (value) =>
-                    value == '' ? Strings.emailValidation : null,
-
-                    cursorColor: Colors.black,
-                    decoration: _getDecoration(Strings.email),
+                  const Text(
+                    Strings.welcome,
+                    style: TextStyle(
+                        fontSize: 20.0
+                    ),
                   ),
-                ),
 
-                SizedBox(height: 20,),
+                  SizedBox(height: 50,),
 
-                // password
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: TextFormField(
-                    controller: userPasswordController,
-                    validator: (value) {
-                      if( value == '' || value!.length < 6 ) {
-                        return Strings.passwordValidation;
+                  // email
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: TextFormField(
+                      controller: userEmailController,
+                      validator: (value) =>
+                      value == '' ? Strings.emailValidation : null,
 
-                      } else {
-                        return null;
-                      }
-                    },
-
-                    cursorColor: Colors.black,
-                    decoration: _getDecoration(Strings.password),
+                      cursorColor: Colors.black,
+                      decoration: _getDecoration(Strings.email),
+                    ),
                   ),
-                ),
 
-                SizedBox(height: 30,),
+                  SizedBox(height: 20,),
 
-                // 로그인 버튼
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: GestureDetector(
-                    onTap: () async {
+                  // password
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: TextFormField(
+                      controller: userPasswordController,
+                      validator: (value) {
+                        if( value == '' || value!.length < 6 ) {
+                          return Strings.passwordValidation;
 
-                      _tryValidation();
+                        } else {
+                          return null;
+                        }
+                      },
 
-                      try {
-                        setState(() {
-                          showSpinner = true;
-                        });
+                      cursorColor: Colors.black,
+                      decoration: _getDecoration(Strings.password),
+                    ),
+                  ),
 
-                        var isLogged = Provider
-                                      .of<UserStateProvider>(context, listen: false)
-                                      .signIn(
-                                      userEmailController.text,
-                                      userPasswordController.text
-                                  );
+                  SizedBox(height: 30,),
 
-                        if( await isLogged ) {
+                  // 로그인 버튼
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: GestureDetector(
+                      onTap: () async {
+
+                        _tryValidation();
+
+                        try {
                           setState(() {
-                            showSpinner = false;
+                            showSpinner = true;
                           });
 
-                          Navigator.push(
-                              (context),
-                              MaterialPageRoute(builder: (context) => BottomNavi())
-                          );
-                        }
+                          var isLogged = Provider
+                                        .of<UserStateProvider>(context, listen: false)
+                                        .signIn(
+                                        userEmailController.text,
+                                        userPasswordController.text
+                                    );
 
-                      } catch (e) {
-                        print(e);
-                        if( mounted ) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    e.toString()
+                          if( await isLogged ) {
+                            setState(() {
+                              showSpinner = false;
+                            });
+
+                            Navigator.push(
+                                (context),
+                                MaterialPageRoute(builder: (context) => BottomNavi())
+                            );
+                          }
+
+                        } catch (e) {
+                          print(e);
+                          if( mounted ) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      e.toString()
+                                  )
                                 )
-                              )
-                          );
+                            );
 
-                          setState(() {
-                            showSpinner = false;
-                          });
+                            setState(() {
+                              showSpinner = false;
+                            });
+                          }
+
                         }
+                      },
 
-                      }
-                    },
+                      // sign in button
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(12)
+                        ),
 
-                    // sign in button
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(12)
-                      ),
-
-                      child: const Center(
-                        child: Text(
-                          Strings.signIn,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                        child: const Center(
+                          child: Text(
+                            Strings.signIn,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                SizedBox(height: 20,),
+                  SizedBox(height: 20,),
 
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                        Strings.forgottenPassword
-                    ),
-
-                    SizedBox(height: 10,),
-
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignUp())
-                        );
-                      },
-
-                      child: const Text(
-                          Strings.createAnAccount
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                          Strings.forgottenPassword
                       ),
-                    ),
-                  ],
-                ),
-              ],
+
+                      SizedBox(height: 10,),
+
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SignUp())
+                          );
+                        },
+
+                        child: const Text(
+                            Strings.createAnAccount
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
