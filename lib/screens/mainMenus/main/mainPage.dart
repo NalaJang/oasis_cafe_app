@@ -174,17 +174,20 @@ class _OrderStatusState extends State<OrderStatus> {
           var processState = document['processState'];
           String cardTitlePhrase = '';
           String cardSubTitlePhrase = '';
+          String graphImage = '';
 
           if( processState == 'new' ) {
             cardTitlePhrase = '주문을 확인하고 있습니다. 🏃🏻‍♀️';
             cardSubTitlePhrase = '주문 상황에 따라 준비가 늦어질 수 있습니다. 본인이 직접 메뉴를 수령해 주세요.';
+            graphImage = 'image/IMG_order_status_new.png';
 
           } else if( processState == 'inProcess' ) {
             cardTitlePhrase = '$userName 님의 주문을 1번째 메뉴로 준비 중입니다.';
             cardSubTitlePhrase = '주문 승인 즉시 메뉴 준비가 시작됩니다. 완성 후, 빠르게 픽업해 주세요.';
+            graphImage = 'image/IMG_order_status_inProcess.png';
           }
 
-          return orderProcessStateCard(cardTitlePhrase, cardSubTitlePhrase);
+          return orderProcessStateCard(cardTitlePhrase, cardSubTitlePhrase, graphImage);
         }
         return const CircularProgressIndicator();
       }
@@ -193,7 +196,7 @@ class _OrderStatusState extends State<OrderStatus> {
 
 
 
-  Widget orderProcessStateCard(String cardTitlePhrase, String cardSubTitlePhrase) {
+  Widget orderProcessStateCard(String cardTitlePhrase, String cardSubTitlePhrase, String graphImage) {
     return Container(
       height: 200,
       padding: const EdgeInsets.all(10.0),
@@ -229,7 +232,7 @@ class _OrderStatusState extends State<OrderStatus> {
             ),
           ),
 
-          Image.asset('image/IMG_order_status_graph.png'),
+          Image.asset(graphImage),
 
           Text('주문내역 확인하기')
         ],
