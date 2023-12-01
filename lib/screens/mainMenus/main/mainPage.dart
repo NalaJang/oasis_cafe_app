@@ -145,7 +145,7 @@ class _OrderStatusState extends State<OrderStatus> {
     */
     return StreamBuilder(
       stream: orderStateProvider.orderStateCollection
-                                .where('processState', isNotEqualTo: 'done')
+                                .where('processState', isNotEqualTo: 'pickedUp')
                                 .orderBy('processState')
                                 .orderBy('orderTime', descending: false)
                                 .snapshots(),
