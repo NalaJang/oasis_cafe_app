@@ -37,11 +37,11 @@ class TabViewList extends StatelessWidget {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Cart()
+            MaterialPageRoute(builder: (context) => const Cart()
             )
           );
         },
-        child: Icon(CupertinoIcons.cart),
+        child: const Icon(CupertinoIcons.cart),
       ),
 
       body: StreamBuilder(
@@ -70,13 +70,9 @@ class TabViewList extends StatelessWidget {
                 );
               }
             );
-
-          } else {
-            print('no data');
           }
 
-          return Center(child: CircularProgressIndicator());
-
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

@@ -51,7 +51,7 @@ class OrderPage extends StatelessWidget {
             ),
 
             tabs: [
-              Tab(text: Strings.order),
+              Tab(text: Strings.beverage),
               Tab(text: Strings.food),
             ],
           ),
