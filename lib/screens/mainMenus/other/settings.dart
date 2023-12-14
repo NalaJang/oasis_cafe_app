@@ -28,9 +28,6 @@ class Settings extends StatelessWidget {
             // 이용약관, 개인정보 처리 방침, 버전 정보
             About(),
 
-            // 로그아웃
-            SignOut(),
-
             SizedBox(height: 20,),
 
             // 계정 삭제
@@ -160,58 +157,6 @@ class About extends StatelessWidget {
   }
 }
 
-class SignOut extends StatefulWidget {
-  const SignOut({Key? key}) : super(key: key);
-
-  @override
-  State<SignOut> createState() => _SignOutState();
-}
-
-class _SignOutState extends State<SignOut> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
-        onPressed: (){
-          Provider.of<UserStateProvider>(context, listen: false).signOut();
-
-          // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
-          // true 를 반환할 때까지 이전 경로를 모두 제거한다.
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const MyApp()
-            ), (route) => false
-          );
-        },
-
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30)
-          ),
-          side: BorderSide(
-            color: Colors.teal,
-          )
-        ),
-
-        child: Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(top: 15, bottom: 15),
-          child: const Text(
-            'Sign out',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.teal,
-              fontWeight: FontWeight.bold
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class DeleteAccount extends StatelessWidget {
   const DeleteAccount({Key? key}) : super(key: key);
