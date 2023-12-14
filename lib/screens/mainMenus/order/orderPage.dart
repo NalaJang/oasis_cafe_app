@@ -32,7 +32,7 @@ class OrderPage extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: (){},
-              icon: Icon(
+              icon: const Icon(
                 Icons.search,
                 size: 30,
               )

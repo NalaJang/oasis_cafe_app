@@ -71,7 +71,7 @@ class MainPage extends StatelessWidget {
                       'image/IMG_banner1.PNG'
                   ),
 
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
                   Image.asset(
                       'image/IMG_banner2.PNG'
@@ -79,11 +79,11 @@ class MainPage extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
 
               // 디저트(하루가 달콤해지는 시간)
               Row(
-                children: [
+                children: const [
                   Text(
                     '하루가 달콤해지는 시간',
                     style: TextStyle(
@@ -101,11 +101,11 @@ class MainPage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   children: [
                     Image.asset('image/IMG_dessert1.PNG'),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     Image.asset('image/IMG_dessert2.PNG'),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     Image.asset('image/IMG_dessert1.PNG'),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     Image.asset('image/IMG_dessert2.PNG'),
                   ],
                 ),
