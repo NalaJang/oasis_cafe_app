@@ -182,35 +182,66 @@ class CardMenuRow extends StatelessWidget {
   }
 }
 
+
+// 고객 지원
 class CustomerServiceMenu extends StatelessWidget {
   const CustomerServiceMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: ListView.builder(
-        padding: const EdgeInsets.only(left: 30),
-        itemCount: customerServiceMenuList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            height: 60,
-            child: Row(
+    return Padding(
+      padding: const EdgeInsets.only(left: 30.0),
+      child: Column(
+        children: [
+          for( var index = 0; index < customerServiceMenuList.length; index++ )
+            Row(
               children: [
                 Icon(customerServiceMenuIcon[index]),
                 const SizedBox(width: 15,),
-                Text(
-                  customerServiceMenuList[index],
-                  style: const TextStyle(
-                      fontSize: 19
-                  ),
-                ),
+                TextButton(
+                  // style: TextButton.styleFrom(
+                  //   textStyle: TextStyle(
+                  //     fontSize: 20
+                  //   )
+                  // ),
+                  onPressed: (){},
+                  child: Text(
+                    customerServiceMenuList[index],
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 19.0
+                    ),
+                  )
+                )
               ],
-            ),
-          );
-        },
+            )
+        ],
       ),
     );
+    // return SizedBox(
+    //   height: 200,
+    //   child: ListView.builder(
+    //     padding: const EdgeInsets.only(left: 30),
+    //     itemCount: customerServiceMenuList.length,
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return Container(
+    //         height: 60,
+    //         child: Row(
+    //           children: [
+    //             Icon(customerServiceMenuIcon[index]),
+    //             const SizedBox(width: 15,),
+    //             Text(
+    //               customerServiceMenuList[index],
+    //               style: const TextStyle(
+    //                   fontSize: 19
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       );
+    //     },
+    //   ),
+    // );
   }
 }
 
