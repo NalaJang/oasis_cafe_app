@@ -171,6 +171,32 @@ class DeleteAccount extends StatelessWidget {
             ),
 
             actions: [
+
+              // 취소 버튼
+              ElevatedButton(
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+
+                style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.teal,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)
+                    ),
+                    side: const BorderSide(
+                        color: Colors.teal,
+                        width: 1
+                    )
+                ),
+
+                child: const Text('Cancel'),
+              ),
+
+              const SizedBox(width: 10,),
+
+              // 확인 버튼
               ElevatedButton(
                 onPressed: (){
                   Provider.of<UserStateProvider>(context, listen: false).deleteAccount();
@@ -196,29 +222,6 @@ class DeleteAccount extends StatelessWidget {
 
                 child: const Text('Proceed'),
               ),
-
-              const SizedBox(width: 10,),
-
-              ElevatedButton(
-                onPressed: (){
-                  Navigator.of(context).pop();
-                },
-
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.teal,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)
-                  ),
-                  side: const BorderSide(
-                      color: Colors.teal,
-                      width: 1
-                  )
-                ),
-
-                child: const Text('Close'),
-              )
             ],
           );
         }
