@@ -115,7 +115,7 @@ class _OrderButtonState extends State<OrderButton> {
         ),
 
         child: const Text(
-          Strings.order,
+          'Details',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
