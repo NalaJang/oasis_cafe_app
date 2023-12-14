@@ -249,7 +249,39 @@ class _OrderStatusState extends State<OrderStatus> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               TextButton(
-                onPressed: (){},
+                onPressed: (){
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        height: 300,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(35),
+                            topRight: Radius.circular(5),
+                          )
+                        ),
+                        child: Column(
+                          children: [
+                            Text('주문내역(1)'),
+                            ListTile(
+
+                              leading: Image.asset(
+                                'image/IMG_espresso.png',
+                              ),
+
+                              title: Text('title'),
+                              subtitle: Text('subTitle'),
+
+                              onTap: (){},
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  );
+                },
+
                 child: const Text(
                   '주문 확인',
                   style: TextStyle(
