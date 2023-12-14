@@ -48,6 +48,8 @@ class OtherPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
+            const Spacer(),
+
             // 환영 문구
             Text(
               '$userName님\n환영합니다! 🙌🏻',
@@ -58,7 +60,7 @@ class OtherPage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 30,),
+            const Spacer(),
 
              // 전자영수증, 개인정보 관리, 설정
              Row(
@@ -70,8 +72,7 @@ class OtherPage extends StatelessWidget {
                ],
              ),
 
-            const SizedBox(height: 35,),
-
+            const Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: const [
@@ -92,9 +93,11 @@ class OtherPage extends StatelessWidget {
 
             // 고객 지원
             const CustomerServiceMenu(),
+            const Spacer(),
 
             // 로그아웃
-            const SignOut()
+            const SignOut(),
+            const Spacer(),
           ],
         ),
       ),
@@ -218,30 +221,6 @@ class CustomerServiceMenu extends StatelessWidget {
         ],
       ),
     );
-    // return SizedBox(
-    //   height: 200,
-    //   child: ListView.builder(
-    //     padding: const EdgeInsets.only(left: 30),
-    //     itemCount: customerServiceMenuList.length,
-    //     itemBuilder: (BuildContext context, int index) {
-    //       return Container(
-    //         height: 60,
-    //         child: Row(
-    //           children: [
-    //             Icon(customerServiceMenuIcon[index]),
-    //             const SizedBox(width: 15,),
-    //             Text(
-    //               customerServiceMenuList[index],
-    //               style: const TextStyle(
-    //                   fontSize: 19
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       );
-    //     },
-    //   ),
-    // );
   }
 }
 
