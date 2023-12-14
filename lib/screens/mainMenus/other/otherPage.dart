@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/accountTransactionHistory.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/personalInfo.dart';
@@ -268,14 +269,13 @@ class _SignOutState extends State<SignOut> {
                 },
 
                 style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)
-                    ),
-                    side: const BorderSide(
-                        color: Colors.teal,
-                        width: 1
-                    )
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)
+                  ),
+                  side: const BorderSide(
+                    color: Palette.buttonColor1,
+                  )
                 ),
 
                 child: const Text('아니오'),
@@ -292,24 +292,23 @@ class _SignOutState extends State<SignOut> {
                   // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
                   // true 를 반환할 때까지 이전 경로를 모두 제거한다.
                   Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MyApp()
-                      ), (route) => false
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyApp()
+                    ), (route) => false
                   );
                 },
 
                 style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.teal,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)
-                    ),
-                    side: const BorderSide(
-                        color: Colors.teal,
-                        width: 1
-                    )
+                  elevation: 0,
+                  foregroundColor: Colors.white,
+                  backgroundColor: Palette.buttonColor1,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)
+                  ),
+                  side: const BorderSide(
+                    color: Palette.buttonColor1,
+                  )
                 ),
 
                 child: const Text('Sign out'),

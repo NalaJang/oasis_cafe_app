@@ -3,6 +3,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/palette.dart';
 import '../../../strings/strings_en.dart';
 
 class PersonalInfo extends StatefulWidget {
@@ -226,13 +227,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: Colors.teal,
+        backgroundColor: Palette.buttonColor1,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
         ),
         side: BorderSide(
-            color: Colors.teal,
-            width: 1
+          color: Palette.buttonColor1,
+          width: 1
         )
       ),
 

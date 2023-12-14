@@ -65,10 +65,7 @@ class _CartItemsState extends State<CartItems> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)
                     ),
-                    side: const BorderSide(
-                      color: Colors.teal,
-                      width: 1
-                    )
+                    side: const BorderSide(color: Palette.buttonColor1,)
                   ),
 
                   child: const Text('아니오'),
@@ -122,14 +119,11 @@ class _CartItemsState extends State<CartItems> {
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.teal,
+                    backgroundColor: Palette.buttonColor1,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18)
                     ),
-                    side: const BorderSide(
-                        color: Colors.teal,
-                        width: 1
-                    )
+                    side: const BorderSide(color: Palette.buttonColor1,)
                   ),
 
                   child: const Text('삭제'),

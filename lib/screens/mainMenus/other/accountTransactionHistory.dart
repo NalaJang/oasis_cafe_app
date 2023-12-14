@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/palette.dart';
 import '../../../strings/strings_en.dart';
 
 class AccountTransactionHistory extends StatefulWidget {
@@ -195,14 +196,11 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
 
                       style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: Colors.teal,
+                          backgroundColor: Palette.buttonColor1,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)
                           ),
-                          side: BorderSide(
-                              color: Colors.teal,
-                              width: 1
-                          )
+                          side: BorderSide(color: Palette.buttonColor1,)
                       ),
 
                       child: Text('조회'),

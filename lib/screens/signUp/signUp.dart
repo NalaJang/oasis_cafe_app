@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
-import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:oasis_cafe_app/strings/strings_en.dart';
-import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -333,17 +330,17 @@ class _SignUpState extends State<SignUp> {
                     child: Container(
                       padding: EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Palette.buttonColor1,
                         borderRadius: BorderRadius.circular(12.0)
                       ),
 
                       child: const Center(
                         child: Text(
                           Strings.signUp,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            )
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          )
                         ),
                       ),
                     ),

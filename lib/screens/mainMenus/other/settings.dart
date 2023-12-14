@@ -3,6 +3,7 @@ import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/palette.dart';
 import '../../../strings/strings_en.dart';
 
 class Settings extends StatelessWidget {
@@ -179,16 +180,13 @@ class DeleteAccount extends StatelessWidget {
                 },
 
                 style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.teal,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)
-                    ),
-                    side: const BorderSide(
-                        color: Colors.teal,
-                        width: 1
-                    )
+                  elevation: 0,
+                  foregroundColor: Colors.white,
+                  backgroundColor: Palette.buttonColor1,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)
+                  ),
+                  side: const BorderSide(color: Palette.buttonColor1,)
                 ),
 
                 child: const Text('Cancel'),
@@ -214,10 +212,7 @@ class DeleteAccount extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)
                   ),
-                  side: const BorderSide(
-                      color: Colors.teal,
-                      width: 1
-                  )
+                  side: const BorderSide(color: Palette.buttonColor1,)
                 ),
 
                 child: const Text('Proceed'),
