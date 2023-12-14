@@ -27,12 +27,10 @@ class OtherPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        centerTitle: true,
         title: const Text(
           Strings.other,
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold
-          ),
+          style: TextStyle(fontSize: 30,),
         ),
 
         actions: [
