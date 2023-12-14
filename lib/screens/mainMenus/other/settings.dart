@@ -27,10 +27,12 @@ class Settings extends StatelessWidget {
             // 이용약관, 개인정보 처리 방침, 버전 정보
             About(),
 
-            SizedBox(height: 20,),
+            Spacer(),
 
             // 계정 삭제
-            DeleteAccount()
+            DeleteAccount(),
+
+            SizedBox(height: 50,)
           ],
         ),
       )
