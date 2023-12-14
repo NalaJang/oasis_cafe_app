@@ -6,6 +6,7 @@ import 'package:oasis_cafe_app/screens/mainMenus/other/personalInfo.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/settings.dart';
 import 'package:provider/provider.dart';
 
+import '../../../main.dart';
 import '../../../strings/strings_en.dart';
 
 const double sizedBoxWidth = 110.0;
@@ -92,6 +93,8 @@ class OtherPage extends StatelessWidget {
             // 고객 지원
             const CustomerServiceMenu(),
 
+            // 로그아웃
+            const SignOut()
           ],
         ),
       ),
@@ -207,6 +210,103 @@ class CustomerServiceMenu extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+
+// 로그아웃
+class SignOut extends StatefulWidget {
+  const SignOut({Key? key}) : super(key: key);
+
+  @override
+  State<SignOut> createState() => _SignOutState();
+}
+
+class _SignOutState extends State<SignOut> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setShowDialog();
+      },
+
+      child: const Text(
+        'Sign out',
+        style: TextStyle(
+            color: Colors.black54,
+            fontSize: 15.0,
+            decoration: TextDecoration.underline
+        ),
+      ),
+    );
+  }
+
+
+  void setShowDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: const Text('로그아웃 하시겠습니까?',),
+            actions: [
+
+              // 취소 버튼
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+
+                style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)
+                    ),
+                    side: const BorderSide(
+                        color: Colors.teal,
+                        width: 1
+                    )
+                ),
+
+                child: const Text('아니오'),
+              ),
+
+              const SizedBox(width: 10,),
+
+              // 확인 버튼
+              ElevatedButton(
+                onPressed: () {
+                  Provider.of<UserStateProvider>(context, listen: false)
+                      .signOut();
+
+                  // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
+                  // true 를 반환할 때까지 이전 경로를 모두 제거한다.
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyApp()
+                      ), (route) => false
+                  );
+                },
+
+                style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.teal,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)
+                    ),
+                    side: const BorderSide(
+                        color: Colors.teal,
+                        width: 1
+                    )
+                ),
+
+                child: const Text('Sign out'),
+              )
+            ],
+          );
+        }
     );
   }
 }
