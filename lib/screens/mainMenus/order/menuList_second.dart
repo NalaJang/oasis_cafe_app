@@ -4,7 +4,6 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
-import 'package:oasis_cafe_app/screens/mainMenus/order/itemOption.dart';
 import 'package:provider/provider.dart';
 
 import '../../../strings/strings_en.dart';
@@ -61,16 +60,16 @@ class _MenuListSecondState extends State<MenuListSecond> {
                   ),
 
                   if( collectionName == 'Espresso' )
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
                   // hot, iced button
                   if( collectionName == 'Espresso' )
-                  HotNIcedButton(),
+                  const HotNIcedButton(),
 
-                  Divider(height: 50, thickness: 1,),
+                  const Divider(height: 50, thickness: 1,),
 
                   // 제품 영양 정보, 알레르기 유발 요인
-                  ItemInfo()
+                  const ItemInfo()
                 ],
               ),
             ),
@@ -106,8 +105,8 @@ class _OrderButtonState extends State<OrderButton> {
       },
 
       child: Container(
-        padding: EdgeInsets.all(15.0),
-        margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
+        padding: const EdgeInsets.all(15.0),
+        margin: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
 
         decoration: BoxDecoration(
           color: Palette.buttonColor1,
@@ -149,13 +148,13 @@ class ItemDescription extends StatelessWidget {
         // 메뉴명
         Text(
           itemName,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
 
-        SizedBox(height: 15,),
+        const SizedBox(height: 15,),
 
         // 메뉴 설명
         SizedBox(
@@ -164,18 +163,18 @@ class ItemDescription extends StatelessWidget {
           width: double.infinity,
           child: Text(
             itemDescription,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15
             ),
           )
         ),
 
-        SizedBox(height: 15,),
+        const SizedBox(height: 15,),
 
         // 메뉴 가격
         Text(
           itemPrice,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold
           ),
@@ -213,11 +212,11 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             },
 
             child: Container(
-              padding: EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15.0),
               decoration: BoxDecoration(
               color: isSelectedHOT == true ? Palette.buttonColor1 : Colors.white,
                   border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(38.0),
                       bottomLeft: Radius.circular(38.0)
                   )
@@ -247,11 +246,11 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             },
 
             child: Container(
-              padding: EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15.0),
               decoration: BoxDecoration(
                 color: isSelectedHOT == true ? Colors.white : Palette.buttonColor1,
                 border: Border.all(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(38.0),
                     bottomRight: Radius.circular(38.0)
                 )
