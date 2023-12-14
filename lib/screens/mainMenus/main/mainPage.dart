@@ -216,7 +216,7 @@ class _OrderStatusState extends State<OrderStatus> {
       ),
 
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // 주문 상태 메인 문구
           Text(
@@ -243,7 +243,22 @@ class _OrderStatusState extends State<OrderStatus> {
           Image.asset(graphImage),
 
           const SizedBox(height: 15,),
-          const Text('주문내역 확인하기')
+
+          // 주문 확인 버튼
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: (){},
+                child: const Text(
+                  '주문 확인',
+                  style: TextStyle(
+                    color: Colors.brown,
+                  ),
+                )
+              ),
+            ],
+          )
         ],
       ),
     );
