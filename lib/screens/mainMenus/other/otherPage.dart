@@ -37,7 +37,7 @@ class OtherPage extends StatelessWidget {
           // 알람 아이콘
           IconButton(
             onPressed: (){},
-            icon: Icon(CupertinoIcons.bell)
+            icon: const Icon(CupertinoIcons.bell)
           )
         ],
       ),
@@ -51,25 +51,25 @@ class OtherPage extends StatelessWidget {
             Text(
               '$userName님\n환영합니다! 🙌🏻',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold
               ),
             ),
 
-             SizedBox(height: 30,),
+            const SizedBox(height: 30,),
 
              // 전자영수증, 개인정보 관리, 설정
              Row(
                children: [
-                 Spacer(),
+                 const Spacer(),
                  for( int i = 0; i < cardMenuRow.length; i++ )
                    CardMenuRow(i),
-                 Spacer(),
+                 const Spacer(),
                ],
              ),
 
-            SizedBox(height: 35,),
+            const SizedBox(height: 35,),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,10 +87,10 @@ class OtherPage extends StatelessWidget {
               ],
             ),
 
-            SizedBox(height: 25,),
+            const SizedBox(height: 25,),
 
             // 고객 지원
-            CustomerServiceMenu(),
+            const CustomerServiceMenu(),
 
           ],
         ),
@@ -124,13 +124,13 @@ class CardMenuRow extends StatelessWidget {
                 onTap: (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AccountTransactionHistory())
+                      MaterialPageRoute(builder: (context) => const AccountTransactionHistory())
                   );
                 },
                 child: Column(
                   children: [
-                    Icon(Icons.receipt_long_sharp),
-                    SizedBox(height: 10,),
+                    const Icon(Icons.receipt_long_sharp),
+                    const SizedBox(height: 10,),
                     Text(cardMenuRow[0], textAlign: TextAlign.center,),
                   ],
                 ),
@@ -142,13 +142,13 @@ class CardMenuRow extends StatelessWidget {
                 onTap: (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PersonalInfo())
+                      MaterialPageRoute(builder: (context) => const PersonalInfo())
                   );
                 },
                 child: Column(
                   children: [
-                    Icon(Icons.person),
-                    SizedBox(height: 10,),
+                    const Icon(Icons.person),
+                    const SizedBox(height: 10,),
                     Text(cardMenuRow[1], textAlign: TextAlign.center),
                   ],
                 ),
@@ -160,14 +160,14 @@ class CardMenuRow extends StatelessWidget {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Settings())
+                    MaterialPageRoute(builder: (context) => const Settings())
                   );
                 },
 
                 child: Column(
                   children: [
-                    Icon(Icons.settings),
-                    SizedBox(height: 10,),
+                    const Icon(Icons.settings),
+                    const SizedBox(height: 10,),
                     Text(cardMenuRow[2], textAlign: TextAlign.center),
                   ],
                 ),
@@ -195,10 +195,10 @@ class CustomerServiceMenu extends StatelessWidget {
             child: Row(
               children: [
                 Icon(customerServiceMenuIcon[index]),
-                SizedBox(width: 15,),
+                const SizedBox(width: 15,),
                 Text(
                   customerServiceMenuList[index],
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 19
                   ),
                 ),
