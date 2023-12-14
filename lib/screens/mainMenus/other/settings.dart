@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/main.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +12,7 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.settings),
+        title: const Text(Strings.settings),
       ),
 
       body: Padding(
@@ -51,14 +50,6 @@ class _PreferencesState extends State<Preferences> {
 
   bool _isSelected = true;
 
-  // final MaterialStateProperty<Icon?> thumbIcon =
-  //     MaterialStateProperty.resolveWith<Icon?>((states) {
-  //       if( states.contains(MaterialState.selected) ) {
-  //         return Icon(Icons.check);
-  //       }
-  //       return Icon(Icons.close);
-  //     });
-
   Row setSwitchMenu(String menuName, UserStateProvider switchButton) {
 
     if( menuName == 'Notification' ) {
@@ -72,24 +63,24 @@ class _PreferencesState extends State<Preferences> {
       children: [
         Text(
           menuName,
-          style: TextStyle(
-              fontSize: 18
+          style: const TextStyle(
+            fontSize: 18
           ),
         ),
 
         Switch(
-            value: _isSelected,
-            onChanged: (value) {
-              setState(() {
-                _isSelected = value;
-                if( menuName == 'Notification' ) {
-                  switchButton.notification = _isSelected;
-                } else if( menuName == 'Shake To Pay') {
-                  switchButton.shakeToPay = _isSelected;
-                }
-                Provider.of<UserStateProvider>(context, listen: false).updatePreferences(menuName, _isSelected);
-              });
-            }
+          value: _isSelected,
+          onChanged: (value) {
+            setState(() {
+              _isSelected = value;
+              if( menuName == 'Notification' ) {
+                switchButton.notification = _isSelected;
+              } else if( menuName == 'Shake To Pay') {
+                switchButton.shakeToPay = _isSelected;
+              }
+              Provider.of<UserStateProvider>(context, listen: false).updatePreferences(menuName, _isSelected);
+            });
+          }
         )
       ],
     );
@@ -145,7 +136,7 @@ class About extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Text(
                 aboutList[index],
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18
                 ),
               ),
@@ -158,6 +149,7 @@ class About extends StatelessWidget {
 }
 
 
+// 계정 삭제
 class DeleteAccount extends StatelessWidget {
   const DeleteAccount({Key? key}) : super(key: key);
 
@@ -166,68 +158,68 @@ class DeleteAccount extends StatelessWidget {
 
     void setDialog() {
       showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Delete Account'),
-              content: Text(
-                  'By deleting your Oasis account, '
-                      'all saved information will be lost. This action is irreversible. \n\n'
-                      'Would you like to proceed?'
-              ),
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Delete Account'),
+            content: const Text(
+                'By deleting your Oasis account, '
+                    'all saved information will be lost. This action is irreversible. \n\n'
+                    'Would you like to proceed?'
+            ),
 
-              actions: [
-                ElevatedButton(
-                  onPressed: (){
-                    Provider.of<UserStateProvider>(context, listen: false).deleteAccount();
+            actions: [
+              ElevatedButton(
+                onPressed: (){
+                  Provider.of<UserStateProvider>(context, listen: false).deleteAccount();
 
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Login()
-                        ), (route) => false
-                    );
-                  },
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Login()
+                    ), (route) => false
+                  );
+                },
 
-                  child: Text('Proceed'),
-
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)
-                      ),
-                      side: BorderSide(
-                          color: Colors.teal,
-                          width: 1
-                      )
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)
                   ),
+                  side: const BorderSide(
+                      color: Colors.teal,
+                      width: 1
+                  )
                 ),
 
-                SizedBox(width: 10,),
+                child: const Text('Proceed'),
+              ),
 
-                ElevatedButton(
-                  onPressed: (){
-                    Navigator.of(context).pop();
-                  },
+              const SizedBox(width: 10,),
 
-                  child: Text('Close'),
+              ElevatedButton(
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
 
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.teal,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)
-                      ),
-                      side: BorderSide(
-                          color: Colors.teal,
-                          width: 1
-                      )
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.teal,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)
                   ),
-                )
-              ],
-            );
-          }
+                  side: const BorderSide(
+                      color: Colors.teal,
+                      width: 1
+                  )
+                ),
+
+                child: const Text('Close'),
+              )
+            ],
+          );
+        }
       );
     }
 
