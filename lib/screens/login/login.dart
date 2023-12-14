@@ -55,15 +55,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text(
-      //     Strings.signIn,
-      //     style: TextStyle(
-      //       color: Palette.textColor1
-      //     ),
-      //   ),
-      // ),
-
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Form(
@@ -73,12 +64,12 @@ class _LoginState extends State<Login> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.coffee,
                     size: 80,
                   ),
 
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
 
                   const Text(
                     Strings.hello,
@@ -87,7 +78,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
 
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
                   const Text(
                     Strings.welcome,
@@ -96,7 +87,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
 
-                  SizedBox(height: 50,),
+                  const SizedBox(height: 50,),
 
                   // email
                   Padding(
@@ -111,7 +102,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
 
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
 
                   // password
                   Padding(
@@ -132,7 +123,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
 
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
 
                   // 로그인 버튼
                   Padding(
@@ -161,7 +152,7 @@ class _LoginState extends State<Login> {
 
                             Navigator.push(
                                 (context),
-                                MaterialPageRoute(builder: (context) => BottomNavi())
+                                MaterialPageRoute(builder: (context) => const BottomNavi())
                             );
                           }
 
@@ -186,7 +177,7 @@ class _LoginState extends State<Login> {
 
                       // sign in button
                       child: Container(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: Palette.buttonColor1,
                           borderRadius: BorderRadius.circular(12)
@@ -205,22 +196,22 @@ class _LoginState extends State<Login> {
                     ),
                   ),
 
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
 
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                           Strings.forgottenPassword
                       ),
 
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
 
                       GestureDetector(
                         onTap: (){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SignUp())
+                            MaterialPageRoute(builder: (context) => const SignUp())
                           );
                         },
 
