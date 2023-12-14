@@ -215,7 +215,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
               padding: const EdgeInsets.all(15.0),
               decoration: BoxDecoration(
               color: isSelectedHOT == true ? Palette.buttonColor1 : Colors.white,
-                  border: Border.all(color: Colors.grey, width: 1),
+                  border: Border.all(color: Palette.buttonColor1, width: 1),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(38.0),
                       bottomLeft: Radius.circular(38.0)
@@ -249,7 +249,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
               padding: const EdgeInsets.all(15.0),
               decoration: BoxDecoration(
                 color: isSelectedHOT == true ? Colors.white : Palette.buttonColor1,
-                border: Border.all(color: Colors.grey, width: 1),
+                border: Border.all(color: Palette.buttonColor1, width: 1),
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(38.0),
                     bottomRight: Radius.circular(38.0)

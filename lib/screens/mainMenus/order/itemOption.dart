@@ -164,7 +164,8 @@ class _DrinkSizeSelectionButtonState extends State<DrinkSizeSelectionButton> {
               width: 80,
               height: 100,
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
+                  border: Border.all(
+                      color: selectedSizeOption.contains(sizeOption[i]) ? Palette.buttonColor1 : Colors.grey),
                   borderRadius: BorderRadius.circular(10),
                   color: selectedSizeOption.contains(sizeOption[i]) ?
                           Palette.buttonColor1 : Colors.white
@@ -255,7 +256,8 @@ class _CupSelectionButtonState extends State<CupSelectionButton> {
             child: Container(
               padding: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
+                  border: Border.all(
+                      color: selectedCupOption.contains(cupOption[i]) ? Palette.buttonColor1 : Colors.grey),
                   borderRadius: setBorderRadius(i),
                   color: selectedCupOption.contains(cupOption[i]) ? Palette.buttonColor1 : Colors.white
               ),
