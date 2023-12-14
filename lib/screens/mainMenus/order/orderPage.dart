@@ -18,14 +18,13 @@ class OrderPage extends StatelessWidget {
         appBar: AppBar(
           // 뒤로가기 화살표 없애기
           automaticallyImplyLeading: false,
-
+          centerTitle: true,
           title: const Padding(
             padding: EdgeInsets.only(top:10),
             child: Text(
               Strings.order,
               style: TextStyle(
                 fontSize: 30,
-                fontWeight: FontWeight.bold
               ),
             ),
           ),
