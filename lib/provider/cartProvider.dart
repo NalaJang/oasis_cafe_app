@@ -7,8 +7,8 @@ import '../strings/strings_en.dart';
 class CartProvider with ChangeNotifier {
   final db = FirebaseFirestore.instance;
   late CollectionReference cartCollection;
-  late int itemCount;
   List<CartProvider> cartItems = [];
+  bool hasCartData = false;
 
   late String id;
   late int quantity;

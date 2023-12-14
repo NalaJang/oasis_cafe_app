@@ -12,7 +12,7 @@ import '../../../strings/strings_en.dart';
 
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);
-
+//todo: 장바구니 데이터를 삭제해서 데이터가 비었을 때 order button UI refresh -> 비활성화
   @override
   Widget build(BuildContext context) {
 
@@ -83,6 +83,14 @@ class _CartItemsState extends State<CartItems> {
                       var isDeleted = cartProvider.deleteItemFromCart(itemId);
 
                       if( await isDeleted ) {
+
+                        setState(() {
+                          // 장바구니 내역이 모두 삭제되어서 비게 되면, 'Order' 버튼의 UI 를 refresh 해줘야 하기 때문.
+                          // 장바구니 내역을 불러오는 코드에서 계속 true 값을 리턴하기 때문에
+                          // 2개 중 하나만 삭제해서 내역이 남아 있어도 버튼이 비활성화 되지는 않는다.
+                          cartProvider.hasCartData = false;
+                        });
+
                         // ScaffoldMessenger.of(context) 에
                         // 'Don't use 'BuildContext's across async gaps.' 라는 경고가 떠 있었다.
                         // 비동기 시 BuildContext 를 암시적으로 저장되고 쉽게 충돌 진단이 어려울 수 있다.
@@ -151,143 +159,150 @@ class _CartItemsState extends State<CartItems> {
 
         if( streamSnapshot.hasData ) {
 
-          // provider 에 데이터를 리스트 형태로 저장
-          cartProvider.fetchCartItems();
+          if( streamSnapshot.data!.docs.isEmpty ) {
+            cartProvider.hasCartData = false;
 
-          return ListView.separated(
-            separatorBuilder: (BuildContext context, int index) => const Divider(
-              color: Colors.grey,
-            ),
-            itemCount: streamSnapshot.data!.docs.length,
-            itemBuilder: (context, index) {
+          } else {
+            cartProvider.hasCartData = true;
 
-              final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
-              String itemId = documentSnapshot.id;
-              String itemName = documentSnapshot['itemName'];
-              String itemPrice = documentSnapshot['itemPrice'];
-              double totalPrice = documentSnapshot['totalPrice'];
-              int quantity  = documentSnapshot['quantity'];
-              String drinkSize = documentSnapshot['drinkSize'];
-              String cup = documentSnapshot['cup'];
-              int espressoOption = documentSnapshot['espressoOption'];
-              String hotOrIced = documentSnapshot['hotOrIced'];
-              String syrupOption = documentSnapshot['syrupOption'];
-              String whippedCreamOption = documentSnapshot['whippedCreamOption'];
-              String iceOption = documentSnapshot['iceOption'];
+            // provider 에 데이터를 리스트 형태로 저장
+            cartProvider.fetchCartItems();
 
-              return Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
+            return ListView.separated(
+              separatorBuilder: (BuildContext context, int index) => const Divider(
+                color: Colors.grey,
+              ),
+              itemCount: streamSnapshot.data!.docs.length,
+              itemBuilder: (context, index) {
 
-                    Row(
-                      children: [
+                final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
+                String itemId = documentSnapshot.id;
+                String itemName = documentSnapshot['itemName'];
+                String itemPrice = documentSnapshot['itemPrice'];
+                double totalPrice = documentSnapshot['totalPrice'];
+                int quantity  = documentSnapshot['quantity'];
+                String drinkSize = documentSnapshot['drinkSize'];
+                String cup = documentSnapshot['cup'];
+                int espressoOption = documentSnapshot['espressoOption'];
+                String hotOrIced = documentSnapshot['hotOrIced'];
+                String syrupOption = documentSnapshot['syrupOption'];
+                String whippedCreamOption = documentSnapshot['whippedCreamOption'];
+                String iceOption = documentSnapshot['iceOption'];
 
-                        // 아이템 삭제
-                        IconButton(
-                            onPressed: (){
-                              setShowDialog(itemId);
-                            },
-                            icon: const Icon(CupertinoIcons.xmark_circle)
-                        ),
-                      ],
-                    ),
+                return Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    children: [
 
-                    Row(
-                      children: [
-                        Image.asset(
-                          'image/IMG_espresso.png',
-                          scale: 2.0,
-                        ),
+                      Row(
+                        children: [
 
-                        // 아이템 정보
-                        Container(
-                          margin: const EdgeInsets.only(left: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                itemName,
-                                style: const TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-
-                              const SizedBox(height: 10,),
-
-                              // hotOrIced, 사이즈, 컵 옵션
-                              Row(
-                                children: [
-                                  Text(hotOrIced),
-                                  const Text(' | '),
-                                  Text(drinkSize),
-                                  const Text(' | '),
-                                  Text(cup)
-                                ],
-                              ),
-
-                              //// 옵션 사항
-                              // 에스프레소
-                              espressoOption != 2 ? Text('$espressoOption') : const SizedBox(height: 0,),
-                              // 시럽
-                              syrupOption != "" ? Text(syrupOption) : const SizedBox(height: 0,),
-                              // 휘핑 크림
-                              whippedCreamOption != "" ? Text(whippedCreamOption) : const SizedBox(height: 0,),
-                              // 얼음
-                              iceOption != "" ? Text('얼음 $iceOption') : const SizedBox(height: 0,),
-
-                              const SizedBox(height: 20,),
-
-                              // 수량 및 가격
-                              Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: (){
-                                          if( quantity > 1 ) {
-                                            quantity--;
-                                          }
-                                          setQuantity(itemId, quantity, double.parse(itemPrice));
-                                        },
-                                        child: Icon(
-                                          CupertinoIcons.minus_circle,
-                                          color: quantity > 1 ? Colors.black : Colors.grey,
-                                        ),
-                                      ),
-
-                                      Container(
-                                        margin: const EdgeInsets.only(left: 20, right: 20),
-                                        child: Text('$quantity'),
-                                      ),
-
-                                      GestureDetector(
-                                        onTap: (){
-                                          quantity++;
-                                          setQuantity(itemId, quantity, double.parse(itemPrice));
-                                        },
-                                        child: const Icon(CupertinoIcons.plus_circle),
-                                      ),
-
-                                    ],
-                                  ),
-
-                                  const SizedBox(width: 50,),
-
-                                  Text('NZD $totalPrice')
-                                ],
-                              ),
-                            ],
+                          // 아이템 삭제
+                          IconButton(
+                              onPressed: (){
+                                setShowDialog(itemId);
+                              },
+                              icon: const Icon(CupertinoIcons.xmark_circle)
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
+                        ],
+                      ),
+
+                      Row(
+                        children: [
+                          Image.asset(
+                            'image/IMG_espresso.png',
+                            scale: 2.0,
+                          ),
+
+                          // 아이템 정보
+                          Container(
+                            margin: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  itemName,
+                                  style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+
+                                const SizedBox(height: 10,),
+
+                                // hotOrIced, 사이즈, 컵 옵션
+                                Row(
+                                  children: [
+                                    Text(hotOrIced),
+                                    const Text(' | '),
+                                    Text(drinkSize),
+                                    const Text(' | '),
+                                    Text(cup)
+                                  ],
+                                ),
+
+                                //// 옵션 사항
+                                // 에스프레소
+                                espressoOption != 2 ? Text('$espressoOption') : const SizedBox(height: 0,),
+                                // 시럽
+                                syrupOption != "" ? Text(syrupOption) : const SizedBox(height: 0,),
+                                // 휘핑 크림
+                                whippedCreamOption != "" ? Text(whippedCreamOption) : const SizedBox(height: 0,),
+                                // 얼음
+                                iceOption != "" ? Text('얼음 $iceOption') : const SizedBox(height: 0,),
+
+                                const SizedBox(height: 20,),
+
+                                // 수량 및 가격
+                                Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: (){
+                                            if( quantity > 1 ) {
+                                              quantity--;
+                                            }
+                                            setQuantity(itemId, quantity, double.parse(itemPrice));
+                                          },
+                                          child: Icon(
+                                            CupertinoIcons.minus_circle,
+                                            color: quantity > 1 ? Colors.black : Colors.grey,
+                                          ),
+                                        ),
+
+                                        Container(
+                                          margin: const EdgeInsets.only(left: 20, right: 20),
+                                          child: Text('$quantity'),
+                                        ),
+
+                                        GestureDetector(
+                                          onTap: (){
+                                            quantity++;
+                                            setQuantity(itemId, quantity, double.parse(itemPrice));
+                                          },
+                                          child: const Icon(CupertinoIcons.plus_circle),
+                                        ),
+
+                                      ],
+                                    ),
+
+                                    const SizedBox(width: 50,),
+
+                                    Text('NZD $totalPrice')
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
         }
         return const Center(child: CircularProgressIndicator());
       }
@@ -311,6 +326,7 @@ class _OrderButtonState extends State<_OrderButton> {
     final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context);
     final String userUid = FirebaseAuth.instance.currentUser!.uid;
     final cartProvider = Provider.of<CartProvider>(context);
+    bool hasCartData = cartProvider.hasCartData;
 
     return Container(
       decoration: BoxDecoration(
@@ -342,39 +358,46 @@ class _OrderButtonState extends State<_OrderButton> {
 
 
           try {
-            for( var i = 0; i < cartProvider.cartItems.length; i++ ) {
-              int quantity = cartProvider.cartItems[i].quantity;
-              String itemName = cartProvider.cartItems[i].itemName;
-              String itemPrice = cartProvider.cartItems[i].itemPrice;
-              double totalPrice = cartProvider.cartItems[i].totalPrice;
-              String drinkSize = cartProvider.cartItems[i].drinkSize;
-              String cup = cartProvider.cartItems[i].cup;
-              int espressoOption = cartProvider.cartItems[i].espressoOption;
-              String hotOrIced = cartProvider.cartItems[i].hotOrIced;
-              String syrupOption = cartProvider.cartItems[i].syrupOption;
-              String whippedCreamOption = cartProvider.cartItems[i].whippedCreamOption;
-              String iceOption = cartProvider.cartItems[i].iceOption;
+            // 장바구니 내역에 없을 경우, 버튼 비활성화
+            if( hasCartData == false ) {
+              null;
 
-              isOrdered = transactionHistoryProvider.orderItems(userUid, year, month, day, hour, time,
-                        quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
-                        espressoOption, syrupOption, whippedCreamOption, iceOption);
+            } else {
 
-              orderedItemsId.add(cartProvider.cartItems[i].id);
-            }
+              for( var i = 0; i < cartProvider.cartItems.length; i++ ) {
+                int quantity = cartProvider.cartItems[i].quantity;
+                String itemName = cartProvider.cartItems[i].itemName;
+                String itemPrice = cartProvider.cartItems[i].itemPrice;
+                double totalPrice = cartProvider.cartItems[i].totalPrice;
+                String drinkSize = cartProvider.cartItems[i].drinkSize;
+                String cup = cartProvider.cartItems[i].cup;
+                int espressoOption = cartProvider.cartItems[i].espressoOption;
+                String hotOrIced = cartProvider.cartItems[i].hotOrIced;
+                String syrupOption = cartProvider.cartItems[i].syrupOption;
+                String whippedCreamOption = cartProvider.cartItems[i].whippedCreamOption;
+                String iceOption = cartProvider.cartItems[i].iceOption;
 
-            // 주문이 정상 처리됐을 경우
-            if( await isOrdered ) {
-              // 주문한 아이템 장바구니에서 삭제
-              cartProvider.deleteAllItemsFromCart(orderedItemsId);
+                isOrdered = transactionHistoryProvider.orderItems(userUid, year, month, day, hour, time,
+                          quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
+                          espressoOption, syrupOption, whippedCreamOption, iceOption);
 
-              if( mounted ) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                        '주문이 완료되었습니다.'
+                orderedItemsId.add(cartProvider.cartItems[i].id);
+              }
+
+              // 주문이 정상 처리됐을 경우
+              if( await isOrdered ) {
+                // 주문한 아이템 장바구니에서 삭제
+                cartProvider.deleteAllItemsFromCart(orderedItemsId);
+
+                if( mounted ) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                          '주문이 완료되었습니다.'
+                      )
                     )
-                  )
-                );
+                  );
+                }
               }
             }
 
@@ -396,18 +419,21 @@ class _OrderButtonState extends State<_OrderButton> {
           margin: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
 
           decoration: BoxDecoration(
-            color: Palette.buttonColor1,
-            border: Border.all(color: Palette.buttonColor1, width: 1),
+            color: hasCartData == false ? Palette.buttonColor2 : Palette.buttonColor1,
+            border: Border.all(
+              width: 1,
+              color: hasCartData == false ? Palette.buttonColor2 : Palette.buttonColor1
+            ),
             borderRadius: BorderRadius.circular(25.0),
           ),
 
-          child: const Text(
+          child: Text(
             Strings.order,
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Colors.white
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: hasCartData == false ? Colors.black45 : Colors.white
             ),
           ),
         ),
