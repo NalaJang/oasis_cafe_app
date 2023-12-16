@@ -281,16 +281,15 @@ class _OrderStatusState extends State<OrderStatus> {
 
     return showModalBottomSheet(
       context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(10)
+        )
+      ),
       builder: (context) {
         double dialogHeight = MediaQuery.of(context).size.height * 0.5;
-        return Container(
+        return SizedBox(
           height: dialogHeight,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(35),
-              topRight: Radius.circular(5),
-            )
-          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
