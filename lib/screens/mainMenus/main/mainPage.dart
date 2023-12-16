@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/orderStateProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
@@ -180,7 +181,7 @@ class _OrderStatusState extends State<OrderStatus> {
             }
 
             // 카드 이미지
-            return orderProcessStateCard(cardTitlePhrase, cardSubTitlePhrase, graphImage);
+            return orderProcessStateCard(cardTitlePhrase, cardSubTitlePhrase, graphImage, document);
           }
 
         }
@@ -200,7 +201,7 @@ class _OrderStatusState extends State<OrderStatus> {
   }
 
   // 카드 이미지
-  Widget orderProcessStateCard(String cardTitlePhrase, String cardSubTitlePhrase, String graphImage) {
+  Widget orderProcessStateCard(String cardTitlePhrase, String cardSubTitlePhrase, String graphImage, DocumentSnapshot documentSnapshot) {
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
@@ -250,36 +251,7 @@ class _OrderStatusState extends State<OrderStatus> {
             children: [
               TextButton(
                 onPressed: (){
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return Container(
-                        height: 300,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(35),
-                            topRight: Radius.circular(5),
-                          )
-                        ),
-                        child: Column(
-                          children: [
-                            Text('주문내역(1)'),
-                            ListTile(
-
-                              leading: Image.asset(
-                                'image/IMG_espresso.png',
-                              ),
-
-                              title: Text('title'),
-                              subtitle: Text('subTitle'),
-
-                              onTap: (){},
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  );
+                  showOrderListDialog(documentSnapshot);
                 },
 
                 child: const Text(
@@ -293,6 +265,101 @@ class _OrderStatusState extends State<OrderStatus> {
           )
         ],
       ),
+    );
+  }
+
+  Future<void> showOrderListDialog(DocumentSnapshot documentSnapshot) {
+    String itemName = documentSnapshot['itemName'];
+    int quantity  = documentSnapshot['quantity'];
+    String drinkSize = documentSnapshot['drinkSize'];
+    String cup = documentSnapshot['cup'];
+    int espressoOption = documentSnapshot['espressoOption'];
+    String hotOrIced = documentSnapshot['hotOrIced'];
+    String syrupOption = documentSnapshot['syrupOption'];
+    String whippedCreamOption = documentSnapshot['whippedCreamOption'];
+    String iceOption = documentSnapshot['iceOption'];
+
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        double dialogHeight = MediaQuery.of(context).size.height * 0.5;
+        return Container(
+          height: dialogHeight,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(35),
+              topRight: Radius.circular(5),
+            )
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 15, top: 20, bottom: 10),
+                child: const Text(
+                  '주문내역(1)',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (context, int index) {
+                    return Row(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(15),
+                          child: Image.asset(
+                            'image/IMG_espresso.png',
+                            scale: 2.5,
+                          ),
+                        ),
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '$itemName $quantity',
+                              style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+
+                            const SizedBox(height: 10,),
+                            Row(
+                              children: [
+                                Text(hotOrIced),
+                                const Text(' | '),
+                                Text(drinkSize),
+                                const Text(' | '),
+                                Text(cup)
+                              ],
+                            ),
+
+                            //// 옵션 사항
+                            // 에스프레소
+                            espressoOption != 2 ? Text('$espressoOption') : const SizedBox(height: 0,),
+                            // 시럽
+                            syrupOption != "" ? Text(syrupOption) : const SizedBox(height: 0,),
+                            // 휘핑 크림
+                            whippedCreamOption != "" ? Text(whippedCreamOption) : const SizedBox(height: 0,),
+                            // 얼음
+                            iceOption != "" ? Text('얼음 $iceOption') : const SizedBox(height: 0,),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                ),
+              )
+            ],
+          ),
+        );
+      }
     );
   }
 }

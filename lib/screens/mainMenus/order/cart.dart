@@ -12,7 +12,7 @@ import '../../../strings/strings_en.dart';
 
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);
-//todo: 장바구니 데이터를 삭제해서 데이터가 비었을 때 order button UI refresh -> 비활성화
+
   @override
   Widget build(BuildContext context) {
 
@@ -397,6 +397,7 @@ class _OrderButtonState extends State<_OrderButton> {
 
           } catch(e) {
             if( mounted ) {
+              print(e);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
