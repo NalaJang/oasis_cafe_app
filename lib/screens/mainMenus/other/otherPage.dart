@@ -8,6 +8,7 @@ import 'package:oasis_cafe_app/screens/mainMenus/other/personalInfo.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/settings.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/buttons.dart';
 import '../../../main.dart';
 import '../../../strings/strings_en.dart';
 
@@ -65,8 +66,8 @@ class OtherPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ShowInformationDialog().signUpButton(context),
-                    ShowInformationDialog().loginButton(context),
+                    Buttons().signUpButton(context),
+                    Buttons().loginButton(context),
                   ],
                 ) :
             const Spacer(),

@@ -6,9 +6,11 @@ import 'package:oasis_cafe_app/screens/signUp/signUp.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/userStateProvider.dart';
+import 'buttons.dart';
 
 class ShowInformationDialog {
 
+  var buttons = Buttons();
 
 
   void setShowLoginDialog(BuildContext context, bool isLogin) {
@@ -136,10 +138,10 @@ class ShowInformationDialog {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         // 회원가입 버튼
-                        signUpButton(context),
+                        buttons.signUpButton(context),
 
                         // 로그인 버튼
-                        loginButton(context)
+                        buttons.loginButton(context)
                       ],
                     )
                   ],
@@ -173,7 +175,7 @@ class ShowInformationDialog {
                 Navigator.of(context).pop();
               },
 
-              child: buttonStyle('취소'),
+              child: buttons.buttonStyle('취소'),
             ),
 
             const SizedBox(width: 10,),
@@ -184,73 +186,11 @@ class ShowInformationDialog {
                 Navigator.of(context).pop();
               },
 
-              child: whiteColorButtonStyle('확인'),
+              child: buttons.whiteColorButtonStyle('확인'),
             ),
           ],
         );
       }
-    );
-  }
-
-  // 회원가입 버튼
-  Widget signUpButton(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(
-            (context),
-            MaterialPageRoute(builder: (context) => const SignUp())
-        );
-      },
-      child: buttonStyle('회원가입'),
-    );
-  }
-
-  // 로그인 버튼
-  Widget loginButton(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(
-          (context),
-          MaterialPageRoute(builder: (context) => const Login())
-        );
-      },
-      child: buttonStyle('로그인')
-    );
-  }
-
-  // 버튼 스타일
-  Widget buttonStyle(String buttonName) {
-    return Container(
-      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
-      decoration: BoxDecoration(
-          color: Palette.buttonColor1,
-          border: Border.all(color: Palette.buttonColor1, width: 1),
-          borderRadius: BorderRadius.circular(25.0)
-      ),
-
-      child: Text(
-        buttonName,
-        style: const TextStyle(
-          color: Colors.white
-        ),
-      ),
-    );
-  }
-
-  Widget whiteColorButtonStyle(String buttonName) {
-    return Container(
-      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
-      decoration: BoxDecoration(
-          border: Border.all(color: Palette.buttonColor1, width: 1),
-          borderRadius: BorderRadius.circular(25.0)
-      ),
-
-      child: Text(
-        buttonName,
-        style: const TextStyle(
-            color: Palette.buttonColor1
-        ),
-      ),
     );
   }
 }
