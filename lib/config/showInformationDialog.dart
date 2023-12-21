@@ -152,6 +152,46 @@ class ShowInformationDialog {
     );
   }
 
+  // 계정 삭제
+  void showDeleteAccountDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete Account'),
+          content: const Text(
+            'By deleting your Oasis account, '
+                'all saved information will be lost. This action is irreversible. \n\n'
+                'Would you like to proceed?'
+          ),
+
+          actions: [
+
+            // 취소 버튼
+            GestureDetector(
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+
+              child: buttonStyle('취소'),
+            ),
+
+            const SizedBox(width: 10,),
+
+            // 확인 버튼
+            GestureDetector(
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+
+              child: whiteColorButtonStyle('확인'),
+            ),
+          ],
+        );
+      }
+    );
+  }
+
   // 회원가입 버튼
   Widget signUpButton(BuildContext context) {
     return GestureDetector(
@@ -179,7 +219,7 @@ class ShowInformationDialog {
   }
 
   // 버튼 스타일
-  Widget buttonStyle(String title) {
+  Widget buttonStyle(String buttonName) {
     return Container(
       padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
       decoration: BoxDecoration(
@@ -189,7 +229,7 @@ class ShowInformationDialog {
       ),
 
       child: Text(
-        title,
+        buttonName,
         style: const TextStyle(
           color: Colors.white
         ),
@@ -197,4 +237,20 @@ class ShowInformationDialog {
     );
   }
 
+  Widget whiteColorButtonStyle(String buttonName) {
+    return Container(
+      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+      decoration: BoxDecoration(
+          border: Border.all(color: Palette.buttonColor1, width: 1),
+          borderRadius: BorderRadius.circular(25.0)
+      ),
+
+      child: Text(
+        buttonName,
+        style: const TextStyle(
+            color: Palette.buttonColor1
+        ),
+      ),
+    );
+  }
 }

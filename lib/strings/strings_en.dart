@@ -71,4 +71,6 @@ class Strings {
   static const String personalInfo = 'Personal Info';
   static const String memberInfo = 'Member Information(*)';
   static const String memberBirth = 'Birthday (Optional)';
+  static const String proceed = 'Proceed';
+
 }

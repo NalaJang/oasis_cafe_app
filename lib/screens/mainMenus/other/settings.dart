@@ -4,6 +4,7 @@ import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/palette.dart';
+import '../../../config/showInformationDialog.dart';
 import '../../../strings/strings_en.dart';
 
 class Settings extends StatelessWidget {
@@ -159,73 +160,9 @@ class DeleteAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    void setDialog() {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Delete Account'),
-            content: const Text(
-                'By deleting your Oasis account, '
-                    'all saved information will be lost. This action is irreversible. \n\n'
-                    'Would you like to proceed?'
-            ),
-
-            actions: [
-
-              // 취소 버튼
-              ElevatedButton(
-                onPressed: (){
-                  Navigator.of(context).pop();
-                },
-
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  foregroundColor: Colors.white,
-                  backgroundColor: Palette.buttonColor1,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)
-                  ),
-                  side: const BorderSide(color: Palette.buttonColor1,)
-                ),
-
-                child: const Text('Cancel'),
-              ),
-
-              const SizedBox(width: 10,),
-
-              // 확인 버튼
-              ElevatedButton(
-                onPressed: (){
-                  Provider.of<UserStateProvider>(context, listen: false).deleteAccount();
-
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Login()
-                    ), (route) => false
-                  );
-                },
-
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)
-                  ),
-                  side: const BorderSide(color: Palette.buttonColor1,)
-                ),
-
-                child: const Text('Proceed'),
-              ),
-            ],
-          );
-        }
-      );
-    }
-
     return GestureDetector(
       onTap: (){
-        setDialog();
+        ShowInformationDialog().showDeleteAccountDialog(context);
       },
 
       child: const Text(
