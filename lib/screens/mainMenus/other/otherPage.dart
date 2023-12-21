@@ -59,7 +59,17 @@ class OtherPage extends StatelessWidget {
                 fontWeight: FontWeight.bold
               ),
             ),
+            const Spacer(),
 
+            userName == '' ?
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ShowInformationDialog().signUpButton(context),
+                    ShowInformationDialog().loginButton(context),
+                  ],
+                ) :
+            const Spacer(),
             const Spacer(),
 
              // 전자영수증, 개인정보 관리, 설정

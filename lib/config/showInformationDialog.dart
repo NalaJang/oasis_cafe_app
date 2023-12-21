@@ -135,17 +135,11 @@ class ShowInformationDialog {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        // 회원가입 버튼
                         signUpButton(context),
 
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              (context),
-                              MaterialPageRoute(builder: (context) => const Login())
-                            );
-                          },
-                          child: buttonStyle('로그인')
-                        )
+                        // 로그인 버튼
+                        loginButton(context)
                       ],
                     )
                   ],
@@ -158,6 +152,7 @@ class ShowInformationDialog {
     );
   }
 
+  // 회원가입 버튼
   Widget signUpButton(BuildContext context) {
     return GestureDetector(
       onTap: (){
@@ -170,6 +165,20 @@ class ShowInformationDialog {
     );
   }
 
+  // 로그인 버튼
+  Widget loginButton(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+          (context),
+          MaterialPageRoute(builder: (context) => const Login())
+        );
+      },
+      child: buttonStyle('로그인')
+    );
+  }
+
+  // 버튼 스타일
   Widget buttonStyle(String title) {
     return Container(
       padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
