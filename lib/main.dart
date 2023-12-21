@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:oasis_cafe_app/provider/cartProvider.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/orderStateProvider.dart';
@@ -7,6 +8,7 @@ import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/main/mainPage.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_first.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/itemOption.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_second.dart';
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: white,
         ),
-        home: Login(),
+        home: BottomNavi(),
 
         routes: {
           Strings.menuListFirst : (context) => const MenuListFirst(),

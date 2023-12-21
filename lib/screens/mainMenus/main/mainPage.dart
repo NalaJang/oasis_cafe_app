@@ -133,8 +133,12 @@ class _OrderStatusState extends State<OrderStatus> {
     var orderStateProvider = Provider.of<OrderStateProvider>(context);
     String userName = Provider.of<UserStateProvider>(context).userName;
 
+    if( userName == '' ) {
+      return noOrder();
+    } else {
 
-    /*
+
+      /*
     .where('processState', isNotEqualTo: 'done') ==> isEqualTo -> isNotEqualTo 로 변경하자 발생한 에러.
     .orderBy('orderTime', descending: false)
 
@@ -144,52 +148,54 @@ class _OrderStatusState extends State<OrderStatus> {
 
     .orderBy('processState') 를 추가해주었다.
     */
-    return StreamBuilder(
-      stream: orderStateProvider.orderStateCollection
-                                .where('processState', isNotEqualTo: 'pickedUp')
-                                .orderBy('processState')
-                                .orderBy('orderTime', descending: false)
-                                .snapshots(),
+      return StreamBuilder(
+        stream: orderStateProvider.orderStateCollection
+            .where('processState', isNotEqualTo: 'pickedUp')
+            .orderBy('processState')
+            .orderBy('orderTime', descending: false)
+            .snapshots(),
 
-      builder: (context, snapshot) {
-        if( snapshot.hasData ) {
-          if( snapshot.data!.size == 0 ) {
-            return noOrder();
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.size == 0) {
+              return noOrder();
+            } else {
+              var document = snapshot.data!.docs[0];
+              var documentId = document.id;
+              var processState = document['processState'];
+              String cardTitlePhrase = '';
+              String cardSubTitlePhrase = '';
+              String graphImage = '';
 
-          } else {
-            var document = snapshot.data!.docs[0];
-            var documentId = document.id;
-            var processState = document['processState'];
-            String cardTitlePhrase = '';
-            String cardSubTitlePhrase = '';
-            String graphImage = '';
+              if (processState == 'new') {
+                cardTitlePhrase = '주문을 확인하고 있습니다. 🏃🏻‍♀️';
+                cardSubTitlePhrase =
+                '주문 상황에 따라 준비가 늦어질 수 있습니다. 본인이 직접 메뉴를 수령해 주세요.';
+                graphImage = 'image/IMG_order_status_new.png';
+              } else if (processState == 'inProcess') {
+                var myOrderNumber = orderStateProvider.getMyOrderNumber(
+                    documentId);
+                print('myOrderNumber >> $myOrderNumber');
+                cardTitlePhrase =
+                '$userName 님의 주문을 $myOrderNumber번째 메뉴로 준비 중입니다.';
+                cardSubTitlePhrase =
+                '주문 승인 즉시 메뉴 준비가 시작됩니다. 완성 후, 빠르게 픽업해 주세요.';
+                graphImage = 'image/IMG_order_status_inProcess.png';
+              } else if (processState == 'done') {
+                cardTitlePhrase = '$userName 님, 메뉴가 모두 준비되었어요.';
+                cardSubTitlePhrase = '메뉴가 모두 준비되었어요. 픽업대에서 메뉴를 픽업해주세요!';
+                graphImage = 'image/IMG_order_status_done.png';
+              }
 
-            if( processState == 'new' ) {
-              cardTitlePhrase = '주문을 확인하고 있습니다. 🏃🏻‍♀️';
-              cardSubTitlePhrase = '주문 상황에 따라 준비가 늦어질 수 있습니다. 본인이 직접 메뉴를 수령해 주세요.';
-              graphImage = 'image/IMG_order_status_new.png';
-
-            } else if( processState == 'inProcess' ) {
-              var myOrderNumber = orderStateProvider.getMyOrderNumber(documentId);
-              print('myOrderNumber >> $myOrderNumber');
-              cardTitlePhrase = '$userName 님의 주문을 $myOrderNumber번째 메뉴로 준비 중입니다.';
-              cardSubTitlePhrase = '주문 승인 즉시 메뉴 준비가 시작됩니다. 완성 후, 빠르게 픽업해 주세요.';
-              graphImage = 'image/IMG_order_status_inProcess.png';
-
-            } else if( processState == 'done' ) {
-              cardTitlePhrase = '$userName 님, 메뉴가 모두 준비되었어요.';
-              cardSubTitlePhrase = '메뉴가 모두 준비되었어요. 픽업대에서 메뉴를 픽업해주세요!';
-              graphImage = 'image/IMG_order_status_done.png';
+              // 카드 이미지
+              return orderProcessStateCard(
+                  cardTitlePhrase, cardSubTitlePhrase, graphImage, document);
             }
-
-            // 카드 이미지
-            return orderProcessStateCard(cardTitlePhrase, cardSubTitlePhrase, graphImage, document);
           }
-
+          return const CircularProgressIndicator();
         }
-        return const CircularProgressIndicator();
-      }
-    );
+      );
+    }
   }
 
   Widget noOrder() {
