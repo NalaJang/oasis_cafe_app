@@ -170,7 +170,9 @@ class _OrderStatusState extends State<OrderStatus> {
               graphImage = 'image/IMG_order_status_new.png';
 
             } else if( processState == 'inProcess' ) {
-              cardTitlePhrase = '$userName 님의 주문을 1번째 메뉴로 준비 중입니다.';
+              var myOrderNumber = orderStateProvider.getMyOrderNumber(documentId);
+              print('myOrderNumber >> $myOrderNumber');
+              cardTitlePhrase = '$userName 님의 주문을 $myOrderNumber번째 메뉴로 준비 중입니다.';
               cardSubTitlePhrase = '주문 승인 즉시 메뉴 준비가 시작됩니다. 완성 후, 빠르게 픽업해 주세요.';
               graphImage = 'image/IMG_order_status_inProcess.png';
 
