@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/screens/login/login.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/main/mainPage.dart';
 import 'package:oasis_cafe_app/screens/signUp/signUp.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/userStateProvider.dart';
 
 class ShowInformationDialog {
 
 
 
-  void setShowLoginDialog(BuildContext context) {
+  void setShowLoginDialog(BuildContext context, bool isLogin) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: const Text('해당 서비스는 로그인 후에 이용하실 수 있습니다.',),
-          actions: [
+          content: Text(
+            isLogin ? '해당 서비스는 로그인 후에 이용하실 수 있습니다.' : '로그아웃 하시겠습니까?'),
 
+          actions: [
             // 취소 버튼
             ElevatedButton(
               onPressed: () {
@@ -39,21 +44,28 @@ class ShowInformationDialog {
             // 확인 버튼
             ElevatedButton(
               onPressed: () {
-                // Provider.of<UserStateProvider>(context, listen: false)
-                //     .signOut();
-                //
-                // // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
-                // // true 를 반환할 때까지 이전 경로를 모두 제거한다.
-                // Navigator.pushAndRemoveUntil(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => const MyApp()
-                //     ), (route) => false
-                // );
-                Navigator.push(
-                  (context),
-                  MaterialPageRoute(builder: (context) => const Login())
-                );
+
+                if( isLogin ) {
+                  Navigator.push(
+                      (context),
+                      MaterialPageRoute(builder: (context) => const Login())
+                  );
+
+                // 로그아웃
+                } else {
+                  Provider.of<UserStateProvider>(context, listen: false)
+                      .signOut();
+
+                  // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
+                  // true 를 반환할 때까지 이전 경로를 모두 제거한다.
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MainPage()
+                    ), (route) => false
+                  );
+                }
+
               },
 
               style: ElevatedButton.styleFrom(
@@ -68,7 +80,7 @@ class ShowInformationDialog {
                 )
               ),
 
-              child: const Text('로그인'),
+              child: Text(isLogin ? '로그인' : '로그아웃'),
             )
           ],
         );
@@ -123,15 +135,7 @@ class ShowInformationDialog {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              (context),
-                              MaterialPageRoute(builder: (context) => const SignUp())
-                            );
-                          },
-                          child: buttonStyle('회원가입'),
-                        ),
+                        signUpButton(context),
 
                         GestureDetector(
                           onTap: (){
@@ -151,6 +155,18 @@ class ShowInformationDialog {
           ),
         );
       }
+    );
+  }
+
+  Widget signUpButton(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+            (context),
+            MaterialPageRoute(builder: (context) => const SignUp())
+        );
+      },
+      child: buttonStyle('회원가입'),
     );
   }
 

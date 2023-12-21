@@ -96,7 +96,7 @@ class OtherPage extends StatelessWidget {
             const Spacer(),
 
             // 로그아웃
-            const SignOut(),
+            userName == '' ? const Spacer() : const SignOut(),
             const Spacer(),
           ],
         ),
@@ -131,7 +131,7 @@ class CardMenuRow extends StatelessWidget {
                 onTap: (){
                   // 로그인 상태가 아닐 경우
                   if( userName == '' ) {
-                    ShowInformationDialog().setShowLoginDialog(context);
+                    ShowInformationDialog().setShowLoginDialog(context, true);
 
                   } else {
                     Navigator.push(
@@ -155,7 +155,7 @@ class CardMenuRow extends StatelessWidget {
                 onTap: (){
                   // 로그인 상태가 아닐 경우
                   if( userName == '' ) {
-                    ShowInformationDialog().setShowLoginDialog(context);
+                    ShowInformationDialog().setShowLoginDialog(context, true);
 
                   } else {
                     Navigator.push(
@@ -252,7 +252,7 @@ class _SignOutState extends State<SignOut> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setShowDialog();
+        ShowInformationDialog().setShowLoginDialog(context, false);
       },
 
       child: const Text(
@@ -263,72 +263,6 @@ class _SignOutState extends State<SignOut> {
             decoration: TextDecoration.underline
         ),
       ),
-    );
-  }
-
-
-  void setShowDialog() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: const Text('로그아웃 하시겠습니까?',),
-            actions: [
-
-              // 취소 버튼
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)
-                  ),
-                  side: const BorderSide(
-                    color: Palette.buttonColor1,
-                  )
-                ),
-
-                child: const Text('아니오'),
-              ),
-
-              const SizedBox(width: 10,),
-
-              // 확인 버튼
-              ElevatedButton(
-                onPressed: () {
-                  Provider.of<UserStateProvider>(context, listen: false)
-                      .signOut();
-
-                  // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
-                  // true 를 반환할 때까지 이전 경로를 모두 제거한다.
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MyApp()
-                    ), (route) => false
-                  );
-                },
-
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  foregroundColor: Colors.white,
-                  backgroundColor: Palette.buttonColor1,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)
-                  ),
-                  side: const BorderSide(
-                    color: Palette.buttonColor1,
-                  )
-                ),
-
-                child: const Text('Sign out'),
-              )
-            ],
-          );
-        }
     );
   }
 }
