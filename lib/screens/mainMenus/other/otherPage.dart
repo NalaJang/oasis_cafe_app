@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
+import 'package:oasis_cafe_app/config/showInformationDialog.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/accountTransactionHistory.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/personalInfo.dart';
@@ -51,7 +52,7 @@ class OtherPage extends StatelessWidget {
 
             // 환영 문구
             Text(
-              '$userName님\n환영합니다! 🙌🏻',
+              userName == '' ? '환영합니다! 🙌🏻' : '$userName님\n환영합니다! 🙌🏻',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 25,
@@ -66,7 +67,7 @@ class OtherPage extends StatelessWidget {
                children: [
                  const Spacer(),
                  for( int i = 0; i < cardMenuRow.length; i++ )
-                   CardMenuRow(i),
+                   CardMenuRow(i, userName),
                  const Spacer(),
                ],
              ),
@@ -105,9 +106,10 @@ class OtherPage extends StatelessWidget {
 }
 
 class CardMenuRow extends StatelessWidget {
-  const CardMenuRow(this.menuIndex, {Key? key}) : super(key: key);
+  const CardMenuRow(this.menuIndex, this.userName, {Key? key}) : super(key: key);
 
   final int menuIndex;
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
@@ -127,10 +129,16 @@ class CardMenuRow extends StatelessWidget {
             if( menuIndex == 0 )
               GestureDetector(
                 onTap: (){
-                  Navigator.push(
+                  // 로그인 상태가 아닐 경우
+                  if( userName == '' ) {
+                    ShowInformationDialog().setShowLoginDialog(context);
+
+                  } else {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const AccountTransactionHistory())
-                  );
+                    );
+                  }
                 },
                 child: Column(
                   children: [
@@ -145,10 +153,17 @@ class CardMenuRow extends StatelessWidget {
             if( menuIndex == 1)
               GestureDetector(
                 onTap: (){
-                  Navigator.push(
+                  // 로그인 상태가 아닐 경우
+                  if( userName == '' ) {
+                    ShowInformationDialog().setShowLoginDialog(context);
+
+                  } else {
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PersonalInfo())
-                  );
+                      MaterialPageRoute(
+                        builder: (context) => const PersonalInfo())
+                    );
+                  }
                 },
                 child: Column(
                   children: [

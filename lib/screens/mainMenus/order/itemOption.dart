@@ -309,7 +309,7 @@ class _SubmitButtonState extends State<SubmitButton> {
 
         // 로그인 상태가 아닐 경우,
         if( userUid == '' ) {
-          ShowInformationDialog().showLoginDialog(context);
+          ShowInformationDialog().showLoginSignUpDialog(context);
 
         } else {
           // 컵이 선택되지 않았을 경우
