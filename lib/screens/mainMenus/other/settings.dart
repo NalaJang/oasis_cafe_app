@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
-import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:provider/provider.dart';
 
-import '../../../config/palette.dart';
 import '../../../config/showInformationDialog.dart';
 import '../../../strings/strings_en.dart';
 
@@ -12,6 +10,8 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userUid = Provider.of<UserStateProvider>(context, listen: false).userUid;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(Strings.settings),
@@ -20,21 +20,21 @@ class Settings extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: const [
+          children: [
             // 푸시 알람, Shake to pay
-            Preferences(),
+            const Preferences(),
 
-            Divider(color: Colors.grey,),
+            const Divider(color: Colors.grey,),
 
             // 이용약관, 개인정보 처리 방침, 버전 정보
-            About(),
+            const About(),
 
-            Spacer(),
+            const Spacer(),
 
             // 계정 삭제
-            DeleteAccount(),
+            userUid == '' ? const Spacer() : const DeleteAccount(),
 
-            SizedBox(height: 50,)
+            const SizedBox(height: 50,)
           ],
         ),
       )
