@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/showInformationDialog.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/personalOption/selectedEspressoItem.dart';
@@ -294,6 +295,7 @@ class _SubmitButtonState extends State<SubmitButton> {
     final userStateProvider = Provider.of<UserStateProvider>(context);
     final menuDetailProvider = Provider.of<ItemProvider>(context);
     final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
+    final userUid = userStateProvider.userUid;
 
     return GestureDetector(
       onTap: (){
@@ -305,38 +307,42 @@ class _SubmitButtonState extends State<SubmitButton> {
         var selectedWhippedCreamOption = personalOptionProvider.selectedWhippedCreamOption;
         var selectedIceOption = personalOptionProvider.selectedIceOption;
 
-        // 컵이 선택되지 않았을 경우
-        if( selectedCupOption == '' ) {
+        // 로그인 상태가 아닐 경우,
+        if( userUid == '' ) {
+          ShowInformationDialog().showLoginDialog(context);
 
-          ScaffoldMessenger.of(context).showSnackBar(
+        } else {
+          // 컵이 선택되지 않았을 경우
+          if (selectedCupOption == '') {
+            ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
                   '컵이 선택되지 않았습니다.'
                 )
               )
-          );
+            );
+          } else {
+            menuDetailProvider.addItemsToCart(
+                userStateProvider.userUid,
+                selectedDrinkSizeOption,
+                selectedCupOption,
+                hotOrIcedOption,
+                widget.itemName,
+                widget.itemPrice,
+                selectedShotOption,
+                selectedSyrupOption,
+                selectedWhippedCreamOption,
+                selectedIceOption
+            );
 
-        } else {
-          menuDetailProvider.addItemsToCart(
-              userStateProvider.userUid,
-              selectedDrinkSizeOption,
-              selectedCupOption,
-              hotOrIcedOption,
-              widget.itemName,
-              widget.itemPrice,
-              selectedShotOption,
-              selectedSyrupOption,
-              selectedWhippedCreamOption,
-              selectedIceOption
-          );
-
-          ScaffoldMessenger.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  content: Text(
-                      '장바구니에 추가되었습니다.'
-                  )
+                content: Text(
+                  '장바구니에 추가되었습니다.'
+                )
               )
-          );
+            );
+          }
         }
       },
 
