@@ -18,6 +18,7 @@ class TransactionHistoryProvider with ChangeNotifier {
   late CollectionReference transactionCollection;
   final userUid = FirebaseAuth.instance.currentUser!.uid;
   List<TransactionHistoryModel> historyList = [];
+  List<TransactionHistoryModel> reversedHistoryList = [];
   bool isOrdered = true;
   String lastOrderUid = '';
 
@@ -118,19 +119,23 @@ class TransactionHistoryProvider with ChangeNotifier {
   }
 
   TransactionHistoryProvider() {
-    transactionCollection = db.collection('user').doc(userUid).collection('user_order').doc().collection('aa');
+    transactionCollection = db.collection(Strings.collection_user)
+        .doc(userUid).collection(Strings.collection_userOrder);
+        // .doc().collection('aa');
   }
 
 
   // 거래 내역 가져오기
   Future<void> getTransactionHistory() async {
-
     historyList = await transactionCollection
-        .where('orderTime', isGreaterThan: '$fromSelectedYear-$toSelectedMonth-$toSelectedDay')
+        .where('processState', isEqualTo: 'pickedUp')
+        .where('orderTime', isGreaterThan: '$fromSelectedYear-$fromSelectedMonth-$fromSelectedDay')
         .where('orderTime', isLessThan: '$toSelectedYear-$toSelectedMonth-${toSelectedDay +1}')
         .get()
         .then((QuerySnapshot querySnapshot) {
           return querySnapshot.docs.map((DocumentSnapshot document) {
+            // 가져온 list 내역을 역순으로 출력
+            reversedHistoryList = List.from(historyList.reversed);
             return TransactionHistoryModel.getSnapshotDataFromUserOrder(document);
           }).toList();
         });

@@ -232,7 +232,7 @@ class TransactionHistoryList extends StatelessWidget {
     return FutureBuilder(
       future: transactionHistoryProvider.getTransactionHistory(),
       builder: (context, snapshot) {
-        if (transactionHistoryProvider.historyList.isEmpty) {
+        if (transactionHistoryProvider.reversedHistoryList.isEmpty) {
           return const Center(child: CircularProgressIndicator(),);
         } else {
 
@@ -244,11 +244,11 @@ class TransactionHistoryList extends StatelessWidget {
               color: Colors.grey,
             ),
 
-            itemCount: transactionHistoryProvider.historyList.length,
+            itemCount: transactionHistoryProvider.reversedHistoryList.length,
             itemBuilder: (context, index) {
-              String price = transactionHistoryProvider.historyList[index].itemPrice;
-              String itemName = transactionHistoryProvider.historyList[index].itemName;
-              String time = transactionHistoryProvider.historyList[index].orderTime;
+              String price = transactionHistoryProvider.reversedHistoryList[index].itemPrice;
+              String itemName = transactionHistoryProvider.reversedHistoryList[index].itemName;
+              String time = transactionHistoryProvider.reversedHistoryList[index].orderTime;
 
               return Padding(
                 padding: const EdgeInsets.only(
