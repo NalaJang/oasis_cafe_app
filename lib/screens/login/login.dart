@@ -64,23 +64,27 @@ class _LoginState extends State<Login> {
         inAsyncCall: showSpinner,
         child: Form(
           key: formKey,
-          child: Center(
-            child: SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Container(
+              margin: const EdgeInsets.all(25),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.coffee,
-                    size: 80,
-                  ),
+                  Row(
+                    children: const [
+                      Text(
+                        Strings.hello,
+                        style: TextStyle(
+                          fontSize: 20.0
+                        ),
+                      ),
 
-                  const SizedBox(height: 30,),
-
-                  const Text(
-                    Strings.hello,
-                    style: TextStyle(
-                      fontSize: 20.0
-                    ),
+                      Icon(
+                        Icons.coffee,
+                        size: 40,
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 10,),
@@ -95,37 +99,31 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 50,),
 
                   // email
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: TextFormField(
-                      controller: userEmailController,
-                      validator: (value) =>
-                      value == '' ? Strings.emailValidation : null,
+                  TextFormField(
+                    controller: userEmailController,
+                    validator: (value) =>
+                    value == '' ? Strings.emailValidation : null,
 
-                      cursorColor: Colors.black,
-                      decoration: _getDecoration(Strings.email),
-                    ),
+                    cursorColor: Colors.black,
+                    decoration: _getDecoration(Strings.email),
                   ),
 
                   const SizedBox(height: 20,),
 
                   // password
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: TextFormField(
-                      controller: userPasswordController,
-                      validator: (value) {
-                        if( value == '' || value!.length < 6 ) {
-                          return Strings.passwordValidation;
+                  TextFormField(
+                    controller: userPasswordController,
+                    validator: (value) {
+                      if( value == '' || value!.length < 6 ) {
+                        return Strings.passwordValidation;
 
-                        } else {
-                          return null;
-                        }
-                      },
+                      } else {
+                        return null;
+                      }
+                    },
 
-                      cursorColor: Colors.black,
-                      decoration: _getDecoration(Strings.password),
-                    ),
+                    cursorColor: Colors.black,
+                    decoration: _getDecoration(Strings.password),
                   ),
 
                   const SizedBox(height: 30,),
@@ -203,14 +201,16 @@ class _LoginState extends State<Login> {
 
                   const SizedBox(height: 20,),
 
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
                           Strings.forgottenPassword
                       ),
 
-                      const SizedBox(height: 10,),
+                      const SizedBox(width: 10,),
+                      const Text(' | '),
+                      const SizedBox(width: 10,),
 
                       GestureDetector(
                         onTap: (){
