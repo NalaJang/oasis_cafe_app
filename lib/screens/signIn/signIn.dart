@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
@@ -8,14 +8,14 @@ import 'package:oasis_cafe_app/screens/signUp/signUp.dart';
 import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'package:provider/provider.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _LoginState extends State<Login> {
+class _SignInState extends State<SignIn> {
 
   var formKey = GlobalKey<FormState>();
   var userEmailController = TextEditingController();
@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text(Strings.signIn),
         centerTitle: true,
       ),
 
@@ -100,7 +100,11 @@ class _LoginState extends State<Login> {
 
                   // email
                   TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     controller: userEmailController,
+                    autofocus: true,
+                    // 다음 텍스트 필드로 포커스 이동
+                    textInputAction: TextInputAction.next,
                     validator: (value) =>
                     value == '' ? Strings.emailValidation : null,
 
@@ -113,6 +117,12 @@ class _LoginState extends State<Login> {
                   // password
                   TextFormField(
                     controller: userPasswordController,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (val) async {
+
+                      await pressedLoginButton();
+                    },
+
                     validator: (value) {
                       if( value == '' || value!.length < 6 ) {
                         return Strings.passwordValidation;
@@ -134,48 +144,7 @@ class _LoginState extends State<Login> {
                     child: GestureDetector(
                       onTap: () async {
 
-                        _tryValidation();
-
-                        try {
-                          setState(() {
-                            showSpinner = true;
-                          });
-
-                          var isLogged = Provider
-                                        .of<UserStateProvider>(context, listen: false)
-                                        .signIn(
-                                        userEmailController.text,
-                                        userPasswordController.text
-                                    );
-
-                          if( await isLogged ) {
-                            setState(() {
-                              showSpinner = false;
-                            });
-
-                            Navigator.push(
-                                (context),
-                                MaterialPageRoute(builder: (context) => const BottomNavi())
-                            );
-                          }
-
-                        } catch (e) {
-                          print(e);
-                          if( mounted ) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      e.toString()
-                                  )
-                                )
-                            );
-
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          }
-
-                        }
+                        await pressedLoginButton();
                       },
 
                       // sign in button
@@ -233,5 +202,50 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  // 로그인 버튼이 눌렸을 때, 유효성 확인
+  Future<void> pressedLoginButton() async {
+    _tryValidation();
+
+    try {
+      setState(() {
+        showSpinner = true;
+      });
+
+      var isLogged = Provider
+          .of<UserStateProvider>(context, listen: false)
+          .signIn(
+          userEmailController.text,
+          userPasswordController.text
+      );
+
+      if( await isLogged ) {
+        setState(() {
+          showSpinner = false;
+        });
+
+        Navigator.push(
+          (context),
+          MaterialPageRoute(builder: (context) => const BottomNavi())
+        );
+      }
+
+    } catch (e) {
+      debugPrint(e.toString());
+      if( mounted ) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                e.toString()
+            )
+          )
+        );
+
+        setState(() {
+          showSpinner = false;
+        });
+      }
+    }
   }
 }

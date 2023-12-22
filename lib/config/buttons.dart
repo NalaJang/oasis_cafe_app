@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 
-import '../screens/login/login.dart';
+import '../screens/signIn/signIn.dart';
 import '../screens/signUp/signUp.dart';
 
 
@@ -27,7 +27,7 @@ class Buttons {
         onTap: (){
           Navigator.push(
               (context),
-              MaterialPageRoute(builder: (context) => const Login())
+              MaterialPageRoute(builder: (context) => const SignIn())
           );
         },
         child: buttonStyle('로그인')

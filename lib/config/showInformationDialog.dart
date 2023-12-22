@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
-import 'package:oasis_cafe_app/screens/login/login.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/main/mainPage.dart';
-import 'package:oasis_cafe_app/screens/signUp/signUp.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/userStateProvider.dart';
+import '../screens/signIn/signIn.dart';
 import 'buttons.dart';
 
 class ShowInformationDialog {
@@ -50,7 +49,7 @@ class ShowInformationDialog {
                 if( isLogin ) {
                   Navigator.push(
                       (context),
-                      MaterialPageRoute(builder: (context) => const Login())
+                      MaterialPageRoute(builder: (context) => const SignIn())
                   );
 
                 // 로그아웃
