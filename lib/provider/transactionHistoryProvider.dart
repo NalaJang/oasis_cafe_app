@@ -129,7 +129,7 @@ class TransactionHistoryProvider with ChangeNotifier {
   Future<void> getTransactionHistory() async {
     historyList = await transactionCollection
         .where('processState', isEqualTo: 'pickedUp')
-        .where('orderTime', isGreaterThan: '$fromSelectedYear-$fromSelectedMonth-$fromSelectedDay')
+        .where('orderTime', isGreaterThanOrEqualTo: '$fromSelectedYear-$fromSelectedMonth-$fromSelectedDay')
         .where('orderTime', isLessThan: '$toSelectedYear-$toSelectedMonth-${toSelectedDay +1}')
         .get()
         .then((QuerySnapshot querySnapshot) {

@@ -192,6 +192,8 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
                         transactionHistoryProvider.toSelectedYear = year;
                         transactionHistoryProvider.toSelectedMonth = month;
                         transactionHistoryProvider.toSelectedDay = day;
+                        // 내역 reset
+                        transactionHistoryProvider.reversedHistoryList.clear();
                       },
 
                       style: ElevatedButton.styleFrom(
