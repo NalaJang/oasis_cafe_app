@@ -341,10 +341,6 @@ class _OrderButtonState extends State<_OrderButton> {
       child: GestureDetector(
         onTap: () async {
           var now = DateTime.now();
-          var year = now.year.toString();
-          var month = now.month.toString();
-          var day = now.day.toString();
-          var hour = now.hour.toString();
           var dateFormatter = DateFormat('yyyy-MM-dd H:m:s');
           var time = dateFormatter.format(now);
           List<String> orderedItemsId = [];
@@ -371,7 +367,7 @@ class _OrderButtonState extends State<_OrderButton> {
                 String whippedCreamOption = cartProvider.cartItems[i].whippedCreamOption;
                 String iceOption = cartProvider.cartItems[i].iceOption;
 
-                isOrdered = transactionHistoryProvider.orderItems(userUid, year, month, day, hour, time,
+                isOrdered = transactionHistoryProvider.orderItems(userUid, time,
                           quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
                           espressoOption, syrupOption, whippedCreamOption, iceOption);
 

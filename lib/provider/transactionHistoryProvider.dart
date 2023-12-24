@@ -40,10 +40,6 @@ class TransactionHistoryProvider with ChangeNotifier {
   // 주문하기
   Future<bool> orderItems(
       String userUid,
-      String year,
-      String month,
-      String day,
-      String hour,
       String time,
       int quantity,
       String itemName,
