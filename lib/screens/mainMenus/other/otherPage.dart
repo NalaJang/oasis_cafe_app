@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/showInformationDialog.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/accountTransactionHistory.dart';
@@ -9,7 +8,6 @@ import 'package:oasis_cafe_app/screens/mainMenus/other/settings.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/buttons.dart';
-import '../../../main.dart';
 import '../../../strings/strings_en.dart';
 
 const double sizedBoxWidth = 110.0;
@@ -68,7 +66,9 @@ class OtherPage extends StatelessWidget {
             ),
             const Spacer(),
 
+            // 로그인 상태가 아닐 때,
             userName == '' ?
+                // 회원가입, 로그인 버튼
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -76,20 +76,18 @@ class OtherPage extends StatelessWidget {
                     Buttons().loginButton(context),
                   ],
                 ) :
-            const Spacer(),
-            const Spacer(),
+               // 전자영수증, 개인정보 관리, 설정
+               Row(
+                 children: [
+                   const Spacer(),
+                   for( int i = 0; i < cardMenuRow.length; i++ )
+                     CardMenuRow(i, userName),
+                   const Spacer(),
+                 ],
+               ),
 
-             // 전자영수증, 개인정보 관리, 설정
-             Row(
-               children: [
-                 const Spacer(),
-                 for( int i = 0; i < cardMenuRow.length; i++ )
-                   CardMenuRow(i, userName),
-                 const Spacer(),
-               ],
-             ),
+            const Spacer(flex: 2,),
 
-            const Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: const [
@@ -103,10 +101,9 @@ class OtherPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 25,),
               ],
             ),
-
-            const SizedBox(height: 25,),
 
             // 고객 지원
             const CustomerServiceMenu(),
@@ -146,16 +143,10 @@ class CardMenuRow extends StatelessWidget {
             if( menuIndex == 0 )
               GestureDetector(
                 onTap: (){
-                  // 로그인 상태가 아닐 경우
-                  if( userName == '' ) {
-                    ShowInformationDialog().setShowLoginDialog(context, true);
-
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const AccountTransactionHistory())
-                    );
-                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AccountTransactionHistory())
+                  );
                 },
                 child: Column(
                   children: [
@@ -170,17 +161,11 @@ class CardMenuRow extends StatelessWidget {
             if( menuIndex == 1)
               GestureDetector(
                 onTap: (){
-                  // 로그인 상태가 아닐 경우
-                  if( userName == '' ) {
-                    ShowInformationDialog().setShowLoginDialog(context, true);
-
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PersonalInfo())
-                    );
-                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PersonalInfo())
+                  );
                 },
                 child: Column(
                   children: [
