@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/main/mainPage.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,7 @@ class ShowInformationDialog {
 
             // 확인 버튼
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
 
                 if( isLogin ) {
                   Navigator.push(
@@ -54,17 +55,32 @@ class ShowInformationDialog {
 
                 // 로그아웃
                 } else {
-                  Provider.of<UserStateProvider>(context, listen: false)
-                      .signOut();
+                  try {
+                    var isSignOut = Provider
+                        .of<UserStateProvider>(context, listen: false)
+                        .signOut();
 
-                  // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
-                  // true 를 반환할 때까지 이전 경로를 모두 제거한다.
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MainPage()
-                    ), (route) => false
-                  );
+                    if( await isSignOut ) {
+                      // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
+                      // true 를 반환할 때까지 이전 경로를 모두 제거한다.
+                      Navigator.pushAndRemoveUntil(
+                          (context),
+                          MaterialPageRoute(
+                              builder: (context) => const BottomNavi()
+                          ), (route) => false
+                      );
+                    }
+
+                  } catch(e) {
+                    debugPrint(e.toString());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            e.toString()
+                        )
+                      )
+                    );
+                  }
                 }
 
               },

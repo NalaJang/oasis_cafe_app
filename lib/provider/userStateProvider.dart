@@ -7,6 +7,7 @@ import '../strings/strings_en.dart';
 class UserStateProvider with ChangeNotifier {
   final _authentication = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+  User? _user;
   CollectionReference userInfo = FirebaseFirestore.instance.collection('user');
 
   bool isLogged = false;
@@ -21,6 +22,15 @@ class UserStateProvider with ChangeNotifier {
   List<String> data = [Strings.termsOfUseAgreed, Strings.privacyPolicyAgreed, Strings.marketingConsentAgreed];
 
 
+  User? getUser() {
+    return _user;
+  }
+
+  void setUser(var user) {
+    _user = user;
+    notifyListeners();
+  }
+
   // 로그인
   Future<bool> signIn(String email, String password) async {
     final newUser = await _authentication.signInWithEmailAndPassword(
@@ -29,6 +39,7 @@ class UserStateProvider with ChangeNotifier {
     );
 
     if (newUser.user != null) {
+      setUser(newUser.user);
       userUid = newUser.user!.uid;
 
       await db.collection(Strings.collection_user)
@@ -53,13 +64,17 @@ class UserStateProvider with ChangeNotifier {
   }
 
   // 로그아웃
-  Future<void> signOut() async{
+  Future<bool> signOut() async {
     try {
       await _authentication.signOut();
-      print('signOut');
+      setUser(null);
+
+      return true;
+
     } catch(e) {
       print(e.toString());
     }
+    return false;
   }
 
   // 사용자 정보 수정
@@ -103,7 +118,6 @@ class UserStateProvider with ChangeNotifier {
   }
 
   // 계정 삭제
-  // todo: 삭제 결과가 db 에 반영되기까지 약간의 시간이 걸리는 부분에 대한 대안(?) 필요
   Future<void> deleteAccount() async {
     try {
       await _authentication.currentUser?.delete();
