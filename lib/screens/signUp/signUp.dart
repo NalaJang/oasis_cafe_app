@@ -302,9 +302,11 @@ class _SignUpState extends State<SignUp> {
                                     )
                                 );
 
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const SignIn())
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const SignIn()
+                                  ), (route) => false
                                 );
                               }
                             }

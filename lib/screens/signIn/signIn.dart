@@ -225,9 +225,11 @@ class _SignInState extends State<SignIn> {
           showSpinner = false;
         });
 
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           (context),
-          MaterialPageRoute(builder: (context) => const BottomNavi())
+          MaterialPageRoute(
+              builder: (context) => const BottomNavi()
+          ), (route) => false
         );
       }
 
