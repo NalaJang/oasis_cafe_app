@@ -48,6 +48,9 @@ class ShowInformationDialog {
               onPressed: () async {
 
                 if( isLogin ) {
+                  // 팝업 창 닫아주기
+                  Navigator.of(context).pop();
+
                   Navigator.push(
                       (context),
                       MaterialPageRoute(builder: (context) => const SignIn())
