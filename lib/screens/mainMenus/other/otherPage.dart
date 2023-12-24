@@ -24,7 +24,13 @@ class OtherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    var userName = Provider.of<UserStateProvider>(context, listen: false).userName;
+    var userName;
+    var userStateProvider = Provider.of<UserStateProvider>(context);
+    if( userStateProvider.getUser() == null ) {
+      userName = '';
+    } else {
+      userName = Provider.of<UserStateProvider>(context, listen: false).userName;
+    }
 
     return Scaffold(
       appBar: AppBar(

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/cart.dart';
+import 'package:provider/provider.dart';
 
 import '../strings/strings_en.dart';
 
@@ -28,12 +30,13 @@ class TabViewList extends StatelessWidget {
     }
 
     CollectionReference collectionReference = db.collection(getCollectionName());
-
+    final userStateProvider = Provider.of<UserStateProvider>(context);
 
     return Scaffold(
 
       // 장바구니 버튼
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: userStateProvider.getUser() != null ?
+      FloatingActionButton(
         onPressed: (){
           Navigator.push(
             context,
@@ -42,7 +45,7 @@ class TabViewList extends StatelessWidget {
           );
         },
         child: const Icon(CupertinoIcons.cart),
-      ),
+      ) : null,
 
       body: StreamBuilder(
         stream: collectionReference.snapshots(),

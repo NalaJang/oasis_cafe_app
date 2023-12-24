@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/userStateProvider.dart';
 import '../../../strings/strings_en.dart';
 import 'cart.dart';
 
@@ -12,6 +13,7 @@ class MenuListFirst extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final menuDetailProvider = Provider.of<ItemProvider>(context);
+    final userStateProvider = Provider.of<UserStateProvider>(context);
 
     // TabViewList class 에서 넘어온 arguments 를 받는다.
     final List arguments = ModalRoute.of(context)!.settings.arguments as List;
@@ -25,7 +27,8 @@ class MenuListFirst extends StatelessWidget {
       ),
 
       // 장바구니 버튼
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: userStateProvider.getUser() != null ?
+      FloatingActionButton(
         onPressed: (){
           Navigator.push(
               context,
@@ -34,7 +37,7 @@ class MenuListFirst extends StatelessWidget {
           );
         },
         child: Icon(CupertinoIcons.cart),
-      ),
+      ) : null,
 
       body: Padding(
         padding: const EdgeInsets.only(top: 20),
