@@ -98,83 +98,12 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
                     children: [
 
                       // 조회 시작 날짜
-                      Row(
-                        children: [
-                          Text(
-                            '$yearOfAMonthAgo.$monthOfAMonthAgo.$dayOfAMonthAgo',
-                            style: const TextStyle(
-                            ),
-                          ),
-
-                          const SizedBox(width: 5,),
-
-                          GestureDetector(
-                            onTap: () async {
-                              final fromSelectedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: now,
-                                  firstDate: DateTime(2018),
-                                  lastDate: now,
-                                  initialEntryMode: DatePickerEntryMode.calendarOnly
-                              );
-
-                              if( fromSelectedDate != null ) {
-                                setState(() {
-                                  yearOfAMonthAgo = fromSelectedDate.year;
-                                  monthOfAMonthAgo = fromSelectedDate.month;
-                                  dayOfAMonthAgo = fromSelectedDate.day;
-                                });
-                              }
-
-                            },
-
-                            child: const Icon(
-                              Icons.calendar_month_outlined,
-                              color: Colors.brown,
-                            ),
-                          )
-                        ],
-                      ),
+                      searchDate(true),
 
                       const Text(' ~ '),
 
                       // 조회 끝 날짜
-                      Row(
-                        children: [
-                          Text(
-                            '$year.$month.$day',
-                            style: const TextStyle(
-                                fontSize: 15.0
-                            ),
-                          ),
-
-                          const SizedBox(width: 5,),
-
-                          GestureDetector(
-                            onTap: () async {
-                              final toSelectedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: now,
-                                  firstDate: DateTime(2018),
-                                  lastDate: now,
-                                  initialEntryMode: DatePickerEntryMode.calendarOnly
-                              );
-
-                              if( toSelectedDate != null ) {
-                                setState(() {
-                                  year = toSelectedDate.year;
-                                  month = toSelectedDate.month;
-                                  day = toSelectedDate.day;
-                                });
-                              }
-                            },
-                            child: const Icon(
-                              Icons.calendar_month_outlined,
-                              color: Colors.brown,
-                            ),
-                          )
-                        ],
-                      ),
+                      searchDate(false),
                     ],
                   ),
 
@@ -218,6 +147,57 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
           const TransactionHistoryList()
         ],
       ),
+    );
+  }
+
+
+  // 조회 날짜
+  Widget searchDate(bool isStartDate) {
+    return Row(
+      children: [
+        Text(
+          isStartDate ?
+          '$yearOfAMonthAgo.$monthOfAMonthAgo.$dayOfAMonthAgo' :
+          '$year.$month.$day',
+          style: const TextStyle(
+          ),
+        ),
+
+        const SizedBox(width: 5,),
+
+        GestureDetector(
+          onTap: () async {
+            final selectedDate = await showDatePicker(
+                context: context,
+                initialDate: now,
+                firstDate: DateTime(2018),
+                lastDate: now,
+                initialEntryMode: DatePickerEntryMode.calendarOnly
+            );
+
+            if( selectedDate != null ) {
+              setState(() {
+                if( isStartDate ) {
+                  yearOfAMonthAgo = selectedDate.year;
+                  monthOfAMonthAgo = selectedDate.month;
+                  dayOfAMonthAgo = selectedDate.day;
+
+                } else {
+                  year = selectedDate.year;
+                  month = selectedDate.month;
+                  day = selectedDate.day;
+                }
+
+              });
+            }
+          },
+
+          child: const Icon(
+            Icons.calendar_month_outlined,
+            color: Colors.brown,
+          ),
+        )
+      ],
     );
   }
 }
