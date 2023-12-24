@@ -127,10 +127,31 @@ class TransactionHistoryProvider with ChangeNotifier {
 
   // 거래 내역 가져오기
   Future<void> getTransactionHistory() async {
+    String startDate = '$fromSelectedYear-$fromSelectedMonth-$fromSelectedDay';
+    String lastDate = '$toSelectedYear-$toSelectedMonth-$toSelectedDay';
+
+    // 내역 검색을 할 때, 날짜가 10보다 작은 경우 숫자 앞에 0을 붙여주지 않으면 검색이 안되어서 아래 코드 추가..
+    // 이유는 못 찾았다.
+    if( fromSelectedMonth < 10 ) {
+      startDate = '$fromSelectedYear-0$fromSelectedMonth-$fromSelectedDay';
+    } else if( fromSelectedDay < 10 ) {
+      startDate = '$fromSelectedYear-$fromSelectedMonth-0$fromSelectedDay';
+    } else if( fromSelectedMonth < 10 && fromSelectedDay < 10 ) {
+      startDate = '$fromSelectedYear-0$fromSelectedMonth-0$fromSelectedDay';
+    }
+
+    if( toSelectedMonth < 10 ) {
+      lastDate = '$toSelectedYear-0$toSelectedMonth-$toSelectedDay';
+    } else if( toSelectedDay < 10 ) {
+      lastDate = '$toSelectedYear-$toSelectedMonth-0$toSelectedDay';
+    } else if( fromSelectedMonth < 10 && toSelectedDay < 10 ) {
+      lastDate = '$toSelectedYear-0$toSelectedMonth-0$toSelectedDay';
+    }
+
     historyList = await transactionCollection
         .where('processState', isEqualTo: 'pickedUp')
-        .where('orderTime', isGreaterThanOrEqualTo: '$fromSelectedYear-$fromSelectedMonth-$fromSelectedDay')
-        .where('orderTime', isLessThan: '$toSelectedYear-$toSelectedMonth-${toSelectedDay +1}')
+        .where('orderTime', isGreaterThanOrEqualTo: startDate)
+        .where('orderTime', isLessThanOrEqualTo: lastDate)
         .get()
         .then((QuerySnapshot querySnapshot) {
           return querySnapshot.docs.map((DocumentSnapshot document) {
