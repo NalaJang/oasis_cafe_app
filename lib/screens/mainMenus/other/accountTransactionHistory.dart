@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/palette.dart';
-import '../../../strings/strings_en.dart';
+import '../../../strings/strings_ko.dart';
 
 class AccountTransactionHistory extends StatefulWidget {
   const AccountTransactionHistory({Key? key}) : super(key: key);
@@ -27,7 +25,7 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
 
     now = DateTime.now();
     // 한 달 전
-    aMonthAgo = now.subtract(Duration(days: 29));
+    aMonthAgo = now.subtract(const Duration(days: 29));
     yearOfAMonthAgo = aMonthAgo.year;
     monthOfAMonthAgo = aMonthAgo.month;
     dayOfAMonthAgo = aMonthAgo.day;
@@ -50,7 +48,7 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.transactionHistory),
+        title: const Text(Strings.transactionHistory),
       ),
 
       body: Column(
@@ -78,7 +76,7 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
 
                 // 상세 조회
                 trailing: Container(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.brown, width: 1),
                     borderRadius: BorderRadius.circular(30)
@@ -108,35 +106,8 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
                   ),
 
                   // 조회 버튼
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: (){
-                        final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context, listen: false);
-
-                        transactionHistoryProvider.fromSelectedYear = yearOfAMonthAgo;
-                        transactionHistoryProvider.fromSelectedMonth = monthOfAMonthAgo;
-                        transactionHistoryProvider.fromSelectedDay = dayOfAMonthAgo;
-                        transactionHistoryProvider.toSelectedYear = year;
-                        transactionHistoryProvider.toSelectedMonth = month;
-                        transactionHistoryProvider.toSelectedDay = day;
-                        // 내역 reset
-                        transactionHistoryProvider.reversedHistoryList.clear();
-                      },
-
-                      style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: Palette.buttonColor1,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          side: BorderSide(color: Palette.buttonColor1,)
-                      ),
-
-                      child: Text('조회'),
-                    ),
-                  )
+                  SearchButton(yearOfAMonthAgo: yearOfAMonthAgo, monthOfAMonthAgo: monthOfAMonthAgo,
+                      dayOfAMonthAgo: dayOfAMonthAgo, year: year, month: month, day: day)
                 ],
               ),
             ),
@@ -202,7 +173,50 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
   }
 }
 
+// 조회 버튼
+class SearchButton extends StatelessWidget {
+  const SearchButton({required this.yearOfAMonthAgo, required this.monthOfAMonthAgo,
+    required this.dayOfAMonthAgo, required this.year, required this.month, required this.day,Key? key}) : super(key: key);
 
+  final int yearOfAMonthAgo, monthOfAMonthAgo, dayOfAMonthAgo;
+  final int year, month, day;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: (){
+          final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context, listen: false);
+
+          transactionHistoryProvider.fromSelectedYear = yearOfAMonthAgo;
+          transactionHistoryProvider.fromSelectedMonth = monthOfAMonthAgo;
+          transactionHistoryProvider.fromSelectedDay = dayOfAMonthAgo;
+          transactionHistoryProvider.toSelectedYear = year;
+          transactionHistoryProvider.toSelectedMonth = month;
+          transactionHistoryProvider.toSelectedDay = day;
+          // 내역 reset
+          transactionHistoryProvider.reversedHistoryList.clear();
+        },
+
+        style: ElevatedButton.styleFrom(
+            elevation: 0,
+            backgroundColor: Palette.buttonColor1,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)
+            ),
+            side: const BorderSide(color: Palette.buttonColor1,)
+        ),
+
+        child: const Text('조회'),
+      ),
+    );
+  }
+}
+
+
+// 거래 내역 리스트
 class TransactionHistoryList extends StatelessWidget {
   const TransactionHistoryList({Key? key}) : super(key: key);
 
