@@ -130,13 +130,14 @@ class _OrderStatusState extends State<OrderStatus> {
 
   @override
   Widget build(BuildContext context) {
-    var orderStateProvider = Provider.of<OrderStateProvider>(context);
-    String userName = Provider.of<UserStateProvider>(context).userName;
 
+    String userName = Provider.of<UserStateProvider>(context).userName;
     if( userName == '' ) {
+
       return noOrder();
     } else {
 
+      var orderStateProvider = Provider.of<OrderStateProvider>(context);
 
       /*
     .where('processState', isNotEqualTo: 'done') ==> isEqualTo -> isNotEqualTo 로 변경하자 발생한 에러.
