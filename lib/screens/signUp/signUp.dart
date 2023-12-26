@@ -4,7 +4,9 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/strings/strings_en.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/userStateProvider.dart';
 import '../signIn/signIn.dart';
 
 class SignUp extends StatefulWidget {
@@ -246,108 +248,7 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: textFormSizedBoxHeight,),
 
                   // 회원가입 버튼
-                  GestureDetector(
-                    onTap: () async {
-
-                      // 사용자 입력 값 유효성 검사
-                      _tryValidation();
-
-                      if( _isCheckedTermsOfUse && _isCheckedPrivacyPolicyAgreed ) {
-                        _isCheckBoxError = false;
-                      } else {
-                        _isCheckBoxError = true;
-                      }
-
-                      setState(() {
-                        checkBoxError();
-                      });
-
-                      if( !checkBoxError() ) {
-
-                        try {
-                          setState(() {
-                            showSpinner = true;
-                          });
-
-                          final newUser = await _authentication.createUserWithEmailAndPassword(
-                              email: userEmailController.text, password: userPasswordController.text
-                          );
-
-                          await FirebaseFirestore.instance
-                          .collection(Strings.collection_user)
-                          .doc(newUser.user!.uid)
-                          .set({
-                            // 데이터의 형식은 항상 map 의 형태
-                            'signUpTime' : DateTime.now(),
-                            'userEmail' : userEmailController.text,
-                            'userPassword' : userPasswordController.text,
-                            'userName' : userNameController.text,
-                            'userDateOfBirth' : '',
-                            'userMobileNumber' : userMobileNumberController.text,
-                            'notification' : false,
-                            'shakeToPay' : false
-                          });
-
-                          if( newUser.user != null ) {
-                            setState(() {
-                              showSpinner = false;
-                            });
-
-                              if( mounted ) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                        '회원가입이 완료되었습니다.',
-                                      ),
-                                    )
-                                );
-
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SignIn()
-                                  ), (route) => false
-                                );
-                              }
-                            }
-
-                        } catch (e) {
-                          print(e);
-                          if( mounted ) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text(
-                                    e.toString()
-                                  )
-                              )
-                            );
-
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          }
-                        }
-                      }
-                    },
-
-                    child: Container(
-                      padding: EdgeInsets.all(20.0),
-                      decoration: BoxDecoration(
-                        color: Palette.buttonColor1,
-                        borderRadius: BorderRadius.circular(12.0)
-                      ),
-
-                      child: const Center(
-                        child: Text(
-                          Strings.signUp,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          )
-                        ),
-                      ),
-                    ),
-                  )
+                  _pressedSignUpButton(),
                 ],
               ),
             ),
@@ -357,6 +258,98 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+
+  // 회원가입 버튼
+  Widget _pressedSignUpButton() {
+    return GestureDetector(
+      onTap: () async {
+
+        // 사용자 입력 값 유효성 검사
+        _tryValidation();
+
+        if( _isCheckedTermsOfUse && _isCheckedPrivacyPolicyAgreed ) {
+          _isCheckBoxError = false;
+        } else {
+          _isCheckBoxError = true;
+        }
+
+        setState(() {
+          checkBoxError();
+        });
+
+        if( !checkBoxError() ) {
+
+          try {
+            setState(() {
+              showSpinner = true;
+            });
+
+            var isSignedUp = Provider
+                .of<UserStateProvider>(context, listen: false)
+                .signUp(userEmailController.text, userPasswordController.text,
+                userNameController.text, userMobileNumberController.text);
+
+            if( await isSignedUp ) {
+              setState(() {
+                showSpinner = false;
+              });
+
+              if( mounted ) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        '회원가입이 완료되었습니다.',
+                      ),
+                    )
+                );
+
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SignIn()
+                    ), (route) => false
+                );
+              }
+            }
+
+          } catch (e) {
+            print(e);
+            if( mounted ) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                          e.toString()
+                      )
+                  )
+              );
+
+              setState(() {
+                showSpinner = false;
+              });
+            }
+          }
+        }
+      },
+
+      child: Container(
+        padding: EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+            color: Palette.buttonColor1,
+            borderRadius: BorderRadius.circular(12.0)
+        ),
+
+        child: const Center(
+          child: Text(
+              Strings.signUp,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              )
+          ),
+        ),
+      ),
+    );
+  }
 
   // textForm UI
   InputDecoration _getTextFormDecoration(String labelText) {

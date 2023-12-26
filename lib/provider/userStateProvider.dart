@@ -22,6 +22,7 @@ class UserStateProvider with ChangeNotifier {
   List<String> data = [Strings.termsOfUseAgreed, Strings.privacyPolicyAgreed, Strings.marketingConsentAgreed];
 
 
+  // 로그인 유무를 판단하기 위해 user 정보를 가져온다.
   User? getUser() {
     return _user;
   }
@@ -29,6 +30,36 @@ class UserStateProvider with ChangeNotifier {
   void setUser(var user) {
     _user = user;
     notifyListeners();
+  }
+
+
+  // 회원가입
+  Future<bool> signUp(String email, String password, String name, String mobileNumber) async {
+    final newUser = await _authentication.createUserWithEmailAndPassword(
+        email: email, password: password
+    );
+
+    if( newUser.user != null ) {
+      userUid = newUser.user!.uid;
+
+      await FirebaseFirestore.instance
+          .collection(Strings.collection_user)
+          .doc(userUid)
+          .set({
+        // 데이터의 형식은 항상 map 의 형태
+        'signUpTime' : DateTime.now(),
+        'userEmail' : email,
+        'userPassword' : password,
+        'userName' : name,
+        'userDateOfBirth' : '',
+        'userMobileNumber' : mobileNumber,
+        'notification' : false,
+        'shakeToPay' : false
+      });
+
+      return true;
+    }
+    return false;
   }
 
   // 로그인

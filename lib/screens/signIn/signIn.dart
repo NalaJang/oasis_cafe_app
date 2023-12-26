@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
@@ -119,7 +120,7 @@ class _SignInState extends State<SignIn> {
                     controller: userPasswordController,
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (val) async {
-
+                      // 키보드에서 'done' 버튼을 눌렀을 때
                       await pressedLoginButton();
                     },
 
