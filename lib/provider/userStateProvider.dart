@@ -25,14 +25,14 @@ class UserStateProvider with ChangeNotifier {
 
 
   // 로그인 유무를 판단하기 위해 user 정보를 가져온다.
-  User? getUser() {
-    return _user;
-  }
-
-  void setUser(var user) {
-    _user = user;
-    notifyListeners();
-  }
+  // User? getUser() {
+  //   return _user;
+  // }
+  //
+  // void setUser(var user) {
+  //   _user = user;
+  //   notifyListeners();
+  // }
 
 
   // 회원가입
@@ -72,7 +72,7 @@ class UserStateProvider with ChangeNotifier {
     );
 
     if (newUser.user != null) {
-      setUser(newUser.user);
+      // setUser(newUser.user);
       userUid = newUser.user!.uid;
 
       // 사용자 정보 가져오기
