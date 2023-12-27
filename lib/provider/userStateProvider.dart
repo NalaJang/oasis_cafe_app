@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../strings/strings_en.dart';
 
 class UserStateProvider with ChangeNotifier {
   final _authentication = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+  final storage = const FlutterSecureStorage();
   User? _user;
   CollectionReference userInfo = FirebaseFirestore.instance.collection('user');
 
@@ -73,32 +75,36 @@ class UserStateProvider with ChangeNotifier {
       setUser(newUser.user);
       userUid = newUser.user!.uid;
 
-      await db.collection(Strings.collection_user)
-          .doc(userUid)
-          .get()
-          .then((value) =>
-      {
-        userName = value.data()!['userName'],
-        userEmail = value.data()!['userEmail'],
-        userDateOfBirth = value.data()!['userDateOfBirth'],
-        userMobileNumber = value.data()!['userMobileNumber'],
-        notification = value.data()!['notification'],
-        shakeToPay = value.data()!['shakeToPay']
-      });
-    }
+      // 사용자 정보 가져오기
+      getUserInfo(userUid);
 
-    if (newUser.user != null) {
+      // 자동 로그인을 위한 사용자 정보 저장
+      await storage.write(key: userUid, value: 'STATUS_LOGIN');
+
       isLogged = true;
     }
 
     return isLogged;
   }
 
+
   // 로그아웃
   Future<bool> signOut() async {
     try {
       await _authentication.signOut();
-      setUser(null);
+      // setUser(null);
+
+      Map<String, String> allValues = await storage.readAll();
+      if( allValues != null ) {
+        allValues.forEach((key, value) async {
+
+          if( value == 'STATUS_LOGIN' ) {
+            await storage.write(key: userUid, value: 'STATUS_LOGOUT');
+          }
+
+        });
+      }
+      notifyListeners();
 
       return true;
 
@@ -107,6 +113,46 @@ class UserStateProvider with ChangeNotifier {
     }
     return false;
   }
+
+
+  Future<void> getStorageInfo() async {
+    // Read all values
+    Map<String, String> allValues = await storage.readAll();
+
+    if( allValues != null ) {
+      allValues.forEach((key, value) {
+
+        if( value == 'STATUS_LOGIN' ) {
+          userUid = key;
+          getUserInfo(userUid);
+
+        } else {
+          userUid = '';
+        }
+      });
+    }
+
+    // 해당 메소드를 호출함으로써 로그아웃 했을 때 화면 UI 가 재로딩된다.
+    notifyListeners();
+  }
+
+
+  // 로그인 사용자 정보 가져오기
+  Future<void> getUserInfo(String userUid) async {
+    await db.collection(Strings.collection_user)
+        .doc(userUid)
+        .get()
+        .then((value) =>
+    {
+      userName = value.data()!['userName'],
+      userEmail = value.data()!['userEmail'],
+      userDateOfBirth = value.data()!['userDateOfBirth'],
+      userMobileNumber = value.data()!['userMobileNumber'],
+      notification = value.data()!['notification'],
+      shakeToPay = value.data()!['shakeToPay']
+    });
+  }
+
 
   // 사용자 정보 수정
   Future<bool> updateUserInfo(String name, String dateOfBirth, String mobileNumber) async {

@@ -128,13 +128,26 @@ class OrderStatus extends StatefulWidget {
 
 class _OrderStatusState extends State<OrderStatus> {
 
+
+  @override
+  void initState() {
+    super.initState();
+
+    var userStateProvider = Provider.of<UserStateProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      userStateProvider.getStorageInfo();
+    });
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
     var userStateProvider = Provider.of<UserStateProvider>(context);
 
     // 로그인 상태인지 확인
-    if( userStateProvider.getUser() == null ) {
+    if( userStateProvider.userUid == '' ) {
       return noOrder();
 
     } else {

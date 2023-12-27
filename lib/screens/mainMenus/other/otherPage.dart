@@ -24,7 +24,7 @@ class OtherPage extends StatelessWidget {
 
     var userName;
     var userStateProvider = Provider.of<UserStateProvider>(context);
-    if( userStateProvider.getUser() == null ) {
+    if( userStateProvider.userUid == '' ) {
       userName = '';
     } else {
       userName = Provider.of<UserStateProvider>(context, listen: false).userName;

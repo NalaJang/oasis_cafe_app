@@ -35,7 +35,7 @@ class TabViewList extends StatelessWidget {
     return Scaffold(
 
       // 장바구니 버튼
-      floatingActionButton: userStateProvider.getUser() != null ?
+      floatingActionButton: userStateProvider.userUid != '' ?
       FloatingActionButton(
         onPressed: (){
           Navigator.push(
