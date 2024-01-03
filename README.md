@@ -1,6 +1,15 @@
-# oasis_cafe_app
+# Oasis Cafe
 
-A new Flutter project.
+It's a cafe app having a function of <b>siren order</b> like the Startbucks app.
+
+## How to use
+### step 1
+
+
+
+## Menu tree
+
+## Screen shots
 
 ## Getting Started
 
