@@ -24,23 +24,11 @@ Try launch the app.
 
 <br></br>
 ## Menu tree
+<img width="740" alt="image" src="https://github.com/NalaJang/oasis_cafe_app/assets/73895803/64d24085-4be4-4bd3-a202-8c792084034b">
+
 
 
 ## Screen shots
 
 
 ## Folder Structure
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# oasis_cafe_app
