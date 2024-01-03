@@ -76,7 +76,7 @@ class UserStateProvider with ChangeNotifier {
       userUid = newUser.user!.uid;
 
       // 사용자 정보 가져오기
-      getUserInfo(userUid);
+      await getUserInfo(userUid);
 
       // 자동 로그인을 위한 사용자 정보 저장
       await storage.write(key: userUid, value: 'STATUS_LOGIN');
@@ -129,8 +129,6 @@ class UserStateProvider with ChangeNotifier {
           userUid = key;
           getUserInfo(userUid);
 
-        } else {
-          userUid = '';
         }
       });
     }
@@ -154,7 +152,6 @@ class UserStateProvider with ChangeNotifier {
       notification = value.data()!['notification'],
       shakeToPay = value.data()!['shakeToPay']
     });
-    print('getUserInfo');
   }
 
 

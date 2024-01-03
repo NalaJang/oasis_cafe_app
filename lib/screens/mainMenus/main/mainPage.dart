@@ -4,6 +4,8 @@ import 'package:oasis_cafe_app/provider/orderStateProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/circularProgressBar.dart';
+
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -176,6 +178,7 @@ class _OrderStatusState extends State<OrderStatus> {
           if (snapshot.hasData) {
             if (snapshot.data!.size == 0) {
               return noOrder();
+
             } else {
               var document = snapshot.data!.docs[0];
               var documentId = document.id;
@@ -204,9 +207,15 @@ class _OrderStatusState extends State<OrderStatus> {
                 graphImage = 'image/IMG_order_status_done.png';
               }
 
-              // 카드 이미지
-              return orderProcessStateCard(
-                  cardTitlePhrase, cardSubTitlePhrase, graphImage, document);
+
+              if( userName != '' ) {
+                // 카드 이미지
+                return orderProcessStateCard(
+                    cardTitlePhrase, cardSubTitlePhrase, graphImage, document);
+              } else {
+                userStateProvider.getStorageInfo();
+                return CircularProgressBar.circularProgressBar;
+              }
             }
           }
           return const CircularProgressIndicator();
