@@ -37,9 +37,9 @@ Try launch the app.
 
 ## Folder Structure
 
-lib/
-|- config/ - contains configuration for widget views.
-|- model/ - contains all the plain data models.
-|- provider/ - contains all Provider models for each of the widget views.
-|- screens/ - the main folder that contains all UI.
-|- main.dart - the main.dart file for dev environment.
+    lib/
+    |- config/ - contains configuration for widget views.
+    |- model/ - contains all the plain data models.
+    |- provider/ - contains all Provider models for each of the widget views.
+    |- screens/ - the main folder that contains all UI.
+    |- main.dart - the main.dart file for dev environment.
