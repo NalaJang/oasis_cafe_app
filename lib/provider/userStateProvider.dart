@@ -76,7 +76,7 @@ class UserStateProvider with ChangeNotifier {
       userUid = newUser.user!.uid;
 
       // 사용자 정보 가져오기
-      getUserInfo(userUid);
+      await getUserInfo(userUid);
 
       // 자동 로그인을 위한 사용자 정보 저장
       await storage.write(key: userUid, value: 'STATUS_LOGIN');
@@ -100,6 +100,9 @@ class UserStateProvider with ChangeNotifier {
 
           if( value == 'STATUS_LOGIN' ) {
             await storage.write(key: userUid, value: 'STATUS_LOGOUT');
+
+            // 로그아웃 후 메인 화면으로 가도 과거의(?) userUid 가 남아있어서 화면 초기화가 되지 않아서 추가.
+            userUid = '';
           }
 
         });
@@ -126,8 +129,6 @@ class UserStateProvider with ChangeNotifier {
           userUid = key;
           getUserInfo(userUid);
 
-        } else {
-          userUid = '';
         }
       });
     }

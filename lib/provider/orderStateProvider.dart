@@ -35,6 +35,7 @@ class OrderStateProvider with ChangeNotifier {
 
                 if( id == orderUid ) {
                   orderNumber = i + 1;
+                  print('orderNumber');
                   return orderNumber;
                 }
               }
