@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/config/showInformationDialog.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/accountTransactionHistory.dart';
@@ -81,7 +82,7 @@ class OtherPage extends StatelessWidget {
                  children: [
                    const Spacer(),
                    for( int i = 0; i < cardMenuRow.length; i++ )
-                     CardMenuRow(i, userName),
+                     CardMenuRow(i),
                    const Spacer(),
                  ],
                ),
@@ -120,10 +121,9 @@ class OtherPage extends StatelessWidget {
 }
 
 class CardMenuRow extends StatelessWidget {
-  const CardMenuRow(this.menuIndex, this.userName, {Key? key}) : super(key: key);
+  const CardMenuRow(this.menuIndex, {Key? key}) : super(key: key);
 
   final int menuIndex;
-  final String userName;
 
   @override
   Widget build(BuildContext context) {
@@ -151,14 +151,14 @@ class CardMenuRow extends StatelessWidget {
                 child: Column(
                   children: [
                     const Icon(Icons.receipt_long_sharp),
-                    const SizedBox(height: 10,),
+                    Gaps.gapH10,
                     Text(cardMenuRow[0], textAlign: TextAlign.center,),
                   ],
                 ),
               ),
 
             // 개인정보 관리
-            if( menuIndex == 1)
+            if( menuIndex == 1 )
               GestureDetector(
                 onTap: (){
                   Navigator.push(
@@ -170,7 +170,7 @@ class CardMenuRow extends StatelessWidget {
                 child: Column(
                   children: [
                     const Icon(Icons.person),
-                    const SizedBox(height: 10,),
+                    Gaps.gapH10,
                     Text(cardMenuRow[1], textAlign: TextAlign.center),
                   ],
                 ),
@@ -189,7 +189,7 @@ class CardMenuRow extends StatelessWidget {
                 child: Column(
                   children: [
                     const Icon(Icons.settings),
-                    const SizedBox(height: 10,),
+                    Gaps.gapH10,
                     Text(cardMenuRow[2], textAlign: TextAlign.center),
                   ],
                 ),

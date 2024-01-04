@@ -94,19 +94,19 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 // 이름, 이메일 정보
                 memberInformation(),
 
-                Gaps.gapW50,
+                  Gaps.gapH50,
 
                 // 생일 정보
                 birthday(),
 
-                Gaps.gapW30,
+                  Gaps.gapH30,
 
                 const Spacer(),
 
                 // update 버튼
                 update(),
 
-                Gaps.gapW50
+                Gaps.gapH50
               ],
             ),
           ),
@@ -127,7 +127,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           ),
         ),
 
-        Gaps.gapW15,
+        Gaps.gapH15,
 
         // 이름
         TextFormField(
@@ -147,7 +147,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           decoration: setTextFormDecoration(Strings.name),
         ),
 
-        Gaps.gapW10,
+        Gaps.gapH10,
 
         // 이메일
         TextFormField(
@@ -176,7 +176,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           ),
         ),
 
-        Gaps.gapW15,
+        Gaps.gapH15,
 
         // 생일
         TextFormField(
