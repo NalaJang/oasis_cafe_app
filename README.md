@@ -25,7 +25,7 @@ Try launch the app.
 <br></br>
 ## Menu tree
 
-** Customer app
+* Customer app
 <img width="740" alt="image" src="https://github.com/NalaJang/oasis_cafe_app/assets/73895803/64d24085-4be4-4bd3-a202-8c792084034b">
 
 
