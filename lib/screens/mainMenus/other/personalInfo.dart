@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -93,18 +94,19 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 // 이름, 이메일 정보
                 memberInformation(),
 
-                SizedBox(height: 50,),
+                Gaps.gapW50,
 
                 // 생일 정보
                 birthday(),
 
-                SizedBox(height: 30,),
+                Gaps.gapW30,
 
-                Spacer(),
+                const Spacer(),
+
                 // update 버튼
                 update(),
 
-                SizedBox(height: 50,)
+                Gaps.gapW50
               ],
             ),
           ),
@@ -125,7 +127,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           ),
         ),
 
-        SizedBox(height: 15,),
+        Gaps.gapW15,
 
         // 이름
         TextFormField(
@@ -136,7 +138,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             }
             return null;
           },
-          style: TextStyle(
+          style: const TextStyle(
             // label text 와 content text 사이에 간격 주기
             height: 1.6,
             color: Colors.black,
@@ -145,7 +147,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           decoration: setTextFormDecoration(Strings.name),
         ),
 
-        SizedBox(height: 10,),
+        Gaps.gapW10,
 
         // 이메일
         TextFormField(
@@ -170,11 +172,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
         const Text(
           Strings.memberBirth,
           style: TextStyle(
-              fontWeight: FontWeight.bold
+            fontWeight: FontWeight.bold
           ),
         ),
 
-        SizedBox(height: 15,),
+        Gaps.gapW15,
 
         // 생일
         TextFormField(
@@ -197,32 +199,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   ElevatedButton update() {
     return ElevatedButton(
       onPressed: () async {
-        // 사용자 입력 값 유효성 검사
-        var isValid = _tryValidation();
-
-        if( isValid ) {
-
-          try {
-            setState(() {
-              showSpinner = true;
-            });
-
-            var isUpdated = Provider.of<UserStateProvider>(context, listen: false).updateUserInfo(
-                            userNameController.text,
-                            userDateOfBirthController.text,
-                            userMobileNumberController.text
-                        );
-
-            if( await isUpdated ) {
-              setState(() {
-                showSpinner = false;
-              });
-            }
-          } catch(e) {
-            print(e);
-          }
-        }
-
+        await _pressedUpdateButton();
       },
 
       style: ElevatedButton.styleFrom(
@@ -231,16 +208,15 @@ class _PersonalInfoState extends State<PersonalInfo> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
         ),
-        side: BorderSide(
+        side: const BorderSide(
           color: Palette.buttonColor1,
-          width: 1
         )
       ),
 
       child: Container(
         width: double.infinity,
-        margin: EdgeInsets.only(top: 15, bottom: 15),
-        child: Text(
+        margin: const EdgeInsets.only(top: 15, bottom: 15),
+        child: const Text(
           'Update',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -252,4 +228,31 @@ class _PersonalInfoState extends State<PersonalInfo> {
     );
   }
 
+  _pressedUpdateButton() async {
+    // 사용자 입력 값 유효성 검사
+    var isValid = _tryValidation();
+
+    if( isValid ) {
+
+      try {
+        setState(() {
+          showSpinner = true;
+        });
+
+        var isUpdated = Provider.of<UserStateProvider>(context, listen: false).updateUserInfo(
+            userNameController.text,
+            userDateOfBirthController.text,
+            userMobileNumberController.text
+        );
+
+        if( await isUpdated ) {
+          setState(() {
+            showSpinner = false;
+          });
+        }
+      } catch(e) {
+        print(e);
+      }
+    }
+  }
 }
