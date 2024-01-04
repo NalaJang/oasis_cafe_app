@@ -19,13 +19,10 @@ class OrderPage extends StatelessWidget {
           // 뒤로가기 화살표 없애기
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: const Padding(
-            padding: EdgeInsets.only(top:10),
-            child: Text(
-              Strings.order,
-              style: TextStyle(
-                fontSize: 30,
-              ),
+          title: const Text(
+            Strings.order,
+            style: TextStyle(
+              fontSize: 30,
             ),
           ),
 
@@ -40,7 +37,6 @@ class OrderPage extends StatelessWidget {
           ],
 
           bottom: const TabBar(
-            padding: EdgeInsets.only(top: 20),
             indicatorColor: Palette.buttonColor1,
             labelStyle: TextStyle(
               fontWeight: FontWeight.bold
