@@ -29,6 +29,8 @@ Try launch the app.
 
 
 ## Screen shots
+<img width="953" alt="oasis_app_customer_screen_shots" src="https://github.com/NalaJang/oasis_cafe_app/assets/73895803/e270f875-12db-41cd-9ea5-59857440b568">
+
 
 
 ## Folder Structure
