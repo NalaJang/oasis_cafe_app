@@ -6,7 +6,7 @@ This is a cafe application with a <b>Siren Order</b> function like the Starbucks
 ### step 1:
 Clone this project.
 
-    https://github.com/NalaJang/oasis_cafe_app.git
+    git clone https://github.com/NalaJang/oasis_cafe_app.git
 
 
 ### step 2:
