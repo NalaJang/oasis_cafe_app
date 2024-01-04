@@ -193,13 +193,8 @@ class _OrderStatusState extends State<OrderStatus> {
                 '주문 상황에 따라 준비가 늦어질 수 있습니다. 본인이 직접 메뉴를 수령해 주세요.';
                 graphImage = 'image/IMG_order_status_new.png';
               } else if (processState == 'inProcess') {
-                var myOrderNumber = orderStateProvider.getMyOrderNumber(
-                    documentId);
-                print('myOrderNumber >> $myOrderNumber');
-                cardTitlePhrase =
-                '$userName 님의 주문을 $myOrderNumber번째 메뉴로 준비 중입니다.';
-                cardSubTitlePhrase =
-                '주문 승인 즉시 메뉴 준비가 시작됩니다. 완성 후, 빠르게 픽업해 주세요.';
+                cardTitlePhrase = '$userName 님의 주문을 준비 중입니다.';
+                cardSubTitlePhrase = '주문 승인 즉시 메뉴 준비가 시작됩니다. 완성 후, 빠르게 픽업해 주세요.';
                 graphImage = 'image/IMG_order_status_inProcess.png';
               } else if (processState == 'done') {
                 cardTitlePhrase = '$userName 님, 메뉴가 모두 준비되었어요.';
