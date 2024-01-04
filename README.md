@@ -1,16 +1,16 @@
 # Oasis Cafe
 
-It's a cafe app having a function of <b>siren order</b> like the Startbucks app.
+This is a cafe application with a <b>Siren Order</b> function like the Starbucks app.
 <br></br>
 ## How to use
 ### step 1:
-Clone this project
+Clone this project.
 
     https://github.com/NalaJang/oasis_cafe_app.git
 
 
 ### step 2:
-Open the project folder with VS Code/Android Studio and execute the following command to install all dependencies packages
+Open the project folder with VS Code/Android Studio and execute the following command to install all dependencies packages.
 
     flutter pub get
 
@@ -24,6 +24,8 @@ Try launch the app.
 
 <br></br>
 ## Menu tree
+
+** Customer app
 <img width="740" alt="image" src="https://github.com/NalaJang/oasis_cafe_app/assets/73895803/64d24085-4be4-4bd3-a202-8c792084034b">
 
 
@@ -34,3 +36,10 @@ Try launch the app.
 
 
 ## Folder Structure
+
+lib/
+|- config/ - contains configuration for widget views.
+|- model/ - contains all the plain data models.
+|- provider/ - contains all Provider models for each of the widget views.
+|- screens/ - the main folder that contains all UI.
+|- main.dart - the main.dart file for dev environment.
