@@ -183,6 +183,7 @@ class _OrderStatusState extends State<OrderStatus> {
               var document = snapshot.data!.docs[0];
               var documentId = document.id;
               var processState = document['processState'];
+              var reasonOfCancel = document['reasonOfCanceled'];
               String cardTitlePhrase = '';
               String cardSubTitlePhrase = '';
               String graphImage = '';
@@ -200,6 +201,10 @@ class _OrderStatusState extends State<OrderStatus> {
                 cardTitlePhrase = '$userName 님, 메뉴가 모두 준비되었어요.';
                 cardSubTitlePhrase = '메뉴가 모두 준비되었어요. 픽업대에서 메뉴를 픽업해주세요!';
                 graphImage = 'image/IMG_order_status_done.png';
+              } else {
+                cardTitlePhrase = '$userName 님, 주문이 취소되었어요.';
+                cardSubTitlePhrase = '$reasonOfCancel (으)로 주문이 취소되었습니다.';
+                graphImage = '';
               }
 
 
@@ -270,7 +275,7 @@ class _OrderStatusState extends State<OrderStatus> {
           const SizedBox(height: 25,),
 
           // 주문 상태 그래프 이미지
-          Image.asset(graphImage),
+          graphImage == '' ? SizedBox() : Image.asset(graphImage),
 
           const SizedBox(height: 15,),
 
