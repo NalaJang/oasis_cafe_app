@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
-import 'package:oasis_cafe_app/config/palette.dart';
 
 import 'buttons.dart';
 
@@ -97,8 +96,8 @@ class ShowInformationDialog {
   }
 
   // 계정 삭제
-  void showDeleteAccountDialog(BuildContext context) {
-    showDialog(
+  Future<bool> showDeleteAccountDialog(BuildContext context) async {
+    bool result = await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -111,29 +110,35 @@ class ShowInformationDialog {
 
           actions: [
 
-            // 취소 버튼
-            GestureDetector(
-              onTap: (){
-                Navigator.of(context).pop();
+            // 확인 버튼
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.of(context).pop(true);
               },
 
-              child: buttons.buttonStyle('취소'),
+              style: buttons.whiteBgButton(),
+
+              child: const Text('삭제'),
             ),
 
-            const SizedBox(width: 10,),
+            Gaps.gapW10,
 
-            // 확인 버튼
-            GestureDetector(
-              onTap: (){
-                Navigator.of(context).pop();
+            // 취소 버튼
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
               },
 
-              child: buttons.whiteColorButtonStyle('확인'),
+              style: buttons.buttonColor1BgButton(),
+
+              child: const Text('취소'),
             ),
           ],
         );
       }
     );
+
+    return result;
   }
 
 
@@ -144,19 +149,12 @@ class ShowInformationDialog {
         Navigator.of(context).pop(false);
       },
 
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20)
-        ),
-        side: const BorderSide(
-          color: Palette.buttonColor1,
-        )
-      ),
+      style: buttons.whiteBgButton(),
 
       child: const Text('아니오'),
     );
   }
+
 
   // 확인 버튼
   Widget _confirmButton(BuildContext context, String text) {
@@ -165,17 +163,7 @@ class ShowInformationDialog {
         Navigator.of(context).pop(true);
       },
 
-      style: ElevatedButton.styleFrom(
-          elevation: 0,
-          foregroundColor: Colors.white,
-          backgroundColor: Palette.buttonColor1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18)
-          ),
-          side: const BorderSide(
-            color: Palette.buttonColor1,
-          )
-      ),
+      style: buttons.buttonColor1BgButton(),
 
       child: Text(text),
     );

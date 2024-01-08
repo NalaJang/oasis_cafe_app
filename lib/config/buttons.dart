@@ -39,9 +39,9 @@ class Buttons {
     return Container(
       padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
       decoration: BoxDecoration(
-          color: Palette.buttonColor1,
-          border: Border.all(color: Palette.buttonColor1, width: 1),
-          borderRadius: BorderRadius.circular(25.0)
+        color: Palette.buttonColor1,
+        border: Border.all(color: Palette.buttonColor1, width: 1),
+        borderRadius: BorderRadius.circular(25.0)
       ),
 
       child: Text(
@@ -53,20 +53,30 @@ class Buttons {
     );
   }
 
-  Widget whiteColorButtonStyle(String buttonName) {
-    return Container(
-      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
-      decoration: BoxDecoration(
-          border: Border.all(color: Palette.buttonColor1, width: 1),
-          borderRadius: BorderRadius.circular(25.0)
-      ),
 
-      child: Text(
-        buttonName,
-        style: const TextStyle(
-            color: Palette.buttonColor1
-        ),
+  ButtonStyle whiteBgButton() {
+    return ElevatedButton.styleFrom(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
       ),
+      side: const BorderSide(
+        color: Palette.buttonColor1,
+      )
+    );
+  }
+
+  ButtonStyle buttonColor1BgButton() {
+    return ElevatedButton.styleFrom(
+      elevation: 0,
+      foregroundColor: Colors.white,
+      backgroundColor: Palette.buttonColor1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18)
+      ),
+      side: const BorderSide(
+        color: Palette.buttonColor1,
+      )
     );
   }
 }
