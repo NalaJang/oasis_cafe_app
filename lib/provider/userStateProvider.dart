@@ -180,7 +180,6 @@ class UserStateProvider with ChangeNotifier {
     return isUpdated;
   }
 
-  // update 메소드를 나누는 게 나은지, 하나의 메소드 안에서 if 문으로 나누는 게 나은지..
   Future<void> updatePreferences(String menuName, bool selectedSwitchButton) async {
     if( menuName == 'Notification' ) {
       await userInfo.doc(userUid).update({

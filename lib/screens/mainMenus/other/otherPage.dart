@@ -8,6 +8,7 @@ import 'package:oasis_cafe_app/screens/mainMenus/other/personalInfo.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/settings.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/bottomNavi.dart';
 import '../../../config/buttons.dart';
 import '../../../strings/strings_en.dart';
 
@@ -242,30 +243,56 @@ class CustomerServiceMenu extends StatelessWidget {
 
 
 // 로그아웃
-class SignOut extends StatefulWidget {
+class SignOut extends StatelessWidget {
   const SignOut({Key? key}) : super(key: key);
 
   @override
-  State<SignOut> createState() => _SignOutState();
-}
-
-class _SignOutState extends State<SignOut> {
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        ShowInformationDialog().setShowLoginDialog(context, false);
+      onTap: () async {
+        await _pressedSignOutButton(context);
       },
 
       child: const Text(
         'Sign out',
         style: TextStyle(
-            color: Colors.black54,
-            fontSize: 15.0,
-            decoration: TextDecoration.underline
+          color: Colors.black54,
+          fontSize: 15.0,
+          decoration: TextDecoration.underline
         ),
       ),
     );
+  }
+
+  _pressedSignOutButton(BuildContext context) async {
+    var isSignOut =  ShowInformationDialog().showConfirmDialog(context, '로그아웃 하시겠습니까?', '로그아웃');
+
+    if( await isSignOut ) {
+      try {
+        var isSignOut = Provider.of<UserStateProvider>((context), listen: false).signOut();
+
+        if( await isSignOut ) {
+          // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
+          // true 를 반환할 때까지 이전 경로를 모두 제거한다.
+          Navigator.pushAndRemoveUntil(
+            (context),
+            MaterialPageRoute(
+              builder: (context) => const BottomNavi()
+            ), (route) => false
+          );
+        }
+
+      } catch(e) {
+        debugPrint(e.toString());
+        ScaffoldMessenger.of((context)).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.toString()
+            )
+          )
+        );
+      }
+    }
   }
 }
 

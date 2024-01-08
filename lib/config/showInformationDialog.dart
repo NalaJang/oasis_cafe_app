@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/config/bottomNavi.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
-import 'package:oasis_cafe_app/screens/mainMenus/main/mainPage.dart';
-import 'package:provider/provider.dart';
 
-import '../provider/userStateProvider.dart';
-import '../screens/signIn/signIn.dart';
 import 'buttons.dart';
 
 class ShowInformationDialog {
@@ -13,99 +9,27 @@ class ShowInformationDialog {
   var buttons = Buttons();
 
 
-  void setShowLoginDialog(BuildContext context, bool isLogin) {
-    showDialog(
+  Future<bool> showConfirmDialog(BuildContext context, String content, String confirmButtonText) async {
+    bool result = await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Text(
-            isLogin ? '해당 서비스는 로그인 후에 이용하실 수 있습니다.' : '로그아웃 하시겠습니까?'),
+          content: Text(content),
 
           actions: [
             // 취소 버튼
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            _cancelButton(context),
 
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                side: const BorderSide(
-                  color: Palette.buttonColor1,
-                )
-              ),
-
-              child: const Text('닫기'),
-            ),
-
-            const SizedBox(width: 10,),
+            Gaps.gapW10,
 
             // 확인 버튼
-            ElevatedButton(
-              onPressed: () async {
-
-                if( isLogin ) {
-                  // 팝업 창 닫아주기
-                  Navigator.of(context).pop();
-
-                  Navigator.push(
-                      (context),
-                      MaterialPageRoute(builder: (context) => const SignIn())
-                  );
-
-                // 로그아웃
-                } else {
-                  try {
-                    var isSignOut = Provider
-                        .of<UserStateProvider>(context, listen: false)
-                        .signOut();
-
-                    if( await isSignOut ) {
-                      // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
-                      // true 를 반환할 때까지 이전 경로를 모두 제거한다.
-                      Navigator.pushAndRemoveUntil(
-                          (context),
-                          MaterialPageRoute(
-                              builder: (context) => const BottomNavi()
-                          ), (route) => false
-                      );
-                    }
-
-                  } catch(e) {
-                    debugPrint(e.toString());
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                            e.toString()
-                        )
-                      )
-                    );
-                  }
-                }
-
-              },
-
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                foregroundColor: Colors.white,
-                backgroundColor: Palette.buttonColor1,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)
-                ),
-                side: const BorderSide(
-                  color: Palette.buttonColor1,
-                )
-              ),
-
-              child: Text(isLogin ? '로그인' : '로그아웃'),
-            )
+            _confirmButton(context, confirmButtonText)
           ],
         );
       }
     );
+
+    return result;
   }
 
 
@@ -209,6 +133,51 @@ class ShowInformationDialog {
           ],
         );
       }
+    );
+  }
+
+
+  // 취소 버튼
+  Widget _cancelButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.of(context).pop(false);
+      },
+
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20)
+        ),
+        side: const BorderSide(
+          color: Palette.buttonColor1,
+        )
+      ),
+
+      child: const Text('아니오'),
+    );
+  }
+
+  // 확인 버튼
+  Widget _confirmButton(BuildContext context, String text) {
+    return ElevatedButton(
+      onPressed: () async {
+        Navigator.of(context).pop(true);
+      },
+
+      style: ElevatedButton.styleFrom(
+          elevation: 0,
+          foregroundColor: Colors.white,
+          backgroundColor: Palette.buttonColor1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18)
+          ),
+          side: const BorderSide(
+            color: Palette.buttonColor1,
+          )
+      ),
+
+      child: Text(text),
     );
   }
 }
