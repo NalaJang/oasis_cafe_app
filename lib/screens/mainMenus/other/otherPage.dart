@@ -5,19 +5,17 @@ import 'package:oasis_cafe_app/config/showInformationDialog.dart';
 import 'package:oasis_cafe_app/main.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/accountTransactionHistory.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/other/customerServiceMenu.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/personalInfo.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/settings.dart';
 import 'package:provider/provider.dart';
 
-import '../../../config/bottomNavi.dart';
 import '../../../config/buttons.dart';
 import '../../../strings/strings_en.dart';
 
 const double sizedBoxWidth = 110.0;
 const double sizedBoxHeight = 110.0;
 final List<String> cardMenuRow = [Strings.transactionHistory, Strings.personalInformation, Strings.settings];
-final List<String> customerServiceMenuList = ['고객의 소리', '매장 정보', '내 리뷰'];
-final List<IconData> customerServiceMenuIcon = [CupertinoIcons.speaker_2, CupertinoIcons.location_solid, Icons.edit_note];
 
 class OtherPage extends StatelessWidget {
   const OtherPage({Key? key}) : super(key: key);
@@ -203,44 +201,6 @@ class CardMenuRow extends StatelessWidget {
   }
 }
 
-
-// 고객 지원
-class CustomerServiceMenu extends StatelessWidget {
-  const CustomerServiceMenu({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 30.0),
-      child: Column(
-        children: [
-          for( var index = 0; index < customerServiceMenuList.length; index++ )
-            Row(
-              children: [
-                Icon(customerServiceMenuIcon[index]),
-                const SizedBox(width: 15,),
-                TextButton(
-                  // style: TextButton.styleFrom(
-                  //   textStyle: TextStyle(
-                  //     fontSize: 20
-                  //   )
-                  // ),
-                  onPressed: (){},
-                  child: Text(
-                    customerServiceMenuList[index],
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 19.0
-                    ),
-                  )
-                )
-              ],
-            )
-        ],
-      ),
-    );
-  }
-}
 
 
 // 로그아웃
