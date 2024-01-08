@@ -203,7 +203,7 @@ class _OrderStatusState extends State<OrderStatus> {
                 graphImage = 'image/IMG_order_status_done.png';
               } else {
                 var splitProcessState = processState.toString().split(':');
-                var reasonOfCancel = splitProcessState[2];
+                var reasonOfCancel = splitProcessState[1];
                 cardTitlePhrase = '$userName 님, 주문이 취소되었어요.';
                 cardSubTitlePhrase = '$reasonOfCancel (으)로 주문이 취소되었습니다.';
                 graphImage = '';
