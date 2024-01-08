@@ -180,10 +180,10 @@ class _OrderStatusState extends State<OrderStatus> {
               return noOrder();
 
             } else {
-              var document = snapshot.data!.docs[0];
+              var document = snapshot.data!.docs[0]; // [0] 제일 먼저 주문한 메뉴를 가지고 온다.
               var documentId = document.id;
               var processState = document['processState'];
-              var reasonOfCancel = document['reasonOfCanceled'];
+              // var reasonOfCancel = document['reasonOfCanceled'];
               String cardTitlePhrase = '';
               String cardSubTitlePhrase = '';
               String graphImage = '';
@@ -202,6 +202,8 @@ class _OrderStatusState extends State<OrderStatus> {
                 cardSubTitlePhrase = '메뉴가 모두 준비되었어요. 픽업대에서 메뉴를 픽업해주세요!';
                 graphImage = 'image/IMG_order_status_done.png';
               } else {
+                var splitProcessState = processState.toString().split(':');
+                var reasonOfCancel = splitProcessState[2];
                 cardTitlePhrase = '$userName 님, 주문이 취소되었어요.';
                 cardSubTitlePhrase = '$reasonOfCancel (으)로 주문이 취소되었습니다.';
                 graphImage = '';
