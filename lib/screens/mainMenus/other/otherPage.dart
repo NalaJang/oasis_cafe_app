@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/config/showInformationDialog.dart';
+import 'package:oasis_cafe_app/main.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/accountTransactionHistory.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/personalInfo.dart';
@@ -277,7 +278,7 @@ class SignOut extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
             (context),
             MaterialPageRoute(
-              builder: (context) => const BottomNavi()
+              builder: (context) => const MyApp()
             ), (route) => false
           );
         }
