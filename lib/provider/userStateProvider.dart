@@ -195,13 +195,17 @@ class UserStateProvider with ChangeNotifier {
   }
 
   // 계정 삭제
-  Future<void> deleteAccount() async {
+  Future<bool> deleteAccount() async {
     try {
       await _authentication.currentUser?.delete();
       await userInfo.doc(userUid).delete();
+      await storage.delete(key: userUid);
       print('deleteAccount');
+      return true;
+
     } catch(e) {
       print(e.toString());
     }
+    return false;
   }
 }
