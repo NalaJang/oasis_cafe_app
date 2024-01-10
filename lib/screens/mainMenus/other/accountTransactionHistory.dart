@@ -32,7 +32,7 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
     // 현재
     year = now.year;
     month = now.month;
-    day = now.day;
+    day = now.day + 1;
 
     final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context, listen: false);
 
