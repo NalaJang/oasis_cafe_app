@@ -76,7 +76,6 @@ class TransactionHistoryProvider with ChangeNotifier {
         }
 
     ).onError((error, stackTrace) => {
-      print('user order error >> $error'),
       isOrdered = false
     });
 
@@ -106,7 +105,6 @@ class TransactionHistoryProvider with ChangeNotifier {
           'processState' : 'new'
         }
     ).onError((error, stackTrace) => {
-      print('order save error >> $error'),
       isOrdered = false
     });
 

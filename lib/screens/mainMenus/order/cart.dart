@@ -317,7 +317,6 @@ class _OrderButtonState extends State<_OrderButton> {
   @override
   Widget build(BuildContext context) {
 
-    final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context);
     final String userUid = FirebaseAuth.instance.currentUser!.uid;
     final cartProvider = Provider.of<CartProvider>(context);
     bool hasCartData = cartProvider.hasCartData;
@@ -336,54 +335,33 @@ class _OrderButtonState extends State<_OrderButton> {
             offset: const Offset(3, 0)
           )
         ]
-
       ),
+
       child: GestureDetector(
         onTap: () async {
-          var now = DateTime.now();
-          var dateFormatter = DateFormat('yyyy-MM-dd H:m:s');
-          var time = dateFormatter.format(now);
-          List<String> orderedItemsId = [];
-          var isOrdered;
-
-
           try {
             // 장바구니 내역에 없을 경우, 버튼 비활성화
             if( hasCartData == false ) {
               null;
 
             } else {
-
-              for( var i = 0; i < cartProvider.cartItems.length; i++ ) {
-                int quantity = cartProvider.cartItems[i].quantity;
-                String itemName = cartProvider.cartItems[i].itemName;
-                String itemPrice = cartProvider.cartItems[i].itemPrice;
-                double totalPrice = cartProvider.cartItems[i].totalPrice;
-                String drinkSize = cartProvider.cartItems[i].drinkSize;
-                String cup = cartProvider.cartItems[i].cup;
-                int espressoOption = cartProvider.cartItems[i].espressoOption;
-                String hotOrIced = cartProvider.cartItems[i].hotOrIced;
-                String syrupOption = cartProvider.cartItems[i].syrupOption;
-                String whippedCreamOption = cartProvider.cartItems[i].whippedCreamOption;
-                String iceOption = cartProvider.cartItems[i].iceOption;
-
-                isOrdered = transactionHistoryProvider.orderItems(userUid, time,
-                          quantity, itemName, itemPrice, totalPrice, drinkSize, cup, hotOrIced,
-                          espressoOption, syrupOption, whippedCreamOption, iceOption);
-
-                orderedItemsId.add(cartProvider.cartItems[i].id);
-              }
+              // 주문 넣기
+              var isOrdered = cartProvider.placeAnOrder(context, userUid);
 
               // 주문이 정상 처리됐을 경우
               if( await isOrdered ) {
                 // 주문한 아이템 장바구니에서 삭제
-                cartProvider.deleteAllItemsFromCart(orderedItemsId);
+                cartProvider.deleteAllItemsFromCart();
 
                 if( mounted ) {
+                  setState(() {
+                    hasCartData;
+                  });
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text(
-                          '주문이 완료되었습니다.'
+                        '주문이 완료되었습니다.'
                       )
                     )
                   );
