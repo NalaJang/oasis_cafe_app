@@ -3,6 +3,17 @@
 This is a cafe application with a <b>Siren Order</b> function like the Starbucks app.
 <br></br>
 
+## Table of content
+* [Tech stack](#tech-stack)
+* [How to use](#how-to-use)
+* [Menu tree](#menu-tree)
+* [Screen shots](#screen-shots)
+* [Folder Structure](#folder-structure)
+* [Preview](#preview)
+
+<br></br>
+
+
 
 ## Tech stack
 <img src="https://img.shields.io/badge/androidstudio-34A853?style=for-the-badge&logo=androidstudio&logoColor=white">
@@ -11,7 +22,7 @@ This is a cafe application with a <b>Siren Order</b> function like the Starbucks
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 
-
+<br></br>
 
 ## How to use
 ### step 1:
@@ -34,16 +45,17 @@ Register your app. Complete the rest of the step require.
 Try launch the app.
 
 <br></br>
+
+
 ## Menu tree
 
 * Customer app
 <img width="649" alt="oasis_cafe_customer_menu_tree" src="https://github.com/NalaJang/oasis_cafe_app/assets/73895803/f245ad51-ea69-4516-84ca-4dced651fada">
 
 
-
 ## Screen shots
 <img width="953" alt="oasis_app_customer_screen_shots" src="https://github.com/NalaJang/oasis_cafe_app/assets/73895803/e270f875-12db-41cd-9ea5-59857440b568">
-
+<br></br>
 
 
 ## Folder Structure
@@ -54,3 +66,11 @@ Try launch the app.
     |- provider/ - contains all Provider models for each of the widget views.
     |- screens/ - the main folder that contains all UI.
     |- main.dart - the main.dart file for dev environment.
+
+<br></br>
+
+## Preview
+|메뉴 주문|주문 상태, 거래 내역 확인|
+|-------|-------------------|
+|![oasis_cafe_app_order](https://github.com/NalaJang/oasis_cafe_app/assets/73895803/4983955e-1776-4424-aa6a-98f1eee9f57e)|![oasis_cafe_app_order_status](https://github.com/NalaJang/oasis_cafe_app/assets/73895803/12f743c3-63c3-4f0e-98b1-e575b79f43ab)|
+
