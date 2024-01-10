@@ -66,7 +66,22 @@ class Buttons {
     );
   }
 
-  ButtonStyle buttonColor1BgButton() {
+  ButtonStyle buttonColor1BgSubmitButton() {
+    return ElevatedButton.styleFrom(
+        elevation: 0,
+        padding: const EdgeInsets.all(15.0),
+        foregroundColor: Colors.white,
+        backgroundColor: Palette.buttonColor1,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25)
+        ),
+        side: const BorderSide(
+          color: Palette.buttonColor1,
+        )
+    );
+  }
+
+  ButtonStyle buttonColor1BgDialogButton() {
     return ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: Colors.white,

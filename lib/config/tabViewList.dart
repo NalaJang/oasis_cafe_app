@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
-import 'package:oasis_cafe_app/screens/mainMenus/order/cart.dart';
+import 'package:oasis_cafe_app/screens/mainMenus/order/cart/cart.dart';
 import 'package:provider/provider.dart';
 
 import '../strings/strings_en.dart';

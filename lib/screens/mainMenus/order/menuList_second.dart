@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/buttons.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/model/model_item.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
@@ -16,6 +17,26 @@ class MenuListSecond extends StatefulWidget {
 }
 
 class _MenuListSecondState extends State<MenuListSecond> {
+
+  late HotNIcedButton hotNIcedButton;
+  bool isSelectedHot = true;
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    hotNIcedButton = HotNIcedButton(setImage: imageChange,);
+  }
+
+  // 'hot', 'iced' 클릭 이벤트를 받아 이미지 변경
+  void imageChange(bool value) {
+    setState(() {
+      isSelectedHot = value;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -29,7 +50,7 @@ class _MenuListSecondState extends State<MenuListSecond> {
     return Scaffold(
 
       // 주문 버튼
-      bottomNavigationBar: OrderButton(itemId: itemId, itemName: itemName, itemPrice: itemPrice,),
+      bottomNavigationBar: DetailsButton(itemId: itemId, itemName: itemName, itemPrice: itemPrice,),
 
       body: CustomScrollView(
         slivers: [
@@ -39,7 +60,7 @@ class _MenuListSecondState extends State<MenuListSecond> {
             // appBar 배경 이미지 추가
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                'image/IMG_mocha_hot.jpg',
+                isSelectedHot ? 'image/IMG_mocha_hot.jpg' : 'image/IMG_mocha_iced.jpg',
                 // 이미지 꽉 채우기
                 fit: BoxFit.cover,
               ),
@@ -64,7 +85,7 @@ class _MenuListSecondState extends State<MenuListSecond> {
 
                   // hot, iced button
                   if( collectionName == 'Espresso' )
-                  const HotNIcedButton(),
+                  HotNIcedButton(setImage: imageChange,),
 
                   const Divider(height: 50, thickness: 1,),
 
@@ -80,40 +101,27 @@ class _MenuListSecondState extends State<MenuListSecond> {
   }
 }
 
-class OrderButton extends StatefulWidget {
-  const OrderButton({required this.itemId, required this.itemName, required this.itemPrice, Key? key}) : super(key: key);
+class DetailsButton extends StatelessWidget {
+  const DetailsButton({required this.itemId, required this.itemName, required this.itemPrice, Key? key}) : super(key: key);
 
   final String itemId;
   final String itemName;
   final String itemPrice;
 
   @override
-  State<OrderButton> createState() => _OrderButtonState();
-}
-
-class _OrderButtonState extends State<OrderButton> {
-  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        Navigator.pushNamed(context, Strings.itemOption,
-        arguments: [
-          widget.itemId,
-          widget.itemName,
-          widget.itemPrice
-        ]);
-      },
-
-      child: Container(
-        padding: const EdgeInsets.all(15.0),
-        margin: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
-
-        decoration: BoxDecoration(
-          color: Palette.buttonColor1,
-          border: Border.all(color: Palette.buttonColor1, width: 1),
-          borderRadius: BorderRadius.circular(25.0),
-        ),
-
+    return Container(
+      margin: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
+      child: ElevatedButton(
+        onPressed: (){
+          Navigator.pushNamed(context, Strings.itemOption,
+            arguments: [
+              itemId,
+              itemName,
+              itemPrice
+            ]);
+        },
+        style: Buttons().buttonColor1BgSubmitButton(),
         child: const Text(
           'Details',
           textAlign: TextAlign.center,
@@ -121,7 +129,7 @@ class _OrderButtonState extends State<OrderButton> {
             fontSize: 20,
             fontWeight: FontWeight.w500,
             color: Colors.white
-          ),
+          )
         ),
       ),
     );
@@ -185,7 +193,9 @@ class ItemDescription extends StatelessWidget {
 }
 
 class HotNIcedButton extends StatefulWidget {
-  const HotNIcedButton({Key? key}) : super(key: key);
+  const HotNIcedButton({required this.setImage, Key? key}) : super(key: key);
+
+  final Function setImage;
 
   @override
   State<HotNIcedButton> createState() => _HotNIcedButtonState();
@@ -207,6 +217,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){
               setState(() {
                 isSelectedHOT = true;
+                widget.setImage(isSelectedHOT);
                 Provider.of<PersonalOptionProvider>(context, listen: false).hotOrIcedOption = 'Hot';
               });
             },
@@ -241,6 +252,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
             onTap: (){
               setState(() {
                 isSelectedHOT = false;
+                widget.setImage(isSelectedHOT);
                 Provider.of<PersonalOptionProvider>(context, listen: false).hotOrIcedOption = 'Iced';
               });
             },

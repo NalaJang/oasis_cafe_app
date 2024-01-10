@@ -32,7 +32,7 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
     // 현재
     year = now.year;
     month = now.month;
-    day = now.day;
+    day = now.day + 1;
 
     final transactionHistoryProvider = Provider.of<TransactionHistoryProvider>(context, listen: false);
 
@@ -139,11 +139,22 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
         GestureDetector(
           onTap: () async {
             final selectedDate = await showDatePicker(
-                context: context,
-                initialDate: now,
-                firstDate: DateTime(2018),
-                lastDate: now,
-                initialEntryMode: DatePickerEntryMode.calendarOnly
+              context: context,
+              initialDate: now,
+              firstDate: DateTime(2018),
+              lastDate: now,
+              initialEntryMode: DatePickerEntryMode.calendarOnly,
+              builder: (context, child) {
+                return Theme(
+                  data: ThemeData(
+                    appBarTheme: const AppBarTheme(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.amber,
+                    ),
+                  ),
+                  child: child!
+                );
+              }
             );
 
             if( selectedDate != null ) {
@@ -228,8 +239,9 @@ class TransactionHistoryList extends StatelessWidget {
     return FutureBuilder(
       future: transactionHistoryProvider.getTransactionHistory(),
       builder: (context, snapshot) {
-        if (transactionHistoryProvider.reversedHistoryList.isEmpty) {
-          return const Center(child: CircularProgressIndicator(),);
+        if( transactionHistoryProvider.reversedHistoryList.isEmpty ) {
+          return const Text('거래 내역이 없습니다.');
+          // return const Center(child: CircularProgressIndicator(),);
         } else {
 
           return ListView.separated(

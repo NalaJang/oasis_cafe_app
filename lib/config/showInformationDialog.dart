@@ -129,7 +129,7 @@ class ShowInformationDialog {
                 Navigator.of(context).pop(false);
               },
 
-              style: buttons.buttonColor1BgButton(),
+              style: buttons.buttonColor1BgDialogButton(),
 
               child: const Text('취소'),
             ),
@@ -163,7 +163,7 @@ class ShowInformationDialog {
         Navigator.of(context).pop(true);
       },
 
-      style: buttons.buttonColor1BgButton(),
+      style: buttons.buttonColor1BgDialogButton(),
 
       child: Text(text),
     );
