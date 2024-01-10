@@ -139,11 +139,22 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
         GestureDetector(
           onTap: () async {
             final selectedDate = await showDatePicker(
-                context: context,
-                initialDate: now,
-                firstDate: DateTime(2018),
-                lastDate: now,
-                initialEntryMode: DatePickerEntryMode.calendarOnly
+              context: context,
+              initialDate: now,
+              firstDate: DateTime(2018),
+              lastDate: now,
+              initialEntryMode: DatePickerEntryMode.calendarOnly,
+              builder: (context, child) {
+                return Theme(
+                  data: ThemeData(
+                    appBarTheme: const AppBarTheme(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.amber,
+                    ),
+                  ),
+                  child: child!
+                );
+              }
             );
 
             if( selectedDate != null ) {
