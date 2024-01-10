@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/provider/cartProvider.dart';
-import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 
-import '../../../config/palette.dart';
-import '../../../strings/strings_en.dart';
+import '../../../../config/palette.dart';
+import 'orderButton.dart';
 
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);
@@ -22,7 +19,7 @@ class Cart extends StatelessWidget {
       ),
 
       // 주문하기
-      bottomNavigationBar: const _OrderButton(),
+      bottomNavigationBar: const OrderButton(),
 
       body: const CartItems(),
 
@@ -283,7 +280,7 @@ class _CartItemsState extends State<CartItems> {
 
                                     const SizedBox(width: 50,),
 
-                                    Text('NZD $totalPrice')
+                                    Text('$totalPrice 원')
                                   ],
                                 ),
                               ],
@@ -300,113 +297,6 @@ class _CartItemsState extends State<CartItems> {
         }
         return const Center(child: CircularProgressIndicator());
       }
-    );
-  }
-}
-
-class _OrderButton extends StatefulWidget {
-  const _OrderButton({Key? key}) : super(key: key);
-
-  @override
-  State<_OrderButton> createState() => _OrderButtonState();
-}
-
-class _OrderButtonState extends State<_OrderButton> {
-  var color = const Color(0xffe8e8e8);
-
-  @override
-  Widget build(BuildContext context) {
-
-    final String userUid = FirebaseAuth.instance.currentUser!.uid;
-    final cartProvider = Provider.of<CartProvider>(context);
-    bool hasCartData = cartProvider.hasCartData;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(
-          color: color
-        )),
-        boxShadow: [
-          BoxShadow(
-            color: color,
-            spreadRadius: 5,
-            blurRadius: 10,
-            offset: const Offset(3, 0)
-          )
-        ]
-      ),
-
-      child: GestureDetector(
-        onTap: () async {
-          try {
-            // 장바구니 내역에 없을 경우, 버튼 비활성화
-            if( hasCartData == false ) {
-              null;
-
-            } else {
-              // 주문 넣기
-              var isOrdered = cartProvider.placeAnOrder(context, userUid);
-
-              // 주문이 정상 처리됐을 경우
-              if( await isOrdered ) {
-                // 주문한 아이템 장바구니에서 삭제
-                cartProvider.deleteAllItemsFromCart();
-
-                if( mounted ) {
-                  setState(() {
-                    hasCartData;
-                  });
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        '주문이 완료되었습니다.'
-                      )
-                    )
-                  );
-                }
-              }
-            }
-
-          } catch(e) {
-            if( mounted ) {
-              print(e);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                      e.toString()
-                  )
-                )
-              );
-            }
-          }
-        },
-
-        child: Container(
-          padding: const EdgeInsets.all(15.0),
-          margin: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
-
-          decoration: BoxDecoration(
-            color: hasCartData == false ? Palette.buttonColor2 : Palette.buttonColor1,
-            border: Border.all(
-              width: 1,
-              color: hasCartData == false ? Palette.buttonColor2 : Palette.buttonColor1
-            ),
-            borderRadius: BorderRadius.circular(25.0),
-          ),
-
-          child: Text(
-            Strings.order,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              color: hasCartData == false ? Colors.black45 : Colors.white
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

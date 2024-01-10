@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../provider/userStateProvider.dart';
 import '../../../strings/strings_en.dart';
-import 'cart.dart';
+import 'cart/cart.dart';
 
 class MenuListFirst extends StatelessWidget {
   const MenuListFirst({Key? key}) : super(key: key);
