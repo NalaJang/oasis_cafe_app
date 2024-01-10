@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserStateProvider()),
-        ChangeNotifierProvider(create: (context) => OrderStateProvider()),
+        ChangeNotifierProvider(create: (context) => OrderStateProvider(Provider.of<UserStateProvider>(context, listen: false).userUid)),
         ChangeNotifierProvider(create: (context) => ItemProvider()),
         ChangeNotifierProvider(create: (context) => PersonalOptionProvider()),
         ChangeNotifierProvider(create: (context) => TransactionHistoryProvider()),
