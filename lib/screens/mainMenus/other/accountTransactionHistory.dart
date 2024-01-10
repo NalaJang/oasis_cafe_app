@@ -228,8 +228,9 @@ class TransactionHistoryList extends StatelessWidget {
     return FutureBuilder(
       future: transactionHistoryProvider.getTransactionHistory(),
       builder: (context, snapshot) {
-        if (transactionHistoryProvider.reversedHistoryList.isEmpty) {
-          return const Center(child: CircularProgressIndicator(),);
+        if( transactionHistoryProvider.reversedHistoryList.isEmpty ) {
+          return const Text('거래 내역이 없습니다.');
+          // return const Center(child: CircularProgressIndicator(),);
         } else {
 
           return ListView.separated(
