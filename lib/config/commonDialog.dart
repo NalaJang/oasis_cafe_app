@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
 
+import '../screens/signIn/signIn.dart';
+import '../screens/signUp/signUp.dart';
 import 'buttons.dart';
 
 class CommonDialog {
@@ -88,10 +90,9 @@ class CommonDialog {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         // 회원가입 버튼
-                        buttons.signUpButton(context),
-
+                        buttons.pageRoute(context, const SignUp(), '회원가입'),
                         // 로그인 버튼
-                        buttons.loginButton(context)
+                        buttons.pageRoute(context, const SignIn(), '로그인'),
                       ],
                     )
                   ],

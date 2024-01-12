@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 
 import '../../../config/buttons.dart';
 import '../../../strings/strings_en.dart';
+import '../../signIn/signIn.dart';
+import '../../signUp/signUp.dart';
 
 const double sizedBoxWidth = 110.0;
 const double sizedBoxHeight = 110.0;
@@ -54,7 +56,7 @@ class OtherPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
-            const Spacer(),
+            Gaps.spacer,
 
             // 환영 문구
             Text(
@@ -65,24 +67,25 @@ class OtherPage extends StatelessWidget {
                 fontWeight: FontWeight.bold
               ),
             ),
-            const Spacer(),
+            Gaps.spacer,
 
-            // 로그인 상태가 아닐 때,
             userName == '' ?
+                // 로그인 상태가 아닐 때,
                 // 회원가입, 로그인 버튼
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Buttons().signUpButton(context),
-                    Buttons().loginButton(context),
+                    Buttons().pageRoute(context, const SignUp(), '회원가입'),
+                    Buttons().pageRoute(context, const SignIn(), '로그인'),
                   ],
                 ) :
+               // 로그인 상태 일 때,
                // 전자영수증, 개인정보 관리, 설정
                Row(
                  children: [
                    const Spacer(),
                    for( int i = 0; i < cardMenuRow.length; i++ )
-                     CardMenuRow(i),
+                     GestureDetector(child: CardMenuRow(i)),
                    const Spacer(),
                  ],
                ),
@@ -93,7 +96,7 @@ class OtherPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: const [
                 Padding(
-                  padding: EdgeInsets.only(left: 30),
+                  padding: EdgeInsets.only(left: 30, bottom: 25),
                   child: Text(
                     '고객지원',
                     style: TextStyle(
@@ -102,17 +105,16 @@ class OtherPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 25,),
               ],
             ),
 
             // 고객 지원
             const CustomerServiceMenu(),
-            const Spacer(),
+            Gaps.spacer,
 
             // 로그아웃
-            userName == '' ? const Spacer() : const SignOut(),
-            const Spacer(),
+            userName == '' ? Gaps.spacer : const SignOut(),
+            Gaps.spacer,
           ],
         ),
       ),
@@ -127,75 +129,50 @@ class CardMenuRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12))
-      ),
+    Widget? className;
+    IconData? iconName;
 
-      child: SizedBox(
-        width: sizedBoxWidth,
-        height: sizedBoxHeight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+    // 전자영수증
+    if( menuIndex == 0 ) {
+      className = const AccountTransactionHistory();
+      iconName = Icons.receipt_long_sharp;
+    }
+    // 개인정보 관리
+    else if( menuIndex == 1 ) {
+      className = const PersonalInfo();
+      iconName = Icons.person;
+    }
+    // 설정
+    else if( menuIndex == 2 ) {
+      className = const Settings();
+      iconName = Icons.settings;
+    }
 
-            // 전자영수증
-            if( menuIndex == 0 )
-              GestureDetector(
-                onTap: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AccountTransactionHistory())
-                  );
-                },
-                child: Column(
-                  children: [
-                    const Icon(Icons.receipt_long_sharp),
-                    Gaps.gapH10,
-                    Text(cardMenuRow[0], textAlign: TextAlign.center,),
-                  ],
-                ),
-              ),
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => className!)
+        );
+      },
 
-            // 개인정보 관리
-            if( menuIndex == 1 )
-              GestureDetector(
-                onTap: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PersonalInfo())
-                  );
-                },
-                child: Column(
-                  children: [
-                    const Icon(Icons.person),
-                    Gaps.gapH10,
-                    Text(cardMenuRow[1], textAlign: TextAlign.center),
-                  ],
-                ),
-              ),
-
-            // 설정
-            if( menuIndex == 2)
-              GestureDetector(
-                onTap: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Settings())
-                  );
-                },
-
-                child: Column(
-                  children: [
-                    const Icon(Icons.settings),
-                    Gaps.gapH10,
-                    Text(cardMenuRow[2], textAlign: TextAlign.center),
-                  ],
-                ),
-              ),
-          ],
+      child: Card(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12))
         ),
+
+        child: SizedBox(
+            width: sizedBoxWidth,
+            height: sizedBoxHeight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(iconName),
+              Gaps.gapH10,
+              Text(cardMenuRow[menuIndex], textAlign: TextAlign.center,),
+            ],
+          ),
+        )
       ),
     );
   }
