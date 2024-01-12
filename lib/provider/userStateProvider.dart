@@ -177,6 +177,7 @@ class UserStateProvider with ChangeNotifier {
     onError: (e) => isUpdated = false
     );
 
+    notifyListeners();
     return isUpdated;
   }
 
