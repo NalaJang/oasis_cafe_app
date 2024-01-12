@@ -88,26 +88,25 @@ class _PersonalInfoState extends State<PersonalInfo> {
           key: formKey,
           child: Padding(
             padding: const EdgeInsets.all(25.0),
-            child: Column(
-              children: [
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
 
-                // 이름, 이메일 정보
-                memberInformation(),
+                  // 이름, 이메일 정보
+                  memberInformation(),
 
                   Gaps.gapH50,
 
-                // 생일 정보
-                birthday(),
+                  // 생일 정보
+                  birthday(),
 
-                  Gaps.gapH30,
+                  Gaps.gapH50,
 
-                const Spacer(),
+                  // update 버튼
+                  update(),
 
-                // update 버튼
-                update(),
-
-                Gaps.gapH50
-              ],
+                ],
+              ),
             ),
           ),
         ),
