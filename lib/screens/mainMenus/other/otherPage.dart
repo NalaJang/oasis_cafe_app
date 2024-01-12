@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
-import 'package:oasis_cafe_app/config/showInformationDialog.dart';
+import 'package:oasis_cafe_app/config/commonDialog.dart';
 import 'package:oasis_cafe_app/main.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/other/accountTransactionHistory.dart';
@@ -226,7 +226,7 @@ class SignOut extends StatelessWidget {
   }
 
   _pressedSignOutButton(BuildContext context) async {
-    var isSignOut =  ShowInformationDialog().showConfirmDialog(context, '로그아웃 하시겠습니까?', '로그아웃');
+    var isSignOut =  CommonDialog().showConfirmDialog(context, '로그아웃 하시겠습니까?', '로그아웃');
 
     if( await isSignOut ) {
       try {

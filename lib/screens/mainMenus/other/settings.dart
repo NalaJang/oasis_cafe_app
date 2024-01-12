@@ -3,7 +3,7 @@ import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/bottomNavi.dart';
-import '../../../config/showInformationDialog.dart';
+import '../../../config/commonDialog.dart';
 import '../../../strings/strings_en.dart';
 
 class Settings extends StatelessWidget {
@@ -178,7 +178,7 @@ class DeleteAccount extends StatelessWidget {
 
 
   _pressedDeleteButton(BuildContext context) async {
-    var isConfirm = ShowInformationDialog().showDeleteAccountDialog(context);
+    var isConfirm = CommonDialog().showDeleteAccountDialog(context);
 
     if( await isConfirm ) {
       try {

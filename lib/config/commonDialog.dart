@@ -3,9 +3,18 @@ import 'package:oasis_cafe_app/config/gaps.dart';
 
 import 'buttons.dart';
 
-class ShowInformationDialog {
+class CommonDialog {
 
   var buttons = Buttons();
+
+
+  showSnackBar(BuildContext context, String snackBarText) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(snackBarText,),
+      )
+    );
+  }
 
 
   Future<bool> showConfirmDialog(BuildContext context, String content, String confirmButtonText) async {

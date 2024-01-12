@@ -4,6 +4,7 @@ import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/commonDialog.dart';
 import '../../../config/palette.dart';
 import '../../../strings/strings_en.dart';
 
@@ -248,6 +249,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
           setState(() {
             showSpinner = false;
           });
+
+          if( mounted ) {
+            CommonDialog().showSnackBar(context, '정보가 수정되었습니다.');
+          }
         }
       } catch(e) {
         print(e);
