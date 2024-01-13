@@ -19,11 +19,11 @@ This application efficiently manages cafe orders and provides a high level of co
 </br>
 
 ## General info
-1. **개발 기간** &nbsp; : &nbsp; 2023.09 ~ 2024.01
-2. **사이렌 오더 시스템**  &nbsp; : &nbsp; Firebase Database를 이용하여 주문 데이터를 관리하며, 주문 상태를 업데이트합니다.  
-3. **MVVM 아키텍처 구현** &nbsp; : &nbsp; Flutter Provider 패키지를 사용하여 MVVM 아키텍처를 적용하여 코드를 모듈화하고, 유지보수성을 높였습니다.  
-4. **사용자 편의성 강조**  &nbsp; : &nbsp; Flutter의 풍부한 위젯 라이브러리를 활용하여 직관적이고 사용자 친화적인 UI를 구현하여 사용자 편의성을 강조하였습니다.  
-5. **Firebase 인증 및 데이터베이스 연동** &nbsp; : &nbsp; Firebase Authentication을 이용하여 사용자 인증을 처리하고, 주문 데이터를 Firebase Database에 저장하고 관리합니다.  
+1. 개발 기간 : 2023.09 ~ 2024.01
+2. 사이렌 오더 시스템 : Firebase Database를 이용하여 주문 데이터를 관리하며, 주문 상태를 업데이트합니다.  
+3. MVVM 아키텍처 구현 : Flutter Provider 패키지를 사용하여 MVVM 아키텍처를 적용하여 코드를 모듈화하고, 유지보수성을 높였습니다.  
+4. 사용자 편의성 강조 : Flutter의 풍부한 위젯 라이브러리를 활용하여 직관적이고 사용자 친화적인 UI를 구현하여 사용자 편의성을 강조하였습니다.  
+5. Firebase 인증 및 데이터베이스 연동 : Firebase Authentication을 이용하여 사용자 인증을 처리하고, 주문 데이터를 Firebase Database에 저장하고 관리합니다.  
 
 </br>
 
