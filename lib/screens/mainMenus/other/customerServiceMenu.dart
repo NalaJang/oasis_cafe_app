@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
+import 'package:oasis_cafe_app/config/palette.dart';
 
 class CustomerServiceMenu extends StatelessWidget {
   const CustomerServiceMenu({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class CustomerServiceMenu extends StatelessWidget {
 
     List<String> customerServiceMenuList = ['고객의 소리', '매장 정보', '내 리뷰'];
     List<IconData> customerServiceMenuIcon = [CupertinoIcons.speaker_2, CupertinoIcons.location_solid, Icons.edit_note];
+    List<Widget> classNames = [AboutUs(), AboutUs(), AboutUs()];
 
     return Padding(
       padding: const EdgeInsets.only(left: 30.0),
@@ -24,6 +26,14 @@ class CustomerServiceMenu extends StatelessWidget {
                 TextButton(
                   onPressed: (){
                     print('index >> $index');
+                    if( index == 1 ) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => classNames[index]
+                        )
+                      );
+                    }
                   },
                   child: Text(
                     customerServiceMenuList[index],
@@ -51,26 +61,49 @@ class AboutUs extends StatelessWidget {
         title: const Text('매장 정보'),
       ),
 
-      body: Column(
-        children: [
-          Text('Oasis Cafe'),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Oasis Cafe',
+              style: TextStyle(
+                color: Palette.textColor1,
+                fontWeight: FontWeight.bold,
+                fontSize: 17.0
+              ),
+            ),
 
-          Row(
-            children: [
-              Text('매장 주소'),
-              Text('서울')
-            ],
-          ),
+            Row(
+              children: [
+                Icon(CupertinoIcons.clock),
+                Container(
+                  child: Row(
+                    children: [
+                      Text('월요일'),
+                      Text('오전 11:30 ~ 오후 9시'),
+                    ],
+                  ),
+                )
+              ],
+            ),
 
-          Text('영업 시간'),
+            Row(
+              children: [
+                Icon(Icons.phone),
+                Text('00-000-0000')
+              ],
+            ),
 
-          Row(
-            children: [
-              Text('전화번호'),
-              Text('00-000-0000')
-            ],
-          ),
-        ],
+            Row(
+              children: [
+                Icon(CupertinoIcons.location_solid),
+                Text('서울')
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

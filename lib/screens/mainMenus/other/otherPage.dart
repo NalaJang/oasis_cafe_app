@@ -25,13 +25,8 @@ class OtherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    var userName;
     var userStateProvider = Provider.of<UserStateProvider>(context);
-    if( userStateProvider.userUid == '' ) {
-      userName = '';
-    } else {
-      userName = userStateProvider.userName;
-    }
+    var userName = userStateProvider.userName;
 
     return Scaffold(
       appBar: AppBar(
