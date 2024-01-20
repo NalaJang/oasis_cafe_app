@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
+import 'package:oasis_cafe_app/provider/aboutUsProvider.dart';
 import 'package:oasis_cafe_app/provider/cartProvider.dart';
 import 'package:oasis_cafe_app/provider/itemProvider.dart';
 import 'package:oasis_cafe_app/provider/orderStateProvider.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PersonalOptionProvider()),
         ChangeNotifierProvider(create: (context) => TransactionHistoryProvider()),
         ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (context) => AboutUsProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

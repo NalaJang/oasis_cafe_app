@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
-import 'package:oasis_cafe_app/config/palette.dart';
+
+import 'customerService/aboutUs.dart';
 
 class CustomerServiceMenu extends StatelessWidget {
   const CustomerServiceMenu({Key? key}) : super(key: key);
@@ -46,64 +47,6 @@ class CustomerServiceMenu extends StatelessWidget {
               ],
             )
         ],
-      ),
-    );
-  }
-}
-
-class AboutUs extends StatelessWidget {
-  const AboutUs({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('매장 정보'),
-      ),
-
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Oasis Cafe',
-              style: TextStyle(
-                color: Palette.textColor1,
-                fontWeight: FontWeight.bold,
-                fontSize: 17.0
-              ),
-            ),
-
-            Row(
-              children: [
-                Icon(CupertinoIcons.clock),
-                Container(
-                  child: Row(
-                    children: [
-                      Text('월요일'),
-                      Text('오전 11:30 ~ 오후 9시'),
-                    ],
-                  ),
-                )
-              ],
-            ),
-
-            Row(
-              children: [
-                Icon(Icons.phone),
-                Text('00-000-0000')
-              ],
-            ),
-
-            Row(
-              children: [
-                Icon(CupertinoIcons.location_solid),
-                Text('서울')
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }
