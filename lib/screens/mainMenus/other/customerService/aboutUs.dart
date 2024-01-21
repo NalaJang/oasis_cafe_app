@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/model/model_aboutUs.dart';
 import 'package:oasis_cafe_app/provider/aboutUsProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +24,9 @@ class _AboutUsState extends State<AboutUs> {
   @override
   Widget build(BuildContext context) {
 
-    final aboutUsProvider = Provider.of<AboutUsProvider>(context);
+    // ConnectionState.waiting 에서 벗어 나지 못해 listen: false 추가.
+    final aboutUsProvider = Provider.of<AboutUsProvider>(context, listen: false);
+    List<String> dateList = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +50,8 @@ class _AboutUsState extends State<AboutUs> {
                 );
 
               } else {
-                List<AboutUsModel> storeInfo = snapshot.data as List<AboutUsModel>;
+                // List<AboutUsModel> storeInfo = snapshot.data as List<AboutUsModel>;
+                // print('storeInfo > ${storeInfo.isEmpty}');
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,22 +67,30 @@ class _AboutUsState extends State<AboutUs> {
 
                     Row(
                       children: [
-                        Icon(CupertinoIcons.clock),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(''),
-                              Text('오전 11:30 ~ 오후 9시'),
-                            ],
-                          ),
+                        const Icon(CupertinoIcons.clock),
+
+                        Column(
+                          children: [
+                            for( var date = 0; date < 7; date++ )
+                              Row(
+                                children: [
+                                  Text(dateList[date]),
+                                  Text(
+                                      '${aboutUsProvider.storeInfo[date].openAmPm} ${aboutUsProvider.storeInfo[date].openHour}:${aboutUsProvider.storeInfo[date].openMinutes}'
+                                          ' ~ ${aboutUsProvider.storeInfo[date].closeAmPm} ${aboutUsProvider.storeInfo[date].closeHour}:${aboutUsProvider.storeInfo[date].closeMinutes}'
+                                  ),
+                                ],
+                              )
+                          ],
                         )
                       ],
                     ),
 
                     Row(
                       children: [
-                        Icon(Icons.phone),
-                        Text('00-000-0000')
+                        const Icon(Icons.phone),
+                        for( var number = 7; number < aboutUsProvider.storeInfo.length; number++ )
+                          Text('${aboutUsProvider.storeInfo[number].number1}-${aboutUsProvider.storeInfo[number].number2}-${aboutUsProvider.storeInfo[number].number3}')
                       ],
                     ),
 
