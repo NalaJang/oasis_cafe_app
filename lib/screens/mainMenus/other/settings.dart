@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/localNotification.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -80,6 +81,10 @@ class _PreferencesState extends State<Preferences> {
               _isSelected = value;
               if( menuName == 'Notification' ) {
                 switchButton.notification = _isSelected;
+
+                if( _isSelected == true ) {
+                  LocalNotification.requestNotificationPermission();
+                }
               } else if( menuName == 'Shake To Pay') {
                 switchButton.shakeToPay = _isSelected;
               }

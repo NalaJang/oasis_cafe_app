@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/localNotification.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/main/mainPage.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/orderPage.dart';
 
@@ -25,6 +26,13 @@ class _BottomNaviState extends State<BottomNavi> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // notification 초기화
+    LocalNotification.init();
   }
 
   @override
