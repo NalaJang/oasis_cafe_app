@@ -21,33 +21,23 @@ class AboutUsProvider with ChangeNotifier {
     await openingHoursCollection.get().then((QuerySnapshot results) {
       return results.docs.map((DocumentSnapshot document) {
         storeInfo.add(AboutUsModel.getOpeningHours(document));
-        // return AboutUsModel.getOpeningHours(document);
       }).toList();
     });
     notifyListeners();
   }
 
   Future<void> getPhoneNumber() async {
-   // await phoneNumberReference.get().then((DocumentSnapshot document) {
-   //    // return AboutUsModel.getOpeningHours(document);
-   //    if( document.exists ) {
-   //      return AboutUsModel.getPhoneNumber(document);
-   //    }
-   //  });
     await db.collection('aboutUs').get().then((QuerySnapshot results) {
      return results.docs.map((DocumentSnapshot document) {
-       print('${document.data()}');
        storeInfo.add(AboutUsModel.getPhoneNumber(document));
      }).toList();
    });
     notifyListeners();
   }
 
+  // 각 각의 db 에서 기져온 data 를 합쳐 보낸다.
   Future<void> fetchStoreInfo() async {
     await getOpeningHours();
     await getPhoneNumber();
-    for( var i = 0; i < storeInfo.length; i++ ) {
-      print('data > ${storeInfo[i].number3}');
-    }
   }
 }

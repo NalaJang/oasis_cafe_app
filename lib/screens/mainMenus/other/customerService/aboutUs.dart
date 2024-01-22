@@ -1,25 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/circularProgressBar.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/provider/aboutUsProvider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../config/palette.dart';
 
-class AboutUs extends StatefulWidget {
+class AboutUs extends StatelessWidget {
   const AboutUs({Key? key}) : super(key: key);
-
-  @override
-  State<AboutUs> createState() => _AboutUsState();
-}
-
-class _AboutUsState extends State<AboutUs> {
-
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +29,7 @@ class _AboutUsState extends State<AboutUs> {
           builder: (context, snapshot) {
 
             if( snapshot.connectionState == ConnectionState.waiting ) {
-              return const CircularProgressIndicator();
+              return CircularProgressBar.circularProgressBar;
 
             } else if( snapshot.connectionState == ConnectionState.done ) {
               if( snapshot.hasError ) {
@@ -50,9 +39,6 @@ class _AboutUsState extends State<AboutUs> {
                 );
 
               } else {
-                // List<AboutUsModel> storeInfo = snapshot.data as List<AboutUsModel>;
-                // print('storeInfo > ${storeInfo.isEmpty}');
-
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -65,34 +51,11 @@ class _AboutUsState extends State<AboutUs> {
                       ),
                     ),
 
-                    Row(
-                      children: [
-                        const Icon(CupertinoIcons.clock),
+                    // 운영 시간
+                    _setOpeningHours(aboutUsProvider, dateList),
 
-                        Column(
-                          children: [
-                            for( var date = 0; date < 7; date++ )
-                              Row(
-                                children: [
-                                  Text(dateList[date]),
-                                  Text(
-                                      '${aboutUsProvider.storeInfo[date].openAmPm} ${aboutUsProvider.storeInfo[date].openHour}:${aboutUsProvider.storeInfo[date].openMinutes}'
-                                          ' ~ ${aboutUsProvider.storeInfo[date].closeAmPm} ${aboutUsProvider.storeInfo[date].closeHour}:${aboutUsProvider.storeInfo[date].closeMinutes}'
-                                  ),
-                                ],
-                              )
-                          ],
-                        )
-                      ],
-                    ),
-
-                    Row(
-                      children: [
-                        const Icon(Icons.phone),
-                        for( var number = 7; number < aboutUsProvider.storeInfo.length; number++ )
-                          Text('${aboutUsProvider.storeInfo[number].number1}-${aboutUsProvider.storeInfo[number].number2}-${aboutUsProvider.storeInfo[number].number3}')
-                      ],
-                    ),
+                    // 전화번호
+                    _setPhoneNumber(aboutUsProvider),
 
                     Row(
                       children: [
@@ -109,6 +72,66 @@ class _AboutUsState extends State<AboutUs> {
           },
         ),
       ),
+    );
+  }
+
+  // 운영 시간
+  Widget _setOpeningHours(AboutUsProvider aboutUsProvider, List<String> dateList) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(CupertinoIcons.clock),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  '영업 중',
+                  style: CommonTextStyle.fontBoldSize17TextColor1,
+                ),
+
+                for( var date = 0; date < 7; date++ )
+                  Row(
+                    children: [
+                      Text(
+                        dateList[date],
+                        style: CommonTextStyle.fontSize17,
+                      ),
+                      Text(
+                        ' ${aboutUsProvider.storeInfo[date].openAmPm} ${aboutUsProvider.storeInfo[date].openHour}:${aboutUsProvider.storeInfo[date].openMinutes}'
+                            ' ~ ${aboutUsProvider.storeInfo[date].closeAmPm} ${aboutUsProvider.storeInfo[date].closeHour}:${aboutUsProvider.storeInfo[date].closeMinutes}',
+                        style: CommonTextStyle.fontSize17,
+                      ),
+                    ],
+                  )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  // 전화번호
+  Row _setPhoneNumber(AboutUsProvider aboutUsProvider) {
+    return Row(
+      children: [
+        const Icon(Icons.phone),
+        for( var number = 7; number < aboutUsProvider.storeInfo.length; number++ )
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0),
+            child: Text(
+              '${aboutUsProvider.storeInfo[number].number1} - ${aboutUsProvider.storeInfo[number].number2} - ${aboutUsProvider.storeInfo[number].number3}',
+              style: const TextStyle(
+                  fontSize: 17.0
+              ),
+            ),
+          )
+      ],
     );
   }
 }
