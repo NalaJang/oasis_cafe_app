@@ -25,6 +25,13 @@ class AboutUsModel {
     closeAmPm = data['closeAmPm'];
     closeHour = data['closeHour'];
     closeMinutes = data['closeMinutes'];
+
+    if( openMinutes == '0' ) {
+      openMinutes = openMinutes.padRight(2, '0');
+    }
+    if( closeMinutes == '0' ) {
+      closeMinutes = closeMinutes.padRight(2, '0');
+    }
   }
 
   AboutUsModel.getPhoneNumber(DocumentSnapshot snapshot) {
