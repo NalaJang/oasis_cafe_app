@@ -1,5 +1,7 @@
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    // ':app:checkDebugDuplicateClasses' 에러 해결을 위해
+    // 1.7.10 -> 1.8.0 으로 변경
+    ext.kotlin_version = '1.8.0'
     repositories {
         google()
         mavenCentral()
