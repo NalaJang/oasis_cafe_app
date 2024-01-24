@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oasis_cafe_app/localNotification.dart';
+import 'package:oasis_cafe_app/config/permissionManager.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -76,20 +76,22 @@ class _PreferencesState extends State<Preferences> {
 
         Switch(
           value: _isSelected,
-          onChanged: (value) {
+          onChanged: (value) async {
             setState(() {
-              _isSelected = value;
-              if( menuName == 'Notification' ) {
-                switchButton.notification = _isSelected;
+              // _isSelected = value;
+              // if( menuName == 'Notification' ) {
+              //   switchButton.notification = _isSelected;
+              //
+              //   if( _isSelected == true ) {
+              //     LocalNotification.requestNotificationPermission();
+              //   }
+              // } else if( menuName == 'Shake To Pay') {
+              //   switchButton.shakeToPay = _isSelected;
+              // }
+              // Provider.of<UserStateProvider>(context, listen: false).updatePreferences(menuName, _isSelected);
 
-                if( _isSelected == true ) {
-                  LocalNotification.requestNotificationPermission();
-                }
-              } else if( menuName == 'Shake To Pay') {
-                switchButton.shakeToPay = _isSelected;
-              }
-              Provider.of<UserStateProvider>(context, listen: false).updatePreferences(menuName, _isSelected);
             });
+            PermissionManager().requestNotificationPermission(context);
           }
         )
       ],

@@ -2,6 +2,7 @@
     package="com.example.oasis_cafe_app">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
 
    <application
         android:label="oasis_cafe_app"

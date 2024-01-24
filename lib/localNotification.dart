@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalNotification {
   // 싱글톤으로 생성
-  LocalNotification._();
+  // LocalNotification._();
 
+  var result;
+
+  // local notification 플러그인 객체 생성
   static FlutterLocalNotificationsPlugin plugin = FlutterLocalNotificationsPlugin();
 
   static init() async {
@@ -27,19 +32,26 @@ class LocalNotification {
   }
 
   // ios 에서 권한 요청을 하기 위한 함수
-  static requestNotificationPermission() {
-    plugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
-    ?.requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true
-    );
+  Future<bool> requestNotificationPermission() async {
+    if( Platform.isAndroid ) {
+      result = true;
+
+    }
+    else if( Platform.isIOS || Platform.isMacOS ) {
+      result = await plugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+                            ?.requestPermissions(
+                            alert: true,
+                            badge: true,
+                            sound: true
+      );
+    }
+    return result;
   }
 
   static const String channelId = 'channel id';
   static const String channelName = 'channel name';
 
-  static Future<void> showNotification() async {
+  Future<void> showNotification() async {
     AndroidNotificationDetails androidNotificationDetails = const AndroidNotificationDetails(
       channelId,
       channelName,
@@ -54,6 +66,8 @@ class LocalNotification {
         iOS: const DarwinNotificationDetails(badgeNumber: 1)
     );
 
-    await plugin.show(0, 'plain title', 'palin body', notificationDetails);
+    if( result == true ) {
+      await plugin.show(0, 'plain title', 'plain body', notificationDetails);
+    }
   }
 }
