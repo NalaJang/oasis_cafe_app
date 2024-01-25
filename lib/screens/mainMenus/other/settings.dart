@@ -79,6 +79,13 @@ class _PreferencesState extends State<Preferences> with WidgetsBindingObserver {
 
 
   @override
+  void dispose() {
+    super.dispose();
+    // 앱 상태 변경 이벤트 해제
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     var userStateProvider = Provider.of<UserStateProvider>(context, listen: false);
