@@ -59,41 +59,6 @@ class _PreferencesState extends State<Preferences> with WidgetsBindingObserver {
 
   bool _isSelected = true;
 
-  Row setSwitchMenu(String menuName, UserStateProvider switchButton) {
-
-    if( menuName == 'Notification' ) {
-      _isSelected = switchButton.notification;
-    } else if( menuName == 'Shake To Pay') {
-      _isSelected = switchButton.shakeToPay;
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          menuName,
-          style: const TextStyle(
-            fontSize: 18
-          ),
-        ),
-
-        Switch(
-          value: _isSelected,
-          onChanged: (value) {
-            if( menuName == 'Notification' ) {
-              // 알람 권한 요청
-              // 현재 권한 상태와 상관없이 다이얼로그를 띄우고 권한 설정 화면으로 넘긴다.
-              PermissionManager.requestNotificationPermission(context);
-
-            } else if( menuName == 'Shake To Pay') {
-              switchButton.shakeToPay = _isSelected;
-            }
-          }
-        )
-      ],
-    );
-  }
-
 
   @override
   void initState() {
@@ -110,6 +75,59 @@ class _PreferencesState extends State<Preferences> with WidgetsBindingObserver {
         checkNotificationPermission();
         break;
     }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    var userStateProvider = Provider.of<UserStateProvider>(context, listen: false);
+
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          setSwitchMenu('Notification', userStateProvider),
+
+          setSwitchMenu('Shake To Pay', userStateProvider),
+        ],
+      ),
+    );
+  }
+
+  Row setSwitchMenu(String menuName, UserStateProvider switchButton) {
+
+    if( menuName == 'Notification' ) {
+      _isSelected = switchButton.notification;
+    } else if( menuName == 'Shake To Pay') {
+      _isSelected = switchButton.shakeToPay;
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          menuName,
+          style: const TextStyle(
+              fontSize: 18
+          ),
+        ),
+
+        Switch(
+            value: _isSelected,
+            onChanged: (value) {
+              if( menuName == 'Notification' ) {
+                // 알람 권한 요청
+                // 현재 권한 상태와 상관없이 다이얼로그를 띄우고 권한 설정 화면으로 넘긴다.
+                PermissionManager.requestNotificationPermission(context);
+
+              } else if( menuName == 'Shake To Pay') {
+                switchButton.shakeToPay = _isSelected;
+              }
+            }
+        )
+      ],
+    );
   }
 
 
@@ -133,23 +151,6 @@ class _PreferencesState extends State<Preferences> with WidgetsBindingObserver {
     } else {
       print('unmounted');
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    var userStateProvider = Provider.of<UserStateProvider>(context, listen: false);
-
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          setSwitchMenu('Notification', userStateProvider),
-
-          setSwitchMenu('Shake To Pay', userStateProvider),
-        ],
-      ),
-    );
   }
 }
 
