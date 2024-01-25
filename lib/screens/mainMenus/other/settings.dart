@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/permissionManager.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/bottomNavi.dart';
 import '../../../config/commonDialog.dart';
+import '../../../localNotification.dart';
 import '../../../strings/strings_en.dart';
 
 class Settings extends StatelessWidget {
@@ -52,7 +54,8 @@ class Preferences extends StatefulWidget {
   State<Preferences> createState() => _PreferencesState();
 }
 
-class _PreferencesState extends State<Preferences> {
+// WidgetsBindingObserver : 앱 상태 변경 이벤트를 받기 위함
+class _PreferencesState extends State<Preferences> with WidgetsBindingObserver {
 
   bool _isSelected = true;
 
@@ -76,26 +79,60 @@ class _PreferencesState extends State<Preferences> {
 
         Switch(
           value: _isSelected,
-          onChanged: (value) async {
-            setState(() {
-              // _isSelected = value;
-              // if( menuName == 'Notification' ) {
-              //   switchButton.notification = _isSelected;
-              //
-              //   if( _isSelected == true ) {
-              //     LocalNotification.requestNotificationPermission();
-              //   }
-              // } else if( menuName == 'Shake To Pay') {
-              //   switchButton.shakeToPay = _isSelected;
-              // }
-              // Provider.of<UserStateProvider>(context, listen: false).updatePreferences(menuName, _isSelected);
+          onChanged: (value) {
+            if( menuName == 'Notification' ) {
+              // 알람 권한 요청
+              // 현재 권한 상태와 상관없이 다이얼로그를 띄우고 권한 설정 화면으로 넘긴다.
+              PermissionManager.requestNotificationPermission(context);
 
-            });
-            PermissionManager().requestNotificationPermission(context);
+            } else if( menuName == 'Shake To Pay') {
+              switchButton.shakeToPay = _isSelected;
+            }
           }
         )
       ],
     );
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    // resumed 를 사용하기 위해 앱 상태 변경 이벤트 등록
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch(state) {
+      // 알람 권한 설정 화면으로 이동하면서 앱을 빠져나갔다가 들어오면 resumed 상태로 들어온다.
+      case AppLifecycleState.resumed :
+        checkNotificationPermission();
+        break;
+    }
+  }
+
+
+  void checkNotificationPermission() async {
+
+    if( mounted ) {
+      var userStateProvider = Provider.of<UserStateProvider>(context, listen: false);
+      var status = await Permission.notification.status;
+
+      if( status.isGranted ) {
+        _isSelected = true;
+      } else {
+        _isSelected = false;
+      }
+
+      setState(() {
+        userStateProvider.notification = _isSelected;
+      });
+      userStateProvider.updatePreferences('Notification', _isSelected);
+
+    } else {
+      print('unmounted');
+    }
   }
 
   @override

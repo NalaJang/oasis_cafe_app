@@ -192,7 +192,7 @@ class UserStateProvider with ChangeNotifier {
         'shakeToPay' : selectedSwitchButton
       });
     }
-
+    notifyListeners();
   }
 
   // 계정 삭제

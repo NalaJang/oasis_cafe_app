@@ -5,15 +5,17 @@ import 'package:permission_handler/permission_handler.dart';
 
 class PermissionManager {
 
-  void requestNotificationPermission(BuildContext context) async {
-    var requestStatus = await Permission.notification.request();
-    var status = await Permission.notification.status;
+  static requestNotificationPermission(BuildContext context) async {
+      var result = CommonDialog().showConfirmDialog(
+          context, "푸시알림 설정 변경은 '설정 > 알림 > Oasis cafe > 알림허용'에서 할 수 있어요.", '확인'
+      );
 
-    if( !status.isGranted ) {
-      var result = CommonDialog().showConfirmDialog(context, "푸시알림 설정 변경은 '설정 > 알림 > Oasis cafe > 알림허용'에서 할 수 있어요.", '확인');
-      if( await result ) {
-        openAppSettings();
+      try {
+        if( await result ) {
+          openAppSettings();
+        }
+      } catch(e) {
+        debugPrint(e.toString());
       }
-    }
   }
 }
