@@ -248,6 +248,9 @@ class TransactionHistoryList extends StatelessWidget {
             child: ListView.separated(
               // list 위젯의 높이를 유연하게 조절하기 위한 shrinkWrap
               // shrinkWrap: true,
+              // -> shrinkWrap 은 내부 컨텐츠의 높이를 미리 설정하기 때문에 오버플로우가 발생할 수 있다.
+              // -> 화면 첫 로딩 후 가져온 데이터의 목록이 짧고, 그 후 데이터 조회를 했을 때 조회 내역이 길게 되면
+              // 오버플로우가 생겼다. 따라서 Expanded 로 감싸주었다.
               separatorBuilder: (BuildContext context, int index) =>
               const Divider(
                 color: Colors.grey,
