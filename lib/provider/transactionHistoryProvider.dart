@@ -102,7 +102,9 @@ class TransactionHistoryProvider with ChangeNotifier {
           'syrupOption' : syrupOption,
           'whippedCreamOption' : whippedCreamOption,
           'iceOption' : iceOption,
-          'processState' : 'new'
+          'processState' : 'new',
+          'isCanceled' : false,
+          'reasonOfCanceled' : ''
         }
     ).onError((error, stackTrace) => {
       isOrdered = false

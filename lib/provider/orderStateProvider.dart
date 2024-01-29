@@ -41,4 +41,16 @@ class OrderStateProvider with ChangeNotifier {
 
     return orderNumber;
   }
+
+
+  Future<void> checkedCanceledOrder(DocumentSnapshot documentSnapshot) async {
+    var splitProcessState = documentSnapshot['processState'].toString().split(':');
+    String reasonOfCanceled = splitProcessState[1];
+
+    await orderStateCollection.doc(documentSnapshot.id).update({
+      'processState' : 'pickedUp',
+      'isCanceled' : true,
+      'reasonOfCanceled' : reasonOfCanceled
+    });
+  }
 }

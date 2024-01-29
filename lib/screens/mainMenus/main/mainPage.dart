@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/localNotification.dart';
 import 'package:oasis_cafe_app/provider/orderStateProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
@@ -172,6 +173,12 @@ class _OrderStatusState extends State<OrderStatus> {
       return StreamBuilder(
         stream: orderStateProvider.orderStateCollection
             .where('processState', isNotEqualTo: 'pickedUp')
+            // .where('processState', isNotEqualTo: 'canceled')
+            // .where(
+            //   Filter.and(
+            //     Filter('processState', isNotEqualTo: 'pickedUp'),
+            //     Filter('processState', isNotEqualTo: 'canceled'),
+            //   ))
             .orderBy('processState')
             .orderBy('orderTime', descending: false)
             .snapshots(),
@@ -182,10 +189,14 @@ class _OrderStatusState extends State<OrderStatus> {
               return noOrder();
 
             } else {
-              var document = snapshot.data!.docs[1]; // [0] 제일 먼저 주문한 메뉴를 가지고 온다.
+              bool orderCanceled = false;
+              var document = snapshot.data!.docs[0]; // [0] 제일 먼저 주문한 메뉴를 가지고 온다.
               var documentId = document.id;
               var processState = document['processState'];
               var splitProcessState = processState.toString().split(':');
+              if( splitProcessState[0] != null ) {
+                processState = splitProcessState[0];
+              }
               String cardTitlePhrase = '';
               String cardSubTitlePhrase = '';
               String graphImage = '';
@@ -206,7 +217,8 @@ class _OrderStatusState extends State<OrderStatus> {
                 cardSubTitlePhrase = '메뉴가 모두 준비되었어요. 픽업대에서 메뉴를 픽업해주세요!';
                 graphImage = 'image/IMG_order_status_done.png';
 
-              } else if( splitProcessState[0] == 'canceled' ) {
+              } else if( processState == 'canceled' ) {
+                orderCanceled = true;
                 var reasonOfCancel = splitProcessState[1];
                 cardTitlePhrase = '$userName 님, 주문이 취소되었어요.';
                 cardSubTitlePhrase = '$reasonOfCancel (으)로 주문이 취소되었습니다.';
@@ -220,7 +232,7 @@ class _OrderStatusState extends State<OrderStatus> {
 
                 // 카드 이미지
                 return orderProcessStateCard(
-                    cardTitlePhrase, cardSubTitlePhrase, graphImage, document);
+                    orderCanceled, cardTitlePhrase, cardSubTitlePhrase, graphImage, document);
               } else {
                 userStateProvider.getStorageInfo();
                 return CircularProgressBar.circularProgressBar;
@@ -244,7 +256,7 @@ class _OrderStatusState extends State<OrderStatus> {
   }
 
   // 카드 이미지
-  Widget orderProcessStateCard(String cardTitlePhrase, String cardSubTitlePhrase, String graphImage, DocumentSnapshot documentSnapshot) {
+  Widget orderProcessStateCard(bool orderCanceled, String cardTitlePhrase, String cardSubTitlePhrase, String graphImage, DocumentSnapshot documentSnapshot) {
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
@@ -289,9 +301,24 @@ class _OrderStatusState extends State<OrderStatus> {
           const SizedBox(height: 15,),
 
           // 주문 확인 버튼
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              orderCanceled == false ?
+                  const SizedBox() :
+                  TextButton(
+                      onPressed: (){
+                        Provider.of<OrderStateProvider>(context, listen: false).checkedCanceledOrder(documentSnapshot);
+                      },
+
+                      child: const Text(
+                        '확인했습니다.',
+                        style: TextStyle(
+                          color: Palette.textColor1,
+                        ),
+                      )
+                  ),
+
               TextButton(
                 onPressed: (){
                   showOrderListDialog(documentSnapshot);
