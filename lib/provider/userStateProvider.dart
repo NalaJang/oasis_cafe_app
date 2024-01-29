@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../strings/strings_en.dart';
 
@@ -140,6 +141,8 @@ class UserStateProvider with ChangeNotifier {
 
   // 로그인 사용자 정보 가져오기
   Future<void> getUserInfo(String userUid) async {
+    // 사용자 휴대폰에서 앱의 알람 상태를 가져온다.
+    await getNotificationPermissionState();
     await db.collection(Strings.collection_user)
         .doc(userUid)
         .get()
@@ -149,7 +152,7 @@ class UserStateProvider with ChangeNotifier {
       userEmail = value.data()!['userEmail'],
       userDateOfBirth = value.data()!['userDateOfBirth'],
       userMobileNumber = value.data()!['userMobileNumber'],
-      notification = value.data()!['notification'],
+      // notification = value.data()!['notification'],
       shakeToPay = value.data()!['shakeToPay']
     });
   }
@@ -181,13 +184,24 @@ class UserStateProvider with ChangeNotifier {
     return isUpdated;
   }
 
-  Future<void> updatePreferences(String menuName, bool selectedSwitchButton) async {
-    if( menuName == 'Notification' ) {
-      await userInfo.doc(userUid).update({
-        'notification' : selectedSwitchButton
-      });
+  // 사용자 휴대폰에서 앱의 알람 상태를 가져온다.
+  getNotificationPermissionState() async {
+    var status = await Permission.notification.status;
+    if( status.isGranted ) {
+      notification = true;
+    } else if( status.isDenied || status.isPermanentlyDenied ) {
+      notification = false;
+    }
+  }
 
-    } else if( menuName == 'Shake To Pay' ) {
+  Future<void> updatePreferences(String menuName, bool selectedSwitchButton) async {
+    // if( menuName == 'Notification' ) {
+    //   await userInfo.doc(userUid).update({
+    //     'notification' : selectedSwitchButton
+    //   });
+    //
+    // } else
+      if( menuName == 'Shake To Pay' ) {
       await userInfo.doc(userUid).update({
         'shakeToPay' : selectedSwitchButton
       });
