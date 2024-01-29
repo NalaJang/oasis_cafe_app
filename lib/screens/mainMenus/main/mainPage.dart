@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/localNotification.dart';
 import 'package:oasis_cafe_app/provider/orderStateProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
@@ -136,6 +137,7 @@ class _OrderStatusState extends State<OrderStatus> {
     super.initState();
 
     var userStateProvider = Provider.of<UserStateProvider>(context, listen: false);
+    // 자동 로그인
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       userStateProvider.getStorageInfo();
     });
@@ -180,10 +182,10 @@ class _OrderStatusState extends State<OrderStatus> {
               return noOrder();
 
             } else {
-              var document = snapshot.data!.docs[0]; // [0] 제일 먼저 주문한 메뉴를 가지고 온다.
+              var document = snapshot.data!.docs[1]; // [0] 제일 먼저 주문한 메뉴를 가지고 온다.
               var documentId = document.id;
               var processState = document['processState'];
-              // var reasonOfCancel = document['reasonOfCanceled'];
+              var splitProcessState = processState.toString().split(':');
               String cardTitlePhrase = '';
               String cardSubTitlePhrase = '';
               String graphImage = '';
@@ -193,16 +195,18 @@ class _OrderStatusState extends State<OrderStatus> {
                 cardSubTitlePhrase =
                 '주문 상황에 따라 준비가 늦어질 수 있습니다. 본인이 직접 메뉴를 수령해 주세요.';
                 graphImage = 'image/IMG_order_status_new.png';
+
               } else if (processState == 'inProcess') {
                 cardTitlePhrase = '$userName 님의 주문을 준비 중입니다.';
                 cardSubTitlePhrase = '주문 승인 즉시 메뉴 준비가 시작됩니다. 완성 후, 빠르게 픽업해 주세요.';
                 graphImage = 'image/IMG_order_status_inProcess.png';
+
               } else if (processState == 'done') {
                 cardTitlePhrase = '$userName 님, 메뉴가 모두 준비되었어요.';
                 cardSubTitlePhrase = '메뉴가 모두 준비되었어요. 픽업대에서 메뉴를 픽업해주세요!';
                 graphImage = 'image/IMG_order_status_done.png';
-              } else {
-                var splitProcessState = processState.toString().split(':');
+
+              } else if( splitProcessState[0] == 'canceled' ) {
                 var reasonOfCancel = splitProcessState[1];
                 cardTitlePhrase = '$userName 님, 주문이 취소되었어요.';
                 cardSubTitlePhrase = '$reasonOfCancel (으)로 주문이 취소되었습니다.';
@@ -211,6 +215,9 @@ class _OrderStatusState extends State<OrderStatus> {
 
 
               if( userName != '' ) {
+                // 푸시 알림으로 메뉴 준비 상태 알리기
+                LocalNotification().showNotification(processState);
+
                 // 카드 이미지
                 return orderProcessStateCard(
                     cardTitlePhrase, cardSubTitlePhrase, graphImage, document);

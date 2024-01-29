@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../../../config/bottomNavi.dart';
 import '../../../config/commonDialog.dart';
-import '../../../localNotification.dart';
 import '../../../strings/strings_en.dart';
 
 class Settings extends StatelessWidget {
