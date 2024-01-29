@@ -244,43 +244,45 @@ class TransactionHistoryList extends StatelessWidget {
           // return const Center(child: CircularProgressIndicator(),);
         } else {
 
-          return ListView.separated(
-            // list 위젯의 높이를 유연하게 조절하기 위한 shrinkWrap
-            shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) =>
-            const Divider(
-              color: Colors.grey,
-            ),
+          return Expanded(
+            child: ListView.separated(
+              // list 위젯의 높이를 유연하게 조절하기 위한 shrinkWrap
+              // shrinkWrap: true,
+              separatorBuilder: (BuildContext context, int index) =>
+              const Divider(
+                color: Colors.grey,
+              ),
 
-            itemCount: transactionHistoryProvider.reversedHistoryList.length,
-            itemBuilder: (context, index) {
-              String price = transactionHistoryProvider.reversedHistoryList[index].itemPrice;
-              String itemName = transactionHistoryProvider.reversedHistoryList[index].itemName;
-              String time = transactionHistoryProvider.reversedHistoryList[index].orderTime;
+              itemCount: transactionHistoryProvider.reversedHistoryList.length,
+              itemBuilder: (context, index) {
+                String price = transactionHistoryProvider.reversedHistoryList[index].itemPrice;
+                String itemName = transactionHistoryProvider.reversedHistoryList[index].itemName;
+                String time = transactionHistoryProvider.reversedHistoryList[index].orderTime;
 
-              return Padding(
-                padding: const EdgeInsets.only(
-                    left: 10, right: 10, top: 5, bottom: 0
-                ),
-                child: ListTile(
-
-                  // 결제 수단
-                  leading: Icon(Icons.credit_card),
-
-                  // 가격
-                  title: Text('NZD $price'),
-
-                  // 결제한 아이템 이름
-                  subtitle: Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Text(itemName)
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, top: 5, bottom: 0
                   ),
+                  child: ListTile(
 
-                  // 결제 시간
-                  trailing: Text(time),
-                ),
-              );
-            },
+                    // 결제 수단
+                    leading: Icon(Icons.credit_card),
+
+                    // 가격
+                    title: Text('NZD $price'),
+
+                    // 결제한 아이템 이름
+                    subtitle: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(itemName)
+                    ),
+
+                    // 결제 시간
+                    trailing: Text(time),
+                  ),
+                );
+              },
+            ),
           );
         }
       }
