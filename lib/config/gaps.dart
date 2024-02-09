@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class Gaps {
   static const spacer = Spacer();
+  static const emptySizedBox = SizedBox();
 
   // width
   static const gapW5 = SizedBox(width: 5,);
@@ -11,6 +12,7 @@ class Gaps {
   // height
   static const gapH10 = SizedBox(height: 10,);
   static const gapH15 = SizedBox(height: 15,);
+  static const gapH25 = SizedBox(height: 25,);
   static const gapH30 = SizedBox(height: 30,);
   static const gapH50 = SizedBox(height: 50,);
 }

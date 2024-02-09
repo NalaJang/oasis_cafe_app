@@ -3,7 +3,7 @@ import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/main/dessertWidget.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/main/helloWidget.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/main/newsWidget.dart';
-import 'orderStatusWidget.dart';
+import 'orderStatus/orderStatusWidget.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
