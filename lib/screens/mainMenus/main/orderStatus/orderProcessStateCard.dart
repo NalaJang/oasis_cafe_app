@@ -4,6 +4,7 @@ import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../config/palette.dart';
+import '../../../../model/model_transactionHistory.dart';
 import '../../../../provider/orderStateProvider.dart';
 
 class OrderProcessStateCard extends StatelessWidget {
@@ -77,30 +78,30 @@ class OrderProcessStateCard extends StatelessWidget {
               Gaps.emptySizedBox :
               // 주문이 취소된 경우, 사용자가 취소 확인을 할 수 있도록 버튼을 노출
               TextButton(
-                  onPressed: (){
-                    Provider.of<OrderStateProvider>(context, listen: false).checkedCanceledOrder(documentSnapshot);
-                  },
+                onPressed: (){
+                  Provider.of<OrderStateProvider>(context, listen: false).checkedCanceledOrder(documentSnapshot);
+                },
 
-                  child: const Text(
-                    '확인했습니다.',
-                    style: TextStyle(
-                      color: Palette.textColor1,
-                    ),
-                  )
+                child: const Text(
+                  '확인했습니다.',
+                  style: TextStyle(
+                    color: Palette.textColor1,
+                  ),
+                )
               ),
 
               // 주문 리스트 확인 버튼
               TextButton(
-                  onPressed: (){
-                    showOrderListDialog(documentSnapshot, context);
-                  },
+                onPressed: (){
+                  showOrderListDialog(documentSnapshot, context);
+                },
 
-                  child: const Text(
-                    '주문 확인',
-                    style: TextStyle(
-                      color: Colors.brown,
-                    ),
-                  )
+                child: const Text(
+                  '주문 확인',
+                  style: TextStyle(
+                    color: Colors.brown,
+                  ),
+                )
               ),
             ],
           )
@@ -111,15 +112,7 @@ class OrderProcessStateCard extends StatelessWidget {
 
   // 주문 리스트 확인 버튼
   Future<void> showOrderListDialog(DocumentSnapshot documentSnapshot, BuildContext context) {
-    String itemName = documentSnapshot['itemName'];
-    int quantity  = documentSnapshot['quantity'];
-    String drinkSize = documentSnapshot['drinkSize'];
-    String cup = documentSnapshot['cup'];
-    int espressoOption = documentSnapshot['espressoOption'];
-    String hotOrIced = documentSnapshot['hotOrIced'];
-    String syrupOption = documentSnapshot['syrupOption'];
-    String whippedCreamOption = documentSnapshot['whippedCreamOption'];
-    String iceOption = documentSnapshot['iceOption'];
+    var data = TransactionHistoryModel.getSnapshotDataFromUserOrder(documentSnapshot);
 
     return showModalBottomSheet(
       context: context,
@@ -165,33 +158,34 @@ class OrderProcessStateCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '$itemName $quantity',
+                              '${data.itemName} ${data.quantity}',
                               style: const TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold
                               ),
                             ),
 
-                            const SizedBox(height: 10,),
+                            Gaps.gapH10,
+
                             Row(
                               children: [
-                                Text(hotOrIced),
+                                Text(data.hotOrIced),
                                 const Text(' | '),
-                                Text(drinkSize),
+                                Text(data.drinkSize),
                                 const Text(' | '),
-                                Text(cup)
+                                Text(data.cup)
                               ],
                             ),
 
                             //// 옵션 사항
                             // 에스프레소
-                            espressoOption != 2 ? Text('$espressoOption') : const SizedBox(height: 0,),
+                            data.espressoOption != 2 ? Text('${data.espressoOption}') : Gaps.emptySizedBox,
                             // 시럽
-                            syrupOption != "" ? Text(syrupOption) : const SizedBox(height: 0,),
+                            data.syrupOption != "" ? Text(data.syrupOption) : Gaps.emptySizedBox,
                             // 휘핑 크림
-                            whippedCreamOption != "" ? Text(whippedCreamOption) : const SizedBox(height: 0,),
+                            data.whippedCreamOption != "" ? Text(data.whippedCreamOption) : Gaps.emptySizedBox,
                             // 얼음
-                            iceOption != "" ? Text('얼음 $iceOption') : const SizedBox(height: 0,),
+                            data.iceOption != "" ? Text('얼음 ${data.iceOption}') : Gaps.emptySizedBox,
                           ],
                         ),
                       ],
