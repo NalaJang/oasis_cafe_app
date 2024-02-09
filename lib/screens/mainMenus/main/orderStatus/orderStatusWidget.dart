@@ -106,15 +106,17 @@ class _OrderStatusState extends State<OrderStatus> {
                 }
 
 
-                if( userName != '' ) {
-                  // 푸시 알림으로 메뉴 준비 상태 알리기
-                  LocalNotification().showNotification(processState);
+                // 푸시 알림으로 메뉴 준비 상태 알리기
+                // LocalNotification().showNotification(processState);
 
-                  // 카드 이미지
-                } else {
-                  userStateProvider.getStorageInfo();
-                  return CircularProgressBar.circularProgressBar;
-                }
+                // 카드 이미지
+                return OrderProcessStateCard(
+                  orderCanceled: orderCanceled,
+                  cardTitlePhrase: cardTitlePhrase,
+                  cardSubTitlePhrase: cardSubTitlePhrase,
+                  graphImage: graphImage,
+                  documentSnapshot: document
+                );
               }
             }
             return CircularProgressBar.circularProgressBar;
