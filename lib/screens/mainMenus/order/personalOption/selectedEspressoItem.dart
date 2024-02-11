@@ -6,8 +6,6 @@ import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../strings/strings_en.dart';
-import '../itemOption.dart';
 
 class SelectedEspressoItem extends StatefulWidget {
   const SelectedEspressoItem({required this.documentSnapshot, required this.itemName, Key? key}) : super(key: key);
@@ -21,37 +19,33 @@ class SelectedEspressoItem extends StatefulWidget {
 
 class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 
-  int shotOptionMinimumValue = 1;
-  int syrupOptionMinimumValue = 0;
-  int optionMaximumValue = 9;
-  int shotOption = 0;
+  static const shotOptionMinimumValue = 1;
+  static const syrupOptionMinimumValue = 0;
+  static const optionMaximumValue = 9;
+
+  int shotOption = 2;
   String syrupOption = '';
   // 휘핑 크림
   var whippedCreamOption = ['None', 'Less', 'Regular', 'Extra'];
   List<String> selectedWhippedCreamOption = [];
 
-  TextStyle setListTitleTextStyle() {
-    return const TextStyle(
-        fontSize: 17
-    );
-  }
+  TextStyle setListTitleTextStyle() => const TextStyle(fontSize: 17);
 
   @override
   void initState() {
     super.initState();
 
-    Provider.of<PersonalOptionProvider>(context, listen: false).selectedShotOption = 2;
-    Provider.of<PersonalOptionProvider>(context, listen: false).vanillaSyrup = 0;
-    Provider.of<PersonalOptionProvider>(context, listen: false).caramelSyrup = 0;
-    Provider.of<PersonalOptionProvider>(context, listen: false).selectedSyrupOption = '';
-    Provider.of<PersonalOptionProvider>(context, listen: false).selectedWhippedCreamOption = '';
+    final personalOptionProvider = Provider.of<PersonalOptionProvider>(context, listen: false);
+    personalOptionProvider.vanillaSyrup = 0;
+    personalOptionProvider.caramelSyrup = 0;
+    personalOptionProvider.selectedSyrupOption = '';
+    personalOptionProvider.selectedWhippedCreamOption = '';
   }
 
   @override
   Widget build(BuildContext context) {
 
     final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
-    shotOption = personalOptionProvider.selectedShotOption;
 
     return Column(
       children: [
@@ -316,18 +310,15 @@ class SyrupOptions extends StatefulWidget {
 
 class _SyrupOptionsState extends State<SyrupOptions> {
 
+  static const int minimumValue = 0;
+  static const int maximumValue = 9;
+
   @override
   Widget build(BuildContext context) {
 
-    int syrupAmount = 0;
-    const int minimumValue = 0;
-    const int maximumValue = 9;
-
-    if( widget.syrupName == '바닐라 시럽' ) {
-      syrupAmount = widget.personalOptionProvider.vanillaSyrup;
-    } else if( widget.syrupName == '카라멜 시럽' ) {
-      syrupAmount = widget.personalOptionProvider.caramelSyrup;
-    }
+    final syrupAmount = (widget.syrupName == '바닐라 시럽')
+    ? widget.personalOptionProvider.vanillaSyrup
+    : widget.personalOptionProvider.caramelSyrup;
 
     return Row(
       children: [
@@ -386,3 +377,5 @@ class _SyrupOptionsState extends State<SyrupOptions> {
     );
   }
 }
+
+
