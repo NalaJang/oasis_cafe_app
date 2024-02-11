@@ -207,14 +207,14 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     // 바닐라 시럽
-                    SyrupOptions(syrupName: '바닐라 시럽',),
+                    SyrupOptions(syrupName: '바닐라 시럽', personalOptionProvider: personalOptionProvider,),
 
                     Gaps.gapH20,
 
                     // 카라멜 시럽
-                    SyrupOptions(syrupName: '카라멜 시럽',),
+                    SyrupOptions(syrupName: '카라멜 시럽', personalOptionProvider: personalOptionProvider,),
 
                     Gaps.gapH30,
                   ],
@@ -305,9 +305,10 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 }
 
 class SyrupOptions extends StatefulWidget {
-  const SyrupOptions({required this.syrupName, Key? key}) : super(key: key);
+  const SyrupOptions({required this.syrupName, required this.personalOptionProvider, Key? key}) : super(key: key);
 
   final String syrupName;
+  final PersonalOptionProvider personalOptionProvider;
 
   @override
   State<SyrupOptions> createState() => _SyrupOptionsState();
@@ -321,70 +322,65 @@ class _SyrupOptionsState extends State<SyrupOptions> {
     int syrupAmount = 0;
     const int minimumValue = 0;
     const int maximumValue = 9;
-    final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
 
     if( widget.syrupName == '바닐라 시럽' ) {
-      syrupAmount = personalOptionProvider.vanillaSyrup;
+      syrupAmount = widget.personalOptionProvider.vanillaSyrup;
     } else if( widget.syrupName == '카라멜 시럽' ) {
-      syrupAmount = personalOptionProvider.caramelSyrup;
+      syrupAmount = widget.personalOptionProvider.caramelSyrup;
     }
 
     return Row(
       children: [
         Expanded(
-            child: Text(
-              widget.syrupName,
-              style: TextStyle(
-                  fontSize: 15
-              ),
-            )
+          child: Text(
+            widget.syrupName,
+            style: const TextStyle(fontSize: 15),
+          )
         ),
-        Expanded(child: Text('')),
+        Gaps.emptySizedBox,
         Expanded(
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: (){
-                    setState(() {
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: (){
+                  setState(() {
 
-                      if( syrupAmount > minimumValue ) {
-                        personalOptionProvider.changeSyrupAmount(widget.syrupName, false);
-                      }
+                    if( syrupAmount > minimumValue ) {
+                      widget.personalOptionProvider.changeSyrupAmount(widget.syrupName, false);
+                    }
 
-                    });
-                  },
-                  child: Icon(
-                    CupertinoIcons.minus_circle,
-                    color: syrupAmount <= minimumValue ? Colors.grey : Colors.black,
-                  ),
+                  });
+                },
+                child: Icon(
+                  CupertinoIcons.minus_circle,
+                  color: syrupAmount <= minimumValue ? Colors.grey : Colors.black,
                 ),
+              ),
 
-                SizedBox(width: 20,),
+              Gaps.gapW20,
 
-                Text(
-                    '$syrupAmount',
-                    style: TextStyle(
-                        fontSize: 15
-                    )
+              Text(
+                '$syrupAmount',
+                style: const TextStyle(fontSize: 15)
+              ),
+
+              Gaps.gapW20,
+
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    if( syrupAmount < maximumValue ) {
+                      widget.personalOptionProvider.changeSyrupAmount(widget.syrupName, true);
+                    }
+                  });
+                },
+                child: Icon(
+                  CupertinoIcons.plus_circle,
+                  color: syrupAmount >= maximumValue ? Colors.grey : Colors.black,
                 ),
-
-                SizedBox(width: 20,),
-
-                GestureDetector(
-                  onTap: (){
-                    setState(() {
-                      if( syrupAmount < maximumValue ) {
-                        personalOptionProvider.changeSyrupAmount(widget.syrupName, true);
-                      }
-                    });
-                  },
-                  child: Icon(
-                    CupertinoIcons.plus_circle,
-                    color: syrupAmount >= maximumValue ? Colors.grey : Colors.black,
-                  ),
-                )
-              ],
-            )
+              )
+            ],
+          )
         ),
       ],
     );
