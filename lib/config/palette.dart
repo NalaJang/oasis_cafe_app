@@ -7,4 +7,5 @@ class Palette {
   static const Color buttonColor1 = Color(0xFF12744B);
   static const Color buttonColor2 = Color(0xFFCDCBCB);
   static const Color backgroundColor = Color(0xFFFFFFFF);
+  static const Color expansionPanelBackgroundColor = Color.fromARGB(250, 250, 250, 250);
 }

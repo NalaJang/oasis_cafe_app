@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:provider/provider.dart';
@@ -23,16 +24,11 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
   int shotOptionMinimumValue = 1;
   int syrupOptionMinimumValue = 0;
   int optionMaximumValue = 9;
-  int shotOption = documentSnapshot['espresso'];
-  String syrupOption = documentSnapshot['syrup'];
-  int mochaSyrup = 0;
+  int shotOption = 0;
+  String syrupOption = '';
   // 휘핑 크림
   var whippedCreamOption = ['None', 'Less', 'Regular', 'Extra'];
   List<String> selectedWhippedCreamOption = [];
-
-  Color setExpansionPanelBackgroundColor() {
-    return const Color.fromARGB(250, 250, 250, 250);
-  }
 
   TextStyle setListTitleTextStyle() {
     return const TextStyle(
@@ -44,6 +40,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
   void initState() {
     super.initState();
 
+    Provider.of<PersonalOptionProvider>(context, listen: false).selectedShotOption = 2;
     Provider.of<PersonalOptionProvider>(context, listen: false).vanillaSyrup = 0;
     Provider.of<PersonalOptionProvider>(context, listen: false).caramelSyrup = 0;
     Provider.of<PersonalOptionProvider>(context, listen: false).selectedSyrupOption = '';
@@ -54,7 +51,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
   Widget build(BuildContext context) {
 
     final personalOptionProvider = Provider.of<PersonalOptionProvider>(context);
-    personalOptionProvider.selectedShotOption = shotOption;
+    shotOption = personalOptionProvider.selectedShotOption;
 
     return Column(
       children: [
@@ -64,7 +61,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
             ExpansionPanelRadio(
               // header 를 클릭했을 때도 펼치고 접을 수 있도록 설정
               canTapOnHeader: true,
-              backgroundColor: setExpansionPanelBackgroundColor(),
+              backgroundColor: Palette.expansionPanelBackgroundColor,
               value: 0,
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
@@ -89,19 +86,19 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                           border: Border.all(color: Colors.grey, width: 1),
                           borderRadius: BorderRadius.circular(10)
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(12.0),
                           child: Text(
                             '디카페인',
                           ),
                         ),
                       ),
 
-                      SizedBox(height: 30,),
+                      Gaps.gapH30,
 
                       Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                               child: Text(
                               '에스프레소 샷',
                               style: TextStyle(
@@ -109,7 +106,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                               ),
                             )
                           ),
-                          Expanded(child: Text('')),
+                          Gaps.spacer,
                           Expanded(
                               child: Row(
                               children: [
@@ -118,6 +115,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                                     setState(() {
                                       if( shotOption > shotOptionMinimumValue ) {
                                         shotOption--;
+                                        personalOptionProvider.selectedShotOption = shotOption;
                                       }
                                     });
                                   },
@@ -127,22 +125,23 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                                   ),
                                 ),
 
-                                SizedBox(width: 20,),
+                                Gaps.gapW20,
 
                                 Text(
                                   '$shotOption',
-                                  style: TextStyle(
-                                      fontSize: 15
+                                  style: const TextStyle(
+                                    fontSize: 15
                                   )
                                 ),
 
-                                SizedBox(width: 20,),
+                                Gaps.gapW20,
 
                                 GestureDetector(
                                   onTap: (){
                                     setState(() {
                                       if( shotOption < optionMaximumValue ) {
                                         shotOption++;
+                                        personalOptionProvider.selectedShotOption = shotOption;
                                       }
                                     });
                                   },
@@ -156,7 +155,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 30,),
+                      Gaps.gapH30,
                     ],
                   ),
                 )
@@ -165,139 +164,138 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
             // 시럽
             ExpansionPanelRadio(
               // header 를 클릭했을 때도 펼치고 접을 수 있도록 설정
-                canTapOnHeader: true,
-                backgroundColor: setExpansionPanelBackgroundColor(),
-                value: 1,
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return ListTile(
-                    title: Text(
-                      '시럽',
-                      style: setListTitleTextStyle(),
-                    ),
-
-                    subtitle: Container(
-                      child: (() {
-                        String selectedSyrup = syrupOption;
-                        int vanillaSyrup = personalOptionProvider.vanillaSyrup;
-                        int caramelSyrup = personalOptionProvider.caramelSyrup;
-
-                        if( selectedSyrup == '0' ) {
-                          selectedSyrup = '';
-
-                        } else if( selectedSyrup != '0' ) {
-                          if( vanillaSyrup > syrupOptionMinimumValue ||
-                              caramelSyrup > syrupOptionMinimumValue ) {
-                            selectedSyrup = '$syrupOption \n';
-                          }
-                        }
-
-                        if( vanillaSyrup > syrupOptionMinimumValue ) {
-                          selectedSyrup = '$selectedSyrup바닐라 시럽 $vanillaSyrup \n';
-                        }
-                        if( caramelSyrup > syrupOptionMinimumValue ) {
-                          selectedSyrup = '$selectedSyrup카라멜 시럽 $caramelSyrup';
-                        }
-
-                        return Text(selectedSyrup);
-                      }) (),
-                    ),
-                  );
-                },
-
-                body: Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      // 바닐라 시럽
-                      SyrupOptions(syrupName: '바닐라 시럽',),
-
-                      SizedBox(height: 20,),
-
-                      // 카라멜 시럽
-                      SyrupOptions(syrupName: '카라멜 시럽',),
-
-                      SizedBox(height: 30,),
-                    ],
+              canTapOnHeader: true,
+              backgroundColor: Palette.expansionPanelBackgroundColor,
+              value: 1,
+              headerBuilder: (BuildContext context, bool isExpanded) {
+                return ListTile(
+                  title: Text(
+                    '시럽',
+                    style: setListTitleTextStyle(),
                   ),
-                )
+
+                  subtitle: Container(
+                    child: (() {
+                      String selectedSyrup = syrupOption;
+                      int vanillaSyrup = personalOptionProvider.vanillaSyrup;
+                      int caramelSyrup = personalOptionProvider.caramelSyrup;
+
+                      if( selectedSyrup == '0' ) {
+                        selectedSyrup = '';
+
+                      } else if( selectedSyrup != '0' ) {
+                        if( vanillaSyrup > syrupOptionMinimumValue ||
+                            caramelSyrup > syrupOptionMinimumValue ) {
+                          selectedSyrup = '$syrupOption \n';
+                        }
+                      }
+
+                      if( vanillaSyrup > syrupOptionMinimumValue ) {
+                        selectedSyrup = '$selectedSyrup바닐라 시럽 $vanillaSyrup \n';
+                      }
+                      if( caramelSyrup > syrupOptionMinimumValue ) {
+                        selectedSyrup = '$selectedSyrup카라멜 시럽 $caramelSyrup';
+                      }
+
+                      return Text(selectedSyrup);
+                    }) (),
+                  ),
+                );
+              },
+
+              body: Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    // 바닐라 시럽
+                    SyrupOptions(syrupName: '바닐라 시럽',),
+
+                    Gaps.gapH20,
+
+                    // 카라멜 시럽
+                    SyrupOptions(syrupName: '카라멜 시럽',),
+
+                    Gaps.gapH30,
+                  ],
+                ),
+              )
             ),
 
             // 베이스
             ExpansionPanelRadio(
               canTapOnHeader: true,
-              backgroundColor: setExpansionPanelBackgroundColor(),
+              backgroundColor: Palette.expansionPanelBackgroundColor,
               value: 2,
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
                   title: const Text(
                     '베이스',
                     style: TextStyle(
-                        fontSize: 17
+                      fontSize: 17
                     ),
                   ),
 
                   subtitle: Text(
-                      '${widget.documentSnapshot['base']}'
+                    '${widget.documentSnapshot['base']}'
                   ),
-
                 );
               },
 
-              body: Text('')
+              body: Gaps.emptySizedBox
             ),
 
             // 휘핑 크림
             ExpansionPanelRadio(
-                canTapOnHeader: true,
-                backgroundColor: setExpansionPanelBackgroundColor(),
-                value: 3,
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return ListTile(
-                    title: const Text(
-                      '휘핑 크림',
-                      style: TextStyle(
-                          fontSize: 17
-                      ),
+              canTapOnHeader: true,
+              backgroundColor: Palette.expansionPanelBackgroundColor,
+              value: 3,
+              headerBuilder: (BuildContext context, bool isExpanded) {
+                return ListTile(
+                  title: const Text(
+                    '휘핑 크림',
+                    style: TextStyle(
+                      fontSize: 17
                     ),
+                  ),
 
-                    subtitle: selectedWhippedCreamOption.isEmpty ? Text('') : Text('${selectedWhippedCreamOption[0]}'),
-                  );
-                },
+                  subtitle: selectedWhippedCreamOption.isEmpty ? Gaps.emptySizedBox : Text(selectedWhippedCreamOption[0]),
+                );
+              },
 
-                body: Row(
-                  children: [
-                    for( var i = 0; i < whippedCreamOption.length; i++ )
-                    GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          selectedWhippedCreamOption.clear();
-                          selectedWhippedCreamOption.add(whippedCreamOption[i]);
-                          personalOptionProvider.selectedWhippedCreamOption = whippedCreamOption[i];
-                        });
-                      },
+              body: Row(
+                children: [
+                  for( var i = 0; i < whippedCreamOption.length; i++ )
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        selectedWhippedCreamOption.clear();
+                        selectedWhippedCreamOption.add(whippedCreamOption[i]);
+                        personalOptionProvider.selectedWhippedCreamOption = whippedCreamOption[i];
+                      });
+                    },
 
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(10),
-                          color: selectedWhippedCreamOption.contains(whippedCreamOption[i]) ? Palette.buttonColor1 : Colors.white
-                        ),
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                        color: selectedWhippedCreamOption.contains(whippedCreamOption[i]) ? Palette.buttonColor1 : Colors.white
+                      ),
 
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text(
-                            whippedCreamOption[i],
-                            style: TextStyle(
-                              color: selectedWhippedCreamOption.contains(whippedCreamOption[i]) ? Colors.white : Colors.grey
-                            ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          whippedCreamOption[i],
+                          style: TextStyle(
+                            color: selectedWhippedCreamOption.contains(whippedCreamOption[i]) ? Colors.white : Colors.grey
                           ),
                         ),
                       ),
-                    )
-                  ],
-                )
+                    ),
+                  )
+                ],
+              )
             ),
           ],
         ),
