@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations: # 다국어 패키지
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,7 +43,7 @@ dependencies:
   modal_progress_hud_nsn: ^0.4.0
   provider: ^6.0.5
   hexcolor: ^3.0.1
-  intl: ^0.18.1
+  intl: ^0.17.0
   flutter_secure_storage: ^8.1.0
   flutter_local_notifications: ^16.3.1
   app_settings: ^5.1.1
@@ -68,6 +70,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  # 자동 생성 유효화
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
