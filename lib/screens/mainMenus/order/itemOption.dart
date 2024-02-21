@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/commonDialog.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:oasis_cafe_app/screens/mainMenus/order/personalOption/selectedEspressoItem.dart';
@@ -57,31 +58,31 @@ class ItemOption extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                Strings.drinkSize,
+                Strings.intlMessage('drinkSize'),
                 style: setTitleTextStyle(),
               ),
 
-              const SizedBox(height: 15,),
+              Gaps.gapH15,
 
               // 음료 사이즈 선택
               const DrinkSizeSelectionButton(),
 
-              const SizedBox(height: 55,),
+              Gaps.gapH50,
 
               Text(
-                Strings.cupOption,
+                Strings.intlMessage('cupOption'),
                 style: setTitleTextStyle(),
               ),
 
-              const SizedBox(height: 15,),
+              Gaps.gapH15,
 
               // 컵 선택
               const CupSelectionButton(),
 
-              const SizedBox(height: 55,),
+              Gaps.gapH50,
 
               Text(
-                Strings.personalOption,
+                Strings.intlMessage('personalOption'),
                 style: setTitleTextStyle()
               ),
 
@@ -130,7 +131,7 @@ class DrinkSizeSelectionButton extends StatefulWidget {
 
 class _DrinkSizeSelectionButtonState extends State<DrinkSizeSelectionButton> {
 
-  var sizeOption = ['Small', 'Medium', 'Large'];
+  var sizeOption = [Strings.intlMessage('small'), Strings.intlMessage('medium'), Strings.intlMessage('large')];
   var weightOption = ['237ml', '355ml', '473ml'];
   List<String> selectedSizeOption = [];
 
@@ -218,7 +219,7 @@ class CupSelectionButton extends StatefulWidget {
 
 class _CupSelectionButtonState extends State<CupSelectionButton> {
 
-  var cupOption = ['매장컵', '개인컵', '일회용컵'];
+  var cupOption = [Strings.intlMessage('haveHere'), Strings.intlMessage('keepCup'), Strings.intlMessage('togo')];
   var selectedCupOption = [];
 
   BorderRadius? setBorderRadius(int i) {
@@ -315,10 +316,8 @@ class _SubmitButtonState extends State<SubmitButton> {
           // 컵이 선택되지 않았을 경우
           if (selectedCupOption == '') {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                  '컵이 선택되지 않았습니다.'
-                )
+              SnackBar(
+                content: Text(Strings.intlMessage('cupNotSelected'))
               )
             );
           } else {
@@ -336,16 +335,15 @@ class _SubmitButtonState extends State<SubmitButton> {
             );
 
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                  '장바구니에 추가되었습니다.'
-                )
+              SnackBar(
+                content: Text(Strings.intlMessage('addCart'))
               )
             );
           }
         }
       },
 
+      // 장바구니 담기 버튼
       child: Container(
         padding: EdgeInsets.all(15.0),
         margin: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
@@ -356,10 +354,10 @@ class _SubmitButtonState extends State<SubmitButton> {
             borderRadius: BorderRadius.circular(25.0)
         ),
 
-        child: const Text(
-          Strings.submit,
+        child: Text(
+          Strings.intlMessage('submit'),
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
             color: Colors.white

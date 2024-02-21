@@ -61,12 +61,20 @@
   "cupOption": "컵 선택",
   "personalOption": "퍼스널 옵션",
 
+  "small" : "스몰",
+  "medium" : "미디움",
+  "large" : "라지",
+  "haveHere" : "매장컵",
+  "keepCup" : "개인컵",
+  "togo" : "일회용컵",
   "coffee": "Coffee",
   "espressoOptions": "Espresso Options",
   "shotOptions": "Shot Options",
   "milk": "Milk",
-
+  "cupNotSelected" : "컵이 선택되지 않았습니다.",
+  "addCart" : "장바구니에 추가되었습니다.",
   "submit": "담기",
+
   "cart" : "장바구니",
   "orderButton" : "주문하기",
   "orderCompleted" : "주문이 완료되었습니다.",
