@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/palette.dart';
-import '../../../strings/strings_ko.dart';
+import '../../../strings/strings_en.dart';
 
 class AccountTransactionHistory extends StatefulWidget {
   const AccountTransactionHistory({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.transactionHistory),
+        title: Text(Strings.intlMessage('transactionHistory')),
       ),
 
       body: Column(
@@ -82,9 +83,9 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
                     borderRadius: BorderRadius.circular(30)
                   ),
 
-                  child: const Text(
-                    '상세 조회',
-                    style: TextStyle(
+                  child: Text(
+                    Strings.intlMessage('details'),
+                    style: const TextStyle(
                       color: Colors.brown
                     ),
                   ),
@@ -134,7 +135,7 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
           ),
         ),
 
-        const SizedBox(width: 5,),
+        Gaps.gapW5,
 
         GestureDetector(
           onTap: () async {
@@ -220,7 +221,7 @@ class SearchButton extends StatelessWidget {
             side: const BorderSide(color: Palette.buttonColor1,)
         ),
 
-        child: const Text('조회'),
+        child: Text(Strings.intlMessage('search')),
       ),
     );
   }
@@ -240,7 +241,7 @@ class TransactionHistoryList extends StatelessWidget {
       future: transactionHistoryProvider.getTransactionHistory(),
       builder: (context, snapshot) {
         if( transactionHistoryProvider.reversedHistoryList.isEmpty ) {
-          return const Text('거래 내역이 없습니다.');
+          return Text(Strings.intlMessage('noTransactionHistory'));
           // return const Center(child: CircularProgressIndicator(),);
         } else {
 
@@ -269,14 +270,14 @@ class TransactionHistoryList extends StatelessWidget {
                   child: ListTile(
 
                     // 결제 수단
-                    leading: Icon(Icons.credit_card),
+                    leading: const Icon(Icons.credit_card),
 
                     // 가격
-                    title: Text('NZD $price'),
+                    title: Text(Strings.intlMessageAndArgs('currency', price)),
 
                     // 결제한 아이템 이름
                     subtitle: Container(
-                        margin: EdgeInsets.only(top: 10),
+                        margin: const EdgeInsets.only(top: 10),
                         child: Text(itemName)
                     ),
 

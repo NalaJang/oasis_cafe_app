@@ -45,6 +45,12 @@
 
   "hot": "HOT",
   "iced": "ICED",
+  "currency" : "{price}원",
+  "@currency" : {
+    "price" : {
+      "description" : "product price"
+    }
+  },
 
   "drinkSize": "사이즈",
   "cupOption": "컵 선택",
@@ -59,6 +65,10 @@
 
   "other": "Other",
   "transactionHistory": "전자영수증",
+  "details" : "상세 조회",
+  "search" : "조회",
+  "noTransactionHistory" : "거래 내역이 없습니다.",
+
   "personalInformation": "개인정보 관리",
   "settings": "설정",
 
