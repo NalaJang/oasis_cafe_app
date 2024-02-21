@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../config/commonDialog.dart';
 import '../../../config/palette.dart';
 import '../../../strings/strings_en.dart';
+import 'deleteAccount.dart';
 
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({Key? key}) : super(key: key);
@@ -107,6 +108,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   // update 버튼
                   update(),
 
+                  Gaps.gapH50,
+
+                  // 계정 삭제
+                  const DeleteAccount(),
                 ],
               ),
             ),

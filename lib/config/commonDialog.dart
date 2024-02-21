@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 
 import '../screens/signIn/signIn.dart';
 import '../screens/signUp/signUp.dart';
@@ -76,23 +78,22 @@ class CommonDialog {
                       size: 40,
                     ),
 
-                    const SizedBox(height: 20,),
-                    const Text(
-                      '로그인 후 이용이 가능합니다.',
-                      style: TextStyle(
-                        fontSize: 20
-                      ),
+                    Gaps.gapH20,
+
+                    Text(
+                      Strings.intlMessage('availableAfterLoggingIn'),
+                      style: CommonTextStyle.fontSize20,
                     ),
 
-                    const SizedBox(height: 50,),
+                    Gaps.gapH50,
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         // 회원가입 버튼
-                        buttons.pageRoute(context, const SignUp(), '회원가입'),
+                        buttons.pageRoute(context, const SignUp(), Strings.intlMessage('createAnAccount')),
                         // 로그인 버튼
-                        buttons.pageRoute(context, const SignIn(), '로그인'),
+                        buttons.pageRoute(context, const SignIn(), Strings.intlMessage('signIn')),
                       ],
                     )
                   ],
@@ -111,15 +112,10 @@ class CommonDialog {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Delete Account'),
-          content: const Text(
-            'By deleting your Oasis account, '
-                'all saved information will be lost. This action is irreversible. \n\n'
-                'Would you like to proceed?'
-          ),
+          title: Text(Strings.intlMessage('deleteAccount')),
+          content: Text(Strings.intlMessage('deleteAccountMessage')),
 
           actions: [
-
             // 확인 버튼
             ElevatedButton(
               onPressed: () async {
@@ -128,7 +124,7 @@ class CommonDialog {
 
               style: buttons.whiteBgButton(),
 
-              child: const Text('삭제'),
+              child: Text(Strings.intlMessage('deleteAccount')),
             ),
 
             Gaps.gapW10,
@@ -141,7 +137,7 @@ class CommonDialog {
 
               style: buttons.buttonColor1BgDialogButton(),
 
-              child: const Text('취소'),
+              child: Text(Strings.intlMessage('cancel')),
             ),
           ],
         );

@@ -17,6 +17,7 @@
   "createAnAccount" : "회원가입",
 
   "cancel" : "취소",
+  "availableAfterLoggingIn." : "로그인 후 이용이 가능합니다.",
 
   "email" : "이메일",
   "password" : "비밀번호",
@@ -76,6 +77,7 @@
   "privacyPolicy" : "개인정보 처리 방침",
   "appVersion" : "버전 정보",
   "deleteAccount" : "계정 삭제",
+  "deleteAccountMessage" : "회원탈퇴 후 스타벅스 리워드 혜택 및 등록한 스타벅스 카드의 소유권 상실에 대해 동의합니다.",
 
   "customerService" : "고객지원",
   "customerFeedback" : "고객의 소리",

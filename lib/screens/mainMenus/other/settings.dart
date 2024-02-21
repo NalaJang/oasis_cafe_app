@@ -14,8 +14,6 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userUid = Provider.of<UserStateProvider>(context, listen: false).userUid;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.intlMessage('settings')),
@@ -24,21 +22,14 @@ class Settings extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: [
+          children: const [
             // 푸시 알람, Shake to pay
-            const Preferences(),
+            Preferences(),
 
-            const Divider(color: Colors.grey,),
+            Divider(color: Colors.grey,),
 
             // 이용약관, 개인정보 처리 방침, 버전 정보
-            const About(),
-
-            const Spacer(),
-
-            // 계정 삭제
-            userUid == '' ? Gaps.spacer : const DeleteAccount(),
-
-            Gaps.gapH50
+            About(),
           ],
         ),
       )
@@ -211,61 +202,5 @@ class About extends StatelessWidget {
         }
       ),
     );
-  }
-}
-
-
-// 계정 삭제
-class DeleteAccount extends StatelessWidget {
-  const DeleteAccount({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return GestureDetector(
-      onTap: () async {
-        _pressedDeleteButton(context);
-      },
-
-      child: Text(
-        Strings.intlMessage('deleteAccount'),
-        style: const TextStyle(
-          color: Colors.red,
-          decoration: TextDecoration.underline
-        ),
-      )
-    );
-  }
-
-
-  _pressedDeleteButton(BuildContext context) async {
-    var isConfirm = CommonDialog().showDeleteAccountDialog(context);
-
-    if( await isConfirm ) {
-      try {
-        var isDeleteAccount = Provider.of<UserStateProvider>((context), listen: false).deleteAccount();
-
-        if( await isDeleteAccount ) {
-          // pushAndRemoveUntil : 이전 페이지들을 모두 제거하기 위한 메소드.
-          // true 를 반환할 때까지 이전 경로를 모두 제거한다.
-          Navigator.pushAndRemoveUntil(
-            (context),
-            MaterialPageRoute(
-              builder: (context) => const BottomNavi()
-            ), (route) => false
-          );
-        }
-
-      } catch(e) {
-        debugPrint(e.toString());
-        ScaffoldMessenger.of((context)).showSnackBar(
-          SnackBar(
-            content: Text(
-              e.toString()
-            )
-          )
-        );
-      }
-    }
   }
 }
