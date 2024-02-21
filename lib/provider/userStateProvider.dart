@@ -201,9 +201,13 @@ class UserStateProvider with ChangeNotifier {
     //   });
     //
     // } else
-      if( menuName == 'Shake To Pay' ) {
+    if( menuName == 'Shake to pay' ) {
       await userInfo.doc(userUid).update({
         'shakeToPay' : selectedSwitchButton
+      });
+    } else {
+      await userInfo.doc(userUid).update({
+        'notification' : selectedSwitchButton
       });
     }
     notifyListeners();

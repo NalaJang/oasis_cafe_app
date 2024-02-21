@@ -69,7 +69,13 @@
   "search" : "조회",
   "noTransactionHistory" : "거래 내역이 없습니다.",
 
-  "settings": "설정",
+  "settings" : "설정",
+  "notification" : "푸시 알림",
+  "shakeToPay" : "Shake to pay",
+  "termsOfUse" : "이용약관",
+  "privacyPolicy" : "개인정보 처리 방침",
+  "appVersion" : "버전 정보",
+  "deleteAccount" : "계정 삭제",
 
   "customerService" : "고객지원",
   "customerFeedback" : "고객의 소리",

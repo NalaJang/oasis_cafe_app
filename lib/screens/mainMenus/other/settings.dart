@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/config/permissionManager.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,7 +18,7 @@ class Settings extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.settings),
+        title: Text(Strings.intlMessage('settings')),
       ),
 
       body: Padding(
@@ -35,9 +36,9 @@ class Settings extends StatelessWidget {
             const Spacer(),
 
             // 계정 삭제
-            userUid == '' ? const Spacer() : const DeleteAccount(),
+            userUid == '' ? Gaps.spacer : const DeleteAccount(),
 
-            const SizedBox(height: 50,)
+            Gaps.gapH50
           ],
         ),
       )
@@ -93,9 +94,9 @@ class _PreferencesState extends State<Preferences> with WidgetsBindingObserver {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          setSwitchMenu('Notification', userStateProvider),
+          setSwitchMenu(Strings.intlMessage('notification'), userStateProvider),
 
-          setSwitchMenu('Shake To Pay', userStateProvider),
+          setSwitchMenu(Strings.intlMessage('shakeToPay'), userStateProvider),
         ],
       ),
     );
@@ -103,10 +104,10 @@ class _PreferencesState extends State<Preferences> with WidgetsBindingObserver {
 
   Row setSwitchMenu(String menuName, UserStateProvider switchButton) {
 
-    if( menuName == 'Notification' ) {
-      _isSelected = switchButton.notification;
-    } else if( menuName == 'Shake To Pay') {
+    if( menuName == 'Shake to pay') {
       _isSelected = switchButton.shakeToPay;
+    } else {
+      _isSelected = switchButton.notification;
     }
 
     return Row(
@@ -120,17 +121,22 @@ class _PreferencesState extends State<Preferences> with WidgetsBindingObserver {
         ),
 
         Switch(
-            value: _isSelected,
-            onChanged: (value) {
-              if( menuName == 'Notification' ) {
-                // 알람 권한 요청
-                // 현재 권한 상태와 상관없이 다이얼로그를 띄우고 권한 설정 화면으로 넘긴다.
-                PermissionManager.requestNotificationPermission(context);
+          value: _isSelected,
+          onChanged: (value) {
+            if( menuName == 'Shake to pay') {
+              _isSelected = !_isSelected;
+              switchButton.shakeToPay = _isSelected;
+              Provider.of<UserStateProvider>(context, listen: false).updatePreferences(menuName, _isSelected);
+              setState(() {
 
-              } else if( menuName == 'Shake To Pay') {
-                switchButton.shakeToPay = _isSelected;
-              }
+              });
+
+            } else {
+              // 알람 권한 요청
+              // 현재 권한 상태와 상관없이 다이얼로그를 띄우고 권한 설정 화면으로 넘긴다.
+              PermissionManager.requestNotificationPermission(context);
             }
+          }
         )
       ],
     );
@@ -162,7 +168,11 @@ class _PreferencesState extends State<Preferences> with WidgetsBindingObserver {
 
 
 // 이용약관, 개인정보 처리 방침, 버전 정보
-final List<String> aboutList = ['Terms of use', 'Privacy policy', 'App version'];
+final List<String> aboutList = [
+  Strings.intlMessage('termsOfUse'),
+  Strings.intlMessage('privacyPolicy'),
+  Strings.intlMessage('appVersion')
+];
 class About extends StatelessWidget {
   const About({Key? key}) : super(key: key);
 
@@ -217,9 +227,9 @@ class DeleteAccount extends StatelessWidget {
         _pressedDeleteButton(context);
       },
 
-      child: const Text(
-        'Delete Account',
-        style: TextStyle(
+      child: Text(
+        Strings.intlMessage('deleteAccount'),
+        style: const TextStyle(
           color: Colors.red,
           decoration: TextDecoration.underline
         ),
