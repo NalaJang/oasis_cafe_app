@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 
 class CommonTextStyle {
+  static const fontSize15 = TextStyle(fontSize: 15.0);
   static const fontSize17 = TextStyle(fontSize: 17.0);
   static const fontSize20 = TextStyle(fontSize: 20.0);
 

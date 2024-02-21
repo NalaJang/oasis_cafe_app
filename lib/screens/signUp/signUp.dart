@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -20,13 +23,13 @@ class _SignUpState extends State<SignUp> {
 
   bool showSpinner = false;
   var formKey = GlobalKey<FormState>();
-  final _authentication = FirebaseAuth.instance;
 
   var userNameController = TextEditingController();
   var userEmailController = TextEditingController();
   var userPasswordController = TextEditingController();
   var userMobileNumberController = TextEditingController();
 
+  // 약관 동의
   bool _checkAll = false;
   bool _isCheckedTermsOfUse = false;
   bool _isCheckedPrivacyPolicyAgreed = false;
@@ -36,9 +39,7 @@ class _SignUpState extends State<SignUp> {
     return _isCheckBoxError;
   }
 
-  final double textFormSizedBoxHeight = 30.0;
-
-
+  // 유효성 검사
   void _tryValidation() {
     final isValid = formKey.currentState!.validate();
 
@@ -63,9 +64,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          Strings.signUp
-        ),
+        title: Text(Strings.intlMessage('signUp')),
       ),
 
       body: ModalProgressHUD(
@@ -82,34 +81,34 @@ class _SignUpState extends State<SignUp> {
                   TextFormField(
                       controller: userNameController,
                       validator: (value) =>
-                      value == '' ? Strings.nameValidation : null,
+                      value == '' ? Strings.intlMessage('nameValidation') : null,
 
                       cursorColor: Colors.black,
-                      decoration: _getTextFormDecoration(Strings.name)
+                      decoration: _getTextFormDecoration(Strings.intlMessage('name'))
 
                   ),
 
-                  SizedBox(height: textFormSizedBoxHeight,),
+                  Gaps.gapH30,
 
                   // 이메일
                   TextFormField(
                     controller: userEmailController,
                     validator: (value) =>
-                    value == '' ? Strings.emailValidation : null,
+                    value == '' ? Strings.intlMessage('emailValidation') : null,
 
                     cursorColor: Colors.black,
-                    decoration: _getTextFormDecoration(Strings.email)
+                    decoration: _getTextFormDecoration(Strings.intlMessage('email'))
 
                   ),
 
-                  SizedBox(height: textFormSizedBoxHeight,),
+                  Gaps.gapH30,
 
                   // 비밀번호
                   TextFormField(
                     controller: userPasswordController,
                     validator: (value) {
                       if( value == '' || value!.length < 6 ) {
-                        return Strings.passwordValidation;
+                        return Strings.intlMessage('passwordValidation');
 
                       } else {
                         return null;
@@ -117,16 +116,16 @@ class _SignUpState extends State<SignUp> {
                     },
 
                     cursorColor: Colors.black,
-                    decoration: _getTextFormDecoration(Strings.password),
+                    decoration: _getTextFormDecoration(Strings.intlMessage('password')),
                   ),
 
-                  SizedBox(height: textFormSizedBoxHeight,),
+                  Gaps.gapH30,
 
                   // 비밀번호 확인
                   TextFormField(
                     validator: (value) {
                       if( value == '' || value != userPasswordController.text ) {
-                        return Strings.confirmPasswordValidation;
+                        return Strings.intlMessage('confirmPasswordValidation');
 
                       } else {
                         return null;
@@ -134,33 +133,31 @@ class _SignUpState extends State<SignUp> {
                     },
 
                     cursorColor: Colors.black,
-                    decoration: _getTextFormDecoration(Strings.confirmPassword),
+                    decoration: _getTextFormDecoration(Strings.intlMessage('confirmPassword')),
                   ),
 
-                  SizedBox(height: textFormSizedBoxHeight,),
+                  Gaps.gapH30,
 
                   // 휴대폰 번호
                   TextFormField(
                       controller: userMobileNumberController,
                       validator: (value) =>
-                      value == '' ? Strings.mobileNumberValidation : null,
+                      value == '' ? Strings.intlMessage('mobileNumberValidation') : null,
 
                       cursorColor: Colors.black,
-                      decoration: _getTextFormDecoration(Strings.mobileNumber)
+                      decoration: _getTextFormDecoration(Strings.intlMessage('mobileNumber'))
 
                   ),
 
-                  SizedBox(height: textFormSizedBoxHeight,),
+                  Gaps.gapH30,
 
                   // 약관 전체 동의 및 해제
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        Strings.agreeToAllTermsConditions,
-                        style: TextStyle(
-                          fontSize: 15.0
-                        ),
+                      Text(
+                        Strings.intlMessage('agreeToAllTermsConditions'),
+                        style: CommonTextStyle.fontSize15,
                       ),
                       Checkbox(
                         value: _checkAll,
@@ -187,7 +184,7 @@ class _SignUpState extends State<SignUp> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _setTermsAndConditionsDecoration(Strings.termsOfUseAgreed),
+                      _setTermsAndConditionsDecoration(Strings.intlMessage('termsOfUseAgreed')),
                       Checkbox(
                         value: _isCheckedTermsOfUse,
                         onChanged: (value) {
@@ -209,7 +206,7 @@ class _SignUpState extends State<SignUp> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _setTermsAndConditionsDecoration(Strings.privacyPolicyAgreed),
+                      _setTermsAndConditionsDecoration(Strings.intlMessage('privacyPolicyAgreed')),
                       Checkbox(
                         value: _isCheckedPrivacyPolicyAgreed,
                         onChanged: (value) {
@@ -243,9 +240,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ],
                   ),
-
-
-                  SizedBox(height: textFormSizedBoxHeight,),
+                  Gaps.gapH30,
 
                   // 회원가입 버튼
                   _pressedSignUpButton(),
@@ -338,10 +333,10 @@ class _SignUpState extends State<SignUp> {
             borderRadius: BorderRadius.circular(12.0)
         ),
 
-        child: const Center(
+        child: Center(
           child: Text(
-              Strings.signUp,
-              style: TextStyle(
+              Strings.intlMessage('signUp'),
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
               )
@@ -371,22 +366,20 @@ class _SignUpState extends State<SignUp> {
   Row _setTermsAndConditionsDecoration(String policyName) {
     return Row(
       children: [
-        const Text(
-          Strings.required,
-          style: TextStyle(
+        Text(
+          Strings.intlMessage('required'),
+          style: const TextStyle(
               color: Colors.deepOrange,
               fontWeight: FontWeight.bold,
               fontSize: 15.0
           ),
         ),
-        const SizedBox(width: 5,),
+        Gaps.gapW5,
         Text(
           policyName,
-          style: const TextStyle(
-              fontSize: 15.0
-          ),
+          style: CommonTextStyle.fontSize15,
         ),
-        const SizedBox(width: 10,),
+        Gaps.gapW10,
         const Icon(
           Icons.arrow_forward_ios,
           color: Colors.black54,
@@ -399,23 +392,21 @@ class _SignUpState extends State<SignUp> {
   // 광고성 정보 수신 동의 UI
   Row _setMarketingConsentDecoration() {
     return Row(
-      children: const [
+      children: [
         Text(
-          Strings.optional,
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15.0
+          Strings.intlMessage('optional'),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15.0
           ),
         ),
-        SizedBox(width: 5,),
+        Gaps.gapW5,
         Text(
-          Strings.marketingConsentAgreed,
-          style: TextStyle(
-              fontSize: 15.0
-          ),
+          Strings.intlMessage('marketingConsentAgreed'),
+          style: CommonTextStyle.fontSize15,
         ),
-        SizedBox(width: 10,),
-        Icon(
+        Gaps.gapW10,
+        const Icon(
           Icons.arrow_forward_ios,
           color: Colors.black54,
           size: 17.0,

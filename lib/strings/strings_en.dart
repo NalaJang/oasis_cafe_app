@@ -1,4 +1,9 @@
+import 'package:intl/intl.dart';
+
 class Strings {
+
+  static String intlMessage(String messageText) => Intl.message(messageText);
+
   static const String menuListFirst = '/menuListFirst';
   static const String menuListSecond = '/menuListSecond';
   static const String itemOption = '/itemOption';
