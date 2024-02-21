@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/circularProgressBar.dart';
 import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/provider/aboutUsProvider.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../config/palette.dart';
@@ -19,7 +20,7 @@ class AboutUs extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('매장 정보'),
+        title: Text(Strings.intlMessage('storeInformation')),
       ),
 
       body: Padding(
@@ -42,9 +43,9 @@ class AboutUs extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Oasis Cafe',
-                      style: TextStyle(
+                    Text(
+                      Strings.intlMessage('oasisCafe'),
+                      style: const TextStyle(
                         color: Palette.textColor1,
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0
@@ -58,7 +59,7 @@ class AboutUs extends StatelessWidget {
                     _setPhoneNumber(aboutUsProvider),
 
                     Row(
-                      children: [
+                      children: const [
                         Icon(CupertinoIcons.location_solid),
                         Text('서울')
                       ],
