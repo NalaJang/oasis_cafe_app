@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:oasis_cafe_app/provider/aboutUsProvider.dart';
 import 'package:oasis_cafe_app/provider/cartProvider.dart';
@@ -14,6 +15,8 @@ import 'package:oasis_cafe_app/screens/mainMenus/order/menuList_second.dart';
 import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
+
+import 'generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,6 +73,18 @@ class MyApp extends StatelessWidget {
           // MenuListSecond -> ItemOption
           Strings.itemOption : (context) => const ItemOption()
         },
+
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate
+        ],
+
+        supportedLocales: const [
+          Locale('en', ''),
+          Locale('ko', ''),
+        ],
       ),
     );
   }

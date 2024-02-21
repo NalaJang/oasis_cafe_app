@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 
+import 'commonTextStyle.dart';
+
 
 class Buttons {
 
@@ -32,6 +34,24 @@ class Buttons {
         buttonName,
         style: const TextStyle(
             color: Colors.white
+        ),
+      ),
+    );
+  }
+
+  // buttonColor1 의 버튼 스타일(로그인
+  Widget edgeInsetsAll(double paddingValue, double circularValue, String buttonName, double fontSize) {
+    return Container(
+      padding: EdgeInsets.all(paddingValue),
+      decoration: BoxDecoration(
+          color: Palette.buttonColor1,
+          borderRadius: BorderRadius.circular(circularValue)
+      ),
+
+      child: Center(
+        child: Text(
+          buttonName,
+          style: CommonTextStyle.whiteTextColor(fontSize),
         ),
       ),
     );

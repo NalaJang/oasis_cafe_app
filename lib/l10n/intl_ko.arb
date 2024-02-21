@@ -1,0 +1,60 @@
+{
+  "hello" : "안녕하세요",
+  "welcome" : "Oasis cafe입니다.",
+
+  "signIn" : "로그인",
+  "signUp" : "회원가입",
+  "forgottenPassword" : "비밀번호 찾기",
+  "createAnAccount" : "회원가입",
+
+  "cancel" : "취소",
+
+  "email" : "이메일",
+  "password" : "비밀번호",
+  "name" : "이름",
+  "dateOfBirth" : "생년월일",
+  "mobileNumber" : "휴대전화번호",
+  "confirmPassword" : "비밀번호 확인",
+  "emailValidation" : "이메일이 올바르지 않습니다.",
+  "passwordValidation" : "비밀번호는 6자리 이상 입력해 주세요.",
+  "confirmPasswordValidation" : "비밀번호가 일치하지 않습니다.",
+  "nameValidation" : "이름을 입력해 주세요.",
+  "dateOfBirthValidation" : "생년월일을 입력해 주세요.",
+  "mobileNumberValidation" : "휴대전화번호를 입력해 주세요.",
+  "required" : "(필수)",
+  "optional" : "(선택)",
+  "agreeToAllTermsConditions" : "약관 전체동의",
+  "termsOfUseAgreed" : "이용약관 동의",
+  "privacyPolicyAgreed" : "개인정보 수집 및 이용동의",
+  "marketingConsentAgreed" : "광고성 정보 수신 동의",
+
+  "order" : "Order",
+  "beverage" : "Beverage",
+  "food" : "Food",
+  "espresso" : "Espresso",
+  "freshJuice" : "Fresh juice",
+
+  "hot": "HOT",
+  "iced": "ICED",
+
+  "drinkSize": "사이즈",
+  "cupOption": "컵 선택",
+  "personalOption": "퍼스널 옵션",
+
+  "coffee": "Coffee",
+  "espressoOptions": "Espresso Options",
+  "shotOptions": "Shot Options",
+  "milk": "Milk",
+
+  "submit": "주문하기",
+
+  "other": "Other",
+  "transactionHistory": "전자영수증",
+  "personalInformation": "개인정보 관리",
+  "settings": "Settings",
+
+  "personalInfo": "Personal Info",
+  "memberInfo": "Member Information(*)",
+  "memberBirth": "Birthday (Optional)",
+  "proceed": "Proceed"
+}

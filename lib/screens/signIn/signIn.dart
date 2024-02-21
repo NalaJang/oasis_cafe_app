@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:oasis_cafe_app/config/buttons.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/bottomNavi.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
@@ -73,31 +77,27 @@ class _SignInState extends State<SignIn> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    children: const [
+                    children: [
                       Text(
-                        Strings.hello,
-                        style: TextStyle(
-                          fontSize: 20.0
-                        ),
+                        Intl.message('hello'),
+                        style: CommonTextStyle.fontSize20,
                       ),
 
-                      Icon(
+                      const Icon(
                         Icons.coffee,
                         size: 40,
                       ),
                     ],
                   ),
 
-                  const SizedBox(height: 10,),
+                  Gaps.gapH10,
 
-                  const Text(
-                    Strings.welcome,
-                    style: TextStyle(
-                        fontSize: 20.0
-                    ),
+                  Text(
+                    Intl.message('welcome'),
+                    style: CommonTextStyle.fontSize20,
                   ),
 
-                  const SizedBox(height: 50,),
+                  Gaps.gapH50,
 
                   // email
                   TextFormField(
@@ -107,13 +107,13 @@ class _SignInState extends State<SignIn> {
                     // 다음 텍스트 필드로 포커스 이동
                     textInputAction: TextInputAction.next,
                     validator: (value) =>
-                    value == '' ? Strings.emailValidation : null,
+                    value == '' ? Intl.message('emailValidation') : null,
 
                     cursorColor: Colors.black,
-                    decoration: _getDecoration(Strings.email),
+                    decoration: _getDecoration(Intl.message('email')),
                   ),
 
-                  const SizedBox(height: 20,),
+                  Gaps.gapH20,
 
                   // password
                   TextFormField(
@@ -126,7 +126,7 @@ class _SignInState extends State<SignIn> {
 
                     validator: (value) {
                       if( value == '' || value!.length < 6 ) {
-                        return Strings.passwordValidation;
+                        return Intl.message('passwordValidation');
 
                       } else {
                         return null;
@@ -134,53 +134,34 @@ class _SignInState extends State<SignIn> {
                     },
 
                     cursorColor: Colors.black,
-                    decoration: _getDecoration(Strings.password),
+                    decoration: _getDecoration(Intl.message('password')),
                   ),
 
-                  const SizedBox(height: 30,),
+                  Gaps.gapH30,
 
                   // 로그인 버튼
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: GestureDetector(
-                      onTap: () async {
+                  GestureDetector(
+                    onTap: () async {
 
-                        await pressedLoginButton();
-                      },
+                      await pressedLoginButton();
+                    },
 
-                      // sign in button
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Palette.buttonColor1,
-                          borderRadius: BorderRadius.circular(12)
-                        ),
-
-                        child: const Center(
-                          child: Text(
-                            Strings.signIn,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // sign in button
+                    child: Buttons().edgeInsetsAll(20, 12, Intl.message('signIn'), 16),
                   ),
 
-                  const SizedBox(height: 20,),
+                  Gaps.gapH20,
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                          Strings.forgottenPassword
+                      Text(
+                        Intl.message('forgottenPassword')
                       ),
 
-                      const SizedBox(width: 10,),
+                      Gaps.gapW10,
                       const Text(' | '),
-                      const SizedBox(width: 10,),
+                      Gaps.gapW10,
 
                       GestureDetector(
                         onTap: (){
@@ -190,8 +171,8 @@ class _SignInState extends State<SignIn> {
                           );
                         },
 
-                        child: const Text(
-                            Strings.createAnAccount
+                        child: Text(
+                          Intl.message('createAnAccount')
                         ),
                       ),
                     ],
