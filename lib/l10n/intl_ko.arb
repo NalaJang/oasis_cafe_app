@@ -11,6 +11,7 @@
   "oasisCafe" : "Oasis cafe입니다.",
 
   "signIn" : "로그인",
+  "signOut" : "로그아웃",
   "signUp" : "회원가입",
   "forgottenPassword" : "비밀번호 찾기",
   "createAnAccount" : "회원가입",
@@ -59,7 +60,12 @@
   "other": "Other",
   "transactionHistory": "전자영수증",
   "personalInformation": "개인정보 관리",
-  "settings": "Settings",
+  "settings": "설정",
+
+  "customerService" : "고객지원",
+  "customerFeedback" : "고객의 소리",
+  "storeInformation" : "매장 정보",
+  "myReviews" : "내 리뷰",
 
   "personalInfo": "Personal Info",
   "memberInfo": "Member Information(*)",

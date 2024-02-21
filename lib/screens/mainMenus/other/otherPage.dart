@@ -17,7 +17,11 @@ import '../../signUp/signUp.dart';
 
 const double sizedBoxWidth = 110.0;
 const double sizedBoxHeight = 110.0;
-final List<String> cardMenuRow = [Strings.transactionHistory, Strings.personalInformation, Strings.settings];
+final List<String> cardMenuRow = [
+  Strings.intlMessage('transactionHistory'),
+  Strings.intlMessage('personalInformation'),
+  Strings.intlMessage('settings')
+];
 
 class OtherPage extends StatelessWidget {
   const OtherPage({Key? key}) : super(key: key);
@@ -90,12 +94,12 @@ class OtherPage extends StatelessWidget {
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: const [
+              children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 30, bottom: 25),
+                  padding: const EdgeInsets.only(left: 30, bottom: 25),
                   child: Text(
-                    '고객지원',
-                    style: TextStyle(
+                    Strings.intlMessage('customerService'),
+                    style: const TextStyle(
                       fontSize: 21.0,
                       fontWeight: FontWeight.bold
                     ),
@@ -187,9 +191,9 @@ class SignOut extends StatelessWidget {
         await _pressedSignOutButton(context);
       },
 
-      child: const Text(
-        'Sign out',
-        style: TextStyle(
+      child: Text(
+        Strings.intlMessage('signOut'),
+        style: const TextStyle(
           color: Colors.black54,
           fontSize: 15.0,
           decoration: TextDecoration.underline

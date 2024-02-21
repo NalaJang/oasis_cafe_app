@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 
 import 'customerService/aboutUs.dart';
 
@@ -10,7 +11,11 @@ class CustomerServiceMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    List<String> customerServiceMenuList = ['고객의 소리', '매장 정보', '내 리뷰'];
+    List<String> customerServiceMenuList = [
+      Strings.intlMessage('customerFeedback'),
+      Strings.intlMessage('storeInformation'),
+      Strings.intlMessage('myReviews')
+    ];
     List<IconData> customerServiceMenuIcon = [CupertinoIcons.speaker_2, CupertinoIcons.location_solid, Icons.edit_note];
     List<Widget> classNames = [AboutUs(), AboutUs(), AboutUs()];
 
