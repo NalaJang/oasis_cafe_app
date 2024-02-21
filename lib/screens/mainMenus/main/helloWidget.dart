@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 
 class HelloWidget extends StatelessWidget {
   const HelloWidget({super.key});
@@ -10,17 +11,17 @@ class HelloWidget extends StatelessWidget {
       padding: const EdgeInsets.only(top: 70),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text(
-            'Hello',
-            style: TextStyle(
+            Strings.intlMessage('hello'),
+            style: const TextStyle(
               fontSize: 35
             ),
           ),
 
           Gaps.gapW5,
 
-          Icon(
+          const Icon(
             Icons.coffee,
             size: 40,
           ),
