@@ -93,7 +93,7 @@ class _SignInState extends State<SignIn> {
                   Gaps.gapH10,
 
                   Text(
-                    Intl.message('welcome'),
+                    Intl.message('oasisCafe'),
                     style: CommonTextStyle.fontSize20,
                   ),
 
