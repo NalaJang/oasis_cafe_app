@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/provider/userStateProvider.dart';
 import 'package:provider/provider.dart';
@@ -120,11 +121,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          Strings.memberInfo,
-          style: TextStyle(
-            fontWeight: FontWeight.bold
-          ),
+        Text(
+          Strings.intlMessage('memberInfo'),
+          style: CommonTextStyle.fontBold,
         ),
 
         Gaps.gapH15,
@@ -144,7 +143,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             color: Colors.black,
           ),
           cursorColor: Colors.black,
-          decoration: setTextFormDecoration(Strings.name),
+          decoration: setTextFormDecoration(Strings.intlMessage('name')),
         ),
 
         Gaps.gapH10,
@@ -158,7 +157,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             height: 1.6,
             color: Colors.grey[850],
           ),
-          decoration: setTextFormDecoration(Strings.email),
+          decoration: setTextFormDecoration(Strings.intlMessage('email')),
         ),
       ],
     );
@@ -169,11 +168,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          Strings.memberBirth,
-          style: TextStyle(
-            fontWeight: FontWeight.bold
-          ),
+        Text(
+          Strings.intlMessage('memberBirth'),
+          style: CommonTextStyle.fontBold,
         ),
 
         Gaps.gapH15,
@@ -189,7 +186,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             color: Colors.black,
           ),
           cursorColor: Colors.black,
-          decoration: setTextFormDecoration(Strings.dateOfBirth),
+          decoration: setTextFormDecoration(Strings.intlMessage('dateOfBirth')),
         ),
       ],
     );
@@ -216,10 +213,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.only(top: 15, bottom: 15),
-        child: const Text(
-          'Update',
+        child: Text(
+          Strings.intlMessage('update'),
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold
           ),
@@ -251,7 +248,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           });
 
           if( mounted ) {
-            CommonDialog().showSnackBar(context, '정보가 수정되었습니다.');
+            CommonDialog().showSnackBar(context, Strings.intlMessage('showUpdateSnackBar'));
           }
         }
       } catch(e) {

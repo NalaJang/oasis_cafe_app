@@ -69,7 +69,6 @@
   "search" : "조회",
   "noTransactionHistory" : "거래 내역이 없습니다.",
 
-  "personalInformation": "개인정보 관리",
   "settings": "설정",
 
   "customerService" : "고객지원",
@@ -77,8 +76,11 @@
   "storeInformation" : "매장 정보",
   "myReviews" : "내 리뷰",
 
-  "personalInfo": "Personal Info",
-  "memberInfo": "Member Information(*)",
-  "memberBirth": "Birthday (Optional)",
+  "personalInformation": "개인정보 관리",
+  "memberInfo": "회원 정보(*)",
+  "memberBirth": "생년월일 (선택)",
+  "update" : "수정",
+  "showUpdateSnackBar" : "정보가 수정되었습니다.",
+
   "proceed": "Proceed"
 }
