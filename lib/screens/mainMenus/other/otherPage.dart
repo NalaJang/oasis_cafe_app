@@ -55,7 +55,8 @@ class OtherPage extends StatelessWidget {
 
             // 환영 문구
             Text(
-              userName == '' ? '환영합니다! 🙌🏻' : '$userName님\n환영합니다! 🙌🏻',
+              userName == '' ? Strings.intlMessage('welcome')
+                  : Strings.intlMessageAndArgs('welcomeWithName', userName),
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 25,
@@ -78,10 +79,10 @@ class OtherPage extends StatelessWidget {
                // 전자영수증, 개인정보 관리, 설정
                Row(
                  children: [
-                   const Spacer(),
+                   Gaps.spacer,
                    for( int i = 0; i < cardMenuRow.length; i++ )
                      GestureDetector(child: CardMenuRow(i)),
-                   const Spacer(),
+                   Gaps.spacer,
                  ],
                ),
 

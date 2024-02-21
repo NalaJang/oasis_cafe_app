@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 class Strings {
 
   static String intlMessage(String messageText) => Intl.message(messageText);
+  static String intlMessageAndArgs(String messageText, String args) =>
+      Intl.message(messageText, args: [args]);
 
   static const String menuListFirst = '/menuListFirst';
   static const String menuListSecond = '/menuListSecond';

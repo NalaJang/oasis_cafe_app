@@ -1,6 +1,13 @@
 {
   "hello" : "안녕하세요",
-  "welcome" : "환영합니다!",
+  "welcome" : "환영합니다! \uD83D\uDE4C\uD83C\uDFFB",
+  "welcomeWithName" : "{name}님 \n환영합니다! \uD83D\uDE4C\uD83C\uDFFB",
+  "@welcomeWithName" : {
+    "name" :{
+      "description" : "User's name"
+    }
+  },
+
   "oasisCafe" : "Oasis cafe입니다.",
 
   "signIn" : "로그인",
