@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../config/palette.dart';
@@ -96,9 +97,9 @@ class OrderProcessStateCard extends StatelessWidget {
                   showOrderListDialog(documentSnapshot, context);
                 },
 
-                child: const Text(
-                  '주문 확인',
-                  style: TextStyle(
+                child: Text(
+                  Strings.intlMessage('viewMyOrder'),
+                  style: const TextStyle(
                     color: Colors.brown,
                   ),
                 )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../config/circularProgressBar.dart';
@@ -102,9 +103,9 @@ class _OrderStatusState extends State<OrderStatus> {
   }
 
   Widget noOrder() {
-    return const Text(
-      "It's a great day for coffee ☕️",
-      style: TextStyle(
+    return Text(
+      Strings.intlMessage('greeting'),
+      style: const TextStyle(
           fontSize: 20.0,
           fontWeight: FontWeight.bold
       ),
