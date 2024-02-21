@@ -36,18 +36,18 @@ class OrderPage extends StatelessWidget {
             )
           ],
 
-          bottom: const TabBar(
+          bottom: TabBar(
             indicatorColor: Palette.buttonColor1,
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
               fontWeight: FontWeight.bold
             ),
-            unselectedLabelStyle: TextStyle(
+            unselectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.normal
             ),
 
             tabs: [
-              Tab(text: Strings.beverage),
-              Tab(text: Strings.food),
+              Tab(text: Strings.intlMessage('beverage')),
+              Tab(text: Strings.intlMessage('food')),
             ],
           ),
         ),

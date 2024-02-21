@@ -18,6 +18,7 @@
   "createAnAccount" : "회원가입",
 
   "cancel" : "취소",
+  "no" : "아니오",
   "availableAfterLoggingIn." : "로그인 후 이용이 가능합니다.",
 
   "email" : "이메일",
@@ -42,8 +43,8 @@
   "viewMyOrder" : "주문 확인",
 
   "order" : "Order",
-  "beverage" : "Beverage",
-  "food" : "Food",
+  "beverage" : "음료",
+  "food" : "푸드",
   "espresso" : "Espresso",
   "freshJuice" : "Fresh juice",
 
@@ -65,7 +66,13 @@
   "shotOptions": "Shot Options",
   "milk": "Milk",
 
-  "submit": "주문하기",
+  "submit": "담기",
+  "cart" : "장바구니",
+  "orderButton" : "주문하기",
+  "orderCompleted" : "주문이 완료되었습니다.",
+  "deleteItem" : "선택한 메뉴를 삭제하시겠습니까?",
+  "delete" : "삭제",
+  "showDeleteSnackBar" : "삭제되었습니다.",
 
   "other": "Other",
   "transactionHistory": "전자영수증",

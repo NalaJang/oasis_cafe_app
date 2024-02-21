@@ -49,7 +49,7 @@ class OrderButton extends StatelessWidget {
           ),
 
           child: Text(
-            Strings.order,
+            Strings.intlMessage('orderButton'),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20,
@@ -80,10 +80,8 @@ class OrderButton extends StatelessWidget {
           cartProvider.deleteAllItemsFromCart();
 
           ScaffoldMessenger.of((context)).showSnackBar(
-            const SnackBar(
-              content: Text(
-                '주문이 완료되었습니다.'
-              )
+            SnackBar(
+              content: Text(Strings.intlMessage('orderCompleted'))
             )
           );
         }

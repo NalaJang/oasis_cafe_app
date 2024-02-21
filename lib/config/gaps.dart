@@ -9,6 +9,7 @@ class Gaps {
   static const gapW10 = SizedBox(width: 10,);
   static const gapW15 = SizedBox(width: 15,);
   static const gapW20 = SizedBox(width: 20,);
+  static const gapW50 = SizedBox(width: 50,);
 
   // height
   static const gapH10 = SizedBox(height: 10,);

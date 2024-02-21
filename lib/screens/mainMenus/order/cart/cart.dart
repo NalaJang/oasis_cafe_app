@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/provider/cartProvider.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../config/palette.dart';
@@ -15,7 +17,7 @@ class Cart extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Review Order'),
+        title: Text(Strings.intlMessage('cart')),
       ),
 
       // 주문하기
@@ -48,7 +50,7 @@ class _CartItemsState extends State<CartItems> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: const Text('선택한 메뉴를 삭제하시겠습니까?',),
+              content: Text(Strings.intlMessage('deleteItem')),
               actions: [
 
                 // 취소 버튼
@@ -65,10 +67,10 @@ class _CartItemsState extends State<CartItems> {
                     side: const BorderSide(color: Palette.buttonColor1,)
                   ),
 
-                  child: const Text('아니오'),
+                  child: Text(Strings.intlMessage('no')),
                 ),
 
-                const SizedBox(width: 10,),
+                Gaps.gapW10,
 
                 // 삭제 버튼
                 ElevatedButton(
@@ -93,9 +95,9 @@ class _CartItemsState extends State<CartItems> {
                           Navigator.of(context).pop();
 
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('삭제되었습니다.')
-                              )
+                            SnackBar(
+                              content: Text(Strings.intlMessage('showDeleteSnackBar'))
+                            )
                           );
                         }
                       }
@@ -123,7 +125,7 @@ class _CartItemsState extends State<CartItems> {
                     side: const BorderSide(color: Palette.buttonColor1,)
                   ),
 
-                  child: const Text('삭제'),
+                  child: Text(Strings.intlMessage('delete')),
                 )
               ],
             );
@@ -219,7 +221,7 @@ class _CartItemsState extends State<CartItems> {
                                   ),
                                 ),
 
-                                const SizedBox(height: 10,),
+                                Gaps.gapH10,
 
                                 // hotOrIced, 사이즈, 컵 옵션
                                 Row(
@@ -242,7 +244,7 @@ class _CartItemsState extends State<CartItems> {
                                 // 얼음
                                 iceOption != "" ? Text('얼음 $iceOption') : const SizedBox(height: 0,),
 
-                                const SizedBox(height: 20,),
+                                Gaps.gapH20,
 
                                 // 수량 및 가격
                                 Row(
@@ -278,9 +280,9 @@ class _CartItemsState extends State<CartItems> {
                                       ],
                                     ),
 
-                                    const SizedBox(width: 50,),
+                                    Gaps.gapW50,
 
-                                    Text('$totalPrice 원')
+                                    Text(Strings.intlMessageAndArgs('currency', totalPrice))
                                   ],
                                 ),
                               ],
