@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'package:provider/provider.dart';
 
 
@@ -26,7 +28,12 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
   int shotOption = 2;
   String syrupOption = '';
   // 휘핑 크림
-  var whippedCreamOption = ['None', 'Less', 'Regular', 'Extra'];
+  var whippedCreamOption = [
+    Strings.intlMessage('none'),
+    Strings.intlMessage('less'),
+    Strings.intlMessage('regular'),
+    Strings.intlMessage('extra'),
+  ];
   List<String> selectedWhippedCreamOption = [];
 
   TextStyle setListTitleTextStyle() => const TextStyle(fontSize: 17);
@@ -60,12 +67,12 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
                   title: Text(
-                    '커피',
+                    Strings.intlMessage('coffee'),
                     style: setListTitleTextStyle(),
                   ),
 
                   subtitle: Text(
-                    '에스프레소 샷 $shotOption',
+                    "${Strings.intlMessage('espressoOption')} $shotOption"
                   ),
                 );
               },
@@ -80,10 +87,10 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                           border: Border.all(color: Colors.grey, width: 1),
                           borderRadius: BorderRadius.circular(10)
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(12.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
                           child: Text(
-                            '디카페인',
+                            Strings.intlMessage('decaf'),
                           ),
                         ),
                       ),
@@ -92,12 +99,10 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 
                       Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                               child: Text(
-                              '에스프레소 샷',
-                              style: TextStyle(
-                                fontSize: 15
-                              ),
+                              Strings.intlMessage('espressoOption'),
+                              style: CommonTextStyle.fontSize15,
                             )
                           ),
                           Gaps.spacer,
@@ -123,9 +128,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
 
                                 Text(
                                   '$shotOption',
-                                  style: const TextStyle(
-                                    fontSize: 15
-                                  )
+                                  style: CommonTextStyle.fontSize15
                                 ),
 
                                 Gaps.gapW20,
@@ -164,7 +167,7 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
                   title: Text(
-                    '시럽',
+                    Strings.intlMessage('syrup'),
                     style: setListTitleTextStyle(),
                   ),
 
@@ -185,10 +188,10 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                       }
 
                       if( vanillaSyrup > syrupOptionMinimumValue ) {
-                        selectedSyrup = '$selectedSyrup바닐라 시럽 $vanillaSyrup \n';
+                        selectedSyrup = '$selectedSyrup${Strings.intlMessage('vanilla')} $vanillaSyrup \n';
                       }
                       if( caramelSyrup > syrupOptionMinimumValue ) {
-                        selectedSyrup = '$selectedSyrup카라멜 시럽 $caramelSyrup';
+                        selectedSyrup = '$selectedSyrup${Strings.intlMessage('caramel')} $caramelSyrup';
                       }
 
                       return Text(selectedSyrup);
@@ -203,12 +206,12 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 바닐라 시럽
-                    SyrupOptions(syrupName: '바닐라 시럽', personalOptionProvider: personalOptionProvider,),
+                    SyrupOptions(syrupName: Strings.intlMessage('vanilla'), personalOptionProvider: personalOptionProvider,),
 
                     Gaps.gapH20,
 
                     // 카라멜 시럽
-                    SyrupOptions(syrupName: '카라멜 시럽', personalOptionProvider: personalOptionProvider,),
+                    SyrupOptions(syrupName: Strings.intlMessage('caramel'), personalOptionProvider: personalOptionProvider,),
 
                     Gaps.gapH30,
                   ],
@@ -223,11 +226,9 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
               value: 2,
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
-                  title: const Text(
-                    '베이스',
-                    style: TextStyle(
-                      fontSize: 17
-                    ),
+                  title: Text(
+                    Strings.intlMessage('base'),
+                    style: CommonTextStyle.fontSize17,
                   ),
 
                   subtitle: Text(
@@ -246,11 +247,9 @@ class _SelectedEspressoItemState extends State<SelectedEspressoItem> {
               value: 3,
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
-                  title: const Text(
-                    '휘핑 크림',
-                    style: TextStyle(
-                      fontSize: 17
-                    ),
+                  title: Text(
+                    Strings.intlMessage('whippedCream'),
+                    style: CommonTextStyle.fontSize17,
                   ),
 
                   subtitle: selectedWhippedCreamOption.isEmpty ? Gaps.emptySizedBox : Text(selectedWhippedCreamOption[0]),
@@ -316,7 +315,7 @@ class _SyrupOptionsState extends State<SyrupOptions> {
   @override
   Widget build(BuildContext context) {
 
-    final syrupAmount = (widget.syrupName == '바닐라 시럽')
+    final syrupAmount = (widget.syrupName == Strings.intlMessage('vanilla'))
     ? widget.personalOptionProvider.vanillaSyrup
     : widget.personalOptionProvider.caramelSyrup;
 
@@ -325,7 +324,7 @@ class _SyrupOptionsState extends State<SyrupOptions> {
         Expanded(
           child: Text(
             widget.syrupName,
-            style: const TextStyle(fontSize: 15),
+            style: CommonTextStyle.fontSize15,
           )
         ),
         Gaps.emptySizedBox,
@@ -352,7 +351,7 @@ class _SyrupOptionsState extends State<SyrupOptions> {
 
               Text(
                 '$syrupAmount',
-                style: const TextStyle(fontSize: 15)
+                style: CommonTextStyle.fontSize15
               ),
 
               Gaps.gapW20,
