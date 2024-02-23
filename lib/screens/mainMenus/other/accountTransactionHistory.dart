@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/provider/transactionHistoryProvider.dart';
 import 'package:provider/provider.dart';
@@ -85,9 +86,7 @@ class _AccountTransactionHistoryState extends State<AccountTransactionHistory> {
 
                   child: Text(
                     Strings.intlMessage('details'),
-                    style: const TextStyle(
-                      color: Colors.brown
-                    ),
+                    style: CommonTextStyle.textColorBrown,
                   ),
                 ),
 

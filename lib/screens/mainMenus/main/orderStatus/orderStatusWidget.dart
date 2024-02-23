@@ -120,25 +120,25 @@ class _OrderStatusState extends State<OrderStatus> {
     String graphImage = '';
 
     if (processState == 'new') {
-      title = '주문을 확인하고 있습니다. 🏃🏻‍♀️';
-      subTitle = '주문 상황에 따라 준비가 늦어질 수 있습니다. 본인이 직접 메뉴를 수령해 주세요.';
+      title = Strings.intlMessage('checkingYourOrder');
+      subTitle = Strings.intlMessage('checkingYourOrderDes');
       graphImage = 'image/IMG_order_status_new.png';
 
     } else if (processState == 'inProcess') {
-      title = '$userName 님의 주문을 준비 중입니다.';
-      subTitle = '주문 승인 즉시 메뉴 준비가 시작됩니다. 완성 후, 빠르게 픽업해 주세요.';
+      title = Strings.intlMessageAndArgs('preparingTheOrder', userName);
+      subTitle = Strings.intlMessage('preparingTheOrderDes');
       graphImage = 'image/IMG_order_status_inProcess.png';
 
     } else if (processState == 'done') {
-      title = '$userName 님, 메뉴가 모두 준비되었어요.';
-      subTitle = '메뉴가 모두 준비되었어요. 픽업대에서 메뉴를 픽업해주세요!';
+      title = Strings.intlMessageAndArgs('readyForPickUp', userName);
+      subTitle = Strings.intlMessage('readyForPickUpDes');
       graphImage = 'image/IMG_order_status_done.png';
 
     } else if( processState == 'canceled' ) {
       orderCanceled = true;
       var reasonOfCancel = splitProcessState[1];
-      title = '$userName 님, 주문이 취소되었어요.';
-      subTitle = '$reasonOfCancel (으)로 주문이 취소되었습니다.';
+      title = Strings.intlMessageAndArgs('orderCanceled', userName);
+      subTitle = Strings.intlMessageAndArgs('orderCanceledDes', reasonOfCancel);
       graphImage = '';
     }
 

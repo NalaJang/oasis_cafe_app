@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'package:provider/provider.dart';
@@ -83,9 +84,9 @@ class OrderProcessStateCard extends StatelessWidget {
                   Provider.of<OrderStateProvider>(context, listen: false).checkedCanceledOrder(documentSnapshot);
                 },
 
-                child: const Text(
-                  '확인했습니다.',
-                  style: TextStyle(
+                child: Text(
+                  Strings.intlMessage('confirmed'),
+                  style: const TextStyle(
                     color: Palette.textColor1,
                   ),
                 )
@@ -99,9 +100,7 @@ class OrderProcessStateCard extends StatelessWidget {
 
                 child: Text(
                   Strings.intlMessage('viewMyOrder'),
-                  style: const TextStyle(
-                    color: Colors.brown,
-                  ),
+                  style: CommonTextStyle.textColorBrown
                 )
               ),
             ],
@@ -132,9 +131,9 @@ class OrderProcessStateCard extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(left: 15, top: 20, bottom: 10),
-                child: const Text(
-                  '주문내역(1)',
-                  style: TextStyle(
+                child: Text(
+                  Strings.intlMessage('orderList'),
+                  style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold
                   ),
