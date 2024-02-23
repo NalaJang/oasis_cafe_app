@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/provider/personalOptionProvider.dart';
+import 'package:oasis_cafe_app/strings/strings_en.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../strings/strings_en.dart';
-
 class SelectedFreshJuiceItem extends StatefulWidget {
-  const SelectedFreshJuiceItem({required this.documentSnapshot, Key? key}) : super(key: key);
-
-  final documentSnapshot;
+  const SelectedFreshJuiceItem({Key? key}) : super(key: key);
 
   @override
   State<SelectedFreshJuiceItem> createState() => _SelectedFreshJuiceItemState();
@@ -16,7 +14,12 @@ class SelectedFreshJuiceItem extends StatefulWidget {
 
 class _SelectedFreshJuiceItemState extends State<SelectedFreshJuiceItem> {
 
-  var iceOption = ['None', 'Less', 'Regular'];
+  // 얼음 양
+  var iceOption = [
+    Strings.intlMessage('none'),
+    Strings.intlMessage('less'),
+    Strings.intlMessage('regular'),
+  ];
   var selectedIcoOption = [];
 
   String setSubTitleText() {
@@ -45,15 +48,13 @@ class _SelectedFreshJuiceItemState extends State<SelectedFreshJuiceItem> {
               backgroundColor: setExpansionPanelBackgroundColor(),
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
-                  title: const Text(
-                    '얼음',
-                    style: TextStyle(
-                      fontSize: 17
-                    ),
+                  title: Text(
+                    Strings.intlMessage('ice'),
+                    style: CommonTextStyle.fontSize17,
                   ),
 
                   subtitle: Text(
-                      setSubTitleText()
+                    setSubTitleText()
                   )
                 );
               },
@@ -70,7 +71,7 @@ class _SelectedFreshJuiceItemState extends State<SelectedFreshJuiceItem> {
                     },
 
                     child: Container(
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 1),
                         borderRadius: BorderRadius.circular(10),

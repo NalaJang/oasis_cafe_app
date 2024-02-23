@@ -105,7 +105,7 @@ class ItemOption extends StatelessWidget {
 
                       // 생과일 쥬스 퍼스널 옵션
                     } else if( collectionName == Strings.freshJuice ) {
-                      return SelectedFreshJuiceItem(documentSnapshot: documentSnapshot);
+                      return const SelectedFreshJuiceItem();
                     }
 
 
