@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/config/palette.dart';
 import 'package:oasis_cafe_app/config/tabViewList.dart';
 
@@ -19,11 +20,9 @@ class OrderPage extends StatelessWidget {
           // 뒤로가기 화살표 없애기
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: const Text(
-            Strings.order,
-            style: TextStyle(
-              fontSize: 30,
-            ),
+          title: Text(
+            Strings.intlMessage('order'),
+            style: CommonTextStyle.fontSize30,
           ),
 
           actions: [

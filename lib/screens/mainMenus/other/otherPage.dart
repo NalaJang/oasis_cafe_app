@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oasis_cafe_app/config/commonTextStyle.dart';
 import 'package:oasis_cafe_app/config/gaps.dart';
 import 'package:oasis_cafe_app/config/commonDialog.dart';
 import 'package:oasis_cafe_app/main.dart';
@@ -36,9 +37,9 @@ class OtherPage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: const Text(
-          Strings.other,
-          style: TextStyle(fontSize: 30,),
+        title: Text(
+          Strings.intlMessage('other'),
+          style: CommonTextStyle.fontSize30
         ),
 
         actions: [

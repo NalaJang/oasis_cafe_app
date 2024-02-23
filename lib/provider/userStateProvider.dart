@@ -22,7 +22,6 @@ class UserStateProvider with ChangeNotifier {
   String userMobileNumber = '';
   bool notification = false;
   bool shakeToPay = false;
-  List<String> data = [Strings.termsOfUseAgreed, Strings.privacyPolicyAgreed, Strings.marketingConsentAgreed];
 
 
   // 로그인 유무를 판단하기 위해 user 정보를 가져온다.

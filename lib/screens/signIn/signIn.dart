@@ -61,7 +61,7 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.signIn),
+        title: Text(Strings.intlMessage('signIn')),
         centerTitle: true,
       ),
 

@@ -234,7 +234,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
               ),
 
               child: Text(
-                Strings.hot,
+                Strings.intlMessage('hot'),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15,
@@ -269,7 +269,7 @@ class _HotNIcedButtonState extends State<HotNIcedButton> {
               ),
 
               child: Text(
-                Strings.iced,
+                Strings.intlMessage('iced'),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 15,

@@ -82,7 +82,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.personalInfo),
+        title: Text(Strings.intlMessage('personalInfo')),
       ),
 
       body: ModalProgressHUD(
@@ -138,7 +138,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           controller: userNameController,
           validator: (value) {
             if( value!.isEmpty || value.length < 2 ) {
-              Strings.nameValidation;
+              Strings.intlMessage('nameValidation');
             }
             return null;
           },
@@ -184,7 +184,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
         TextFormField(
           controller: userDateOfBirthController,
           validator: (value) =>
-            value!.length < 6 ? Strings.dateOfBirthValidation : null,
+            value!.length < 6 ? Strings.intlMessage('dateOfBirthValidation') : null,
 
           style: const TextStyle(
             height: 1.6,
