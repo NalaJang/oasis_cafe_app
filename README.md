@@ -23,7 +23,8 @@ This application efficiently manages cafe orders and provides a high level of co
 2. 사이렌 오더 시스템 : Firebase Database를 이용하여 주문 데이터를 관리하며, 주문 상태를 업데이트합니다.  
 3. MVVM 아키텍처 구현 : Flutter Provider 패키지를 사용하여 MVVM 아키텍처를 적용하여 코드를 모듈화하고, 유지보수성을 높였습니다.  
 4. 사용자 편의성 강조 : Flutter의 풍부한 위젯 라이브러리를 활용하여 직관적이고 사용자 친화적인 UI를 구현하여 사용자 편의성을 강조하였습니다.  
-5. Firebase 인증 및 데이터베이스 연동 : Firebase Authentication을 이용하여 사용자 인증을 처리하고, 주문 데이터를 Firebase Database에 저장하고 관리합니다.  
+5. Firebase 인증 및 데이터베이스 연동 : Firebase Authentication을 이용하여 사용자 인증을 처리하고, 주문 데이터를 Firebase Database에 저장하고 관리합니다.
+6. Localizaions : 한국어와 영어를 포함한 다양한 언어를 지원합니다. 사용자는 언제든지 선호하는 언어로 앱을 쉽게 이용할 수 있습니다.
 
 <br></br>
 
@@ -83,7 +84,17 @@ Try launch the app.
 <br></br>
 
 ## Preview
+* 메뉴 주문 및 확인
+
 |메뉴 주문|주문 상태, 거래 내역 확인|
 |-------|-------------------|
 |![oasis_cafe_app_order](https://github.com/NalaJang/oasis_cafe_app/assets/73895803/4983955e-1776-4424-aa6a-98f1eee9f57e)|![oasis_cafe_app_order_status](https://github.com/NalaJang/oasis_cafe_app/assets/73895803/12f743c3-63c3-4f0e-98b1-e575b79f43ab)|
 
+<br></br>
+
+* 다국어 지원
+
+|한국어|영어|
+|----|---|
+|![oasis_cafe_app_ko1](https://github.com/NalaJang/oasis_cafe_app/assets/73895803/b78f45e3-dd82-4ac7-999a-6b3739f4cdb3)|![oasis_cafe_app_en1](https://github.com/NalaJang/oasis_cafe_app/assets/73895803/1668eab6-0313-4c3c-a039-8c9248017245)|
+|![oasis_cafe_app_ko2](https://github.com/NalaJang/oasis_cafe_app/assets/73895803/05e680a0-d187-4766-804c-de7e8f322443)|![oasis_cafe_app_en2](https://github.com/NalaJang/oasis_cafe_app/assets/73895803/0a7bc46f-7bba-4e4b-942d-b5a80f1ca17e)|
