@@ -22,7 +22,7 @@ This application efficiently manages cafe orders and provides a high level of co
 **1. 개발 기간**  
     > 2023.09 ~ 2024.01  <br></br>
 **2. 개발 인원**  
-    > 1명  
+    > 1명    <br></br>
 **3. 사이렌 오더 시스템**  
     >Firebase Database를 이용하여 주문 데이터를 관리하며, 주문 상태를 업데이트합니다.  <br></br>
 **4. MVVM 아키텍처 구현**  
