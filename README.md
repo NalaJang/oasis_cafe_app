@@ -1,5 +1,10 @@
 # Oasis Cafe
 
+스타벅스 앱과 같은 사이렌오더 기능을 갖춘 카페 어플리케이션입니다.
+
+Oasis 카페 앱 프로젝트는 Flutter 프레임워크를 사용하여 개발된 모바일 애플리케이션으로 MVVM(Model-View-ViewModel) 아키텍처 패턴을 구현합니다.
+이 애플리케이션은 카페 주문을 효율적으로 관리하고 사용자에게 높은 수준의 편의성을 제공합니다.
+
 This is a cafe application with a <b>Siren Order</b> function like the Starbucks app.
 
 The Oasis cafe app project is a mobile application developed using the Flutter framework, implementing the MVVM (Model-View-ViewModel) architectural pattern. 
