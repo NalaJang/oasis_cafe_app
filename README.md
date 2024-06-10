@@ -37,7 +37,7 @@ This application efficiently manages cafe orders and provides a high level of co
 **6. Firebase 인증 및 데이터베이스 연동**  
     > Firebase Authentication을 이용하여 사용자 인증을 처리하고, 주문 데이터를 Firebase Database에 저장하고 관리합니다.  <br></br>
 **7. Localizaions**  
-    > 한국어와 영어를 포함한 다양한 언어를 지원합니다. 사용자는 언제든지 선호하는 언어로 앱을 쉽게 이용할 수 있습니다.
+    > 한국어와 영어를 지원합니다. 사용자는 언제든지 선호하는 언어로 앱을 쉽게 이용할 수 있습니다.
 
 <br></br>
 
