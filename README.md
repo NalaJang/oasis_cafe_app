@@ -2,13 +2,10 @@
 
 스타벅스 앱과 같은 사이렌오더 기능을 갖춘 카페 어플리케이션입니다.
 
-Oasis 카페 앱 프로젝트는 Flutter 프레임워크를 사용하여 개발된 모바일 애플리케이션으로 MVVM(Model-View-ViewModel) 아키텍처 패턴을 구현합니다.
-이 애플리케이션은 카페 주문을 효율적으로 관리하고 사용자에게 높은 수준의 편의성을 제공합니다.
+Oasis 카페 앱 프로젝트는 Flutter 프레임워크를 사용하여 개발된 모바일 애플리케이션으로 카페 주문을 효율적으로 관리하고 사용자에게 높은 수준의 편의성을 제공합니다.
 
-This is a cafe application with a <b>Siren Order</b> function like the Starbucks app.
-
-The Oasis cafe app project is a mobile application developed using the Flutter framework, implementing the MVVM (Model-View-ViewModel) architectural pattern. 
-This application efficiently manages cafe orders and provides a high level of convenience to users.
+**<기획 배경>**  
+뉴질랜드에서 생활 당시, 외국인으로서 다른 나라의 생소한 음식을 글만으로 이해하기 어려웠습니다. 저와 같은 외국인도 새로운 문화에 쉽게 다가갈 수 있는 서비스를 만들고 싶었습니다.
 
 <br></br>
 
@@ -29,13 +26,19 @@ This application efficiently manages cafe orders and provides a high level of co
 **2. 개발 인원**  
     > 1명    <br></br>
 **3. 사이렌 오더 시스템**  
-    >Firebase Database를 이용하여 주문 데이터를 관리하며, 주문 상태를 업데이트합니다.  <br></br>
+    > Firebase Database를 이용하여 주문 데이터를 관리하며, 주문 상태를 업데이트합니다.  
+    > LocalNotificatoin 알림으로 주문 진행 상태 알립니다.  
+    > 사용자 기기의 알람 허용 여부를 확인 후 알림이 거부 되어있을 경우, 사용자를 기기 설정으로 유도합니다.  <br></br>
 **4. MVVM 아키텍처 구현**  
     > Flutter Provider 패키지를 사용하여 MVVM 아키텍처를 적용하여 코드를 모듈화하고, 유지보수성을 높였습니다.  <br></br>
 **5. 사용자 편의성 강조**  
-    > Flutter의 풍부한 위젯 라이브러리를 활용하여 직관적이고 사용자 친화적인 UI를 구현하여 사용자 편의성을 강조하였습니다.  <br></br>
+    > Flutter의 풍부한 위젯 라이브러리를 활용하여 직관적이고 친화적인 UI를 위해 대중적인 스타벅스 앱을 클론하였습니다.  
+    > 메뉴 커스텀 기능을 구현하였습니다.  
+    > 전자 영수증 메뉴에서 선택된 기간에 대한 과거 주문 내역 확인 기능을 구현하였습니다.  <br></br>
 **6. Firebase 인증 및 데이터베이스 연동**  
-    > Firebase Authentication을 이용하여 사용자 인증을 처리하고, 주문 데이터를 Firebase Database에 저장하고 관리합니다.  <br></br>
+    > Firebase Authentication을 이용하여 사용자 인증을 처리합니다.  
+    > FlutterSecureStorage로 사용자 정보를 저장하고 자동 로그인 구현하였습니다.  
+    > Firebase Database를 이용하여 주문 데이터를 관리하고 주문 상태를 업데이트합니다.  <br></br>
 **7. Localizaions**  
     > 한국어와 영어를 지원합니다. 사용자는 언제든지 선호하는 언어로 앱을 쉽게 이용할 수 있습니다.
 
